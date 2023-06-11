@@ -1,11 +1,33 @@
 #include "minishell.h"
 
+char *ft_find_symbol(char *str, char c)
+{
+    int i;
+    int j;
+    char    *ptr;
+
+    ptr = NULL;
+    j = 0;
+    i = 0;
+    while (str[i] != c)
+        i++;
+    ptr = (char *)malloc(sizeof(char) * i);
+    while (j < i)
+    {
+        ptr[j] = str[j];
+        j++;
+    }
+    ptr[j] = '\0';
+    return(ptr);
+}
+
 t_list *ft_lstnew_2(char *str)
 {
     t_list *lst;
 
     lst = malloc(sizeof(t_list));
-    lst->ptr = ft_strdup(str);
+    lst->ptr = ft_strdup(ft_find_symbol(str, '='));
+    lst->value = ft_strdup(ft_strchr(str, '='));
     lst->next = NULL;
     lst->prev = NULL;
     return(lst);
@@ -20,6 +42,8 @@ void    ft_create_env(char **str, t_list **stack)
     i = 0;
     while (str[i])
     {
+        if (ft_strnstr(str[i], "OLD", 3))
+            i++;
         stack_a = ft_lstnew_2(str[i]);
         if (ft_strnstr(stack_a->ptr, "OLDPWD", 10) == NULL)
             ft_lstadd_back(stack, stack_a);
@@ -34,7 +58,7 @@ void    ft_env(t_list *env)
     lst = env;
 	while ((lst))
    	{
-      printf("%s\n", (lst)->ptr);
+      printf("%s\n", ft_strjoin(lst->ptr, lst->value));
       (lst) = (lst)->next;
     }
 }

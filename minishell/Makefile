@@ -1,4 +1,4 @@
-NAME        =   minishall
+NAME        =   minishell
 LIBFT_DIR	=	libft
 LIB_SOURCES	=	$(wildcard $(LIBFT_DIR)/*.c)
 LIBFT_OBJ	=	$(patsubst %.c, %.o, $(LIB_SOURCES))

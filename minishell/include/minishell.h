@@ -13,10 +13,15 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+// typedef struct dirent
+// {
+//     char *d_name;
+// }   DIR;
 
 typedef struct s_list
 {
     char *ptr;
+    char *value;
     void *next;
     void *prev;
     void *content;
@@ -32,6 +37,7 @@ typedef struct s_list
 # include <stdio.h>
 # include <unistd.h>
 # include "libft.h"
+#include <dirent.h>
 
 // char	**ft_split(const char *s, char c);
 // int	ft_size_word(char const *s, char c, int i);
@@ -46,6 +52,9 @@ void    ft_env(t_list *env);
 t_list *ft_lstnew_2(char *str);
 void    ft_cd(t_list *str, char *text);
 char    *ft_change_str(char *str);
+char *ft_find_symbol(char *str, char c);
+void    ft_cd_prev(t_list *str, char *text);
+char *ft_ls(char *str);
 // char *read_line(const char *str);
 
 #endif
