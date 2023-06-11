@@ -51,7 +51,7 @@ void    ft_create_env(char **str, t_list **stack);
 void    ft_env(t_list *env);
 t_list *ft_lstnew_2(char *str);
 void    ft_cd(t_list *str, char *text);
-char    *ft_change_str(char *str);
+// char    *ft_change_str(char *str);
 char *ft_find_symbol(char *str, char c);
 void    ft_cd_prev(t_list *str, char *text);
 char *ft_ls(char *str);
