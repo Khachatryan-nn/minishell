@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/12 18:53:23 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/12 20:14:35 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,27 @@ void static	ft_lstadd_back_2(t_lexargs **lst, t_lexargs *new)
 //
 */
 
-void static	handle_space(t_lexargs **res, char *line, int i, int j)
+void static	handle_space(t_lexargs **res, char *line, int i, int count)
 {
 	//int	counter;
 
-	ft_lstadd_back_2(res, ft_lstnew_3(ft_substr(line, j, i)));
+	ft_lstadd_back_2(res, ft_lstnew_3(ft_substr(line, count, i - count)));
+}
+
+int static	handle_double_quotes(t_lexargs **res, char *line, int i, int count)
+{
+	int	counter;
+
+	ft_lstadd_back_2(res, ft_lstnew_3(ft_substr(line, count, i - count)));
+	counter = i + 1;
+	while (line[counter] != '"' && line[counter])
+		counter++;
+	if (line[counter] == '"')
+		ft_lstadd_back_2(res, ft_lstnew_3(ft_substr(line, i + 1, counter - i - 1)));
+	else
+		;
+		//get_next_line from STD_IN while we haven't encountered " symbol in there
+	return (counter);
 }
 
 void	lexer(char *line)
@@ -85,14 +101,16 @@ void	lexer(char *line)
 		counter = i;
 		while (line[i])
 		{
-			if (line[i] == ' ')
+			if (line[i] == '"')
 			{
-				handle_space(&res, line, i, counter);
-				printf("%d %d\n", counter, i);
+				i = handle_double_quotes(&res, line, i, counter) + 1;
 				break ;
 			}
-			//else if (line[i] == '"')
-			//	handle_double_quotes(line, i, counter);
+			else if (line[i] == ' ')
+			{
+				handle_space(&res, line, i, counter);
+				break ;
+			}
 			// else if (line[i] == 39)
 			// 	handle_single_quotes(line, i, counter);
 			// else if (line[i] == "|" && line[i + 1] == "|")
@@ -105,6 +123,11 @@ void	lexer(char *line)
 			// 	handle_single_and(line, i, counter);
 			// else if (line[i] == '<' && line[i + 1] == '<')
 			// 	handle_heredoc(line, i, counter);
+			else if (line[i + 1] == '\0')
+			{
+				handle_space(&res, line, i + 1, counter);
+				break ;
+			}
 			i++;
 		}
 	}
