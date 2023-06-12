@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musimony <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 19:28:58 by musimony          #+#    #+#             */
-/*   Updated: 2023/01/29 16:11:39 by musimony         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:04:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 
 	ptr = ft_lstlast(*lst);
 	if (!ptr)
-	*lst = new;
+		*lst = new;
 	else
-	ptr->next = new;
+		ptr->next = new;
 }
