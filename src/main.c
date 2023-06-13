@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/12 18:50:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:22:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 				}
 				if(ft_strnstr(str,"cd", 2))
 					ft_cd(env,  ft_strchr(str, str[3]));
-				lexer(str);
+				lex(str);
 			}
 		}
 	}
