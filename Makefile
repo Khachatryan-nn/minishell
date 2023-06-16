@@ -9,9 +9,8 @@ MK          =   mkdir -p
 
 #LIBFT
 LIBFT_DIR	=	libft
-LIBFT_OBJ_D	=	obj
 LIBFT_SRCS	=	$(wildcard $(LIBFT_DIR)/*.c)
-LIBFT_OBJ	=	$(patsubst $(LIBFT_DIR)/%.c, $(LIBFT_OBJ_D)/%.o, $(LIBFT_SRCS))
+LIBFT_OBJ	=	$(patsubst $(LIBFT_DIR)/%.c, $(OBJ_DIR)/%.o, $(LIBFT_SRCS))
 #MANDATORY
 SRC_DIR     =   src
 OBJ_DIR     =   obj
@@ -20,15 +19,18 @@ OBJS        =   $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o , $(SRCS))
 
 .DEFAULT_GOAL= all
 
-all:    $(LIBFT_OBJ_D) $(OBJ_DIR) $(NAME)
+all:    $(OBJ_DIR) $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(READ) $(INCS) -o $(NAME) $(OBJS)
+$(NAME): $(OBJS) $(LIBFT_OBJ)
+	$(CC) $(CFLAGS) $(READ) $(INCS) -o $(NAME) $(OBJS) $(LIBFT_OBJ)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@ 
 
-$(OBJ_DIR): $(SRC_DIR)
+$(OBJ_DIR)/%.o: $(LIBFT_DIR)/%.c $(HEADERS)
+	$(CC) $(CFLAGS) $(INCS) -c $< -o $@ 
+
+$(OBJ_DIR): $(SRC_DIR) $(LIBFT_DIR)
 	$(MK) $(OBJ_DIR)
 
 %.o: %.c $(HEADERS)
@@ -36,7 +38,6 @@ $(OBJ_DIR): $(SRC_DIR)
 
 clean:
 	$(RM) $(OBJ_DIR)
-	$(RM) $(LIBFT_OBJ)
 
 fclean:	clean
 	$(RM) $(NAME)
