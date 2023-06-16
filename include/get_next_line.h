@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/20 00:36:42 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/17 01:52:00 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/06/16 22:45:52 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/06/16 23:41:18 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
-{
-	unsigned char	*str;
-	size_t			i;
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-	str = (unsigned char *)s;
-	i = 0;
-	while (i < n)
-	{
-		if (str[i] == (unsigned char)c)
-			return (str + i);
-				i++;
-	}
-	return (NULL);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100
+# endif
+
+# include <stdlib.h>
+# include <stdarg.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <limits.h>
+# include "minishell.h"
+
+char	*get_next_line(int fd);
+
+#endif

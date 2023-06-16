@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/16 16:53:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/16 22:46:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_list
 # include <stdio.h>
 # include <unistd.h>
 # include "libft.h"
+# include "get_next_line.h"
 #include <dirent.h>
 
 // char	**ft_split(const char *s, char c);

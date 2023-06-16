@@ -1,21 +1,26 @@
 NAME        =   minishell
-LIBFT_DIR	=	libft
-LIB_SOURCES	=	$(wildcard $(LIBFT_DIR)/*.c)
-LIBFT_OBJ	=	$(patsubst %.c, %.o, $(LIB_SOURCES))
-SRC_DIR     =   src
-OBJ_DIR     =   obj
 INCS        =   -Iinclude
 HEADERS     =   $(wildcard ./include/*.h)
-SOURCES     =   $(wildcard $(SRC_DIR)/*.c) $(wildcard $(LIBFT_DIR)/*.c)
-OBJS        =   $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o , $(SOURCES))
 CC          =   cc
 CFLAGS		=	-Wall -Wextra -Werror
 READ      	=   -lreadline
 RM          =   rm -rf
 MK          =   mkdir -p
+
+#LIBFT
+LIBFT_DIR	=	libft
+LIBFT_OBJ_D	=	obj
+LIBFT_SRCS	=	$(wildcard $(LIBFT_DIR)/*.c)
+LIBFT_OBJ	=	$(patsubst $(LIBFT_DIR)/%.c, $(LIBFT_OBJ_D)/%.o, $(LIBFT_SRCS))
+#MANDATORY
+SRC_DIR     =   src
+OBJ_DIR     =   obj
+SRCS     	=   $(wildcard $(SRC_DIR)/*.c)
+OBJS        =   $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o , $(SRCS))
+
 .DEFAULT_GOAL= all
 
-all:    $(LIBFT_OBJ) $(OBJ_DIR) $(NAME)
+all:    $(LIBFT_OBJ_D) $(OBJ_DIR) $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(READ) $(INCS) -o $(NAME) $(OBJS)
@@ -25,7 +30,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 
 $(OBJ_DIR): $(SRC_DIR)
 	$(MK) $(OBJ_DIR)
-
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@

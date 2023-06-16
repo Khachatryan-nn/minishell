@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strnstr.c                                          :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musimony <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:42:05 by musimony          #+#    #+#             */
-/*   Updated: 2023/01/29 19:11:15 by musimony         ###   ########.fr       */
+/*   Updated: 2023/06/17 01:52:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 char	*ft_strnstr(const char *str, const char *str1, size_t len)
