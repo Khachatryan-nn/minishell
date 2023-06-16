@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/16 16:35:35 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:17:56 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,17 +277,28 @@ void static	lexer(t_lexargs **res, char *line)
 	}
 }
 
-void	lex(char *line, t_list env)
+void	lex(char *line, t_list *env)
 {
 	t_lexargs	*res;
+	int			done;
+	(void)		done;
+	(void)		env;
 
 	res = NULL;
 	lexer(&res, line);
-	while (res)
-	{
-		// printf("lexing resulte: %s\n", res->cmd);
-		while (execve(0, res->next, env.content) == -1 && env.ptr)
-			env = env.next;
-		res = res->next;
-	}
+	// while (res)
+	// {
+	// 	// printf("lexing resulte: %s\n", res->cmd);
+	// 	done = 0;
+	// 	while (env)
+	// 	{
+	// 		env = env->next;
+	// 		done = execve(0, (char *) res->cmd, env->content);
+	// 	}
+	// 	if (done != -1)
+	// 		perror("Execve err");
+	// 	res = res->next;
+	// 	free(res->cmd);
+	// }
+	// free(res);
 }

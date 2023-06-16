@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/13 15:21:57 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:53:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void    ft_cd(t_list *str, char *text);
 // char    *ft_change_str(char *str);
 char *ft_find_symbol(char *str, char c);
 void    ft_cd_prev(t_list *str, char *text);
+void	lex(char *line, t_list *env);
 char *ft_ls(char *str);
-void	lex(char *line);
 // char *read_line(const char *str);
 
 #endif
