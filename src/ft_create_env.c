@@ -53,7 +53,8 @@ void    ft_create_env(char **str, t_list **stack)
 
 void    ft_env(t_list *env)
 {
-    t_list *lst;
+    t_list	*lst;
+
 	lst = NULL;
     lst = env;
 	while ((lst))

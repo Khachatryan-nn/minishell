@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/15 15:51:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:35:35 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,53 @@ void static	handle_space(t_lexargs **res, char *line, int i, int count)
 	if (ft_isspace(line, i, count))
 		return ;
 	ft_lstadd_back_2(res, ft_lstnew_3(ft_substr(line, count, i - count)));
+}
+
+int static	handle_op_parentheses(t_lexargs **res, char *line, int i, int count)
+{
+	int		counter;
+	int		enable;
+	char	*read;
+	char	*result;
+	char	*temp;
+	int		k;
+
+	if (!ft_isspace(line, i, count))
+		ft_lstadd_back_2(res, ft_lstnew_3(ft_substr(line, count, i - count)));
+	counter = i + 1;
+	ft_lstadd_back_2(res, ft_lstnew_3("("));
+	while (line[counter] != ')' && line[counter])
+		counter++;
+	if (line[counter] == ')')
+		ft_lstadd_back_2(res, ft_lstnew_3(ft_substr(line, i + 1, counter - i - 1)));
+	else
+	{
+		enable = 1;
+		result = ft_substr(line, i + 1, counter - i - 1);
+		if (!result)
+			ft_strdup(result);
+		while (enable)
+		{
+			read = readline("subsh> ");
+			if (ft_strchr(read, ')'))
+				enable = 0;
+			temp = result;
+			result = ft_strjoin(temp, "\n");
+			free(temp);
+			temp = result;
+			result = ft_strjoin(temp, read);
+			free(read);
+			free(temp);
+		}
+		k = 0;
+		while (result[k] && result[k] != ')')
+			k++;
+		ft_lstadd_back_2(res, ft_lstnew_3(ft_substr(result, 0, k)));
+		if (k < (int) ft_strlen(result))
+			lexer(res, result + k + 1);
+	}
+	ft_lstadd_back_2(res, ft_lstnew_3(")"));
+	return (counter);
 }
 
 int static	handle_dquotes(t_lexargs **res, char *line, int i, int count)
@@ -200,6 +247,11 @@ void static	lexer(t_lexargs **res, char *line)
 			 	i = handle_squotes(res, line, i, counter) + 1;
 				break ;
 			}
+			else if (line[i] == '(')
+			{//if there are more than one parenthesis, then it's math>
+				i = handle_op_parentheses(res, line, i, counter);
+				break ;
+			}
 			else if (line[i] == ' ')
 			{
 				handle_space(res, line, i, counter);
@@ -225,7 +277,7 @@ void static	lexer(t_lexargs **res, char *line)
 	}
 }
 
-void	lex(char *line)
+void	lex(char *line, t_list env)
 {
 	t_lexargs	*res;
 
@@ -233,7 +285,9 @@ void	lex(char *line)
 	lexer(&res, line);
 	while (res)
 	{
-		printf("lexing resulte: %s\n", res->cmd);
+		// printf("lexing resulte: %s\n", res->cmd);
+		while (execve(0, res->next, env.content) == -1 && env.ptr)
+			env = env.next;
 		res = res->next;
 	}
 }
