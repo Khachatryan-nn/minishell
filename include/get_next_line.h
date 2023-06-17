@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 22:45:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/18 02:03:53 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/18 02:21:16 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
 # endif
-
-typedef struct s_cmd
-{
-	char	**path;
-	char	*cmd_line;
-	char	**cmd_args;
-	int		stdin;
-	int		stdout;
-}			t_cmd;
-
-typedef struct s_lexer_arg
-{
-	char	*cmd;
-	void	*next;
-}			t_lexargs;
 
 # include <stdlib.h>
 # include <stdarg.h>

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/18 02:15:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/18 02:21:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@ typedef struct s_list
     void *content;
 }   t_list;
 
+typedef struct s_cmd
+{
+	char	**path;
+	char	*cmd_line;
+	char	**cmd_args;
+	int		stdin;
+	int		stdout;
+}			t_cmd;
+
+typedef struct s_lexer_arg
+{
+	char	*cmd;
+	void	*next;
+}			t_lexargs;
 
 #include <string.h>
 #include <stdlib.h>
