@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/16 22:46:26 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/18 02:15:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,32 @@ typedef struct s_list
 # include "get_next_line.h"
 #include <dirent.h>
 
-// char	**ft_split(const char *s, char c);
-// int	ft_size_word(char const *s, char c, int i);
-// char	*ft_substr(char const *s, unsigned int start, size_t len);
+// char		**ft_split(const char *s, char c);
+// int		ft_size_word(char const *s, char c, int i);
+// char		*ft_substr(char const *s, unsigned int start, size_t len);
 // size_t	ft_strlen(const char *str);
-// char	*ft_strdup(const char *s1);
-// int	ft_strcmp(const char *s1, const char *s2);
-// int chdir(const char *str);
-void    ft_pwd(t_list *env);
-void    ft_create_env(char **str, t_list **stack);
-void    ft_env(t_list *env);
-t_list *ft_lstnew_2(char *str);
-void    ft_cd(t_list *str, char *text);
+// char		*ft_strdup(const char *s1);
+// int		ft_strcmp(const char *s1, const char *s2);
+// int		chdir(const char *str);
+int			handle_op_parentheses(t_lexargs **res, char *line, int i, int count);
+int			handle_squotes(t_lexargs **res, char *line, int i, int count);
+int			handle_dquotes(t_lexargs **res, char *line, int i, int count);
+void		handle_space(t_lexargs **res, char *line, int i, int count);
+void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
+int			ft_isspace(char *line, int i, int j);
+void		lexer(t_lexargs **res, char *line);
+t_lexargs	*ft_lstlast_3(t_lexargs *lst);
+t_lexargs	*ft_lstnew_3(char *content);
+void		ft_pwd(t_list *env);
+void		ft_create_env(char **str, t_list **stack);
+void		ft_env(t_list *env);
+t_list		*ft_lstnew_2(char *str);
+void		ft_cd(t_list *str, char *text);
 // char    *ft_change_str(char *str);
-char *ft_find_symbol(char *str, char c);
-void    ft_cd_prev(t_list *str, char *text);
-void	lex(char *line, t_list *env);
-char *ft_ls(char *str);
-// char *read_line(const char *str);
+char		*ft_find_symbol(char *str, char c);
+void		ft_cd_prev(t_list *str, char *text);
+void		lex(char *line, t_list *env);
+char		*ft_ls(char *str);
+// char		*read_line(const char *str);
 
 #endif
