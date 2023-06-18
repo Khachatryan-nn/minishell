@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/18 02:21:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/18 23:19:23 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_list
     void *prev;
     void *content;
 }   t_list;
+
 
 typedef struct s_cmd
 {
@@ -66,8 +67,13 @@ int			handle_squotes(t_lexargs **res, char *line, int i, int count);
 int			handle_dquotes(t_lexargs **res, char *line, int i, int count);
 void		handle_space(t_lexargs **res, char *line, int i, int count);
 void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
+void		lex(char *line, t_list *env, char **env1);
 int			ft_isspace(char *line, int i, int j);
+void		find_path(t_cmd *cmd, t_list *env);
+int			check_cmd(t_cmd *cmd);
+int			checker(t_cmd *cmd);
 void		lexer(t_lexargs **res, char *line);
+void		find_path(t_cmd *cmd, t_list *env);
 t_lexargs	*ft_lstlast_3(t_lexargs *lst);
 t_lexargs	*ft_lstnew_3(char *content);
 void		ft_pwd(t_list *env);
@@ -78,7 +84,6 @@ void		ft_cd(t_list *str, char *text);
 // char    *ft_change_str(char *str);
 char		*ft_find_symbol(char *str, char c);
 void		ft_cd_prev(t_list *str, char *text);
-void		lex(char *line, t_list *env);
 char		*ft_ls(char *str);
 // char		*read_line(const char *str);
 
