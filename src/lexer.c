@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/19 23:58:53 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/20 00:34:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ void	lex(char *line, t_list *env, char **env1)
 			free(cmd->cmd_line);
 			free_matrix((void **) cmd->cmd_args);
 			free(cmd->cmd_path);
+			free(cmd);
+			cmd = 0;
 		}
 	}
-	//ft_lstclear3);
+	ft_lstclear_3(&res);
 }

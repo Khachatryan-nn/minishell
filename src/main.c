@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/19 23:15:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/20 00:41:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int	main(int ac, char **av, char **env1)
 			else if (ft_strcmp(str, "pwd") == 0)
 				ft_pwd(env);
 			else if(ft_strcmp(str, "exit") == 0)
-			{
-				system("leaks minishell");
+			//{
+			//	system("leaks minishell");
 				exit(0);
-			}
+			//}
 			else if (ft_strcmp(str, "ls") == 0)
 			{
 				ls = ft_ls(ls);

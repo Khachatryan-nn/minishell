@@ -6,16 +6,17 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/18 02:17:09 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/20 00:35:51 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
+void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
+int			ft_isspace(char *line, int i, int j);
+void		ft_lstclear_3(t_lexargs **lst);
 t_lexargs	*ft_lstlast_3(t_lexargs *lst);
 t_lexargs	*ft_lstnew_3(char *content);
-int	ft_isspace(char *line, int i, int j);
 
 t_lexargs	*ft_lstnew_3(char *content)
 {
@@ -50,6 +51,17 @@ void	ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new)
 		*lst = new;
 	else
 		ptr->next = new;
+}
+
+void	ft_lstclear_3(t_lexargs **lst)
+{
+	if (!lst || !*lst)
+		return ;
+	while ((*lst))
+	{
+		free ((*lst)->cmd);
+		(*lst) = (*lst)->next;
+	}
 }
 
 //Checks if there only spaces from j -> i.\
