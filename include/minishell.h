@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/18 23:19:23 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/19 23:53:33 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_cmd
 {
 	char	**path;
 	char	*cmd_line;
+	char	*cmd_path;
 	char	**cmd_args;
 	int		stdin;
 	int		stdout;
@@ -70,6 +71,7 @@ void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
 void		lex(char *line, t_list *env, char **env1);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
+void		free_matrix(void **ptr);
 int			check_cmd(t_cmd *cmd);
 int			checker(t_cmd *cmd);
 void		lexer(t_lexargs **res, char *line);

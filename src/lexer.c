@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/19 00:02:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/19 23:58:53 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,32 +69,31 @@ void	lexer(t_lexargs **res, char *line)
 void	lex(char *line, t_list *env, char **env1)
 {
 	t_lexargs	*res;
-	t_cmd		cmd;
+	t_cmd		*cmd;
+	pid_t		pid;
 	int			done;
 	(void)		done;
-	(void)		env;
+	(void)		env1;
 
 	res = NULL;
+	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	lexer(&res, line);
-	find_path(&cmd, env);
-	if (!check_cmd(&cmd))
-		execve(cmd.cmd_args[0], &cmd.cmd_args[0], env1);
-	printf("cmd for executing: %s\n", cmd.cmd_args[0]);
-	//while (res)
-	//{
-	// 	// printf("lexing resulte: %s\n", res->cmd);
-	// 	done = -1;
-	// 	while (env && done == -1)
-	// 	{
-	// 		env = env->next;
-	//		done = access(res->cmd, X_OK);
-	// 		if (done)
-	//			execve(0, res->cmd, env->content);
-	// 	}
-	// 	if (done == -1)
-	// 		perror("Execve err");
-	// 	res = res->next;
-	// 	free(res->cmd);
-	//}
-	free(res);
+	find_path(cmd, env);
+	cmd->cmd_line = line;
+	if (!check_cmd(cmd))
+	{
+		pid = fork();
+		if (pid == -1)
+			printf ("Proccessing fault.\n");
+		else if (pid == 0)
+			execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
+		else
+		{
+			wait(NULL);
+			free(cmd->cmd_line);
+			free_matrix((void **) cmd->cmd_args);
+			free(cmd->cmd_path);
+		}
+	}
+	//ft_lstclear3);
 }

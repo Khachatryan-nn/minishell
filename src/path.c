@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/19 00:04:43 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/19 20:05:17 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int	checker(t_cmd *cmd)
 		temp = 0;
 		if (access(cmd_path, X_OK) != -1)
 		{
-			cmd->cmd_args[0] = cmd_path;
-		printf("cmd after finding: %s\n", cmd->cmd_args[0]);
+			cmd->cmd_path = cmd_path;
 			return (1);
 		}
 		free(cmd_path);
