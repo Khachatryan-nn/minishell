@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/20 00:41:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:12:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	main(int ac, char **av, char **env1)
 		while(1)
 		{
 			str = readline("minishell>: ");
+			if (ft_strcmp(str, "") == 0)
+				continue ;
 			if (ft_strcmp(str, "env") == 0)
 				ft_env(env);
 			else if (ft_strcmp(str, "pwd") == 0)
@@ -59,6 +61,8 @@ int	main(int ac, char **av, char **env1)
 			}
 			else if (ft_strnstr(str, "cd", 2))
 				ft_cd(env,  ft_strchr(str, str[3]));
+			else if (ft_onlyspaces(str))
+				;
 			else
 				lex(str, env, env1);
 			add_history(str);

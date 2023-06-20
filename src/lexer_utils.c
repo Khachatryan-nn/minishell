@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/20 00:35:51 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:51:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_lexargs	*ft_lstnew_3(char *content)
 
 t_lexargs	*ft_lstlast_3(t_lexargs *lst)
 {
-	t_lexargs *ptr;
+	t_lexargs	*ptr;
 
 	ptr = lst;
 	if (!ptr)
@@ -68,7 +68,7 @@ void	ft_lstclear_3(t_lexargs **lst)
 //If there are only spaces returns 1.
 int	ft_isspace(char *line, int i, int j)
 {
-	while(j < i && line[j])
+	while (j < i && line[j])
 	{
 		if (line[j] != ' ' && line[j] != '	')
 			return (0);

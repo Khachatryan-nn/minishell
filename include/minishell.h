@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/20 00:34:23 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:12:50 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void		lex(char *line, t_list *env, char **env1);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
 void		ft_lstclear_3(t_lexargs **lst);
+int			ft_onlyspaces(char *str);
 void		free_matrix(void **ptr);
 int			check_cmd(t_cmd *cmd);
 int			checker(t_cmd *cmd);

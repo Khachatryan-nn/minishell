@@ -6,17 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/18 02:16:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:49:14 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 void	handle_space(t_lexargs **res, char *line, int i, int count);
-int	handle_squotes(t_lexargs **res, char *line, int i, int count);
-int	handle_dquotes(t_lexargs **res, char *line, int i, int count);
-int	handle_op_parentheses(t_lexargs **res, char *line, int i, int count);
+int		handle_squotes(t_lexargs **res, char *line, int i, int count);
+int		handle_dquotes(t_lexargs **res, char *line, int i, int count);
+int		handle_op_parentheses(t_lexargs **res, char *line, int i, int count);
 
 void	handle_space(t_lexargs **res, char *line, int i, int count)
 {
