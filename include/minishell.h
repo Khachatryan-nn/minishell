@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/20 16:12:50 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:40:53 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@
 // {
 //     char *d_name;
 // }   DIR;
+
+enum cmd_type
+{
+	word = 0;
+	dquote;
+	squote;
+	subsh;
+	math;
+	redirection;
+	variable;
+	comment;
+	control flow;
+	command;
+}
 
 typedef struct s_list
 {
@@ -38,9 +52,23 @@ typedef struct s_cmd
 	int		stdout;
 }			t_cmd;
 
+/*
+types:
+0 - word
+1 - dquote
+2 - squote
+3 - subsh
+4 - math
+5 - redirection
+6 - variable
+7 - comment
+8 - control flow
+9 - command
+*/
 typedef struct s_lexer_arg
 {
 	char	*cmd;
+	int		type;
 	void	*next;
 }			t_lexargs;
 
@@ -54,7 +82,7 @@ typedef struct s_lexer_arg
 # include <unistd.h>
 # include "libft.h"
 # include "get_next_line.h"
-#include <dirent.h>
+# include <dirent.h>
 
 // char		**ft_split(const char *s, char c);
 // int		ft_size_word(char const *s, char c, int i);
@@ -69,6 +97,7 @@ int			handle_dquotes(t_lexargs **res, char *line, int i, int count);
 void		handle_space(t_lexargs **res, char *line, int i, int count);
 void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
 void		lex(char *line, t_list *env, char **env1);
+void		strjoin_helper(char *read, char *result);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
 void		ft_lstclear_3(t_lexargs **lst);

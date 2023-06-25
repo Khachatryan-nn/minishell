@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/20 15:49:14 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:40:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	handle_op_parentheses(t_lexargs **res, char *line, int i, int count)
 	int		enable;
 	char	*read;
 	char	*result;
-	char	*temp;
 	int		k;
 
 	if (!ft_isspace(line, i, count))
@@ -52,13 +51,7 @@ int	handle_op_parentheses(t_lexargs **res, char *line, int i, int count)
 			read = readline("subsh> ");
 			if (ft_strchr(read, ')'))
 				enable = 0;
-			temp = result;
-			result = ft_strjoin(temp, "\n");
-			free(temp);
-			temp = result;
-			result = ft_strjoin(temp, read);
-			free(read);
-			free(temp);
+			strjoin_helper(result, read);
 		}
 		k = 0;
 		while (result[k] && result[k] != ')')
@@ -77,7 +70,6 @@ int	handle_dquotes(t_lexargs **res, char *line, int i, int count)
 	int		enable;
 	char	*read;
 	char	*result;
-	char	*temp;
 	int		k;
 
 	if (!ft_isspace(line, i, count))
@@ -99,13 +91,7 @@ int	handle_dquotes(t_lexargs **res, char *line, int i, int count)
 			read = readline("dquote> ");
 			if (ft_strchr(read, '"'))
 				enable = 0;
-			temp = result;
-			result = ft_strjoin(temp, "\n");
-			free(temp);
-			temp = result;
-			result = ft_strjoin(temp, read);
-			free(read);
-			free(temp);
+			strjoin_helper(result, read);
 		}
 		k = 0;
 		while (result[k] && result[k] != '"')
@@ -124,7 +110,6 @@ int	handle_squotes(t_lexargs **res, char *line, int i, int count)
 	int		enable;
 	char	*read;
 	char	*result;
-	char	*temp;
 	int		k;
 
 	if (!ft_isspace(line, i, count))
@@ -146,13 +131,7 @@ int	handle_squotes(t_lexargs **res, char *line, int i, int count)
 			read = readline("quote> ");
 			if (ft_strchr(read, 39))
 				enable = 0;
-			temp = result;
-			result = ft_strjoin(temp, "\n");  
-			free(temp);
-			temp = result;
-			result = ft_strjoin(temp, read);
-			free(read);
-			free(temp);
+			strjoin_helper(result, read);
 		}
 		k = 0;
 		while (result[k] && result[k] != 39)
