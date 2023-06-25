@@ -6,16 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/19 20:05:17 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:26:56 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 void	find_path(t_cmd *cmd, t_list *env);
-int	check_cmd(t_cmd *cmd);
-int	checker(t_cmd *cmd);
+int		check_cmd(t_cmd *cmd);
+int		checker(t_cmd *cmd);
 
 //Function to find and create matrix of cmd PATHs
 void	find_path(t_cmd *cmd, t_list *env)

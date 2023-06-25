@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/25 21:07:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:28:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ void static	print_logo(void)
 
 int	main(int ac, char **av, char **env1)
 {
-	(void)	av;
 	char	*str;
 	t_list	*env;
 	char	*ls;
 
+	(void)	av;
 	env = NULL;
 	ls = NULL;
 	ft_create_env(env1, &env);
 	if (ac == 1)
 	{
 		print_logo();
-		while(1)
+		while (1)
 		{
 			str = readline("\033[38;5;46mminishell$ \e[0m");
 			if (ft_strcmp(str, "") == 0)
@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **env1)
 				ft_env(env);
 			else if (ft_strcmp(str, "pwd") == 0)
 				ft_pwd(env);
-			else if(ft_strcmp(str, "exit") == 0)
+			else if (ft_strcmp(str, "exit") == 0)
 			//{
 			//	system("leaks minishell");
 				exit(0);
@@ -60,7 +60,7 @@ int	main(int ac, char **av, char **env1)
 				ls = NULL;
 			}
 			else if (ft_strnstr(str, "cd", 2))
-				ft_cd(env,  ft_strchr(str, str[3]));
+				ft_cd(env, ft_strchr(str, str[3]));
 			else if (ft_onlyspaces(str))
 				;
 			else

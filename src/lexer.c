@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/21 18:45:14 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:22:14 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	lexer(t_lexargs **res, char *line)
 			}
 			else if (line[i] == 39)
 			{
-			 	i = handle_squotes(res, line, i, counter) + 1;
+				i = handle_squotes(res, line, i, counter) + 1;
 				break ;
 			}
 			else if (line[i] == '(')
 			{//if there are more than one parenthesis, then it's math>
-				i = handle_op_parentheses(res, line, i, counter);
+				i = handle_prnthses(res, line, i, counter);
 				break ;
 			}
 			else if (line[i] == ' ')
@@ -72,9 +72,9 @@ void	lex(char *line, t_list *env, char **env1)
 	t_cmd		*cmd;
 	pid_t		pid;
 	int			done;
-	(void)		done;
-	(void)		env1;
 
+	(void) done;
+	(void) env1;
 	res = NULL;
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	lexer(&res, line);

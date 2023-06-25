@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/22 18:40:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:15:53 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	handle_space(t_lexargs **res, char *line, int i, int count);
 int		handle_squotes(t_lexargs **res, char *line, int i, int count);
 int		handle_dquotes(t_lexargs **res, char *line, int i, int count);
-int		handle_op_parentheses(t_lexargs **res, char *line, int i, int count);
+int		handle_prnthses(t_lexargs **res, char *line, int i, int count);
 
 void	handle_space(t_lexargs **res, char *line, int i, int count)
 {
@@ -24,7 +24,7 @@ void	handle_space(t_lexargs **res, char *line, int i, int count)
 	ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count)));
 }
 
-int	handle_op_parentheses(t_lexargs **res, char *line, int i, int count)
+int	handle_prnthses(t_lexargs **res, char *line, int i, int count)
 {
 	int		counter;
 	int		enable;

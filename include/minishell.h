@@ -6,19 +6,30 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/22 21:40:53 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:15:53 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <string.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include "libft.h"
+# include "get_next_line.h"
+# include <dirent.h>
+
 // typedef struct dirent
 // {
 //     char *d_name;
 // }   DIR;
 
-enum cmd_type
+enum e_type
 {
 	word = 0;
 	dquote;
@@ -30,17 +41,16 @@ enum cmd_type
 	comment;
 	control flow;
 	command;
-}
+};
 
 typedef struct s_list
 {
-    char *ptr;
-    char *value;
-    void *next;
-    void *prev;
-    void *content;
-}   t_list;
-
+	char	*ptr;
+	char	*value;
+	void	*next;
+	void	*prev;
+	void	*content;
+}			t_list;
 
 typedef struct s_cmd
 {
@@ -52,46 +62,14 @@ typedef struct s_cmd
 	int		stdout;
 }			t_cmd;
 
-/*
-types:
-0 - word
-1 - dquote
-2 - squote
-3 - subsh
-4 - math
-5 - redirection
-6 - variable
-7 - comment
-8 - control flow
-9 - command
-*/
 typedef struct s_lexer_arg
 {
-	char	*cmd;
-	int		type;
-	void	*next;
-}			t_lexargs;
+	char		*cmd;
+	enum e_type	type;
+	void		*next;
+}				t_lexargs;
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
-
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include "libft.h"
-# include "get_next_line.h"
-# include <dirent.h>
-
-// char		**ft_split(const char *s, char c);
-// int		ft_size_word(char const *s, char c, int i);
-// char		*ft_substr(char const *s, unsigned int start, size_t len);
-// size_t	ft_strlen(const char *str);
-// char		*ft_strdup(const char *s1);
-// int		ft_strcmp(const char *s1, const char *s2);
-// int		chdir(const char *str);
-int			handle_op_parentheses(t_lexargs **res, char *line, int i, int count);
+int			handle_prnthses(t_lexargs **res, char *line, int i, int count);
 int			handle_squotes(t_lexargs **res, char *line, int i, int count);
 int			handle_dquotes(t_lexargs **res, char *line, int i, int count);
 void		handle_space(t_lexargs **res, char *line, int i, int count);
