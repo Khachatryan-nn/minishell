@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/25 21:22:14 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:58:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,15 @@ void	lex(char *line, t_list *env, char **env1)
 			free(cmd);
 			cmd = 0;
 		}
+	}
+	int	i;
+	i = 0;
+	while (res)
+	{
+		printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n", \
+		i, get_token_name(res->type), res->cmd);
+		res = res->next;
+		i++;
 	}
 	ft_lstclear_3(&res);
 }
