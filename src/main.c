@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/25 21:28:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/28 23:49:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int ac, char **av, char **env1)
 			else if (ft_onlyspaces(str))
 				;
 			else
-				lex(str, env, env1);
+				lex(str, env);
 			add_history(str);
 		}
 	}

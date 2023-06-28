@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/27 18:39:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/28 19:22:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 void		strjoin_helper(char *read, char *result);
-const char* get_token_name(e_type token);
+const char* get_token_name(t_type token);
 
 void	strjoin_helper(char *read, char *result)
 {
@@ -29,7 +29,7 @@ void	strjoin_helper(char *read, char *result)
 	free(temp);
 }
 
-const char* get_token_name(e_type token)
+const char* get_token_name(t_type token)
 {
 	if (token == WORD)
 		return "WORD";

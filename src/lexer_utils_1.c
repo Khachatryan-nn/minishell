@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/27 17:54:18 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/28 19:22:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
 int			ft_isspace(char *line, int i, int j);
 void		ft_lstclear_3(t_lexargs **lst);
 t_lexargs	*ft_lstlast_3(t_lexargs *lst);
-t_lexargs	*ft_lstnew_3(char *content, e_type type);
+t_lexargs	*ft_lstnew_3(char *content, t_type type);
 
-t_lexargs	*ft_lstnew_3(char *content, e_type type)
+t_lexargs	*ft_lstnew_3(char *content, t_type type)
 {
 	t_lexargs	*elt;
 

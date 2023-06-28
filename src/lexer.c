@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/27 18:58:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/28 23:49:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lex(char *line, t_list *env, char **env1);
+void	lex(char *line, t_list *env);
 void	lexer(t_lexargs **res, char *line);
 
 void	lexer(t_lexargs **res, char *line)
@@ -66,20 +66,17 @@ void	lexer(t_lexargs **res, char *line)
 	}
 }
 
-void	lex(char *line, t_list *env, char **env1)
+void	lex(char *line, t_list *env)
 {
 	t_lexargs	*res;
 	t_cmd		*cmd;
 	pid_t		pid;
-	int			done;
 
-	(void) done;
-	(void) env1;
 	res = NULL;
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	lexer(&res, line);
 	find_path(cmd, env);
-	cmd->cmd_line = line;
+	cmd->cmd_line = line;//cmd_processing(res);
 	if (!check_cmd(cmd))
 	{
 		pid = fork();
