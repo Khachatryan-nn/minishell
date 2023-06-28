@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/27 18:51:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:07:09 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef enum e_token_type
 	VAR,
 	COMMENT,
 	CMD,
-}		e_type;
+}	e_type;
 
 // typedef struct s_list
 // {
