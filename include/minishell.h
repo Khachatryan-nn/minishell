@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/28 23:49:37 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:49:27 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ typedef enum e_token_type
 	SUBSH_CLOSE,
 	MATH_OPEN,
 	MATH_CLOSE,
+	XOR,
+	XAND,
+	PIPE,
+	AND,
+	HEREDOC,
+	REDIREC_
 	FILEIN,
 	FILEOUT,
 	VAR,
@@ -84,7 +90,12 @@ typedef struct s_lexer_arg
 int			handle_prnthses(t_lexargs **res, char *line, int i, int count);
 int			handle_squotes(t_lexargs **res, char *line, int i, int count);
 int			handle_dquotes(t_lexargs **res, char *line, int i, int count);
+int			handle_heredoc(t_lexargs **res, char *line, int i, int count);
 void		handle_space(t_lexargs **res, char *line, int i, int count);
+int			handle_pipe(t_lexargs **res, char *line, int i, int count);
+int			handle_xand(t_lexargs **res, char *line, int i, int count);
+int			handle_xor(t_lexargs **res, char *line, int i, int count);
+int			handle_and(t_lexargs **res, char *line, int i, int count);
 void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
 void		strjoin_helper(char *read, char *result);
 int			ft_isspace(char *line, int i, int j);

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/28 19:22:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:25:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,42 @@ const char* get_token_name(t_type token)
 {
 	if (token == WORD)
 		return "WORD";
-	if (token == DQUOTE_OPEN)
-		return "DQUOTE_OPEN";
-	if (token == DQUOTE_CLOSE)
-		return "DQUOTE_CLOSE";
-	if (token == SQUOTE_OPEN)
-		return "SQUOTE_OPEN";
-	if (token == SQUOTE_CLOSE)
-		return "SQUOTE_CLOSE";
-	if (token == SUBSH_OPEN)
-		return "SUBSH_OPEN";
-	if (token == SUBSH_CLOSE)
-		return "SUBSH_CLOSE";
-	if (token == MATH_OPEN)
-		return "MATH_OPEN";
-	if (token == MATH_CLOSE)
-		return "MATH_CLOSE";
-	if (token == FILEIN)
-		return "FILEIN";
-	if (token == FILEOUT)
-		return "FILEOUT";
-	if (token == VAR)
-		return "VAR";
-	if (token == COMMENT)
-		return "COMMENT";
-	if (token == CMD)
-		return "CMD";
+	else if (token == DQUOTE_OPEN)
+		return ("DQUOTE_OPEN");
+	else if (token == DQUOTE_CLOSE)
+		return ("DQUOTE_CLOSE");
+	else if (token == SQUOTE_OPEN)
+		return ("SQUOTE_OPEN");
+	else if (token == SQUOTE_CLOSE)
+		return ("SQUOTE_CLOSE");
+	else if (token == SUBSH_OPEN)
+		return ("SUBSH_OPEN");
+	else if (token == SUBSH_CLOSE)
+		return ("SUBSH_CLOSE");
+	else if (token == MATH_OPEN)
+		return ("MATH_OPEN");
+	else if (token == MATH_CLOSE)
+		return ("MATH_CLOSE");
+	else if (token == XOR)
+		return ("XOR");
+	else if (token == XAND)
+		return ("XAND");
+	else if (token == PIPE)
+		return ("PIPE");
+	else if (token == AND)
+		return ("AND");
+	else if (token == HEREDOC)
+		return ("HEREDOC");
+	else if (token == FILEIN)
+		return ("FILEIN");
+	else if (token == FILEOUT)
+		return ("FILEOUT");
+	else if (token == VAR)
+		return ("VAR");
+	else if (token == COMMENT)
+		return ("COMMENT");
+	else if (token == CMD)
+		return ("CMD");
 	else
-		return "UNKNOWN";
+		return ("UNKNOWN");
 }
