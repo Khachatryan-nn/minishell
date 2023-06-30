@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/29 17:49:27 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:03:50 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef enum e_token_type
 	PIPE,
 	AND,
 	HEREDOC,
-	REDIREC_
+	REDIREC,
 	FILEIN,
 	FILEOUT,
 	VAR,
