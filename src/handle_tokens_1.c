@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/30 14:12:11 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:29:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int		handle_prnthses(t_lexargs **res, char *line, int i, int count);
 int		handle_squotes(t_lexargs **res, char *line, int i, int count);
 int		handle_dquotes(t_lexargs **res, char *line, int i, int count);
 int		handle_heredoc(t_lexargs **res, char *line, int i, int count);
+int		handle_wappend(t_lexargs **res, char *line, int i, int count);
+int		handle_wtrunc(t_lexargs **res, char *line, int i, int count);
 void	handle_space(t_lexargs **res, char *line, int i, int count);
 int		handle_pipe(t_lexargs **res, char *line, int i, int count);
 int		handle_xand(t_lexargs **res, char *line, int i, int count);
@@ -194,6 +196,38 @@ int	handle_heredoc(t_lexargs **res, char *line, int i, int count)
 	if (!ft_isspace(line, i, count))
 		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD));
 	ft_lstadd_back_3(res, ft_lstnew_3("<<", HEREDOC));
+	k = 1;
+	while (line[i + ++k])
+	{
+		if (line[i + k] != ' ')
+			return (i + 1);
+	}
+	return (parse_error());
+}
+
+int	handle_wappend(t_lexargs **res, char *line, int i, int count)
+{
+	int	k;
+
+	if (!ft_isspace(line, i, count))
+		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD));
+	ft_lstadd_back_3(res, ft_lstnew_3(">>", WRITE_APPEND));
+	k = 1;
+	while (line[i + ++k])
+	{
+		if (line[i + k] != ' ')
+			return (i + 1);
+	}
+	return (parse_error());
+}
+
+int	handle_wtrunc(t_lexargs **res, char *line, int i, int count)
+{
+	int	k;
+
+	if (!ft_isspace(line, i, count))
+		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD));
+	ft_lstadd_back_3(res, ft_lstnew_3(">>", WRITE_TRUNC));
 	k = 1;
 	while (line[i + ++k])
 	{
