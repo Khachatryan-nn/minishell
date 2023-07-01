@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/28 16:07:09 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/01 22:58:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,20 @@ typedef enum e_token_type
 	SUBSH_CLOSE,
 	MATH_OPEN,
 	MATH_CLOSE,
+	XOR,
+	XAND,
+	PIPE,
+	AND,
+	HEREDOC,
+	REDIREC,
+	WRITE_APPEND,
+	WRITE_TRUNC,
 	FILEIN,
 	FILEOUT,
 	VAR,
 	COMMENT,
 	CMD,
-}	e_type;
+}		t_type;
 
 // typedef struct s_list
 // {
@@ -56,6 +64,14 @@ typedef enum e_token_type
 // 	void	*content;
 // }			t_list;
 
+/*
+	char	**path;
+	char	*cmd_line;
+	char	*cmd_path;
+	char	**cmd_args;
+	int		stdin;
+	int		stdout;
+*/
 typedef struct s_cmd
 {
 	char	**path;
@@ -69,21 +85,28 @@ typedef struct s_cmd
 typedef struct s_lexer_arg
 {
 	char	*cmd;
-	e_type	type;
+	t_type	type;
 	void	*next;
 }				t_lexargs;
 
 int			handle_prnthses(t_lexargs **res, char *line, int i, int count);
 int			handle_squotes(t_lexargs **res, char *line, int i, int count);
 int			handle_dquotes(t_lexargs **res, char *line, int i, int count);
+int			handle_heredoc(t_lexargs **res, char *line, int i, int count);
+int			handle_wappend(t_lexargs **res, char *line, int i, int count);
+int			handle_wtrunc(t_lexargs **res, char *line, int i, int count);
 void		handle_space(t_lexargs **res, char *line, int i, int count);
+int			handle_pipe(t_lexargs **res, char *line, int i, int count);
+int			handle_xand(t_lexargs **res, char *line, int i, int count);
+int			handle_xor(t_lexargs **res, char *line, int i, int count);
+int			handle_and(t_lexargs **res, char *line, int i, int count);
 void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
-void		lex(char *line, t_list *env, char **env1);
 void		strjoin_helper(char *read, char *result);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
 void		ft_lstclear_3(t_lexargs **lst);
-const char* get_token_name(e_type token);
+const char	*get_token_name(t_type token);
+void		lex(char *line, t_list *env);
 int			ft_onlyspaces(char *str);
 void		free_matrix(void **ptr);
 int			check_cmd(t_cmd *cmd);
@@ -91,7 +114,7 @@ int			checker(t_cmd *cmd);
 void		lexer(t_lexargs **res, char *line);
 void		find_path(t_cmd *cmd, t_list *env);
 t_lexargs	*ft_lstlast_3(t_lexargs *lst);
-t_lexargs	*ft_lstnew_3(char *content, e_type type);
+t_lexargs	*ft_lstnew_3(char *content, t_type type);
 void		ft_pwd(t_list *env);
 void		ft_create_env(char **str, t_list **stack);
 void		ft_env(t_list *env);
