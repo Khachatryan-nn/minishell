@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/29 17:25:49 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/01 22:48:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ void	strjoin_helper(char *read, char *result)
 	temp = result;
 	result = ft_strjoin(temp, "\n");
 	free(temp);
+	temp = 0;
 	temp = result;
 	result = ft_strjoin(temp, read);
-	free(read);
-	free(temp);
+	if (temp)
+		free(temp);
+	temp = 0;
 }
 
 const char* get_token_name(t_type token)
@@ -59,6 +61,10 @@ const char* get_token_name(t_type token)
 		return ("AND");
 	else if (token == HEREDOC)
 		return ("HEREDOC");
+	else if (token == WRITE_APPEND)
+		return ("WRITE_APPEND");
+	else if (token == WRITE_TRUNC)
+		return ("WRITE_TRUNC");
 	else if (token == FILEIN)
 		return ("FILEIN");
 	else if (token == FILEOUT)

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/30 15:05:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/30 23:48:55 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	lexer(t_lexargs **res, char *line)
 				i = handle_xand(res, line, i, counter);
 			else if (line[i] == '<' && line[i + 1] == '<')
 				i = handle_heredoc(res, line, i, counter);
-			// else if (line[i] == '>' && line[i + 1] == '>')
-			// 	i = handle_wappend(res, line, i, counter);
-			// else if (line[i] == '>')
-			// 	i = handle_wtrunc(res, line, i, counter);
+			else if (line[i] == '>' && line[i + 1] == '>')
+				i = handle_wappend(res, line, i, counter);
+			else if (line[i] == '>')
+				i = handle_wtrunc(res, line, i, counter);
 			else if (line[i] == ' ')
 				handle_space(res, line, i, counter);
 			else if (line[i] == '|')
@@ -102,10 +102,10 @@ void	lex(char *line, t_list *env)
 
 /*
 
-<< [whenever it's encountered -> it's heredoc]. It will be outputted only if there are cat are simething like that
+<< [whenever it's encountered -> it's heredoc]. It will be outputted only if there are cat are something like that
 << a | cat [wouldn't output something in any case, because heredoc in first part doesn't cat'ed]
 			[in case of echo there are also nothing]
 			[if there are nothing after << then whole line wouldn't executed and error will be outputed]
 > [will insert the new info instead of old]
->> [will add the new info to the old]v
+>> [will add the new info to the old]
 */

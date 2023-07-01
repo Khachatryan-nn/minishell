@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/30 13:03:50 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:29:50 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef enum e_token_type
 	AND,
 	HEREDOC,
 	REDIREC,
+	WRITE_APPEND,
+	WRITE_TRUNC,
 	FILEIN,
 	FILEOUT,
 	VAR,
@@ -91,6 +93,8 @@ int			handle_prnthses(t_lexargs **res, char *line, int i, int count);
 int			handle_squotes(t_lexargs **res, char *line, int i, int count);
 int			handle_dquotes(t_lexargs **res, char *line, int i, int count);
 int			handle_heredoc(t_lexargs **res, char *line, int i, int count);
+int			handle_wappend(t_lexargs **res, char *line, int i, int count);
+int			handle_wtrunc(t_lexargs **res, char *line, int i, int count);
 void		handle_space(t_lexargs **res, char *line, int i, int count);
 int			handle_pipe(t_lexargs **res, char *line, int i, int count);
 int			handle_xand(t_lexargs **res, char *line, int i, int count);
