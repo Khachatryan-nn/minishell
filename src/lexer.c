@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/30 23:48:55 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/02 23:01:21 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	lex(char *line, t_list *env)
 		else
 		{
 			wait(NULL);
-			// free(cmd->cmd_line);
 			free_matrix((void **) cmd->cmd_args);
 			free(cmd->cmd_path);
 			free(cmd);
