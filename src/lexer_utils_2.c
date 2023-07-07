@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/01 22:48:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:09:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ const char* get_token_name(t_type token)
 		return ("XAND");
 	else if (token == PIPE)
 		return ("PIPE");
-	else if (token == AND)
-		return ("AND");
 	else if (token == HEREDOC)
 		return ("HEREDOC");
 	else if (token == WRITE_APPEND)

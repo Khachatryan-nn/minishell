@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/02 23:01:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:04:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	lexer(t_lexargs **res, char *line)
 				handle_space(res, line, i, counter);
 			else if (line[i] == '|')
 				handle_pipe(res, line, i, counter);
-			else if (line[i] == '&')
-				handle_and(res, line, i, counter);
 			else if (line[i + 1] == '\0')
 				handle_space(res, line, i + 1, counter);
 			else

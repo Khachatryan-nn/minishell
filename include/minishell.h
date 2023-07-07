@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/01 22:58:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:04:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef enum e_token_type
 	XOR,
 	XAND,
 	PIPE,
-	AND,
 	HEREDOC,
 	REDIREC,
 	WRITE_APPEND,

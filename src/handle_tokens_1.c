@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/30 16:29:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:05:24 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		handle_wtrunc(t_lexargs **res, char *line, int i, int count);
 void	handle_space(t_lexargs **res, char *line, int i, int count);
 int		handle_pipe(t_lexargs **res, char *line, int i, int count);
 int		handle_xand(t_lexargs **res, char *line, int i, int count);
-int		handle_and(t_lexargs **res, char *line, int i, int count);
 int		handle_xor(t_lexargs **res, char *line, int i, int count);
 
 void	handle_space(t_lexargs **res, char *line, int i, int count)
@@ -172,14 +171,6 @@ int	handle_pipe(t_lexargs **res, char *line, int i, int count)
 	if (!ft_isspace(line, i, count))
 		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD));
 	ft_lstadd_back_3(res, ft_lstnew_3("|", PIPE));
-	return (i + 1);
-}
-
-int	handle_and(t_lexargs **res, char *line, int i, int count)
-{
-	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD));
-	ft_lstadd_back_3(res, ft_lstnew_3("&", AND));
 	return (i + 1);
 }
 
