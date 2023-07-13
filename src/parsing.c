@@ -6,16 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/10 13:10:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:41:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parser(t_lexargs *tokens)
+void	parser(t_list env, t_init *init);
+
+void	parser(t_list env, t_init *init)
 {
-	(void) tokens;
-	//t_
+	(void)	init;
+	(void)	env;
+	init->pars = NULL;
 }
 
 

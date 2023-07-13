@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/12 20:00:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:34:11 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_cmd
 	char	*cmd_line;
 	char	*cmd_path;
 	char	**cmd_args;
+	char	**path;
 	int		stdin;
 	int		stdout;
 }			t_cmd;
@@ -118,6 +119,7 @@ t_list		*ft_lstnew_2(char *str);
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
 void		lex(char *line, t_list *env, t_init *init);
 void		lexer(t_lexargs **res, char *line);
+void		parser(t_list env, t_init *init);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
 void		strjoin_helper(char *read, char *result);
@@ -125,6 +127,8 @@ int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
 int			ft_onlyspaces(char *str);
 void		free_matrix(void **ptr);
+
+/* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
 int			check_cmd(t_cmd *cmd);
 int			checker(t_cmd *cmd);
 void		find_path(t_cmd *cmd, t_list *env);

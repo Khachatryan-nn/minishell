@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/12 19:53:07 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:29:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lex(char *line, t_list *env);
+void	lex(char *line, t_list *env, t_init *init);
 void	lexer(t_lexargs **res, char *line);
 
 void	lexer(t_lexargs **res, char *line)
@@ -60,42 +60,40 @@ void	lexer(t_lexargs **res, char *line)
 
 void	lex(char *line, t_list *env, t_init *init)
 {
-	t_lexargs	*res;
-	t_cmd		*cmd;
-	//pid_t		pid;
+	t_cmd	*cmd;
+	pid_t	pid;
 
-	res = NULL;
+	init->lex = NULL;
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	lexer(&res, line);
+	lexer(&init->lex, line);
 	find_path(cmd, env);
-	cmd->cmd_line = line;//cmd_processing(res);
-	//if (!check_cmd(cmd))
-	//{
-	//	pid = fork();
-	//	if (pid == -1)
-	//		printf ("Proccessing fault.\n");
-	//	else if (pid == 0)
-	//		;
-	//		execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
-	//	else
-	//	{
-	//		wait(NULL);
-	//		free_matrix((void **) cmd->cmd_args);
-	//		free(cmd->cmd_path);
-	//		free(cmd);
-	//		cmd = 0;
-	//	}
-	//}
+	cmd->cmd_line = line;//cmd_processing(lex);
+	if (!check_cmd(cmd))
+	{
+		pid = fork();
+		if (pid == -1)
+			printf ("Proccessing fault.\n");
+		else if (pid == 0)
+			execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
+		else
+		{
+			wait(NULL);
+			free_matrix((void **) cmd->cmd_args);
+			free(cmd->cmd_path);
+			free(cmd);
+			cmd = 0;
+		}
+	}
 	int	i;
 	i = 0;
-	while (res)
+	while (init->lex)
 	{
 		printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n", \
-		i, get_token_name(res->type), res->cmd);
-		res = res->next;
+		i, get_token_name(init->lex->type), init->lex->cmd);
+		init->lex = init->lex->next;
 		i++;
 	}
-	ft_lstclear_3(&res);
+	ft_lstclear_3(&init->lex);
 }
 
 /*
