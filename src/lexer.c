@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/07 20:04:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:53:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,33 +58,34 @@ void	lexer(t_lexargs **res, char *line)
 	}
 }
 
-void	lex(char *line, t_list *env)
+void	lex(char *line, t_list *env, t_init *init)
 {
 	t_lexargs	*res;
 	t_cmd		*cmd;
-	pid_t		pid;
+	//pid_t		pid;
 
 	res = NULL;
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	lexer(&res, line);
 	find_path(cmd, env);
 	cmd->cmd_line = line;//cmd_processing(res);
-	if (!check_cmd(cmd))
-	{
-		pid = fork();
-		if (pid == -1)
-			printf ("Proccessing fault.\n");
-		else if (pid == 0)
-			execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
-		else
-		{
-			wait(NULL);
-			free_matrix((void **) cmd->cmd_args);
-			free(cmd->cmd_path);
-			free(cmd);
-			cmd = 0;
-		}
-	}
+	//if (!check_cmd(cmd))
+	//{
+	//	pid = fork();
+	//	if (pid == -1)
+	//		printf ("Proccessing fault.\n");
+	//	else if (pid == 0)
+	//		;
+	//		execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
+	//	else
+	//	{
+	//		wait(NULL);
+	//		free_matrix((void **) cmd->cmd_args);
+	//		free(cmd->cmd_path);
+	//		free(cmd);
+	//		cmd = 0;
+	//	}
+	//}
 	int	i;
 	i = 0;
 	while (res)
@@ -98,7 +99,6 @@ void	lex(char *line, t_list *env)
 }
 
 /*
-
 << [whenever it's encountered -> it's heredoc]. It will be outputted only if there are cat are something like that
 << a | cat [wouldn't output something in any case, because heredoc in first part doesn't cat'ed]
 			[in case of echo there are also nothing]

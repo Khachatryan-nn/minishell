@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/07 20:04:38 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/12 20:00:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,6 @@ typedef enum e_token_type
 	CMD,
 }		t_type;
 
-// typedef struct s_list
-// {
-// 	char	*ptr;
-// 	char	*value;
-// 	void	*next;
-// 	void	*prev;
-// 	void	*content;
-// }			t_list;
-
 /*
 	char	**path;
 	char	*cmd_line;
@@ -73,7 +64,6 @@ typedef enum e_token_type
 */
 typedef struct s_cmd
 {
-	char	**path;
 	char	*cmd_line;
 	char	*cmd_path;
 	char	**cmd_args;
@@ -83,11 +73,28 @@ typedef struct s_cmd
 
 typedef struct s_lexer_arg
 {
-	char	*cmd;
-	t_type	type;
-	void	*next;
+	char		*cmd;
+	t_type		type;
+	void		*next;
 }				t_lexargs;
 
+typedef	struct s_parser
+{
+	t_cmd		*cmd;
+	void		*next;
+	void		*prev;
+	void		*left;
+	void		*right;
+}				t_parser;
+
+typedef struct s_init
+{
+	char		**path;
+	t_parser	*pars;
+	t_lexargs	*lex;
+}				t_init;
+
+/* - - - - --!-- - - - - ! Handling characters ! - - - - --!-- - - - - */
 int			handle_prnthses(t_lexargs **res, char *line, int i, int count);
 int			handle_squotes(t_lexargs **res, char *line, int i, int count);
 int			handle_dquotes(t_lexargs **res, char *line, int i, int count);
@@ -99,25 +106,31 @@ int			handle_pipe(t_lexargs **res, char *line, int i, int count);
 int			handle_xand(t_lexargs **res, char *line, int i, int count);
 int			handle_xor(t_lexargs **res, char *line, int i, int count);
 int			handle_and(t_lexargs **res, char *line, int i, int count);
+const char	*get_token_name(t_type token);
+
+/* - - - - - --!-- - - - - ! Nodes and lists ! - - - - --!-- - - - - - */
 void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
+t_lexargs	*ft_lstnew_3(char *content, t_type type);
+void		ft_lstclear_3(t_lexargs **lst);
+t_lexargs	*ft_lstlast_3(t_lexargs *lst);
+t_list		*ft_lstnew_2(char *str);
+
+/* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
+void		lex(char *line, t_list *env, t_init *init);
+void		lexer(t_lexargs **res, char *line);
+
+/* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
 void		strjoin_helper(char *read, char *result);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
-void		ft_lstclear_3(t_lexargs **lst);
-const char	*get_token_name(t_type token);
-void		lex(char *line, t_list *env);
 int			ft_onlyspaces(char *str);
 void		free_matrix(void **ptr);
 int			check_cmd(t_cmd *cmd);
 int			checker(t_cmd *cmd);
-void		lexer(t_lexargs **res, char *line);
 void		find_path(t_cmd *cmd, t_list *env);
-t_lexargs	*ft_lstlast_3(t_lexargs *lst);
-t_lexargs	*ft_lstnew_3(char *content, t_type type);
 void		ft_pwd(t_list *env);
 void		ft_create_env(char **str, t_list **stack);
 void		ft_env(t_list *env);
-t_list		*ft_lstnew_2(char *str);
 void		ft_cd(t_list *str, char *text);
 // char    *ft_change_str(char *str);
 char		*ft_find_symbol(char *str, char c);
