@@ -6,11 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 19:19:51 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/25 21:17:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/16 02:37:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 t_list	*ft_lstlast(t_list *lst)
 {

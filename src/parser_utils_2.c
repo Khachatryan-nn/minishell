@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   parser_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/28 17:07:40 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/16 02:37:52 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/07/16 01:45:02 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/07/16 02:13:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char static	*ft_strjoin_ws(char const *s1, char const *s2);
+int	restore_cmd_line(t_lexargs *lex, char **str);
+
+char static	*ft_strjoin_ws(char const *s1, char const *s2)
 {
 	char	*ptr;
 	size_t	len_s1;
@@ -30,6 +33,24 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!ptr)
 		return (NULL);
 	ft_strlcpy(ptr, s1, len_s1 + 1);
-	ft_strlcat(ptr, s2, len_s1 + len_s2 + 1);
+	ft_strlcat(ptr, " ", len_s1 + 2);
+	ft_strlcat(ptr, s2, len_s1 + len_s2 + 2);
 	return (ptr);
+}
+
+int	restore_cmd_line(t_lexargs *lex, char **str)
+{
+	char *temp;
+
+	temp = *str;
+	if (lex->type != WORD)
+		return (0);
+	else if (*str == NULL)
+		*str = lex->cmd;
+	else
+	{
+		*str = ft_strjoin_ws(*str, lex->cmd);
+		free(temp);
+	}
+	return (1);
 }

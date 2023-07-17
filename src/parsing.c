@@ -6,19 +6,45 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/14 00:41:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/16 20:38:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parser(t_list env, t_init *init);
+void	parser(t_list *env, t_init *init);
 
-void	parser(t_list env, t_init *init)
+void	parser(t_list *env, t_init *init)
 {
+	char		*str;
+	t_lexargs	*ptr;
+
+	str = NULL;
 	(void)	init;
 	(void)	env;
 	init->pars = NULL;
+	while (init->lex != NULL)
+	{
+		if (restore_cmd_line(init->lex, &str))
+		{
+			ptr = init->lex;
+			init->lex = init->lex->next;
+			if (init->lex != NULL)
+				continue;
+		}
+		else if (init->lex->type == PIPE)
+		{
+			lstadd_back_pars(&init->pars, lstnew_pars("|", PIPE));
+			ptr = init->pars;
+			ptr = lstlast_pars(ptr);
+			prt->
+
+		}
+		lstadd_back_pars(&init->pars, lstnew_pars(str, ptr->type));
+		printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n", \
+			0, get_token_name(init->pars->type), init->pars->cmd);
+		printf("%p\n", ptr->next);
+	}
 }
 
 

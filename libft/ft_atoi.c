@@ -6,11 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 01:09:33 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/17 01:50:35 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/16 02:37:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/../include/minishell.h"
+#include "../include/minishell.h"
 
 int	ft_atoi(const char *str)
 {

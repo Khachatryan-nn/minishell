@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:23:59 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/25 21:24:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/16 02:27:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_find_symbol(char *str, char c)
 	i = 0;
 	while (str[i] != c)
 		i++;
-	ptr = (char *)malloc(sizeof(char) * i);
+	ptr = (char *)malloc(sizeof(char) * (i + 1));
 	while (j < i)
 	{
 		ptr[j] = str[j];
