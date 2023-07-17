@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/16 20:38:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/17 19:28:20 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	parser(t_list *env, t_init *init)
 {
 	char		*str;
 	t_lexargs	*ptr;
+	t_parser	*pars_ptr;
 
 	str = NULL;
 	(void)	init;
@@ -35,10 +36,9 @@ void	parser(t_list *env, t_init *init)
 		else if (init->lex->type == PIPE)
 		{
 			lstadd_back_pars(&init->pars, lstnew_pars("|", PIPE));
-			ptr = init->pars;
-			ptr = lstlast_pars(ptr);
-			prt->
-
+			pars_ptr = init->pars;
+			pars_ptr = lstlast_pars(pars_ptr);
+			pars_ptr = 
 		}
 		lstadd_back_pars(&init->pars, lstnew_pars(str, ptr->type));
 		printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n", \

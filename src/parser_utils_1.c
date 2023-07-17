@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/16 20:46:35 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:28:15 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	lstadd_back_pars(t_parser **lst, t_parser *new)
 	else
 	{
 		ptr->next = new;
-		ptr->next->prev = ptr;
+		new->prev = ptr;
 	}
 }
 
