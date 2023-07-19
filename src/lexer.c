@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/19 18:49:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/19 22:13:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int		lexer(t_lexargs **res, char *line);
 
 int	lexer(t_lexargs **res, char *line)
 {
-	int			i;
-	int			l;
-	int			counter;
+	int	i;
+	int	l;
+	int	counter;
 
 	i = -1;
 	l = -1;
@@ -60,7 +60,10 @@ int	lexer(t_lexargs **res, char *line)
 			if (l == 0)
 				return (0);
 			else if (l > 0)
+			{
 				i = l;
+				l = -1;
+			}
 			break ;
 		}
 	}
@@ -76,7 +79,10 @@ void	lex(char *line, t_list *env, t_init *init)
 	init->lex = NULL;
 	//cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!(lexer(&init->lex, line)))
+	{
+		destroy_init(init);
 		return ;
+	}
 	//find_path(cmd, env);
 	//cmd->cmd_line = line;//cmd_processing(lex);
 	//if (!check_cmd(cmd))
@@ -105,7 +111,10 @@ void	lex(char *line, t_list *env, t_init *init)
 	//	i++;
 	//}
 	if (!is_valid(init))
+	{
+		destroy_init(init);
 		return ;
+	}
 	//parser(env, init);
 }
 

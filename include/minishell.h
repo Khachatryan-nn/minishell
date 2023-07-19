@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/19 17:39:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:33:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void		ft_lstclear_3(t_lexargs **lst);
 t_lexargs	*ft_lstlast_3(t_lexargs *lst);
 void		lstclear_pars(t_parser **lst);
 t_parser	*lstlast_pars(t_parser *lst);
+void		destroy_init(t_init *init);
 t_list		*ft_lstnew_2(char *str);
 
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */

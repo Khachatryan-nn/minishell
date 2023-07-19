@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/19 17:42:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/20 01:53:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,10 @@ int	handle_squotes(t_lexargs **res, char *line, int i, int count)
 int	handle_xor(t_lexargs **res, char *line, int i, int count)
 {
 	if (!(*res))
+	{
+		printf("or it is there\n");
 		return (parse_error("||"));
+	}
 	if (!ft_isspace(line, i, count))
 		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD));
 	ft_lstadd_back_3(res, ft_lstnew_3("||", XOR));
@@ -163,7 +166,10 @@ int	handle_xor(t_lexargs **res, char *line, int i, int count)
 int	handle_xand(t_lexargs **res, char *line, int i, int count)
 {
 	if (!(*res))
+	{
+		printf ("there\n");
 		return (parse_error("&&"));
+	}
 	if (!ft_isspace(line, i, count))
 		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD));
 	ft_lstadd_back_3(res, ft_lstnew_3("&&", XAND));
@@ -193,7 +199,7 @@ int	handle_heredoc(t_lexargs **res, char *line, int i, int count)
 		if (line[i + k] != ' ')
 			return (i + 1);
 	}
-	return (parse_error("\n"));
+	return (parse_error("\\n"));
 }
 
 int	handle_wappend(t_lexargs **res, char *line, int i, int count)

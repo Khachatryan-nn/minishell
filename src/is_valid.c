@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/19 18:51:14 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/20 01:48:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	is_valid(t_init *init)
 	t_lexargs	*ptr;
 
 	ptr = init->lex;
+	if (!ptr)
+		return (0);
 	while (ptr->next != NULL)
 	{
 		if (check_type(ptr->type) && check_type(ptr->next->type))

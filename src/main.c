@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/19 15:49:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/19 22:07:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int ac, char **av, char **env1)
 	char	*ls;
 
 	init.lex = NULL;
+	init.pars = NULL;
 	env = NULL;
 	ls = NULL;
 	ft_create_env(env1, &env);
