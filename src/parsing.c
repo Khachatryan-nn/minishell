@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/17 19:28:20 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/19 17:20:33 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	parser(t_list *env, t_init *init)
 	char		*str;
 	t_lexargs	*ptr;
 	t_parser	*pars_ptr;
+	int			flag;
 
+	flag = 0;
 	str = NULL;
-	(void)	init;
 	(void)	env;
 	init->pars = NULL;
 	while (init->lex != NULL)
@@ -35,20 +36,31 @@ void	parser(t_list *env, t_init *init)
 		}
 		else if (init->lex->type == PIPE)
 		{
-			lstadd_back_pars(&init->pars, lstnew_pars("|", PIPE));
 			pars_ptr = init->pars;
-			pars_ptr = lstlast_pars(pars_ptr);
-			pars_ptr = 
+			init->pars = lstnew_pars("|", PIPE);
+			init->pars->left = pars_ptr;
+			init->lex = init->lex->next;
+			flag = 1;
 		}
-		lstadd_back_pars(&init->pars, lstnew_pars(str, ptr->type));
-		printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n", \
-			0, get_token_name(init->pars->type), init->pars->cmd);
+		if (flag == 1)
+			init->pars->right = lstnew_pars(str, ptr->type);
+		else
+			lstadd_back_pars(&init->pars, lstnew_pars(str, ptr->type));
+		print_types(init);
 		printf("%p\n", ptr->next);
 	}
 }
 
 
+/*
+ls && cat script.sh
+ls -> cmd
+parser (ls as head)
+&& -> xand -> && -> left ls -> right null
+parser (&& as head)
+cat script.sh -> && 
 
+*/
 
 
 

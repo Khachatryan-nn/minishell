@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/16 02:21:55 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/19 17:39:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,26 @@
 # include "get_next_line.h"
 # include <dirent.h>
 
-// typedef struct dirent
-// {
-//     char *d_name;
-// }   DIR;
 
 typedef enum e_token_type
 {
-	WORD,
-	DQUOTE_OPEN,
-	DQUOTE_CLOSE,
-	SQUOTE_OPEN,
-	SQUOTE_CLOSE,
-	SUBSH_OPEN,
-	SUBSH_CLOSE,
-	MATH_OPEN,
-	MATH_CLOSE,
-	XOR,
-	XAND,
-	PIPE,
-	HEREDOC,
-	REDIREC,
-	WRITE_APPEND,
-	WRITE_TRUNC,
-	FILEIN,
-	FILEOUT,
-	VAR,
-	COMMENT,
-	CMD,
-}		t_type;
+	WORD,			//	cmd
+	DQUOTE_OPEN,	//	"
+	DQUOTE_CLOSE,	//	"
+	SQUOTE_OPEN,	//	'
+	SQUOTE_CLOSE,	//	'
+	SUBSH_OPEN,		//	(
+	SUBSH_CLOSE,	//	)
+	XOR,			//	||
+	XAND,			//	&&
+	PIPE,			//	|
+	HEREDOC,		//	<<
+	WRITE_APPEND,	//	>>
+	WRITE_TRUNC,	//	>
+	FILEIN,			//	fname
+	FILEOUT,		//	fname
+	END,			//	end of cmd
+}	t_type;
 
 /*
 	char	*cmd_line;
@@ -75,32 +66,32 @@ typedef struct s_cmd
 /*
 	char		*cmd;
 	t_type		type;
-	void		*next;
+	t_lexargs	*next;
 */
 typedef struct s_lexer_arg
 {
-	char		*cmd;
-	t_type		type;
-	void		*next;
-}				t_lexargs;
+	char				*cmd;
+	t_type				type;
+	struct s_lexer_arg	*next;
+}						t_lexargs;
 
 /*
-	char	*cmd;
-	t_type	type;
-	void	*next;
-	void	*prev;
-	void	*left;
-	void	*right;
+	char		*cmd;
+	t_type		type;
+	t_parser	*next;
+	t_parser	*prev;
+	t_parser	*left;
+	t_parser	*right;
 */
-typedef	struct s_parser
+typedef struct s_parser
 {
-	char	*cmd;
-	t_type	type;
-	void	*next;
-	void	*prev;
-	void	*left;
-	void	*right;
-}			t_parser;
+	char			*cmd;
+	t_type			type;
+	struct s_parser	*next;
+	struct s_parser	*prev;
+	struct s_parser	*left;
+	struct s_parser	*right;
+}					t_parser;
 
 /*
 	char		**path;
@@ -141,7 +132,7 @@ t_list		*ft_lstnew_2(char *str);
 
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
 void		lex(char *line, t_list *env, t_init *init);
-void		lexer(t_lexargs **res, char *line);
+int			lexer(t_lexargs **res, char *line);
 void		parser(t_list *env, t_init *init);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
@@ -149,8 +140,11 @@ int			restore_cmd_line(t_lexargs *lex, char **str);
 void		strjoin_helper(char *read, char *result);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
+int			parse_error(char *err_str);
+void		print_types(t_init *init);
 int			ft_onlyspaces(char *str);
 void		free_matrix(void **ptr);
+int			is_valid(t_init *init);
 
 /* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
 int			check_cmd(t_cmd *cmd);

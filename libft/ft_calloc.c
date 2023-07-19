@@ -6,11 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 01:20:42 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/16 02:37:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:12:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 void	*ft_calloc(size_t nitems, size_t size)
 {

@@ -6,12 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:54:12 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/16 02:37:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:12:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <unistd.h>
+#include "libft.h"
 
 void	ft_putendl_fd(char *s, int fd)
 {

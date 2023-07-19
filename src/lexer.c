@@ -6,46 +6,50 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/16 01:59:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/19 18:49:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	lex(char *line, t_list *env, t_init *init);
-void	lexer(t_lexargs **res, char *line);
+int		lexer(t_lexargs **res, char *line);
 
-void	lexer(t_lexargs **res, char *line)
+int	lexer(t_lexargs **res, char *line)
 {
 	int			i;
+	int			l;
 	int			counter;
 
 	i = -1;
+	l = -1;
 	while (line[++i])
 	{
 		counter = i;
 		while (line[i])
 		{
 			if (line[i] == '"')
-				i = handle_dquotes(res, line, i, counter) + 1;
+				l = handle_dquotes(res, line, i, counter) + 1;
 			else if (line[i] == 39)
-				i = handle_squotes(res, line, i, counter) + 1;
+				l = handle_squotes(res, line, i, counter) + 1;
+			else if (line[i] == ')')
+				l = parse_error(")");
 			else if (line[i] == '(')
-				i = handle_prnthses(res, line, i, counter);
+				l = handle_prnthses(res, line, i, counter);
 			else if (line[i] == '|' && line[i + 1] == '|')
-				i = handle_xor(res, line, i, counter);
+				l = handle_xor(res, line, i, counter) + 1;
 			else if (line[i] == '&' && line[i + 1] == '&')
-				i = handle_xand(res, line, i, counter);
+				l = handle_xand(res, line, i, counter) + 1;
 			else if (line[i] == '<' && line[i + 1] == '<')
-				i = handle_heredoc(res, line, i, counter);
+				l = handle_heredoc(res, line, i, counter);
 			else if (line[i] == '>' && line[i + 1] == '>')
-				i = handle_wappend(res, line, i, counter);
+				l = handle_wappend(res, line, i, counter);
 			else if (line[i] == '>')
-				i = handle_wtrunc(res, line, i, counter);
-			else if (line[i] == ' ')
+				l = handle_wtrunc(res, line, i, counter);
+			else if (ft_strchr(" \n\t\v\r\f", line[i]))
 				handle_space(res, line, i, counter);
 			else if (line[i] == '|')
-				handle_pipe(res, line, i, counter);
+				l = handle_pipe(res, line, i, counter);
 			else if (line[i + 1] == '\0')
 				handle_space(res, line, i + 1, counter);
 			else
@@ -53,37 +57,44 @@ void	lexer(t_lexargs **res, char *line)
 				i++;
 				continue ;
 			}
+			if (l == 0)
+				return (0);
+			else if (l > 0)
+				i = l;
 			break ;
 		}
 	}
+	return (1);
 }
 
 void	lex(char *line, t_list *env, t_init *init)
 {
-	t_cmd	*cmd;
-	pid_t	pid;
+	//t_cmd	*cmd;
+	//pid_t	pid;
 
+	(void) env;
 	init->lex = NULL;
-	cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	lexer(&init->lex, line);
-	find_path(cmd, env);
-	cmd->cmd_line = line;//cmd_processing(lex);
-	if (!check_cmd(cmd))
-	{
-		pid = fork();
-		if (pid == -1)
-			printf ("Proccessing fault.\n");
-		else if (pid == 0)
-			execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
-		else
-		{
-			wait(NULL);
-			free_matrix((void **) cmd->cmd_args);
-			free(cmd->cmd_path);
-			free(cmd);
-			cmd = 0;
-		}
-	}
+	//cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	if (!(lexer(&init->lex, line)))
+		return ;
+	//find_path(cmd, env);
+	//cmd->cmd_line = line;//cmd_processing(lex);
+	//if (!check_cmd(cmd))
+	//{
+	//	pid = fork();
+	//	if (pid == -1)
+	//		printf ("Proccessing fault.\n");
+	//	else if (pid == 0)
+	//		execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
+	//	else
+	//	{
+	//		wait(NULL);
+	//		free_matrix((void **) cmd->cmd_args);
+	//		free(cmd->cmd_path);
+	//		free(cmd);
+	//		cmd = 0;
+	//	}
+	//}
 	//int	i;
 	//i = 0;
 	//while (init->lex)
@@ -93,7 +104,9 @@ void	lex(char *line, t_list *env, t_init *init)
 	//	init->lex = init->lex->next;
 	//	i++;
 	//}
-	parser(env, init);
+	if (!is_valid(init))
+		return ;
+	//parser(env, init);
 }
 
 /*

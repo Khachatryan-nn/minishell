@@ -6,11 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:45:57 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/16 02:37:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:12:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 int	ft_getstart(const char *s1, const char *s2)
 {

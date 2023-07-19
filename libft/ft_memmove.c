@@ -6,11 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:52:38 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/16 02:37:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:12:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {

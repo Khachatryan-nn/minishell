@@ -6,11 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 14:58:16 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/16 02:37:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:12:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
