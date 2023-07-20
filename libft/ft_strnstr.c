@@ -6,58 +6,58 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:42:05 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/18 22:12:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:40:58 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr( char *str, char *str1, int len)
+char	*ft_strnstr(char *str1, char *str2, int len)
 {
 	int		i;
 
 	i = 0;
 	if (len == 0)
 	{
-		while (str[i] == str1[i])
+		while (str1[i] == str2[i])
 			i++;
-		if (str[i] || str1[i])
-			return(NULL);
+		if (str1[i] || str2[i])
+			return (NULL);
 		else
-			return(str);
+			return (str1);
 	}
 	else
 	{
-		while (str[i] == str1[i] && i < len)
+		while (str1[i] == str2[i] && i < len)
 			i++;
-		if (str[i]!= '\0' && str1[i] != '\0')
-			return(str);
+		if (str1[i] != '\0' && str2[i] != '\0')
+			return (NULL);
 		else
-			return(NULL);		
+			return (str1);		
 	}
 
 	// int		i;
 	// char		*ptr;
 	// char		*ptr1;
 
-	// if (!*str1)
-	// 	return ((char *)str);
-	// while (len-- && *str)
+	// if (!*str2)
+	// 	return ((char *)str1);
+	// while (len-- && *str1)
 	// {
-	// 	if (*str == *str1)
+	// 	if (*str1 == *str2)
 	// 	{
 	// 		i = len;
-	// 		ptr = (char *)str + 1;
-	// 		ptr1 = (char *)str1 + 1;
+	// 		ptr = (char *)str1 + 1;
+	// 		ptr1 = (char *)str2 + 1;
 	// 		while (i-- && *ptr && *ptr1 && *ptr1 == *ptr)
 	// 		{
 	// 			++ptr1;
 	// 			++ptr;
 	// 		}
 	// 		if (*ptr1 == '\0')
-	// 			return ((char *)str);
+	// 			return ((char *)str1);
 	// 	}
-	// 	++str;
+	// 	++str1;
 	// }
 	// return (NULL);
 }

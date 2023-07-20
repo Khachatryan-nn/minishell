@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/25 21:21:05 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:51:22 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,42 @@
 
 void	ft_cd(t_list *str, char *ptr)
 {
-	char *text;
+	char	*text;
 	int		i;
 	int		j;
 
 	j = 0;
 	i = 0;
 	text = NULL;
-	while (ptr[i] == ' ')
+	while (ptr[i] != '\0' && ptr[i] == ' ')
 		i++;
-	while (ptr[i] != ' ')
+	text = (char *)malloc(sizeof(char) * (ft_strlen(ptr + i) + 1));
+	while (ptr[i] != '\0' && ptr[i] != ' ')
+	{
+		text[j] = ptr[i];
 		i++;
-	while (ptr[i] == ' ' && ptr[i] == '\0')
-		{
-			text[j] = ptr[i];
-			i++;
-			j++;
-		}
+		j++;
+	}
+	text[j] = '\0';
+	//while (ptr[i] != '\0' && ptr[i] != ' ')
+	//	i++;
+	//while (ptr[i] != '\0' && ptr[i] == ' ')
+	//{
+	//	text[j] = ptr[i];
+	//	i++;
+	//	j++;
+	//}
 	// if (ft_strcmp(text, "..") == 0)
 	// 	ft_cd_prev(str, text);
 	 if (ft_ls(text) != NULL)
 		ft_cd_prev(str, text);
 	else
 		printf("no such file directory\n");
+	if (text)
+	{
+		free (text);
+		text = 0;
+	}
 }
 
 void	ft_cd_prev(t_list *str, char *text)
