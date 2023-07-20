@@ -57,8 +57,6 @@ const char* get_token_name(t_type token)
 		return ("XAND");
 	else if (token == PIPE)
 		return ("PIPE");
-	else if (token == AND)
-		return ("AND");
 	else if (token == HEREDOC)
 		return ("HEREDOC");
 	else if (token == WRITE_APPEND)

@@ -46,8 +46,6 @@ void	lexer(t_lexargs **res, char *line)
 				handle_space(res, line, i, counter);
 			else if (line[i] == '|')
 				handle_pipe(res, line, i, counter);
-			else if (line[i] == '&')
-				handle_and(res, line, i, counter);
 			else if (line[i + 1] == '\0')
 				handle_space(res, line, i + 1, counter);
 			else
@@ -71,7 +69,7 @@ void	lex(char *line, t_list *env)
 	lexer(&res, line);
 	find_path(cmd, env);
 	cmd->cmd_line = line;//cmd_processing(res);
-	if (!check_cmd(cmd))
+	if (!check_cmd(cmd, env))
 	{
 		pid = fork();
 		if (pid == -1)

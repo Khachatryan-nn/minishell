@@ -12,20 +12,23 @@
 
 #include "minishell.h"
 
-void	find_path(t_cmd *cmd, t_list *env);
-int		check_cmd(t_cmd *cmd);
+// void	find_path(t_cmd *cmd, t_list *env);
+int		check_cmd(t_cmd *cmd, t_list *env);
 int		checker(t_cmd *cmd);
 
 //Function to find and create matrix of cmd PATHs
 void	find_path(t_cmd *cmd, t_list *env)
 {
-	while (env)
+	t_list *env1;
+
+	env1 = env;
+	while (env1)
 	{
-		if (ft_strcmp(env->ptr, "PATH") == 0)
+		if (ft_strcmp(env1->ptr, "PATH") == 0)
 			break;
-		env = env->next;
+		env1 = env1->next;
 	}
-	cmd->path = ft_split(env->value, ':');
+		cmd->path = ft_split(env1->value, ':');
 }
 
 int	checker(t_cmd *cmd)
@@ -34,14 +37,14 @@ int	checker(t_cmd *cmd)
 	char	*temp;
 	int		i;
 
-	i = 1;
+	i = -1;
 	while (cmd->path[++i])
 	{
 		temp = ft_strjoin("/", cmd->cmd_args[0]);
 		cmd_path = ft_strjoin(cmd->path[i], temp);
 		free(temp);
 		temp = 0;
-		if (access(cmd_path, X_OK) != -1)
+		if (access(cmd_path, X_OK) == -1)
 		{
 			cmd->cmd_path = cmd_path;
 			return (1);
@@ -53,9 +56,16 @@ int	checker(t_cmd *cmd)
 }
 
 //Function to check if there are existing cmd like that
-int	check_cmd(t_cmd *cmd)
+int	check_cmd(t_cmd *cmd, t_list *env)
 {
+	int	i;
+
+	i = 0;
+	while (*cmd->cmd_line == ' ')
+		cmd->cmd_line++;
 	cmd->cmd_args = ft_split(cmd->cmd_line, ' ');
+	if(check_built(cmd->cmd_line, env))
+			return(1);
 	if (access(cmd->cmd_args[0], X_OK) == -1)
 	{
 		if (ft_strchr(cmd->cmd_args[0], '/') != NULL)

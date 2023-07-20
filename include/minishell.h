@@ -43,7 +43,6 @@ typedef enum e_token_type
 	XOR,
 	XAND,
 	PIPE,
-	AND,
 	HEREDOC,
 	REDIREC,
 	WRITE_APPEND,
@@ -99,7 +98,6 @@ void		handle_space(t_lexargs **res, char *line, int i, int count);
 int			handle_pipe(t_lexargs **res, char *line, int i, int count);
 int			handle_xand(t_lexargs **res, char *line, int i, int count);
 int			handle_xor(t_lexargs **res, char *line, int i, int count);
-int			handle_and(t_lexargs **res, char *line, int i, int count);
 void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
 void		strjoin_helper(char *read, char *result);
 int			ft_isspace(char *line, int i, int j);
@@ -109,7 +107,7 @@ const char	*get_token_name(t_type token);
 void		lex(char *line, t_list *env);
 int			ft_onlyspaces(char *str);
 void		free_matrix(void **ptr);
-int			check_cmd(t_cmd *cmd);
+int			check_cmd(t_cmd *cmd, t_list *env);
 int			checker(t_cmd *cmd);
 void		lexer(t_lexargs **res, char *line);
 void		find_path(t_cmd *cmd, t_list *env);
@@ -119,11 +117,21 @@ void		ft_pwd(t_list *env);
 void		ft_create_env(char **str, t_list **stack);
 void		ft_env(t_list *env);
 t_list		*ft_lstnew_2(char *str);
-void		ft_cd(t_list *str, char *text);
+void		ft_cd(t_list *str, char *ptr);
 // char    *ft_change_str(char *str);
 char		*ft_find_symbol(char *str, char c);
 void		ft_cd_prev(t_list *str, char *text);
 char		*ft_ls(char *str);
 // char		*read_line(const char *str);
+// int		check_built(t_cmd *cmd, t_list *env);
+// void minishell_ls(char *directory);
+void	ft_export(t_list *env);
+// int	ft_strncmp(char *s1,  char *s2, int n);
+int	ft_strcmp(char *s1, char *s2);
+// void    ft_export_change(t_cmd *cmd, t_list *env);
+int		ft_list_change(t_list *new, t_list *env);
+void ft_unset(char *ptr, t_list *env);
+int check_built(char *str, t_list *env);
+void    ft_export_change(char *line, t_list *env);
 
 #endif
