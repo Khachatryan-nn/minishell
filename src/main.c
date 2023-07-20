@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/19 22:07:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:03:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,23 @@ int	main(int ac, char **av, char **env1)
 	init.lex = NULL;
 	init.pars = NULL;
 	env = NULL;
-	ls = NULL;
+
 	ft_create_env(env1, &env);
 	if (ac == 1 && av)
 	{
 		print_logo();
 		while (1)
 		{
-			str = readline("minishell$  ");
-			if (ft_strcmp(str, "") == 0)
-				continue ;
-			if (ft_strcmp(str, "env") == 0)
-				ft_env(env);
-			else if (ft_strcmp(str, "pwd") == 0)
-				ft_pwd(env);
-			else if (ft_strcmp(str, "exit") == 0)
-			//{
-			//	system("leaks minishell");
-				exit (0);
-			//}
-			else if (ft_strcmp(str, "ls") == 0)
+			str = readline("minishell$ ");
+			if (ft_strcmp(str, "exit") == 0)
 			{
-				ls = ft_ls(ls);
-				if (ls)
-					printf("%s\n", ls);
-				free(ls);
-				ls = NULL;
+				while (env)
+				{
+					free(env->ptr);
+					free(env->value);
+					env = env->next;
+				}
+				return(1);
 			}
 			else if (ft_strnstr(str, "cd", 2))
 				ft_cd(env, ft_strchr(str, str[3]));
@@ -73,4 +64,5 @@ int	main(int ac, char **av, char **env1)
 			//parser(env, &init);
 		}
 	}
+	return(0);
 }
