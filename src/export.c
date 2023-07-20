@@ -62,7 +62,7 @@ void    ft_export(t_list *env)
         i++;
     }
     i = 0;
-    while (ptr[i] != '\0' && *ptr != NULL)
+    while (ptr[i] != NULL && *ptr != NULL)
     {
         printf("declare - x ");
         printf("%s", ft_find_symbol(ptr[i], '='));

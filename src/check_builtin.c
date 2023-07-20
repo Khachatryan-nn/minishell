@@ -2,10 +2,10 @@
 
 int check_built(char *str, t_list *env)
 {
-    char *ls;
+    //char *ls;
     // char *str;
 
-    ls = NULL;
+    //ls = NULL;
     // str = ft_strdup(cmd->cmd_line);
 	if (ft_strcmp(str, "env") == 0)
 		{
