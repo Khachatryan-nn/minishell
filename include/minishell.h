@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/20 23:56:39 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:11:21 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int			check_cmd(t_cmd *cmd, t_list *env);
 int			is_valid(t_init *init);
 
 /* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
-int			check_cmd(t_cmd *cmd);
+int			check_cmd(t_cmd *cm, t_list *env);
 int			checker(t_cmd *cmd);
 void		find_path(t_cmd *cmd, t_list *env);
 void		ft_pwd(t_list *env);

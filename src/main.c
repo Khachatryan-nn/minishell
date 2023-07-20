@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/21 00:03:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:12:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int ac, char **av, char **env1)
 	char	*str;
 	t_list	*env;
 	t_init	init;
-	char	*ls;
+	//char	*ls;
 
 	init.lex = NULL;
 	init.pars = NULL;
@@ -46,6 +46,8 @@ int	main(int ac, char **av, char **env1)
 		while (1)
 		{
 			str = readline("minishell$ ");
+			if (ft_strcmp(str, "") == 0)
+				continue ;
 			if (ft_strcmp(str, "exit") == 0)
 			{
 				while (env)
