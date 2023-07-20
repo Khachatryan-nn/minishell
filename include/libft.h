@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:23:02 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/27 17:17:51 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/20 23:51:06 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-// # include "minishell.h"
+# include <stdarg.h>
 
 typedef struct s_list
 {
@@ -46,6 +46,9 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *b, int c, size_t len);
 int		ft_atoi(const char *str);
+char	*ft_itoaun(unsigned int n);
+char	*ft_itoaptrhex(uintptr_t n);
+char	*ft_itoahex(unsigned int n, char c);
 void	*ft_calloc(size_t nitems, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_getstart(const char *s1, const char *set);
@@ -69,5 +72,14 @@ t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
+
+int		ft_percentage(char type, va_list arg);
+int		ft_putnbrhex(unsigned int nb, char c);
+int		ft_printf(const char *arg, ...);
+int		ft_putptrhex(char const *ptr);
+int		ft_putnbrun(unsigned int nb);
+int		ft_putstr(char *s, int t);
+int		ft_putchr(char c);
+int		ft_putnbr(int nb);
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:35:30 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/17 01:50:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:12:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
 int	ft_isalpha(int c)
 {
