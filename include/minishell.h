@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/21 00:11:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 19:26:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_lexer_arg
 {
 	char				*cmd;
 	t_type				type;
+	int					precedence;
 	struct s_lexer_arg	*next;
 }						t_lexargs;
 
@@ -121,7 +122,7 @@ const char	*get_token_name(t_type token);
 /* - - - - - --!-- - - - - ! Nodes and lists ! - - - - --!-- - - - - - */
 void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
 void		lstadd_back_pars(t_parser **lst, t_parser *new);
-t_lexargs	*ft_lstnew_3(char *content, t_type type);
+t_lexargs	*ft_lstnew_3(char *content, t_type type, int prec);
 t_parser	*lstnew_pars(char *content, t_type type);
 void		ft_lstclear_3(t_lexargs **lst);
 t_lexargs	*ft_lstlast_3(t_lexargs *lst);
@@ -137,7 +138,7 @@ void		parser(t_list *env, t_init *init);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
 int			restore_cmd_line(t_lexargs *lex, char **str);
-void		strjoin_helper(char *read, char *result);
+char		*strjoin_helper(char *result, char *read);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
 int			parse_error(char *err_str);

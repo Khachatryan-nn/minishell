@@ -6,29 +6,29 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/19 17:32:16 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 19:28:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-void		strjoin_helper(char *read, char *result);
-const char* get_token_name(t_type token);
+char		*strjoin_helper(char *result, char *read);
+const char	*get_token_name(t_type token);
 
-void	strjoin_helper(char *read, char *result)
+char	*strjoin_helper(char *result, char *read)
 {
 	char	*temp;
 
 	temp = result;
 	result = ft_strjoin(temp, "\n");
 	free(temp);
-	temp = 0;
 	temp = result;
 	result = ft_strjoin(temp, read);
 	if (temp)
 		free(temp);
 	temp = 0;
+	return (result);
 }
 
 const char* get_token_name(t_type token)

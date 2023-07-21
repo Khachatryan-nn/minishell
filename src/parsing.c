@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/19 17:20:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:03:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,16 @@ void	parser(t_list *env, t_init *init);
 
 void	parser(t_list *env, t_init *init)
 {
-	char		*str;
-	t_lexargs	*ptr;
-	t_parser	*pars_ptr;
-	int			flag;
+	//char		*str;
+	//t_lexargs	*ptr;
+	//t_parser	*pars_ptr;
+	//t_parser	*stack_ops;
+	//int			flag;
 
-	flag = 0;
-	str = NULL;
+	//flag = 0;
+	//str = NULL;
 	(void)	env;
 	init->pars = NULL;
-	while (init->lex != NULL)
-	{
-		if (restore_cmd_line(init->lex, &str))
-		{
-			ptr = init->lex;
-			init->lex = init->lex->next;
-			if (init->lex != NULL)
-				continue;
-		}
-		else if (init->lex->type == PIPE)
-		{
-			pars_ptr = init->pars;
-			init->pars = lstnew_pars("|", PIPE);
-			init->pars->left = pars_ptr;
-			init->lex = init->lex->next;
-			flag = 1;
-		}
-		if (flag == 1)
-			init->pars->right = lstnew_pars(str, ptr->type);
-		else
-			lstadd_back_pars(&init->pars, lstnew_pars(str, ptr->type));
-		print_types(init);
-		printf("%p\n", ptr->next);
-	}
 }
 
 
@@ -70,6 +47,31 @@ cat script.sh -> &&
 
 
 
+	//while (init->lex != NULL)
+	//{
+	//	if (restore_cmd_line(init->lex, &str))
+	//	{
+	//		ptr = init->lex;
+	//		init->lex = init->lex->next;
+	//		if (init->lex != NULL)
+	//			continue ;
+	//	}
+	//	else if (init->lex->type == PIPE && flag == 0)
+	//	{
+	//		lstadd_back_pars(&init->pars, lstnew_pars(str, ptr->type));
+	//		pars_ptr = init->pars;
+	//		init->pars = lstnew_pars("|", PIPE);
+	//		init->pars->left = pars_ptr;
+	//		flag = 1;
+	//	}
+	//	else if (flag == 1)
+	//		init->pars->right = lstnew_pars(str, ptr->type);
+	//	else
+	//		lstadd_back_pars(&init->pars, lstnew_pars(str, ptr->type));
+	//	if (init->lex && init->lex->next)
+	//		init->lex = init->lex->next;
+	//	print_types(init);
+	//	//printf("%p\n", ptr->next);
 
 
 

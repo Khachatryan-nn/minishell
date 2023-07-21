@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/20 01:48:39 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 14:29:53 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char static	*type_is(t_type	type)
 
 int	is_valid(t_init *init)
 {
-	//int	i;
 	t_lexargs	*ptr;
 
 	ptr = init->lex;

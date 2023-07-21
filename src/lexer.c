@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 14:18:57 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:13:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	lexer(t_lexargs **res, char *line)
 void	lex(char *line, t_list *env, t_init *init)
 {
 	//t_cmd	*cmd;
+	int i = 0;
 	//pid_t	pid;
 
 	(void) env;
@@ -103,19 +104,19 @@ void	lex(char *line, t_list *env, t_init *init)
 	//}
 	//int	i;
 	//i = 0;
-	//while (init->lex)
-	//{
-	//	printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n", \
-	//	i, get_token_name(init->lex->type), init->lex->cmd);
-	//	init->lex = init->lex->next;
-	//	i++;
-	//}
+	while (init->lex)
+	{
+		printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n\tprecedence: %d\n", \
+		i, get_token_name(init->lex->type), init->lex->cmd, init->lex->precedence);
+		init->lex = init->lex->next;
+		i++;
+	}
 	if (!is_valid(init))
 	{
 		destroy_init(init);
 		return ;
 	}
-	//parser(env, init);
+	parser(env, init);
 }
 
 /*

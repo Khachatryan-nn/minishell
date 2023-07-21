@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:45:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/19 15:45:26 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:04:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	print_types(t_init *init)
 	printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n", \
 		0, get_token_name(init->pars->type), init->pars->cmd);
 	if (init->pars->left != NULL)
-		printf("\t\x1b[38;2;252;78;3m[%d] --\ttype: %s -> LEFT\x1b[0m\n\tcmd: %s\n", \
+		printf("\t\x1b[38;2;252;78;3m[%d] --\ttype: %s -> LEFT BRANCH\x1b[0m\n\tcmd: %s\n", \
 		1, get_token_name(init->pars->left->type), init->pars->left->cmd);
 	if (init->pars->right != NULL)
-		printf("\t\x1b[38;2;252;78;3m[%d] --\ttype: %s -> RIGHT\x1b[0m\n\tcmd: %s\n", \
+		printf("\t\x1b[38;2;252;78;3m[%d] --\ttype: %s -> RIGHT BRANCH\x1b[0m\n\tcmd: %s\n", \
 		2, get_token_name(init->pars->right->type), init->pars->right->cmd);
 }
