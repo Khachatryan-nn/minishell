@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 18:25:59 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 18:42:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	pop(t_parser **stack)
 		temp->prev->next = NULL;
 		temp->prev = NULL;
 	}
-	*stack = temp->next;
+	else
+		*stack = NULL;
 }
 
 void	push(t_parser **a, t_parser **b)
@@ -79,9 +80,9 @@ void	parser(t_list *env, t_init *init)
 	stack_otp = NULL;
 	while (ptr)
 	{
+		//printf("\n\t\tprocessing type is:\t%s\n", ptr->cmd);
 		//printf("%p\tstack_otp:\t\t", &ptr); print_types(stack_otp);
 		//printf("\t\tstack_ops:\t\t"); print_types(stack_ops);
-		//printf("\n\t\tprocessing type is:\t%s\n", ptr->cmd);
 		if (ptr->prc == 0)
 		{
 			lstback_pars(&stack_otp, lstnew_pars(ptr->cmd, \
@@ -95,7 +96,7 @@ void	parser(t_list *env, t_init *init)
 					push(&stack_ops, &stack_otp);
 				pop(&stack_ops);
 			}
-			else
+			else if (ptr->prc > 1)
 			{
 				while (stack_ops && lstlast_pars(stack_ops)->prc >= ptr->prc \
 					&& lstlast_pars(stack_ops)->type != SUBSH_OPEN)
@@ -103,6 +104,8 @@ void	parser(t_list *env, t_init *init)
 				lstback_pars(&stack_ops, lstnew_pars(ptr->cmd, \
 					ptr->type, ptr->prc));
 			}
+			else
+				lstback_pars(&stack_ops, lstnew_pars(ptr->cmd, ptr->type, ptr->prc));
 		}
 		ptr = ptr->next;
 	}
