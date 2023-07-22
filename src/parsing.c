@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 18:59:00 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 21:06:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,157 +110,17 @@ void	parser(t_list *env, t_init *init)
 		push(&stack_ops, &stack_otp);
 	print_types(stack_otp);
 	init->pars = NULL;
-	
+	//abstract_syntax_tree(init, stack_otp);
 }
 
 
 /*
-
 orig:	ls && cat || ps && (top || head | more | cat)
 result:	ls cat && ps || top head more | cat | || &&
 
-ls cat && ps || top head more cat | | || &&
-
-
 ls -l && (pwd || ls) | cat script.sh
-
-ls:
-output stack:		[ls]
-operators stack:	[]
-
--l
-output stack:		[ls, -l]
-operators stack:	[]
-
-&&
-output stack:		[ls -l]
-operators stack:	[&&]
-
-(
-output stack:		[ls -l]
-operators stack:	[&& (]
-
-pwd
-output stack:		[ls -l pwd]
-operators stack:	[&& (]
-
-||
-output stack:		[ls -l pwd]
-operators stack:	[&& ( ||]
-
-ls
-output stack:		[ls -l pwd ls]
-operators stack:	[&& ( ||]
-
-)
-output stack:		[ls -l pwd ls]
-operators stack:	[&& ( ||]
-
-	now we need to push all to output while don't encountered (
-	output stack:		[ls -l pwd ls ||]
-	operators stack:	[&&]
-
-|
-| is higher than others
-output stack:		[ls -l pwd ls || cat scripy.sh]
-operators stack:	[&& |]
-
-output stack:		[ls -l pwd ls || cat script.sh | &&]
-operators stack:	[]
-
-ls -l && (pwd || ls) | cat script.sh
-
-
 ls -l && (pwd || ls) && ls | cat script.sh && pwd || ls
-output stack:		[ls -l]
-operator stack:		[&&]
-
-
-output stack:		[ls -l pwd ls]
-operator stack:		[&& ( ||]
-
-output stack:		[ls -l pwd ls || ls cat script.sh]
-operator stack:		[&& && |]
-
-output stack:		[ls -l pwd ls || ls cat script.sh | pwd ls]
-operator stack:		[&& && && ||]
-
-output stack:		[ls -l pwd ls || ls cat script.sh | pwd ls || && && &&]
-operator stack:		[]
-
-sksum enq araji operatori demi 2 hramanic u dalshe etum
-|| -> pwd ls -> res1
-| -> ls cat script.sh -> res2
-ls -l res1 res2 pwd ls || && && &&
-|| -> pwd ls -> res3
-ls -l res1 res2 res3 && && &&
-&& res2 res3 -> res2 \\ ls | cat script.sh && pwd || ls
-ls -l res1 res2 && &&
-
-
-
-
-output stack:		[ls -l pwd ls || &&]
-operators stack:	[|]
-
-cat
-output stack:		[ls -l pwd ls || && cat]
-operators stack:	[|]
-
-script.sh
-output stack:		[ls -l pwd ls || && cat script.sh]
-operators stack:	[|]
-
-there are nothing in lex, so
-output stack:		[ls -l pwd ls || && cat script.sh |]
-operators stack:	[]
-
-ls -l pwd ls || && cat script.sh |
-demic pwd ls || -> res 1
-heto ls -l && res1 -> res2
-res2 | cat script.sh
-
-ls -l pwd ls || cat script.sh | &&
-
-ls -l && (pwd || ls) | cat script.sh
-
 */
-
-
-
-
-
-
-
-
-
-	//while (init->lex != NULL)
-	//{
-	//	if (restore_cmd_line(init->lex, &str))
-	//	{
-	//		ptr = init->lex;
-	//		init->lex = init->lex->next;
-	//		if (init->lex != NULL)
-	//			continue ;
-	//	}
-	//	else if (init->lex->type == PIPE && flag == 0)
-	//	{
-	//		lstback_pars(&init->pars, lstnew_pars(str, ptr->type));
-	//		pars_ptr = init->pars;
-	//		init->pars = lstnew_pars("|", PIPE);
-	//		init->pars->left = pars_ptr;
-	//		flag = 1;
-	//	}
-	//	else if (flag == 1)
-	//		init->pars->right = lstnew_pars(str, ptr->type);
-	//	else
-	//		lstback_pars(&init->pars, lstnew_pars(str, ptr->type));
-	//	if (init->lex && init->lex->next)
-	//		init->lex = init->lex->next;
-	//	print_types(init);
-	//	//printf("%p\n", ptr->next);
-
-
 
 //եթե տեսնում ա && ավտոմատ ձախ ու աջ ա կիսում
 //եթե տեսնում ա () ավտոմատ սպասում ա աջինին

@@ -2,7 +2,7 @@ NAME        	=   minishell
 INCS        	=   -Iinclude
 HEADERS     	=   $(wildcard ./include/*.h) Makefile
 CC          	=   cc
-CFLAGS			=	-Wall -Wextra -Werror# #-g3 -fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror #-g3 -fsanitize=address
 READ      		=   -lreadline
 RM          	=   rm -rf
 MK          	=   mkdir -p

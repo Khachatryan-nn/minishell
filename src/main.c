@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/21 00:53:22 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 21:11:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int ac, char **av, char **env1)
 			else if (!ft_onlyspaces(str))
 				lex(str, env, &init);
 			add_history(str);
-			//parser(env, &init);
+			//system("leaks minishell");
 		}
 	}
 	return(0);
