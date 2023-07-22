@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 18:42:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 18:59:00 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,11 @@ void	push(t_parser **a, t_parser **b)
 
 void	parser(t_list *env, t_init *init)
 {
-	//char		*str;
-	//t_lexargs	*ptr;
-	//t_parser	*pars_ptr;
 	t_lexargs	*ptr;
 	t_parser	*stack_ops;
 	t_parser	*stack_otp;
-	//int			flag;
 
+	(void)	env;
 	ptr = init->lex;
 	stack_ops = NULL;
 	stack_otp = NULL;
@@ -112,8 +109,8 @@ void	parser(t_list *env, t_init *init)
 	while (stack_ops)
 		push(&stack_ops, &stack_otp);
 	print_types(stack_otp);
-	(void)	env;
 	init->pars = NULL;
+	
 }
 
 

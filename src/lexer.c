@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 17:13:06 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 19:37:06 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	lexer(t_lexargs **res, char *line)
 				l = handle_wappend(res, line, i, counter);
 			else if (line[i] == '>')
 				l = handle_wtrunc(res, line, i, counter);
+			else if (line[i] == '<')
+				l = handle_input(res, line, i, counter);
 			else if (ft_strchr(" \n\t\v\r\f", line[i]))
 				handle_space(res, line, i, counter);
 			else if (line[i] == '|')
@@ -114,11 +116,11 @@ void	lex(char *line, t_list *env, t_init *init)
 	//	init->lex = init->lex->next;
 	//	i++;
 	//}
-	//if (!is_valid(init))
-	//{
-	//	destroy_init(init);
-	//	return ;
-	//}
+	if (!is_valid(init))
+	{
+		destroy_init(init);
+		return ;
+	}
 	parser(env, init);
 }
 

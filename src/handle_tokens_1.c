@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 23:50:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 19:43:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		handle_dquotes(t_lexargs **res, char *line, int i, int count);
 int		handle_heredoc(t_lexargs **res, char *line, int i, int count);
 int		handle_wappend(t_lexargs **res, char *line, int i, int count);
 int		handle_wtrunc(t_lexargs **res, char *line, int i, int count);
+int		handle_input(t_lexargs **res, char *line, int i, int count);
 void	handle_space(t_lexargs **res, char *line, int i, int count);
 int		handle_pipe(t_lexargs **res, char *line, int i, int count);
 int		handle_xand(t_lexargs **res, char *line, int i, int count);
@@ -222,12 +223,28 @@ int	handle_wtrunc(t_lexargs **res, char *line, int i, int count)
 
 	if (!ft_isspace(line, i, count))
 		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
-	lstback_lex(res, lstnew_lex(">>", WRITE_TRUNC, 4));
+	lstback_lex(res, lstnew_lex(">", WRITE_TRUNC, 4));
 	k = 1;
 	while (line[i + ++k])
 	{
 		if (line[i + k] != ' ')
-			return (i + 2);
+			return (i + 1);
+	}
+	return (parse_error("\n"));
+}
+
+int	handle_input(t_lexargs **res, char *line, int i, int count)
+{
+	int	k;
+
+	if (!ft_isspace(line, i, count))
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
+	lstback_lex(res, lstnew_lex("<", INPUT, 4));
+	k = 1;
+	while (line[i + ++k])
+	{
+		if (line[i + k] != ' ')
+			return (i + 1);
 	}
 	return (parse_error("\n"));
 }

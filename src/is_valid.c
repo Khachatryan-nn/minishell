@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 14:29:53 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 19:43:43 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	static	check_type(t_type type)
 		return (1);
 	else if (type == WRITE_APPEND || type == WRITE_TRUNC)
 		return (1);
-	else if (type == HEREDOC)
+	else if (type == HEREDOC || type == INPUT)
 		return (1);
 	return (0);
 }
@@ -39,6 +39,8 @@ char static	*type_is(t_type	type)
 		return (">");
 	else if (type == HEREDOC)
 		return ("<<");
+	else if (type == INPUT)
+		return ("<");
 	return ("");
 }
 

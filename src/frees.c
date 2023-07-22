@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 14:22:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 19:38:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void	destroy_init(t_init *init)
 {
 	void	*ptr;
 
-	if (init->lex && init->lex->cmd)
-		free(init->lex->cmd);
+	if (!init)
+		return ;
+	//if (init->lex && init->lex->cmd)
+	//	free(init->lex->cmd);
 	while (init->lex)
 	{
 		ptr = init->lex->next;
