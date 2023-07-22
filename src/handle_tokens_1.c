@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 19:31:50 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 23:50:21 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	handle_space(t_lexargs **res, char *line, int i, int count)
 {
 	if (ft_isspace(line, i, count))
 		return ;
-	ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
+	lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
 }
 
 int	handle_prnthses(t_lexargs **res, char *line, int i, int count)
@@ -39,15 +39,16 @@ int	handle_prnthses(t_lexargs **res, char *line, int i, int count)
 	int		k;
 
 	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
 	counter = i + 1;
-	ft_lstadd_back_3(res, ft_lstnew_3("(", SUBSH_OPEN, 1));
+	lstback_lex(res, lstnew_lex("(", SUBSH_OPEN, 1));
 	while (line[counter] && line[counter] != ')')
 		counter++;
 	if (line[counter] == ')')
 	{
-		line[counter] = ' ';
+		line[counter] = '\0';
 		lexer(res, line + i + 1);
+		line[counter] = ')';
 	}
 	else
 	{
@@ -69,7 +70,7 @@ int	handle_prnthses(t_lexargs **res, char *line, int i, int count)
 		if (k < (int) ft_strlen(result))
 			lexer(res, result + k + 1);
 	}
-	ft_lstadd_back_3(res, ft_lstnew_3(")", SUBSH_CLOSE, 1));
+	lstback_lex(res, lstnew_lex(")", SUBSH_CLOSE, 1));
 	return (counter);
 }
 
@@ -82,13 +83,13 @@ int	handle_dquotes(t_lexargs **res, char *line, int i, int count)
 	int		k;
 
 	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
 	counter = i + 1;
-	ft_lstadd_back_3(res, ft_lstnew_3("\"", DQUOTE_OPEN, 0));
+	lstback_lex(res, lstnew_lex("\"", DQUOTE_OPEN, 0));
 	while (line[counter] != '"' && line[counter])
 		counter++;
 	if (line[counter] == '"')
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, i + 1, counter - i - 1), WORD, 0));
+		lstback_lex(res, lstnew_lex(ft_substr(line, i + 1, counter - i - 1), WORD, 0));
 	else
 	{
 		enable = 1;
@@ -105,11 +106,11 @@ int	handle_dquotes(t_lexargs **res, char *line, int i, int count)
 		k = 0;
 		while (result[k] && result[k] != '"')
 			k++;
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(result, 0, k), WORD, 0));
+		lstback_lex(res, lstnew_lex(ft_substr(result, 0, k), WORD, 0));
 		if (k < (int) ft_strlen(result))
 			lexer(res, result + k + 1);
 	}
-	ft_lstadd_back_3(res, ft_lstnew_3("\"", DQUOTE_CLOSE, 0));
+	lstback_lex(res, lstnew_lex("\"", DQUOTE_CLOSE, 0));
 	return (counter);
 }
 
@@ -122,13 +123,13 @@ int	handle_squotes(t_lexargs **res, char *line, int i, int count)
 	int		k;
 
 	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
 	counter = i + 1;
-	ft_lstadd_back_3(res, ft_lstnew_3("'", SQUOTE_OPEN, 0));
+	lstback_lex(res, lstnew_lex("'", SQUOTE_OPEN, 0));
 	while (line[counter] != 39 && line[counter])
 		counter++;
 	if (line[counter] == 39)
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, i + 1, counter - i - 1), WORD, 0));
+		lstback_lex(res, lstnew_lex(ft_substr(line, i + 1, counter - i - 1), WORD, 0));
 	else
 	{
 		enable = 1;
@@ -145,11 +146,11 @@ int	handle_squotes(t_lexargs **res, char *line, int i, int count)
 		k = 0;
 		while (result[k] && result[k] != 39)
 			k++;
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(result, 0, k), WORD, 0));
+		lstback_lex(res, lstnew_lex(ft_substr(result, 0, k), WORD, 0));
 		if (k < (int) ft_strlen(result) - 1)
 			lexer(res, result + k + 1);
 	}
-	ft_lstadd_back_3(res, ft_lstnew_3("'", SQUOTE_CLOSE, 0));
+	lstback_lex(res, lstnew_lex("'", SQUOTE_CLOSE, 0));
 	return (counter);
 }
 
@@ -158,8 +159,8 @@ int	handle_xor(t_lexargs **res, char *line, int i, int count)
 	if (!(*res))
 		return (parse_error("||"));
 	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
-	ft_lstadd_back_3(res, ft_lstnew_3("||", XOR, 4));
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
+	lstback_lex(res, lstnew_lex("||", XOR, 2));
 	return (i + 2);
 }
 
@@ -168,8 +169,8 @@ int	handle_xand(t_lexargs **res, char *line, int i, int count)
 	if (!(*res))
 		return (parse_error("&&"));
 	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
-	ft_lstadd_back_3(res, ft_lstnew_3("&&", XAND, 3));
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
+	lstback_lex(res, lstnew_lex("&&", XAND, 2));
 	return (i + 2);
 }
 
@@ -178,8 +179,8 @@ int	handle_pipe(t_lexargs **res, char *line, int i, int count)
 	if (!(*res))
 		return (parse_error("|"));
 	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
-	ft_lstadd_back_3(res, ft_lstnew_3("|", PIPE, 2));
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
+	lstback_lex(res, lstnew_lex("|", PIPE, 3));
 	return (i + 1);
 }
 
@@ -188,8 +189,8 @@ int	handle_heredoc(t_lexargs **res, char *line, int i, int count)
 	int	k;
 
 	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
-	ft_lstadd_back_3(res, ft_lstnew_3("<<", HEREDOC, 6));
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
+	lstback_lex(res, lstnew_lex("<<", HEREDOC, 4));
 	k = 1;
 	while (line[i + ++k])
 	{
@@ -204,8 +205,8 @@ int	handle_wappend(t_lexargs **res, char *line, int i, int count)
 	int	k;
 
 	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
-	ft_lstadd_back_3(res, ft_lstnew_3(">>", WRITE_APPEND, 6));
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
+	lstback_lex(res, lstnew_lex(">>", WRITE_APPEND, 4));
 	k = 1;
 	while (line[i + ++k])
 	{
@@ -220,8 +221,8 @@ int	handle_wtrunc(t_lexargs **res, char *line, int i, int count)
 	int	k;
 
 	if (!ft_isspace(line, i, count))
-		ft_lstadd_back_3(res, ft_lstnew_3(ft_substr(line, count, i - count), WORD, 0));
-	ft_lstadd_back_3(res, ft_lstnew_3(">>", WRITE_TRUNC, 6));
+		lstback_lex(res, lstnew_lex(ft_substr(line, count, i - count), WORD, 0));
+	lstback_lex(res, lstnew_lex(">>", WRITE_TRUNC, 4));
 	k = 1;
 	while (line[i + ++k])
 	{

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/21 19:26:13 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 21:15:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,21 @@ typedef struct s_cmd
 /*
 	char		*cmd;
 	t_type		type;
+	int			prc;
 	t_lexargs	*next;
 */
 typedef struct s_lexer_arg
 {
 	char				*cmd;
 	t_type				type;
-	int					precedence;
+	int					prc;
 	struct s_lexer_arg	*next;
 }						t_lexargs;
 
 /*
 	char		*cmd;
 	t_type		type;
+	int			prc;
 	t_parser	*next;
 	t_parser	*prev;
 	t_parser	*left;
@@ -88,6 +90,7 @@ typedef struct s_parser
 {
 	char			*cmd;
 	t_type			type;
+	int				prc;
 	struct s_parser	*next;
 	struct s_parser	*prev;
 	struct s_parser	*left;
@@ -120,14 +123,15 @@ int			handle_xor(t_lexargs **res, char *line, int i, int count);
 const char	*get_token_name(t_type token);
 
 /* - - - - - --!-- - - - - ! Nodes and lists ! - - - - --!-- - - - - - */
-void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
-void		lstadd_back_pars(t_parser **lst, t_parser *new);
-t_lexargs	*ft_lstnew_3(char *content, t_type type, int prec);
-t_parser	*lstnew_pars(char *content, t_type type);
-void		ft_lstclear_3(t_lexargs **lst);
-t_lexargs	*ft_lstlast_3(t_lexargs *lst);
+t_parser	*lstnew_pars(char *content, t_type type, int prec);
+t_lexargs	*lstnew_lex(char *content, t_type type, int prec);
+void		lstback_lex(t_lexargs **lst, t_lexargs *new);
+void		lstback_pars(t_parser **lst, t_parser *new);
+void		lstclear_lex(t_lexargs **lst);
 void		lstclear_pars(t_parser **lst);
+t_lexargs	*lstlast_lex(t_lexargs *lst);
 t_parser	*lstlast_pars(t_parser *lst);
+int			lstsize_pars(t_parser *lst);
 void		destroy_init(t_init *init);
 t_list		*ft_lstnew_2(char *str);
 
@@ -142,7 +146,7 @@ char		*strjoin_helper(char *result, char *read);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
 int			parse_error(char *err_str);
-void		print_types(t_init *init);
+void		print_types(t_parser *ptr);
 int			ft_onlyspaces(char *str);
 void		free_matrix(void **ptr);
 int			check_cmd(t_cmd *cmd, t_list *env);

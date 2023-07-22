@@ -6,18 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/17 17:28:15 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/21 21:22:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		lstadd_back_pars(t_parser **lst, t_parser *new);
-t_parser	*lstnew_pars(char *content, t_type type);
+void		lstback_pars(t_parser **lst, t_parser *new);
+t_parser	*lstnew_pars(char *content, t_type type, int prec);
 void		lstclear_pars(t_parser **lst);
 t_parser	*lstlast_pars(t_parser *lst);
+int			lstsize_pars(t_parser *lst);
 
-t_parser	*lstnew_pars(char *content, t_type type)
+t_parser	*lstnew_pars(char *content, t_type type, int prec)
 {
 	t_parser	*elt;
 
@@ -26,6 +27,7 @@ t_parser	*lstnew_pars(char *content, t_type type)
 		return (NULL);
 	elt->cmd = content;
 	elt->type = type;
+	elt->prc = prec;
 	elt->next = NULL;
 	elt->prev = NULL;
 	elt->right = NULL;
@@ -45,7 +47,7 @@ t_parser	*lstlast_pars(t_parser *lst)
 	return (ptr);
 }
 
-void	lstadd_back_pars(t_parser **lst, t_parser *new)
+void	lstback_pars(t_parser **lst, t_parser *new)
 {
 	t_parser	*ptr;
 
@@ -61,11 +63,30 @@ void	lstadd_back_pars(t_parser **lst, t_parser *new)
 
 void	lstclear_pars(t_parser **lst)
 {
+	t_parser	*ptr;
+
+	ptr = NULL;
 	if (!lst || !*lst)
 		return ;
 	while ((*lst))
 	{
+		ptr = (*lst)->next;
 		free ((*lst)->cmd);
-		(*lst) = (*lst)->next;
+		free (*lst);
+		(*lst) = ptr;
 	}
+	ptr = NULL;
+}
+
+int	lstsize_pars(t_parser *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		i++;
+		(lst) = (lst)->next;
+	}
+	return (i);
 }

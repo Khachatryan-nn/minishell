@@ -6,36 +6,223 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 18:03:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 18:25:59 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	parser(t_list *env, t_init *init);
+void	push(t_parser **a, t_parser **b);
+void	pop(t_parser **stack);
+
+void	pop(t_parser **stack)
+{
+	t_parser	*temp;
+
+	temp = lstlast_pars(*stack);
+	if (temp->prev)
+	{
+		temp->prev->next = NULL;
+		temp->prev = NULL;
+	}
+	*stack = temp->next;
+}
+
+void	push(t_parser **a, t_parser **b)
+{
+	t_parser	*ptr1;
+	t_parser	*ptr2;
+
+	ptr1 = NULL;
+	ptr2 = NULL;
+	//printf("segfault caused by:\n"); print_types(*a); print_types(*b);
+	//[%s] and [%s]\n", lstlast_pars(*a)->cmd, lstlast_pars(*b)->cmd);
+	if (lstsize_pars(*a) == 0)
+		return ;
+	else if (lstsize_pars(*a) == 1 && lstsize_pars(*b) == 0)
+	{
+		*b = *a;
+		*a = NULL;
+	}
+	else if (lstsize_pars(*a) == 1 && lstsize_pars(*b) > 0)
+	{
+		ptr1 = lstlast_pars(*b);
+		ptr1->next = *a;
+		(*a)->prev = ptr1;
+		*a = NULL;
+	}
+	else if (lstsize_pars(*a) > 1 && lstsize_pars(*b) > 0)
+	{
+		ptr1 = lstlast_pars(*b);
+		ptr2 = lstlast_pars(*a);
+		ptr1->next = ptr2;
+		ptr2->prev->next = NULL;
+		ptr2->prev = ptr1;
+	}
+	else
+		return ;
+}
 
 void	parser(t_list *env, t_init *init)
 {
 	//char		*str;
 	//t_lexargs	*ptr;
 	//t_parser	*pars_ptr;
-	//t_parser	*stack_ops;
+	t_lexargs	*ptr;
+	t_parser	*stack_ops;
+	t_parser	*stack_otp;
 	//int			flag;
 
-	//flag = 0;
-	//str = NULL;
+	ptr = init->lex;
+	stack_ops = NULL;
+	stack_otp = NULL;
+	while (ptr)
+	{
+		//printf("%p\tstack_otp:\t\t", &ptr); print_types(stack_otp);
+		//printf("\t\tstack_ops:\t\t"); print_types(stack_ops);
+		//printf("\n\t\tprocessing type is:\t%s\n", ptr->cmd);
+		if (ptr->prc == 0)
+		{
+			lstback_pars(&stack_otp, lstnew_pars(ptr->cmd, \
+			ptr->type, ptr->prc));
+		}
+		else if (ptr->prc > 0)
+		{
+			if (ptr->type == SUBSH_CLOSE)
+			{
+				while (stack_ops && lstlast_pars(stack_ops)->type != SUBSH_OPEN)
+					push(&stack_ops, &stack_otp);
+				pop(&stack_ops);
+			}
+			else
+			{
+				while (stack_ops && lstlast_pars(stack_ops)->prc >= ptr->prc \
+					&& lstlast_pars(stack_ops)->type != SUBSH_OPEN)
+					push(&stack_ops, &stack_otp);
+				lstback_pars(&stack_ops, lstnew_pars(ptr->cmd, \
+					ptr->type, ptr->prc));
+			}
+		}
+		ptr = ptr->next;
+	}
+	while (stack_ops)
+		push(&stack_ops, &stack_otp);
+	print_types(stack_otp);
 	(void)	env;
 	init->pars = NULL;
 }
 
 
 /*
-ls && cat script.sh
-ls -> cmd
-parser (ls as head)
-&& -> xand -> && -> left ls -> right null
-parser (&& as head)
-cat script.sh -> && 
+
+orig:	ls && cat || ps && (top || head | more | cat)
+result:	ls cat && ps || top head more | cat | || &&
+
+ls cat && ps || top head more cat | | || &&
+
+
+ls -l && (pwd || ls) | cat script.sh
+
+ls:
+output stack:		[ls]
+operators stack:	[]
+
+-l
+output stack:		[ls, -l]
+operators stack:	[]
+
+&&
+output stack:		[ls -l]
+operators stack:	[&&]
+
+(
+output stack:		[ls -l]
+operators stack:	[&& (]
+
+pwd
+output stack:		[ls -l pwd]
+operators stack:	[&& (]
+
+||
+output stack:		[ls -l pwd]
+operators stack:	[&& ( ||]
+
+ls
+output stack:		[ls -l pwd ls]
+operators stack:	[&& ( ||]
+
+)
+output stack:		[ls -l pwd ls]
+operators stack:	[&& ( ||]
+
+	now we need to push all to output while don't encountered (
+	output stack:		[ls -l pwd ls ||]
+	operators stack:	[&&]
+
+|
+| is higher than others
+output stack:		[ls -l pwd ls || cat scripy.sh]
+operators stack:	[&& |]
+
+output stack:		[ls -l pwd ls || cat script.sh | &&]
+operators stack:	[]
+
+ls -l && (pwd || ls) | cat script.sh
+
+
+ls -l && (pwd || ls) && ls | cat script.sh && pwd || ls
+output stack:		[ls -l]
+operator stack:		[&&]
+
+
+output stack:		[ls -l pwd ls]
+operator stack:		[&& ( ||]
+
+output stack:		[ls -l pwd ls || ls cat script.sh]
+operator stack:		[&& && |]
+
+output stack:		[ls -l pwd ls || ls cat script.sh | pwd ls]
+operator stack:		[&& && && ||]
+
+output stack:		[ls -l pwd ls || ls cat script.sh | pwd ls || && && &&]
+operator stack:		[]
+
+sksum enq araji operatori demi 2 hramanic u dalshe etum
+|| -> pwd ls -> res1
+| -> ls cat script.sh -> res2
+ls -l res1 res2 pwd ls || && && &&
+|| -> pwd ls -> res3
+ls -l res1 res2 res3 && && &&
+&& res2 res3 -> res2 \\ ls | cat script.sh && pwd || ls
+ls -l res1 res2 && &&
+
+
+
+
+output stack:		[ls -l pwd ls || &&]
+operators stack:	[|]
+
+cat
+output stack:		[ls -l pwd ls || && cat]
+operators stack:	[|]
+
+script.sh
+output stack:		[ls -l pwd ls || && cat script.sh]
+operators stack:	[|]
+
+there are nothing in lex, so
+output stack:		[ls -l pwd ls || && cat script.sh |]
+operators stack:	[]
+
+ls -l pwd ls || && cat script.sh |
+demic pwd ls || -> res 1
+heto ls -l && res1 -> res2
+res2 | cat script.sh
+
+ls -l pwd ls || cat script.sh | &&
+
+ls -l && (pwd || ls) | cat script.sh
 
 */
 
@@ -58,7 +245,7 @@ cat script.sh -> &&
 	//	}
 	//	else if (init->lex->type == PIPE && flag == 0)
 	//	{
-	//		lstadd_back_pars(&init->pars, lstnew_pars(str, ptr->type));
+	//		lstback_pars(&init->pars, lstnew_pars(str, ptr->type));
 	//		pars_ptr = init->pars;
 	//		init->pars = lstnew_pars("|", PIPE);
 	//		init->pars->left = pars_ptr;
@@ -67,7 +254,7 @@ cat script.sh -> &&
 	//	else if (flag == 1)
 	//		init->pars->right = lstnew_pars(str, ptr->type);
 	//	else
-	//		lstadd_back_pars(&init->pars, lstnew_pars(str, ptr->type));
+	//		lstback_pars(&init->pars, lstnew_pars(str, ptr->type));
 	//	if (init->lex && init->lex->next)
 	//		init->lex = init->lex->next;
 	//	print_types(init);
