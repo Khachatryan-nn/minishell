@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 00:51:22 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 22:52:11 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_cd(t_list *str, char *ptr)
 	//}
 	// if (ft_strcmp(text, "..") == 0)
 	// 	ft_cd_prev(str, text);
-	 if (ft_ls(text) != NULL)
+	if (ft_ls(text) != NULL)
 		ft_cd_prev(str, text);
 	else
 		printf("no such file directory\n");
@@ -69,7 +69,7 @@ void	ft_cd_prev(t_list *str, char *text)
 			old = ft_strdup(temp->value);
 			free(temp->value);
 			temp->value = ft_strdup(ft_strjoin("=", getcwd(NULL, 0)));
-			break;
+			break ;
 		}
 		temp = temp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 21:06:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 22:36:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	parser(t_list *env, t_init *init)
 	ptr = init->lex;
 	stack_ops = NULL;
 	stack_otp = NULL;
-	while (ptr)
+	while (ptr)//Shunting Yurd algorithm for RPN -> reverse polish notation
 	{
 		//printf("\n\t\tprocessing type is:\t%s\n", ptr->cmd);
 		//printf("%p\tstack_otp:\t\t", &ptr); print_types(stack_otp);
@@ -110,7 +110,7 @@ void	parser(t_list *env, t_init *init)
 		push(&stack_ops, &stack_otp);
 	print_types(stack_otp);
 	init->pars = NULL;
-	//abstract_syntax_tree(init, stack_otp);
+	abstract_syntax_tree(init, stack_otp);
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/22 19:36:53 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 23:03:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,25 @@
 # include "get_next_line.h"
 # include <dirent.h>
 
-
 typedef enum e_token_type
 {
-	WORD,			//	cmd
-	DQUOTE_OPEN,	//	"
-	DQUOTE_CLOSE,	//	"
-	SQUOTE_OPEN,	//	'
-	SQUOTE_CLOSE,	//	'
-	SUBSH_OPEN,		//	(
-	SUBSH_CLOSE,	//	)
-	XOR,			//	||
-	XAND,			//	&&
-	PIPE,			//	|
-	HEREDOC,		//	<<
-	WRITE_APPEND,	//	>>
-	WRITE_TRUNC,	//	>
-	INPUT,			//	<
-	FILEIN,			//	fname
-	FILEOUT,		//	fname
-	END,			//	end of cmd
+	WORD,
+	DQUOTE_OPEN,
+	DQUOTE_CLOSE,
+	SQUOTE_OPEN,
+	SQUOTE_CLOSE,
+	SUBSH_OPEN,
+	SUBSH_CLOSE,
+	XOR,
+	XAND,
+	PIPE,
+	HEREDOC,
+	WRITE_APPEND,
+	WRITE_TRUNC,
+	INPUT,
+	FILEIN,
+	FILEOUT,
+	END,
 }	t_type;
 
 /*
@@ -142,6 +141,9 @@ void		lex(char *line, t_list *env, t_init *init);
 int			lexer(t_lexargs **res, char *line);
 void		parser(t_list *env, t_init *init);
 
+/* - - - - - --!-- - - - - - ! RPN and AST ! - - - - - --!-- - - - - - */
+void		abstract_syntax_tree(t_init *init, t_parser *stack);
+
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
 int			restore_cmd_line(t_lexargs *lex, char **str);
 char		*strjoin_helper(char *result, char *read);
@@ -163,20 +165,14 @@ void		ft_create_env(char **str, t_list **stack);
 void		ft_env(t_list *env);
 t_list		*ft_lstnew_2(char *str);
 void		ft_cd(t_list *str, char *ptr);
-// char    *ft_change_str(char *str);
 char		*ft_find_symbol(char *str, char c);
 void		ft_cd_prev(t_list *str, char *text);
 char		*ft_ls(char *str);
-// char		*read_line(const char *str);
-// int		check_built(t_cmd *cmd, t_list *env);
-// void minishell_ls(char *directory);
-void	ft_export(t_list *env);
-// int	ft_strncmp(char *s1,  char *s2, int n);
-int	ft_strcmp(char *s1, char *s2);
-// void    ft_export_change(t_cmd *cmd, t_list *env);
-int		ft_list_change(t_list *new, t_list *env);
-void ft_unset(char *ptr, t_list *env);
-int check_built(char *str, t_list *env);
-void    ft_export_change(char *line, t_list *env);
+void		ft_export(t_list *env);
+int			ft_strcmp(char *s1, char *s2);
+int			ft_list_change(t_list *new, t_list *env);
+void		ft_unset(char *ptr, t_list *env);
+int			check_built(char *str, t_list *env);
+void		ft_export_change(char *line, t_list *env);
 
 #endif

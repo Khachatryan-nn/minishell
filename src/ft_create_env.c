@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:23:59 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 21:09:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/22 22:52:59 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ char	*ft_find_symbol(char *str, char c)
 t_list	*ft_lstnew_2(char *str)
 {
 	t_list	*lst;
+
 	lst = malloc(sizeof(t_list));
 	lst->ptr = ft_strdup(ft_find_symbol(str, '='));
 	lst->value = ft_strdup(ft_strchr(str, '='));
 	lst->next = NULL;
 	lst->prev = NULL;
-	return(lst);
+	return (lst);
 }
 
 void	ft_create_env(char **str, t_list **stack)
