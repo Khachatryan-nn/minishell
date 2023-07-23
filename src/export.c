@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:50:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 22:50:59 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:33:22 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_export(t_list *env)
 		if (env1->ptr != NULL)
 			ptr[i] = ft_strdup(env1->ptr);
 		if (env1->value != NULL)
-			ptr[i] = ft_strjoin(ptr[i], ft_strdup(env1->value));
+			ptr[i] = ft_strjoin(ptr[i], ft_strdup(env1->value), 1);
 		env1 = env1->next;
 		i++;
 	}

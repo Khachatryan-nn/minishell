@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:16:12 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 22:54:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:34:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char *ft_ls(char *str)
 		if (entry->d_name[0] != '.' && !ft_strnstr(entry->d_name, \
 		"minishell", ft_strlen(entry->d_name)))
 		{
-			str = ft_strjoin(str, entry->d_name);
-			str = ft_strjoin(str, "\t");
+			str = ft_strjoin(str, entry->d_name, 0);
+			str = ft_strjoin(str, "\t", 0);
 		}
 	}
 	closedir(dir);

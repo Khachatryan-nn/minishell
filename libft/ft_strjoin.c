@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:07:40 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/21 19:30:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:32:23 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, int mode)
 {
 	char	*new;
 	int		len;
@@ -34,5 +34,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[++k])
 		new[i + k] = s2[k];
 	new[len] = '\0';
+	if (mode)
+	{
+		free(s1);
+		s1 = 0;
+	}
 	return (new);
 }

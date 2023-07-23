@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 20:33:37 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/23 20:40:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_lexargs	*lstnew_lex(char *content, t_type type, int prec)
 	elt->type = type;
 	elt->prc = prec;
 	elt->next = NULL;
+	elt->prev = NULL;
 	return (elt);
 }
 
@@ -37,8 +38,8 @@ t_lexargs	*lstlast_lex(t_lexargs *lst)
 	t_lexargs	*ptr;
 
 	ptr = lst;
-	if (!ptr)
-		return (0);
+	if (ptr == NULL)
+		return (NULL);
 	while (ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
@@ -52,7 +53,10 @@ void	lstback_lex(t_lexargs **lst, t_lexargs *new)
 	if (!ptr)
 		*lst = new;
 	else
+	{
 		ptr->next = new;
+		new->prev = ptr;
+	}
 }
 
 void	lstclear_lex(t_lexargs **lst)
@@ -72,15 +76,15 @@ void	lstclear_lex(t_lexargs **lst)
 	ptr = NULL;
 }
 
-//Checks if there only spaces from j -> i.\
+//Checks if there only spaces from i -> j.\
 //If there are only spaces returns 1.
 int	ft_isspace(char *line, int i, int j)
 {
-	while (j < i && line[j])
+	while (i < j && line[i])
 	{
-		if (line[j] != ' ' && line[j] != '	')
+		if (line[i] != ' ' && line[i] != '	')
 			return (0);
-		j++;
+		i++;
 	}
 	return (1);
 }

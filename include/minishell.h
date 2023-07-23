@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/22 23:03:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/23 20:22:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@
 typedef enum e_token_type
 {
 	WORD,
-	DQUOTE_OPEN,
-	DQUOTE_CLOSE,
-	SQUOTE_OPEN,
-	SQUOTE_CLOSE,
+	DQUOTE,
+	SQUOTE,
 	SUBSH_OPEN,
 	SUBSH_CLOSE,
 	XOR,
@@ -75,6 +73,7 @@ typedef struct s_lexer_arg
 	t_type				type;
 	int					prc;
 	struct s_lexer_arg	*next;
+	struct s_lexer_arg	*prev;
 }						t_lexargs;
 
 /*
@@ -142,13 +141,17 @@ int			lexer(t_lexargs **res, char *line);
 void		parser(t_list *env, t_init *init);
 
 /* - - - - - --!-- - - - - - ! RPN and AST ! - - - - - --!-- - - - - - */
-void		abstract_syntax_tree(t_init *init, t_parser *stack);
+t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack);
+void		print_ast(t_parser *ast, int indent, int lrc);
+void		push(t_parser **a, t_parser **b);
+void		pop(t_parser **stack);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
+char		*strjoin_helper(char *result, char *read, int mode);
 int			restore_cmd_line(t_lexargs *lex, char **str);
-char		*strjoin_helper(char *result, char *read);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_cmd *cmd, t_list *env);
+int			is_delitimer(t_lexargs *root);
 int			parse_error(char *err_str);
 void		print_types(t_parser *ptr);
 int			ft_onlyspaces(char *str);

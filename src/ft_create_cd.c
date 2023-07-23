@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 22:52:11 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:33:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ void	ft_cd_prev(t_list *str, char *text)
 		{
 			old = ft_strdup(temp->value);
 			free(temp->value);
-			temp->value = ft_strdup(ft_strjoin("=", getcwd(NULL, 0)));
+			temp->value = ft_strdup(ft_strjoin("=", getcwd(NULL, 0), 0));
 			break ;
 		}
 		temp = temp->next;
 	}
 	if (k == 0)
 	{
-		ft_lstadd_back(&str, ft_lstnew_2(ft_strjoin("OLDPWD", old)));
+		ft_lstadd_back(&str, ft_lstnew_2(ft_strjoin("OLDPWD", old, 0)));
 		k++;
 	}
 	else
