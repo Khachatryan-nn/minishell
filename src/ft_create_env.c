@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// 
 #include "minishell.h"
 
 char	*ft_find_symbol(char *str, char c)
@@ -21,34 +22,32 @@ char	*ft_find_symbol(char *str, char c)
 	ptr = NULL;
 	j = 0;
 	i = 0;
-	if (!str[i])
-		return (NULL);
-	while (str[i] && str[i] != c)
+	while (str[i] != c  && str[i] != '\0')
 		i++;
 	if (str[i] == '\0')
-		return (str);
-	ptr = (char *)malloc(sizeof(char) * (i + 1));
+		return(str);
+	ptr = (char *)malloc(sizeof(char) * i);
 	if (!ptr)
-		return (NULL);
+	return(NULL);
 	while (j < i)
 	{
 		ptr[j] = str[j];
 		j++;
 	}
 	ptr[j] = '\0';
-	return (ptr);
+	return(ptr);
 }
 
 t_list	*ft_lstnew_2(char *str)
 {
 	t_list	*lst;
-
 	lst = malloc(sizeof(t_list));
 	lst->ptr = ft_strdup(ft_find_symbol(str, '='));
 	lst->value = ft_strdup(ft_strchr(str, '='));
+	lst->type = ft_strdup("yes");
 	lst->next = NULL;
 	lst->prev = NULL;
-	return (lst);
+	return(lst);
 }
 
 void	ft_create_env(char **str, t_list **stack)
@@ -60,14 +59,7 @@ void	ft_create_env(char **str, t_list **stack)
 	while (str[i])
 	{
 		stack_a = ft_lstnew_2(str[i]);
-		if (ft_strcmp(stack_a->ptr, "OLDPWD") != 0)
-			ft_lstadd_back(stack, stack_a);
-		else
-		{
-			// free(stack_a->ptr);
-			// free(stack_a->value);
-			free(stack_a);
-		}
+		ft_lstadd_back(stack, stack_a);
 		i++;
 	}
 }
@@ -80,7 +72,7 @@ void	ft_env(t_list *env)
 	lst = env;
 	while ((lst))
 	{
-		if (lst->ptr && lst->value)
+		if (ft_strcmp(lst->type, "yes") == 0)
 		{
 			printf("%s", lst->ptr);
 			printf("%s\n", lst->value);

@@ -16,5 +16,6 @@ void	abstract_syntax_tree(t_init *init, t_parser *stack);
 
 void	abstract_syntax_tree(t_init *init, t_parser *stack)
 {
-	;
+	(void)init;
+	(void)stack;
 }
