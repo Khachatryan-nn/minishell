@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:37:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/23 01:36:57 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:24:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_ast(t_parser *ast, int indent, int lrc)
 	if (!ast)
 		return ;
     print_ast(ast->right, indent + 1, 1);
-	while (++i < indent)
+	while (i++ < indent)
 	{
         //if (i % 3 == 0 && i > 4)
 		//	printf("║");
@@ -31,11 +31,11 @@ void	print_ast(t_parser *ast, int indent, int lrc)
 		printf("\t");
 	}
     if (lrc == 0)
-		printf("\t═══[%s]\n", ast->cmd);
+		printf("\033[38;5;46m╠══════\033[0m[%s]\n", ast->cmd);
 	else if (lrc == 1)
-		printf("\t╔══ [%s]\n", ast->cmd);
+		printf("\033[38;5;46m╔══════\033[0m[%s]\n", ast->cmd);
 	else if (lrc == 2)
-		printf("\t╚══ [%s]\n", ast->cmd);
+		printf("\033[38;5;46m╚══════\033[0m[%s]\n", ast->cmd);
     print_ast(ast->left, indent + 1, 2);
 }
 
