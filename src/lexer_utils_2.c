@@ -6,43 +6,35 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/01 22:48:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/23 21:28:16 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-void		strjoin_helper(char *read, char *result);
-const char* get_token_name(t_type token);
+char		*strjoin_helper(char *result, char *read, int mode);
+const char	*get_token_name(t_type token);
+int			is_delitimer(t_lexargs *root);
 
-void	strjoin_helper(char *read, char *result)
+char	*strjoin_helper(char *result, char *read, int mode)
 {
-	char	*temp;
-
-	temp = result;
-	result = ft_strjoin(temp, "\n");
-	free(temp);
-	temp = 0;
-	temp = result;
-	result = ft_strjoin(temp, read);
-	if (temp)
-		free(temp);
-	temp = 0;
+	if (mode)
+		result = ft_strjoin(result, "\n", 1);
+	else
+		result = ft_strjoin(result, " ", 1);
+	result = ft_strjoin(result, read, 1);
+	return (result);
 }
 
 const char* get_token_name(t_type token)
 {
 	if (token == WORD)
-		return "WORD";
-	else if (token == DQUOTE_OPEN)
-		return ("DQUOTE_OPEN");
-	else if (token == DQUOTE_CLOSE)
-		return ("DQUOTE_CLOSE");
-	else if (token == SQUOTE_OPEN)
-		return ("SQUOTE_OPEN");
-	else if (token == SQUOTE_CLOSE)
-		return ("SQUOTE_CLOSE");
+		return ("WORD");
+	else if (token == DQUOTE)
+		return ("DQUOTE");
+	else if (token == SQUOTE)
+		return ("SQUOTE");
 	else if (token == SUBSH_OPEN)
 		return ("SUBSH_OPEN");
 	else if (token == SUBSH_CLOSE)
@@ -75,4 +67,24 @@ const char* get_token_name(t_type token)
 		return ("CMD");
 	else
 		return ("UNKNOWN");
+}
+
+int	is_delitimer(t_lexargs *root)
+{
+	t_lexargs	*ptr;
+
+	ptr = root;
+	if (!ptr)
+		return (2);
+	ptr = lstlast_lex(ptr);
+	if (ptr->type == PIPE || ptr->type == HEREDOC)
+		return (1);
+	else if (ptr->type == XOR || ptr->type == XAND)
+		return (1);
+	else if (ptr->type == WRITE_APPEND || ptr->type == WRITE_TRUNC)
+		return (1);
+	else if (ptr->type == SUBSH_OPEN || ptr->type == SUBSH_CLOSE)
+		return (1);
+	else
+		return (0);
 }

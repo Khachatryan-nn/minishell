@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/25 21:26:56 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:37:44 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int		checker(t_cmd *cmd);
 //Function to find and create matrix of cmd PATHs
 void	find_path(t_cmd *cmd, t_list *env)
 {
-	t_list *env1;
+	t_list	*env1;
 
 	env1 = env;
 	while (env1)
 	{
 		if (ft_strcmp(env1->ptr, "PATH") == 0)
-			break;
+			break ;
 		env1 = env1->next;
 	}
-		cmd->path = ft_split(env1->value, ':');
+	cmd->path = ft_split(env1->value, ':');
 }
 
 int	checker(t_cmd *cmd)
@@ -40,8 +40,8 @@ int	checker(t_cmd *cmd)
 	i = -1;
 	while (cmd->path[++i])
 	{
-		temp = ft_strjoin("/", cmd->cmd_args[0]);
-		cmd_path = ft_strjoin(cmd->path[i], temp);
+		temp = ft_strjoin("/", cmd->cmd_args[0], 0);
+		cmd_path = ft_strjoin(cmd->path[i], temp, 0);
 		free(temp);
 		temp = 0;
 		if (access(cmd_path, X_OK) == -1)
@@ -58,14 +58,11 @@ int	checker(t_cmd *cmd)
 //Function to check if there are existing cmd like that
 int	check_cmd(t_cmd *cmd, t_list *env)
 {
-	int	i;
-
-	i = 0;
 	while (*cmd->cmd_line == ' ')
 		cmd->cmd_line++;
 	cmd->cmd_args = ft_split(cmd->cmd_line, ' ');
-	if(check_built(cmd->cmd_line, env))
-			return(1);
+	if (check_built(cmd->cmd_line, env))
+		return (1);
 	if (access(cmd->cmd_args[0], X_OK) == -1)
 	{
 		if (ft_strchr(cmd->cmd_args[0], '/') != NULL)
