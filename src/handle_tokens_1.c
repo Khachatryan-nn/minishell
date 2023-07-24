@@ -117,7 +117,7 @@ int	handle_dquotes(t_lexargs **res, char *line, int i, int count)
 		while (result[k] && result[k] != '"')
 			k++;
 		if (is_delitimer(*res))
-			lstback_lex(res, lstnew_lex(ft_substr(result, 0, k), SQUOTE, 0));
+			lstback_lex(res, lstnew_lex(ft_substr(result, 0, k), DQUOTE, 0));
 		else
 			lstlast_lex(*res)->cmd = strjoin_helper(lstlast_lex(*res)->cmd, ft_substr(result, 0, k), 0);
 		if (k < (int) ft_strlen(result))

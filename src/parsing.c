@@ -111,6 +111,7 @@ void	parser(t_list *env, t_init *init)
 	// print_types(stack_otp);
 	init->pars = abstract_syntax_tree(init, &stack_otp);
 	print_ast(init->pars, 0, 0);
+	check_ast(init, init->pars, env);
 }
 
 

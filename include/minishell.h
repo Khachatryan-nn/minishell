@@ -90,6 +90,7 @@ typedef struct s_parser
 	char			*cmd;
 	t_type			type;
 	int				prc;
+	int				flag;
 	struct s_parser	*next;
 	struct s_parser	*prev;
 	struct s_parser	*left;
@@ -136,6 +137,7 @@ void		destroy_init(t_init *init);
 t_list		*ft_lstnew_2(char *str);
 
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
+int 		check_ast(t_init *init, t_parser *pars, t_list *env);
 void		lex(char *line, t_list *env, t_init *init);
 int			lexer(t_lexargs **res, char *line);
 void		parser(t_list *env, t_init *init);
