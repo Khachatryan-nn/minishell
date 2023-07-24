@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils_1.c                                    :+:      :+:    :+:   */
+/*   parser_utils_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 16:06:42 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/07/24 16:03:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexargs	*lstnew_lex(char *content, t_type type, int prec);
-void		lstback_lex(t_lexargs **lst, t_lexargs *new);
-int			ft_isspace(char *line, int i, int j);
-void		lstclear_lex(t_lexargs **lst);
-t_lexargs	*lstlast_lex(t_lexargs *lst);
+void		lstback_pars(t_parser **lst, t_parser *new);
+t_parser	*lstnew_pars(char *content, t_type type, int prec);
+void		lstclear_pars(t_parser **lst);
+t_parser	*lstlast_pars(t_parser *lst);
+int			lstsize_pars(t_parser *lst);
 
-t_lexargs	*lstnew_lex(char *content, t_type type, int prec)
+t_parser	*lstnew_pars(char *content, t_type type, int prec)
 {
-	t_lexargs	*elt;
+	t_parser	*elt;
 
-	elt = (t_lexargs *)malloc(sizeof(t_lexargs));
+	elt = (t_parser *)malloc(sizeof(t_parser));
 	if (!elt)
 		return (NULL);
 	elt->cmd = content;
@@ -30,26 +30,28 @@ t_lexargs	*lstnew_lex(char *content, t_type type, int prec)
 	elt->prc = prec;
 	elt->next = NULL;
 	elt->prev = NULL;
+	elt->right = NULL;
+	elt->left = NULL;
 	return (elt);
 }
 
-t_lexargs	*lstlast_lex(t_lexargs *lst)
+t_parser	*lstlast_pars(t_parser *lst)
 {
-	t_lexargs	*ptr;
+	t_parser	*ptr;
 
 	ptr = lst;
-	if (ptr == NULL)
-		return (NULL);
+	if (!ptr)
+		return (0);
 	while (ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
 }
 
-void	lstback_lex(t_lexargs **lst, t_lexargs *new)
+void	lstback_pars(t_parser **lst, t_parser *new)
 {
-	t_lexargs	*ptr;
+	t_parser	*ptr;
 
-	ptr = lstlast_lex(*lst);
+	ptr = lstlast_pars(*lst);
 	if (!ptr)
 		*lst = new;
 	else
@@ -59,9 +61,9 @@ void	lstback_lex(t_lexargs **lst, t_lexargs *new)
 	}
 }
 
-void	lstclear_lex(t_lexargs **lst)
+void	lstclear_pars(t_parser **lst)
 {
-	t_lexargs	*ptr;
+	t_parser	*ptr;
 
 	ptr = NULL;
 	if (!lst || !*lst)
@@ -70,21 +72,21 @@ void	lstclear_lex(t_lexargs **lst)
 	{
 		ptr = (*lst)->next;
 		free ((*lst)->cmd);
-		free(*lst);
+		free (*lst);
 		(*lst) = ptr;
 	}
 	ptr = NULL;
 }
 
-//Checks if there only spaces from i -> j.\
-//If there are only spaces returns 1.
-int	ft_isspace(char *line, int i, int j)
+int	lstsize_pars(t_parser *lst)
 {
-	while (i < j && line[i])
+	int	i;
+
+	i = 0;
+	while (lst)
 	{
-		if (line[i] != ' ' && line[i] != '	')
-			return (0);
 		i++;
+		(lst) = (lst)->next;
 	}
-	return (1);
+	return (i);
 }

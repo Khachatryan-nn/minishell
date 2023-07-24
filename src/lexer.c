@@ -6,46 +6,52 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/23 21:31:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/24 16:05:27 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lex(char *line, t_list *env);
-void	lexer(t_lexargs **res, char *line);
+void	lex(char *line, t_list *env, t_init *init);
+int		lexer(t_lexargs **res, char *line);
 
-void	lexer(t_lexargs **res, char *line)
+int	lexer(t_lexargs **res, char *line)
 {
-	int			i;
-	int			counter;
+	int	i;
+	int	l;
+	int	counter;
 
 	i = -1;
+	l = -1;
 	while (line[++i])
 	{
 		counter = i;
 		while (line[i])
 		{
 			if (line[i] == '"')
-				i = handle_dquotes(res, line, i, counter) + 1;
+				l = handle_dquotes(res, line, i, counter) + 1;
 			else if (line[i] == 39)
-				i = handle_squotes(res, line, i, counter) + 1;
+				l = handle_squotes(res, line, i, counter) + 1;
+			else if (line[i] == ')')
+				l = parse_error(")");
 			else if (line[i] == '(')
-				i = handle_prnthses(res, line, i, counter);
+				l = handle_prnthses(res, line, i, counter);
 			else if (line[i] == '|' && line[i + 1] == '|')
-				i = handle_xor(res, line, i, counter);
+				l = handle_xor(res, line, i, counter);
 			else if (line[i] == '&' && line[i + 1] == '&')
-				i = handle_xand(res, line, i, counter);
+				l = handle_xand(res, line, i, counter);
 			else if (line[i] == '<' && line[i + 1] == '<')
-				i = handle_heredoc(res, line, i, counter);
+				l = handle_heredoc(res, line, i, counter);
 			else if (line[i] == '>' && line[i + 1] == '>')
-				i = handle_wappend(res, line, i, counter);
+				l = handle_wappend(res, line, i, counter);
 			else if (line[i] == '>')
-				i = handle_wtrunc(res, line, i, counter);
-			else if (line[i] == ' ')
+				l = handle_wtrunc(res, line, i, counter);
+			else if (line[i] == '<')
+				l = handle_input(res, line, i, counter);
+			else if (ft_strchr(" \n\t\v\r\f", line[i]))
 				handle_space(res, line, i, counter);
 			else if (line[i] == '|')
-				handle_pipe(res, line, i, counter);
+				l = handle_pipe(res, line, i, counter);
 			else if (line[i + 1] == '\0')
 				handle_space(res, line, i + 1, counter);
 			else
@@ -53,52 +59,72 @@ void	lexer(t_lexargs **res, char *line)
 				i++;
 				continue ;
 			}
+			if (l == 0)
+				return (0);
+			else if (l > 0)
+			{
+				i = l;
+				l = -1;
+			}
 			break ;
 		}
 	}
+	return (1);
 }
 
-void	lex(char *line, t_list *env)
+void	lex(char *line, t_list *env, t_init *init)
 {
-	t_lexargs	*res;
-	t_cmd		*cmd;
-	pid_t		pid;
+	//t_cmd	*cmd;
+	//pid_t	pid;
 
-	res = NULL;
-	cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	lexer(&res, line);
-	find_path(cmd, env);
-	cmd->cmd_line = line;//cmd_processing(res);
-	if (!check_cmd(cmd, env))
+	(void) env;
+	init->lex = NULL;
+	//cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	//printf("%s\n", line);
+	if (!(lexer(&init->lex, line)))
 	{
-		pid = fork();
-		if (pid == -1)
-			printf ("Proccessing fault.\n");
-		else if (pid == 0)
-			execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
-		else
-		{
-			wait(NULL);
-			free_matrix((void **) cmd->cmd_args);
-			free(cmd->cmd_path);
-			free(cmd);
-			cmd = 0;
-		}
+		destroy_init(init);
+		return ;
 	}
-	int	i;
-	i = 0;
-	while (res)
+	//printf("%s\n", line);
+	//find_path(cmd, env);
+	//cmd->cmd_line = line;//cmd_processing(lex);
+	//if (!check_cmd(cmd))
+	//{
+	//	pid = fork();
+	//	if (pid == -1)
+	//		printf ("Proccessing fault.\n");
+	//	else if (pid == 0)
+	//		execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
+	//	else
+	//	{
+	//		wait(NULL);
+	//		free_matrix((void **) cmd->cmd_args);
+	//		free(cmd->cmd_path);
+	//		free(cmd);
+	//		cmd = 0;
+	//	}
+	//}
+	//int	i;
+	//i = 0;
+	//								ls -l && (pwd || ls) | cat script.sh
+	//int i = 0;
+	//while (init->lex)
+	//{
+	//	printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n\tprc: %d\n", \
+	//	i, get_token_name(init->lex->type), init->lex->cmd, init->lex->prc);
+	//	init->lex = init->lex->next;
+	//	i++;
+	//}
+	if (!is_valid(init))
 	{
-		printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n", \
-		i, get_token_name(res->type), res->cmd);
-		res = res->next;
-		i++;
+		destroy_init(init);
+		return ;
 	}
-	ft_lstclear_3(&res);
+	parser(env, init);
 }
 
 /*
-
 << [whenever it's encountered -> it's heredoc]. It will be outputted only if there are cat are something like that
 << a | cat [wouldn't output something in any case, because heredoc in first part doesn't cat'ed]
 			[in case of echo there are also nothing]

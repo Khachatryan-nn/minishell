@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/23 21:28:16 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/24 16:06:56 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ const char* get_token_name(t_type token)
 		return ("SUBSH_OPEN");
 	else if (token == SUBSH_CLOSE)
 		return ("SUBSH_CLOSE");
-	else if (token == MATH_OPEN)
-		return ("MATH_OPEN");
-	else if (token == MATH_CLOSE)
-		return ("MATH_CLOSE");
 	else if (token == XOR)
 		return ("XOR");
 	else if (token == XAND)
@@ -59,12 +55,8 @@ const char* get_token_name(t_type token)
 		return ("FILEIN");
 	else if (token == FILEOUT)
 		return ("FILEOUT");
-	else if (token == VAR)
-		return ("VAR");
-	else if (token == COMMENT)
-		return ("COMMENT");
-	else if (token == CMD)
-		return ("CMD");
+	else if (token == END)
+		return ("END");
 	else
 		return ("UNKNOWN");
 }
