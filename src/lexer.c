@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 16:05:27 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/24 20:16:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ int	lexer(t_lexargs **res, char *line)
 
 void	lex(char *line, t_list *env, t_init *init)
 {
-	//t_cmd	*cmd;
-	//pid_t	pid;
+	// t_cmd	*cmd;
+	// pid_t	pid;
 
 	(void) env;
 	init->lex = NULL;
-	//cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	// cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	//printf("%s\n", line);
 	if (!(lexer(&init->lex, line)))
 	{
@@ -87,24 +87,27 @@ void	lex(char *line, t_list *env, t_init *init)
 		return ;
 	}
 	//printf("%s\n", line);
-	//find_path(cmd, env);
-	//cmd->cmd_line = line;//cmd_processing(lex);
-	//if (!check_cmd(cmd))
-	//{
-	//	pid = fork();
-	//	if (pid == -1)
-	//		printf ("Proccessing fault.\n");
-	//	else if (pid == 0)
-	//		execve(cmd->cmd_path, cmd->cmd_args, cmd->path);
-	//	else
-	//	{
-	//		wait(NULL);
-	//		free_matrix((void **) cmd->cmd_args);
-	//		free(cmd->cmd_path);
-	//		free(cmd);
-	//		cmd = 0;
-	//	}
-	//}
+	// find_path(cmd, env);
+	// cmd->cmd_line = line;//cmd_processing(lex);
+	// if (!check_cmd(cmd, env))
+	// {
+	// 	pid = fork();
+	// 	if (pid == -1)
+	// 		printf ("Proccessing fault.\n");
+	// 	if (pid == 0)
+	// 	{
+	// 		// printf("%s\n", cmd->cmd_path);
+	// 		execve(cmd->cmd_path + 1, cmd->cmd_args, cmd->path);
+	// 	}
+	// 	else
+	// 	{
+	// 		wait(NULL);
+	// 		free_matrix((void **) cmd->cmd_args);
+	// 		free(cmd->cmd_path);
+	// 		free(cmd);
+	// 		cmd = 0;
+	// 	}
+	// }
 	//int	i;
 	//i = 0;
 	//								ls -l && (pwd || ls) | cat script.sh

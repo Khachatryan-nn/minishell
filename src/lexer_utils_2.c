@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 16:06:56 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:51:46 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,32 @@ int			is_delitimer(t_lexargs *root);
 
 char	*strjoin_helper(char *result, char *read, int mode)
 {
-	if (mode)
+	if (mode == 1)
 		result = ft_strjoin(result, "\n", 1);
+	else if (mode == 2)
+	{
+		if (read[0] == ' ')
+			result = ft_strjoin(result, " \"", 1);
+		else
+			result = ft_strjoin(result, "\"", 1);
+	}
+	else if (mode == 3)
+	{
+		if (read[0] == ' ')
+			result = ft_strjoin(result, "'", 1);
+		else
+			result = ft_strjoin(result, "'", 1);
+	}
 	else
 		result = ft_strjoin(result, " ", 1);
-	result = ft_strjoin(result, read, 1);
+	if (mode == 2 || mode == 3)
+		result = ft_strjoin(result, read + 2, 0);
+	else
+		result = ft_strjoin(result, read, 1);
+	if (mode == 2)
+		result = ft_strjoin(result, "\"", 1);
+	else if (mode == 3)
+		result = ft_strjoin(result, "'", 1);
 	return (result);
 }
 

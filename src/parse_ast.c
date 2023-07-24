@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:37:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 12:24:26 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/24 20:19:24 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	print_ast(t_parser *ast, int indent, int lrc)
 		printf("\033[38;5;46m╔══════\033[0m[%s]\n", ast->cmd);
 	else if (lrc == 2)
 		printf("\033[38;5;46m╚══════\033[0m[%s]\n", ast->cmd);
+	if (ast->next)
+    	print_ast(ast->next, indent, 2);
     print_ast(ast->left, indent + 1, 2);
 }
 
@@ -46,6 +48,8 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 
 	new = NULL;
 	ptr = lstlast_pars(*stack);
+	if (!ptr)
+		return (NULL);
 	if (ptr->type == XOR || ptr->type == XAND || ptr->type == PIPE)
 	{
 		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc);
@@ -54,10 +58,20 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 		new->left = abstract_syntax_tree(init, stack);
 		return (new);
 	}
+	else if (ptr->type == SQUOTE || ptr->type == DQUOTE)
+	{
+		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc);
+		pop(stack);
+		if (ptr->type == SQUOTE || ptr->type == DQUOTE)
+			new->next = abstract_syntax_tree(init, stack);
+		return (new);
+	}
 	else if (ptr)
 	{
 		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc);
 		pop(stack);
+		if (ptr->type == SQUOTE || ptr->type == DQUOTE)
+			new->next = abstract_syntax_tree(init, stack);
 		return (new);
 	}
 	return (new);

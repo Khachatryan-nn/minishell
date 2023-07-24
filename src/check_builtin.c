@@ -19,6 +19,7 @@ int check_built(char *str, t_list *env)
         }
     else if (ft_strnstr(str, "export", 6) == 0)
     {
+		printf("input: %s\n", str);
         if(ft_strcmp(str, "export") == 0)
             ft_export(env);
         else
