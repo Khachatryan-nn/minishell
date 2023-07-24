@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   strlcpy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musimony <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:02:23 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/18 22:12:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/01/29 19:09:00 by musimony         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {

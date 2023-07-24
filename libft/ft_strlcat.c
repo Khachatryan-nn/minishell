@@ -3,38 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musimony <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 14:58:16 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/18 22:12:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/01/29 19:08:26 by musimony         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	char	*s;
-	size_t	len_dst;
-	size_t	res;
-	size_t	len_src;
 	size_t	i;
+	size_t	s_len;
+	size_t	d_len;
 
-	s = (char *)src;
-	len_dst = ft_strlen(dst);
-	len_src = ft_strlen(s);
-	res = 0;
 	i = 0;
-	if (size > len_dst)
-		res = len_src + len_dst;
-	else
-		res = len_src + size;
-	while (s[i] && (len_dst + 1) < size)
+	s_len = ft_strlen(src);
+	if (!dest && size == 0)
+		return (s_len);
+	d_len = ft_strlen(dest);
+	if (size < d_len + 1)
+		return (size + s_len);
+	if (size > d_len + 1)
 	{
-		dst[len_dst] = s[i];
-		len_dst++;
-		i++;
+		while (src[i] != '\0' && d_len + 1 + i < size)
+		{
+			dest[d_len + i] = src[i];
+			i++;
+		}
 	}
-	dst[len_dst] = '\0';
-	return (res);
+	dest[d_len + i] = '\0';
+	return (s_len + d_len);
 }

@@ -6,19 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 20:33:37 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/28 19:22:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexargs	*lstnew_lex(char *content, t_type type, int prec);
-void		lstback_lex(t_lexargs **lst, t_lexargs *new);
+void		ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new);
 int			ft_isspace(char *line, int i, int j);
-void		lstclear_lex(t_lexargs **lst);
-t_lexargs	*lstlast_lex(t_lexargs *lst);
+void		ft_lstclear_3(t_lexargs **lst);
+t_lexargs	*ft_lstlast_3(t_lexargs *lst);
+t_lexargs	*ft_lstnew_3(char *content, t_type type);
 
-t_lexargs	*lstnew_lex(char *content, t_type type, int prec)
+t_lexargs	*ft_lstnew_3(char *content, t_type type)
 {
 	t_lexargs	*elt;
 
@@ -27,12 +27,11 @@ t_lexargs	*lstnew_lex(char *content, t_type type, int prec)
 		return (NULL);
 	elt->cmd = content;
 	elt->type = type;
-	elt->prc = prec;
 	elt->next = NULL;
 	return (elt);
 }
 
-t_lexargs	*lstlast_lex(t_lexargs *lst)
+t_lexargs	*ft_lstlast_3(t_lexargs *lst)
 {
 	t_lexargs	*ptr;
 
@@ -44,32 +43,26 @@ t_lexargs	*lstlast_lex(t_lexargs *lst)
 	return (ptr);
 }
 
-void	lstback_lex(t_lexargs **lst, t_lexargs *new)
+void	ft_lstadd_back_3(t_lexargs **lst, t_lexargs *new)
 {
 	t_lexargs	*ptr;
 
-	ptr = lstlast_lex(*lst);
+	ptr = ft_lstlast_3(*lst);
 	if (!ptr)
 		*lst = new;
 	else
 		ptr->next = new;
 }
 
-void	lstclear_lex(t_lexargs **lst)
+void	ft_lstclear_3(t_lexargs **lst)
 {
-	t_lexargs	*ptr;
-
-	ptr = NULL;
 	if (!lst || !*lst)
 		return ;
 	while ((*lst))
 	{
-		ptr = (*lst)->next;
 		free ((*lst)->cmd);
-		free(*lst);
-		(*lst) = ptr;
+		(*lst) = (*lst)->next;
 	}
-	ptr = NULL;
 }
 
 //Checks if there only spaces from j -> i.\

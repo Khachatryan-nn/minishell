@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musimony <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 17:21:34 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/18 22:12:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/01/29 18:26:03 by musimony         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {

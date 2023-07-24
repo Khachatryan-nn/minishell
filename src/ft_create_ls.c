@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:16:12 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 22:54:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:26:17 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,4 @@ char *ft_ls(char *str)
 	}
 	closedir(dir);
 	return (str);
-}
+	}

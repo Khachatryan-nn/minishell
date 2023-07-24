@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musimony <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:34:33 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/18 22:12:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/01/29 19:09:59 by musimony         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {

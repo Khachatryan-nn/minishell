@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 00:21:16 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:26:56 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	checker(t_cmd *cmd)
 //Function to check if there are existing cmd like that
 int	check_cmd(t_cmd *cmd, t_list *env)
 {
-	//int	i;
+	int	i;
 
-	//i = 0;
+	i = 0;
 	while (*cmd->cmd_line == ' ')
 		cmd->cmd_line++;
 	cmd->cmd_args = ft_split(cmd->cmd_line, ' ');

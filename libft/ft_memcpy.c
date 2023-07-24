@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musimony <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 00:47:19 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/18 22:12:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/04/04 23:04:14 by musimony         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {

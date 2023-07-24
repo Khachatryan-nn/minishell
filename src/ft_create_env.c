@@ -6,11 +6,10 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:23:59 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 22:52:59 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:24:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// 
 #include "minishell.h"
 
 char	*ft_find_symbol(char *str, char c)
@@ -45,6 +44,7 @@ t_list	*ft_lstnew_2(char *str)
 	lst->ptr = ft_strdup(ft_find_symbol(str, '='));
 	lst->value = ft_strdup(ft_strchr(str, '='));
 	lst->type = ft_strdup("yes");
+	lst->flag = 0;
 	lst->next = NULL;
 	lst->prev = NULL;
 	return(lst);

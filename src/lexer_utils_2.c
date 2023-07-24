@@ -6,35 +6,35 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/21 19:28:07 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/01 22:48:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-char		*strjoin_helper(char *result, char *read);
-const char	*get_token_name(t_type token);
+void		strjoin_helper(char *read, char *result);
+const char* get_token_name(t_type token);
 
-char	*strjoin_helper(char *result, char *read)
+void	strjoin_helper(char *read, char *result)
 {
 	char	*temp;
 
 	temp = result;
 	result = ft_strjoin(temp, "\n");
 	free(temp);
+	temp = 0;
 	temp = result;
 	result = ft_strjoin(temp, read);
 	if (temp)
 		free(temp);
 	temp = 0;
-	return (result);
 }
 
 const char* get_token_name(t_type token)
 {
 	if (token == WORD)
-		return ("WORD");
+		return "WORD";
 	else if (token == DQUOTE_OPEN)
 		return ("DQUOTE_OPEN");
 	else if (token == DQUOTE_CLOSE)
@@ -47,6 +47,10 @@ const char* get_token_name(t_type token)
 		return ("SUBSH_OPEN");
 	else if (token == SUBSH_CLOSE)
 		return ("SUBSH_CLOSE");
+	else if (token == MATH_OPEN)
+		return ("MATH_OPEN");
+	else if (token == MATH_CLOSE)
+		return ("MATH_CLOSE");
 	else if (token == XOR)
 		return ("XOR");
 	else if (token == XAND)
@@ -63,8 +67,12 @@ const char* get_token_name(t_type token)
 		return ("FILEIN");
 	else if (token == FILEOUT)
 		return ("FILEOUT");
-	else if (token == END)
-		return ("END");
+	else if (token == VAR)
+		return ("VAR");
+	else if (token == COMMENT)
+		return ("COMMENT");
+	else if (token == CMD)
+		return ("CMD");
 	else
 		return ("UNKNOWN");
 }

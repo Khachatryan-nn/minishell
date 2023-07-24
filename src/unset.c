@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 22:59:54 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/22 23:00:05 by tikhacha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-// 
 #include "minishell.h"
 
 void ft_unset(char *ptr, t_list *env)
@@ -111,8 +98,13 @@ void ft_unset(char *ptr, t_list *env)
         {
             if(ft_strcmp(lst->ptr, ttr[k]) == 0)
             {
+                if (ft_strcmp(lst->ptr, "PWD"))
+                {
+                    printf("aaa\n");
+                    lst->flag++;
+                    printf("%d\n", lst->flag);
+                }
                 lst->type = ft_strdup("no");
-                printf("%s\n", lst->type);
             }
             lst = lst->next;
         }
