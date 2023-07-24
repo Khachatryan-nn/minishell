@@ -52,7 +52,7 @@ void    ft_export(t_list *env)
             if (env1->ptr != NULL)
              ptr[i] = ft_strdup(env1->ptr);
             if (env1->value != NULL)
-             ptr[i] = ft_strjoin(ptr[i], ft_strdup(env1->value));
+             ptr[i] = ft_strjoin(ptr[i], ft_strdup(env1->value), 0);
         i++;
         env1 = env1->next;
     }

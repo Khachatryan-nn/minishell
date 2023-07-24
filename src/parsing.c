@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/23 21:49:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:33:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	parser(t_list *env, t_init *init)
 	stack_otp = NULL;
 	while (ptr)//Shunting Yurd algorithm for RPN -> reverse polish notation
 	{
-		//printf("\n\t\tprocessing type is:\t%s\n", ptr->cmd);
-		//printf("%p\tstack_otp:\t\t", &ptr); print_types(stack_otp);
-		//printf("\t\tstack_ops:\t\t"); print_types(stack_ops);
+		// printf("\n\t\tprocessing type is:\t%s\n", ptr->cmd);
+		// printf("%p\tstack_otp:\t\t", &ptr); print_types(stack_otp);
+		// printf("\t\tstack_ops:\t\t"); print_types(stack_ops);
 		if (ptr->prc == 0)
 		{
 			lstback_pars(&stack_otp, lstnew_pars(ptr->cmd, \
@@ -108,7 +108,7 @@ void	parser(t_list *env, t_init *init)
 	}
 	while (stack_ops)
 		push(&stack_ops, &stack_otp);
-	//print_types(stack_otp);
+	// print_types(stack_otp);
 	init->pars = abstract_syntax_tree(init, &stack_otp);
 	print_ast(init->pars, 0, 0);
 }
