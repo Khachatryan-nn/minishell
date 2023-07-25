@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils_1.c                                   :+:      :+:    :+:   */
+/*   parser_structs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 00:09:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:52:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag);
-void		lstback_pars(t_parser **lst, t_parser *new);
-void		lstclear_pars(t_parser **lst);
-t_parser	*lstlast_pars(t_parser *lst);
-int			lstsize_pars(t_parser *lst);
+void		lstback(t_parser **lst, t_parser *new);
+void		lstclear(t_parser **lst);
+t_parser	*lstlast(t_parser *lst);
+int			lstsize(t_parser *lst);
 
 t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag)
 {
@@ -25,10 +25,11 @@ t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag)
 	elt = (t_parser *)malloc(sizeof(t_parser));
 	if (!elt)
 		return (NULL);
-	elt->cmd = content;
+	elt->cmd = ft_strdup(content);
 	elt->type = type;
 	elt->prc = prec;
-	elt->is_cmd = flag;
+	elt->flag = flag;
+	elt->err_code = 0;
 	elt->next = NULL;
 	elt->prev = NULL;
 	elt->right = NULL;
@@ -36,23 +37,23 @@ t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag)
 	return (elt);
 }
 
-t_parser	*lstlast_pars(t_parser *lst)
+t_parser	*lstlast(t_parser *lst)
 {
 	t_parser	*ptr;
 
 	ptr = lst;
 	if (!ptr)
-		return (0);
+		return (NULL);
 	while (ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
 }
 
-void	lstback_pars(t_parser **lst, t_parser *new)
+void	lstback(t_parser **lst, t_parser *new)
 {
 	t_parser	*ptr;
 
-	ptr = lstlast_pars(*lst);
+	ptr = lstlast(*lst);
 	if (!ptr)
 		*lst = new;
 	else
@@ -62,7 +63,7 @@ void	lstback_pars(t_parser **lst, t_parser *new)
 	}
 }
 
-void	lstclear_pars(t_parser **lst)
+void	lstclear(t_parser **lst)
 {
 	t_parser	*ptr;
 
@@ -79,7 +80,7 @@ void	lstclear_pars(t_parser **lst)
 	ptr = NULL;
 }
 
-int	lstsize_pars(t_parser *lst)
+int	lstsize(t_parser *lst)
 {
 	int	i;
 

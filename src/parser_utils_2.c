@@ -6,20 +6,20 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:45:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 16:03:26 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:41:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char static	*ft_strjoin_ws(char const *s1, char const *s2);
-int			restore_cmd_line(t_lexargs *lex, char **str);
+int			restore_cmd_line(t_parser *lex, char **str);
 void		print_types(t_parser *ptr);
 int			parse_error(char *err_str);
 
 int	parse_error(char *err_str)
 {
-	printf("minishell: parse error near `%s'\n", err_str);
+	printf("minishell: syntax error near unexpected token `%s'\n", err_str);
 	return (0);
 }
 
@@ -46,7 +46,7 @@ char static	*ft_strjoin_ws(char const *s1, char const *s2)
 	return (ptr);
 }
 
-int	restore_cmd_line(t_lexargs *lex, char **str)
+int	restore_cmd_line(t_parser *lex, char **str)
 {
 	char *temp;
 
@@ -76,12 +76,4 @@ void	print_types(t_parser *ptr)
 		ptr = ptr->next;
 	}
 	printf("\n");
-	//printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n", \
-	//	0, get_token_name(ptr->type), ptr->cmd);
-	//if (ptr->left != NULL)
-	//	printf("\t\x1b[38;2;252;78;3m[%d] --\ttype: %s -> LEFT BRANCH\x1b[0m\n\tcmd: %s\n", \
-	//	1, get_token_name(ptr->left->type), ptr->left->cmd);
-	//if (ptr->right != NULL)
-	//	printf("\t\x1b[38;2;252;78;3m[%d] --\ttype: %s -> RIGHT BRANCH\x1b[0m\n\tcmd: %s\n", \
-	//	2, get_token_name(ptr->right->type), ptr->right->cmd);
 }

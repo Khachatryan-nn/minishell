@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:23:02 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/27 17:17:51 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:44:46 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-// # include "minishell.h"
 
 typedef struct s_list
 {

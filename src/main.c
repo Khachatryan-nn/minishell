@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/25 02:36:42 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:51:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int ac, char **av, char **env1)
 	init.pars = NULL;
 	init.temp = NULL;
 	env = NULL;
+	(void) init;
 	ft_create_env(env1, &env);
 	if (ac == 1 && av)
 	{
@@ -58,8 +59,15 @@ int	main(int ac, char **av, char **env1)
 			else if (!ft_onlyspaces(str))
 				lex(str, env, &init);
 			add_history(str);
-			// system("leaks minishell");
+			//system("leaks minishell");
 		}
 	}
 	return(0);
 }
+
+// command not found -> 127
+// syntax || parsing error -> 258
+// empty () -> 1
+// unknown flag || parameter -> 1
+// maximum exit value is 0->255, example: exit 256 -> 256 - 256 = 0, exit 300 -> 300 - 256 = 44
+// exit "20"1 is the same, as exit "201" and exit 201

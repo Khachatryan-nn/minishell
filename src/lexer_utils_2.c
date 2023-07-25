@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 23:55:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:55:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 char		*strjoin_helper(char *result, char *read, int mode);
 const char	*get_token_name(t_type token);
-int			is_delitimer(t_lexargs *root);
+int			is_delitimer(t_parser *root);
 
 char	*strjoin_helper(char *result, char *read, int mode)
 {
@@ -82,14 +82,14 @@ const char* get_token_name(t_type token)
 		return ("UNKNOWN");
 }
 
-int	is_delitimer(t_lexargs *root)
+int	is_delitimer(t_parser *root)
 {
-	t_lexargs	*ptr;
+	t_parser	*ptr;
 
 	ptr = root;
 	if (!ptr)
 		return (2);
-	ptr = lstlast_lex(ptr);
+	ptr = lstlast(ptr);
 	if (ptr->type == PIPE || ptr->type == HEREDOC)
 		return (1);
 	else if (ptr->type == XOR || ptr->type == XAND)
@@ -97,8 +97,6 @@ int	is_delitimer(t_lexargs *root)
 	else if (ptr->type == WRITE_APPEND || ptr->type == WRITE_TRUNC)
 		return (1);
 	else if (ptr->type == SUBSH_OPEN || ptr->type == SUBSH_CLOSE)
-		return (1);
-	else if (ptr->type == DQUOTE || ptr->type == SQUOTE)
 		return (1);
 	else
 		return (0);

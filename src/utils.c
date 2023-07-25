@@ -6,12 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/20 16:12:38 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:40:59 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_strcmp( char *s1, char *s2);
 int	ft_onlyspaces(char *str);
 
 int	ft_onlyspaces(char *str)

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 04:24:05 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:36:46 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,17 @@ void	print_ast(t_parser *ast, int indent, int lrc)
 		return ;
 	}
 	print_ast(ast->right, indent + 1, 1);
-	if (i % 3 == 0 && (ast->left == NULL || ast->right == NULL) && \
-		(ast->type != WORD && ast->type != SQUOTE && ast->type != DQUOTE))
-		printf("\t║");
 	while (i++ < indent)
 	{
 		//if (i % 3 != 0 && ast->left != NULL)
 			printf("\t");
 	}
 	if (lrc == 0)
-		printf("\033[38;5;46m╠══════\033[0m[%s]\n", ast->cmd);
+		printf("\033[38;5;46m╠══════\033[0m[%s][%d]\n", ast->cmd, (ast->flag & 1<<1) && 1);
 	else if (lrc == 1)
-		printf("\033[38;5;46m╔══════\033[0m[%s]\n", ast->cmd);
+		printf("\033[38;5;46m╔══════\033[0m[%s][%d]\n", ast->cmd, (ast->flag & 1<<1) && 1);
 	else if (lrc == 2)
-		printf("\033[38;5;46m╚══════\033[0m[%s]\n", ast->cmd);
+		printf("\033[38;5;46m╚══════\033[0m[%s][%d]\n", ast->cmd, (ast->flag & 1<<1) && 1);
 	if (ast->next)
 	print_ast(ast->next, indent + 1, 2);
 	print_ast(ast->left, indent + 1, 2);
@@ -65,7 +62,7 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 	t_parser	*new;
 
 	new = NULL;
-	ptr = lstlast_pars(*stack);
+	ptr = lstlast(*stack);
 	if (!ptr)
 		return (NULL);
 	if (ptr->type == END)
@@ -75,7 +72,9 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 		new->right = most_prev(abstract_syntax_tree(init, stack));
 		return (new);
 	}
-	if (ptr->type == XOR || ptr->type == XAND || ptr->type == PIPE)
+	if (ptr->type == XOR || ptr->type == XAND || ptr->type == PIPE || \
+		ptr->type == HEREDOC || ptr->type == INPUT || ptr->type == WRITE_APPEND \
+		|| ptr->type == WRITE_TRUNC)
 	{
 		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
 		pop(stack);
@@ -85,18 +84,17 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 	}
 	else if (ptr && ptr->type != END)
 	{
-		while (ptr && ptr->cmd && ptr->is_cmd == 0)
+		while (ptr && ptr->cmd && (ptr->flag & 1) == 0)
 		{
 			push(stack, &init->temp);
-			ptr = lstlast_pars(*stack);
+			ptr = lstlast(*stack);
 		}
-		if (ptr && ptr->cmd && ptr->is_cmd == 1)
+		if (ptr && ptr->cmd && (ptr->flag & 1) == 1)
 		{
 			new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
 			pop(stack);
 			while (init && init->temp)
 				push(&init->temp, &new);
-			ptr = lstlast_pars(*stack);
 			return (new);
 		}
 	}

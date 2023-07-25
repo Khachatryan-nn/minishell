@@ -6,16 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 03:39:51 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:36:51 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	lex(char *line, t_list *env, t_init *init);
-int		lexer(t_lexargs **res, char *line);
+int		lexer(t_parser **res, char *line);
 
-int	lexer(t_lexargs **res, char *line)
+int	lexer(t_parser **res, char *line)
 {
 	int	i;
 	int	l;
@@ -69,7 +69,7 @@ int	lexer(t_lexargs **res, char *line)
 			break ;
 		}
 	}
-	lstback_lex(res, lstnew_lex("AST", END, 1, 2));
+	lstback(res, lstnew_pars("AST", END, 1, 2));
 	return (1);
 }
 
@@ -87,7 +87,6 @@ void	lex(char *line, t_list *env, t_init *init)
 		destroy_init(init);
 		return ;
 	}
-	//printf("%s\n", line);
 	// find_path(cmd, env);
 	// cmd->cmd_line = line;//cmd_processing(lex);
 	// if (!check_cmd(cmd, env))
