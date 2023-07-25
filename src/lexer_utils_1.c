@@ -6,19 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 16:06:42 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 00:08:59 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexargs	*lstnew_lex(char *content, t_type type, int prec);
+t_lexargs	*lstnew_lex(char *content, t_type type, int prec, int flag);
 void		lstback_lex(t_lexargs **lst, t_lexargs *new);
 int			ft_isspace(char *line, int i, int j);
 void		lstclear_lex(t_lexargs **lst);
 t_lexargs	*lstlast_lex(t_lexargs *lst);
 
-t_lexargs	*lstnew_lex(char *content, t_type type, int prec)
+t_lexargs	*lstnew_lex(char *content, t_type type, int prec, int flag)
 {
 	t_lexargs	*elt;
 
@@ -28,6 +28,7 @@ t_lexargs	*lstnew_lex(char *content, t_type type, int prec)
 	elt->cmd = content;
 	elt->type = type;
 	elt->prc = prec;
+	elt->is_cmd = flag;
 	elt->next = NULL;
 	elt->prev = NULL;
 	return (elt);

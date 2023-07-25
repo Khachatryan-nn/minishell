@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 22:37:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 20:19:24 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/07/25 04:24:05 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack);
 void		print_ast(t_parser *ast, int indent, int lrc);
 
+t_parser	*most_prev(t_parser	*stack)
+{
+	t_parser	*ptr;
+
+	ptr = stack;
+	if (!ptr)
+		return (NULL);
+	while (ptr && ptr->prev != NULL)
+		ptr = ptr->prev;
+	return (ptr);
+}
+
 void	print_ast(t_parser *ast, int indent, int lrc)
 {
 	int	i;
@@ -22,23 +34,29 @@ void	print_ast(t_parser *ast, int indent, int lrc)
 	i = 0;
 	if (!ast)
 		return ;
-    print_ast(ast->right, indent + 1, 1);
+	else if (ast->type == END)
+	{
+		print_ast(ast->right, indent, 0);
+		return ;
+	}
+	print_ast(ast->right, indent + 1, 1);
+	if (i % 3 == 0 && (ast->left == NULL || ast->right == NULL) && \
+		(ast->type != WORD && ast->type != SQUOTE && ast->type != DQUOTE))
+		printf("\t║");
 	while (i++ < indent)
 	{
-        //if (i % 3 == 0 && i > 4)
-		//	printf("║");
-		//else
-		printf("\t");
+		//if (i % 3 != 0 && ast->left != NULL)
+			printf("\t");
 	}
-    if (lrc == 0)
+	if (lrc == 0)
 		printf("\033[38;5;46m╠══════\033[0m[%s]\n", ast->cmd);
 	else if (lrc == 1)
 		printf("\033[38;5;46m╔══════\033[0m[%s]\n", ast->cmd);
 	else if (lrc == 2)
 		printf("\033[38;5;46m╚══════\033[0m[%s]\n", ast->cmd);
 	if (ast->next)
-    	print_ast(ast->next, indent, 2);
-    print_ast(ast->left, indent + 1, 2);
+	print_ast(ast->next, indent + 1, 2);
+	print_ast(ast->left, indent + 1, 2);
 }
 
 t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
@@ -50,58 +68,37 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 	ptr = lstlast_pars(*stack);
 	if (!ptr)
 		return (NULL);
+	if (ptr->type == END)
+	{
+		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
+		pop(stack);
+		new->right = most_prev(abstract_syntax_tree(init, stack));
+		return (new);
+	}
 	if (ptr->type == XOR || ptr->type == XAND || ptr->type == PIPE)
 	{
-		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc);
+		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
 		pop(stack);
-		new->right = abstract_syntax_tree(init, stack);
-		new->left = abstract_syntax_tree(init, stack);
+		new->right = most_prev(abstract_syntax_tree(init, stack));
+		new->left = most_prev(abstract_syntax_tree(init, stack));
 		return (new);
 	}
-	else if (ptr->type == SQUOTE || ptr->type == DQUOTE)
+	else if (ptr && ptr->type != END)
 	{
-		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc);
-		pop(stack);
-		if (ptr->type == SQUOTE || ptr->type == DQUOTE)
-			new->next = abstract_syntax_tree(init, stack);
-		return (new);
-	}
-	else if (ptr)
-	{
-		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc);
-		pop(stack);
-		if (ptr->type == SQUOTE || ptr->type == DQUOTE)
-			new->next = abstract_syntax_tree(init, stack);
-		return (new);
+		while (ptr && ptr->cmd && ptr->is_cmd == 0)
+		{
+			push(stack, &init->temp);
+			ptr = lstlast_pars(*stack);
+		}
+		if (ptr && ptr->cmd && ptr->is_cmd == 1)
+		{
+			new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
+			pop(stack);
+			while (init && init->temp)
+				push(&init->temp, &new);
+			ptr = lstlast_pars(*stack);
+			return (new);
+		}
 	}
 	return (new);
 }
-
-/* IDEA FOR AST CONSTRUCTION WAY [DOESN'T WORKING RIGHT NOW]
-// Recursive function to construct the AST
-ASTNode *constructAST(char **tokens, int *index) {
-    char *token = tokens[*index];
-    (*index)++;
-
-    if (strcmp(token, "||") == 0 || strcmp(token, "&&") == 0 || strcmp(token, "|") == 0) {
-        ASTNode *node = createNode(token);
-        node->right = constructAST(tokens, index);
-        node->left = constructAST(tokens, index);
-        return node;
-    } else {
-        return createNode(token);
-    }
-}
-
-// Function to print the AST in a tree-like format
-void printAST(ASTNode *root, int indent) {
-    if (root == NULL) {
-        return;
-    }
-    printAST(root->right, indent + 4);
-    for (int i = 0; i < indent; i++) {
-        printf(" ");
-    }
-    printf("└── %s\n", root->cmd);
-    printAST(root->left, indent + 4);
-}*/

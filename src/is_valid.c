@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 16:09:57 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 03:09:18 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char static	*type_is(t_type	type)
 		return ("<<");
 	else if (type == INPUT)
 		return ("<");
+	else if (type == END)
+		return ("END");
 	return ("");
 }
 

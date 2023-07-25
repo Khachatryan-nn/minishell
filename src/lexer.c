@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 20:16:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 03:39:51 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	lexer(t_lexargs **res, char *line)
 			break ;
 		}
 	}
+	lstback_lex(res, lstnew_lex("AST", END, 1, 2));
 	return (1);
 }
 
@@ -114,8 +115,8 @@ void	lex(char *line, t_list *env, t_init *init)
 	//int i = 0;
 	//while (init->lex)
 	//{
-	//	printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n\tprc: %d\n", \
-	//	i, get_token_name(init->lex->type), init->lex->cmd, init->lex->prc);
+	//	printf("\033[38;5;54m[%d] --\ttype: %s\033[0m\n\tcmd: %s\n\tprc: %d\n\tis_cmd: %d\n", \
+	//	i, get_token_name(init->lex->type), init->lex->cmd, init->lex->prc, init->lex->is_cmd);
 	//	init->lex = init->lex->next;
 	//	i++;
 	//}

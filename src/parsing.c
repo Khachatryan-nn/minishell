@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 20:17:23 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 04:24:16 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	pop(t_parser **stack)
 	{
 		temp->prev->next = NULL;
 		temp->prev = NULL;
+		free (temp);
 	}
 	else
 		*stack = NULL;
@@ -37,14 +38,19 @@ void	push(t_parser **a, t_parser **b)
 
 	ptr1 = NULL;
 	ptr2 = NULL;
-	//printf("segfault caused by:\n"); print_types(*a); print_types(*b);
-	//[%s] and [%s]\n", lstlast_pars(*a)->cmd, lstlast_pars(*b)->cmd);
 	if (lstsize_pars(*a) == 0)
 		return ;
 	else if (lstsize_pars(*a) == 1 && lstsize_pars(*b) == 0)
 	{
 		*b = *a;
 		*a = NULL;
+	}
+	else if (lstsize_pars(*a) > 1 && lstsize_pars(*b) == 0)
+	{
+		ptr1 = lstlast_pars(*a);
+		*b = ptr1;
+		ptr1->prev->next = NULL;
+		ptr1->prev = NULL;
 	}
 	else if (lstsize_pars(*a) == 1 && lstsize_pars(*b) > 0)
 	{
@@ -61,8 +67,6 @@ void	push(t_parser **a, t_parser **b)
 		ptr2->prev->next = NULL;
 		ptr2->prev = ptr1;
 	}
-	else
-		return ;
 }
 
 void	parser(t_list *env, t_init *init)
@@ -83,7 +87,7 @@ void	parser(t_list *env, t_init *init)
 		if (ptr->prc == 0)
 		{
 			lstback_pars(&stack_otp, lstnew_pars(ptr->cmd, \
-			ptr->type, ptr->prc));
+			ptr->type, ptr->prc, ptr->is_cmd));
 		}
 		else if (ptr->prc > 0)
 		{
@@ -93,25 +97,26 @@ void	parser(t_list *env, t_init *init)
 					push(&stack_ops, &stack_otp);
 				pop(&stack_ops);
 			}
-			else if (ptr->prc > 1)
+			else if (ptr->type != SUBSH_OPEN)
 			{
 				while (stack_ops && lstlast_pars(stack_ops)->prc >= ptr->prc \
 					&& lstlast_pars(stack_ops)->type != SUBSH_OPEN)
 					push(&stack_ops, &stack_otp);
 				lstback_pars(&stack_ops, lstnew_pars(ptr->cmd, \
-					ptr->type, ptr->prc));
+					ptr->type, ptr->prc, ptr->is_cmd));
 			}
 			else
-				lstback_pars(&stack_ops, lstnew_pars(ptr->cmd, ptr->type, ptr->prc));
+				lstback_pars(&stack_ops, lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->is_cmd));
 		}
 		ptr = ptr->next;
 	}
 	while (stack_ops)
 		push(&stack_ops, &stack_otp);
-	// print_types(stack_otp);
+	//print_types(stack_otp);
 	init->pars = abstract_syntax_tree(init, &stack_otp);
+	//print_types(init->pars);
 	print_ast(init->pars, 0, 0);
-	check_ast(init, init->pars, env);
+	//check_ast(init, init->pars, env);
 }
 
 

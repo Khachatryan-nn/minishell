@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/24 16:06:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 02:37:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_lexer_arg
 	char				*cmd;
 	t_type				type;
 	int					prc;
+	int					is_cmd;
 	struct s_lexer_arg	*next;
 	struct s_lexer_arg	*prev;
 }						t_lexargs;
@@ -91,6 +92,7 @@ typedef struct s_parser
 	t_type			type;
 	int				prc;
 	int				flag;
+	int				is_cmd;
 	struct s_parser	*next;
 	struct s_parser	*prev;
 	struct s_parser	*left;
@@ -101,12 +103,14 @@ typedef struct s_parser
 	char		**path;
 	t_parser	*pars;
 	t_lexargs	*lex;
+	t_parser	*temp;
 */
 typedef struct s_init
 {
 	char		**path;
 	t_parser	*pars;
 	t_lexargs	*lex;
+	t_parser	*temp;
 }				t_init;
 
 /* - - - - --!-- - - - - ! Handling characters ! - - - - --!-- - - - - */
@@ -124,8 +128,8 @@ int			handle_xor(t_lexargs **res, char *line, int i, int count);
 const char	*get_token_name(t_type token);
 
 /* - - - - - --!-- - - - - ! Nodes and lists ! - - - - --!-- - - - - - */
-t_parser	*lstnew_pars(char *content, t_type type, int prec);
-t_lexargs	*lstnew_lex(char *content, t_type type, int prec);
+t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag);
+t_lexargs	*lstnew_lex(char *content, t_type type, int prec, int flag);
 void		lstback_lex(t_lexargs **lst, t_lexargs *new);
 void		lstback_pars(t_parser **lst, t_parser *new);
 void		lstclear_lex(t_lexargs **lst);

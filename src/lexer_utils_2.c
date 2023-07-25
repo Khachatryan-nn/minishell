@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 17:51:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/24 23:55:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int	is_delitimer(t_lexargs *root)
 	else if (ptr->type == WRITE_APPEND || ptr->type == WRITE_TRUNC)
 		return (1);
 	else if (ptr->type == SUBSH_OPEN || ptr->type == SUBSH_CLOSE)
+		return (1);
+	else if (ptr->type == DQUOTE || ptr->type == SQUOTE)
 		return (1);
 	else
 		return (0);

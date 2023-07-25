@@ -6,19 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/24 16:03:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 00:09:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag);
 void		lstback_pars(t_parser **lst, t_parser *new);
-t_parser	*lstnew_pars(char *content, t_type type, int prec);
 void		lstclear_pars(t_parser **lst);
 t_parser	*lstlast_pars(t_parser *lst);
 int			lstsize_pars(t_parser *lst);
 
-t_parser	*lstnew_pars(char *content, t_type type, int prec)
+t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag)
 {
 	t_parser	*elt;
 
@@ -28,6 +28,7 @@ t_parser	*lstnew_pars(char *content, t_type type, int prec)
 	elt->cmd = content;
 	elt->type = type;
 	elt->prc = prec;
+	elt->is_cmd = flag;
 	elt->next = NULL;
 	elt->prev = NULL;
 	elt->right = NULL;
