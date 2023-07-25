@@ -72,6 +72,7 @@ $(BUILD)/%.o:		$(SRC_DIR)/*/%.c $(DEPS)
 						$(call update_progress)
 
 $(NAME):			$(BUILD) $(OBJS) $(LIBFT) $(PRINTF)
+						@cp -f $(NAME) $(NAME)_old 2> /dev/null || :
 						@echo "$(GREEN)\nSources and libraries compiled.$(RESET)"
 						@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) $(OBJS) -o $(NAME)
 						@echo "$(GREEN)Build completed.$(RESET)"

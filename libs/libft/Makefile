@@ -46,6 +46,7 @@ $(BUILD)/%.o:		$(SRC_DIR)/%.c $(DEPS)
 #						@echo "$(GRAY)$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@$(RESET)"
 
 $(NAME):			$(BUILD) $(OBJS) $(DEPS)
+						@cp -f $(NAME) $(NAME)_old 2> /dev/null || :
 						@$(AR) $(NAME) $(OBJS)
 						@echo "\n$(GRAY)Libft build completed.$(RESET)"
 
