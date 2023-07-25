@@ -6,11 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:42:05 by musimony          #+#    #+#             */
-/*   Updated: 2023/06/17 01:52:38 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:30:58 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
 char	*ft_strnstr( char *str, char *str1, int len)
 {
