@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 16:46:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:59:43 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,4 @@ void	ft_cd(t_list *str, char *ptr)
 		;
 	else
 		perror("minishell");
-
 }

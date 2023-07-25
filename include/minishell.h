@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/25 16:31:16 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:03:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,9 @@ t_list		*ft_lstnew_2(char *str);
 
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
 int 		check_ast(t_init *init, t_parser *pars, t_list *env);
-void		lex(char *line, t_list *env, t_init *init);
+void		lex(char *line, t_init *init);
 int			lexer(t_parser **res, char *line);
-void		parser(t_list *env, t_init *init);
+void		parser(t_init *init);
 
 /* - - - - - --!-- - - - - - ! RPN and AST ! - - - - - --!-- - - - - - */
 void		shunting_yard(t_parser **p, t_parser **ops, t_parser **otp);

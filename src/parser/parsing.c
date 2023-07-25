@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 16:31:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:04:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	shunting_yard(t_parser **p, t_parser **ops, t_parser **otp);
-void	parser(t_list *env, t_init *init);
+void	parser(t_init *init);
 void	push(t_parser **a, t_parser **b);
 void	pop(t_parser **stack);
 
@@ -84,7 +84,7 @@ void	shunting_yard(t_parser **p, t_parser **ops, t_parser **otp)
 	}
 }
 
-void	parser(t_list *env, t_init *init)
+void	parser(t_init *init)
 {
 	t_parser	*ptr;
 	t_parser	*stack_ops;
@@ -100,11 +100,6 @@ void	parser(t_list *env, t_init *init)
 	}
 	while (stack_ops)
 		push(&stack_ops, &stack_otp);
-	//print_types(stack_otp);
 	init->pars = abstract_syntax_tree(init, &stack_otp);
-	//print_types(init->pars);
 	print_ast(init->pars, 0, 0);
-	(void) env;
-	//check_ast(init, init->pars, env);
-	destroy_init(init);
 }

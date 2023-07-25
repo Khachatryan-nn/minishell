@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 13:33:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:09:21 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	free_matrix(void **ptr)
 
 void	destroy_init(t_init *init)
 {
-
 	if (!init)
 		return ;
 	destroy_structure(init->lex);
@@ -44,20 +43,12 @@ void	destroy_structure(t_parser *root)
 {
 	if (!root)
 		return ;
-	//if (root->next)
-	//{
-	//	printf("root:%s\n", root->cmd);
-	//	printf("root->next:%s\n", root->next->cmd);
-	//	if (root->next->next)
-	//		printf("root->next->next:%s\n", root->next->next->cmd);
-	//}
-	if (root->right){//printf("rchild of %s\n", root->cmd);
-		destroy_structure(root->right);}
-	if (root->left){//printf("lchild of %s\n", root->cmd);
-		destroy_structure(root->left);}
-	if (root->next){//printf("next of %s\n", root->cmd);
-		destroy_structure(root->next);}
-	//printf("now freeing %s\n", root->cmd);
+	if (root->right)
+		destroy_structure(root->right);
+	if (root->left)
+		destroy_structure(root->left);
+	if (root->next)
+		destroy_structure(root->next);
 	if (root->cmd)
 		free (root->cmd);
 	free (root);
