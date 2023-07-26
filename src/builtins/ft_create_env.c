@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:23:59 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/26 15:20:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/26 16:13:10 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,26 @@ char	*ft_find_symbol(char *str, char c)
 	ptr = NULL;
 	j = 0;
 	i = 0;
-	while (str[i] != c  && str[i] != '\0')
+	while (str[i] != c && str[i] != '\0')
 		i++;
 	if (str[i] == '\0')
-		return(str);
+		return (str);
 	ptr = (char *)malloc(sizeof(char) * (i + 1));
 	if (!ptr)
-	return(NULL);
+		return (NULL);
 	while (j < i)
 	{
 		ptr[j] = str[j];
 		j++;
 	}
 	ptr[j] = '\0';
-	return(ptr);
+	return (ptr);
 }
 
 t_list	*ft_lstnew_2(char *str)
 {
 	t_list	*lst;
+
 	lst = malloc(sizeof(t_list));
 	lst->ptr = ft_strdup(ft_find_symbol(str, '='));
 	lst->value = ft_strdup(ft_strchr(str, '='));
@@ -47,7 +48,7 @@ t_list	*ft_lstnew_2(char *str)
 	lst->flag = 0;
 	lst->next = NULL;
 	lst->prev = NULL;
-	return(lst);
+	return (lst);
 }
 
 void	ft_create_env(char **str, t_list **stack)

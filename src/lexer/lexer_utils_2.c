@@ -6,47 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 13:55:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/26 19:14:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-char		*strjoin_helper(char *result, char *read, int mode);
 const char	*get_token_name(t_type token);
 int			is_delitimer(t_parser *root);
-
-char	*strjoin_helper(char *result, char *read, int mode)
-{
-	if (mode == 1)
-		result = ft_strjoin(result, "\n", 1);
-	else if (mode == 2)
-	{
-		if (read[0] == ' ')
-			result = ft_strjoin(result, " \"", 1);
-		else
-			result = ft_strjoin(result, "\"", 1);
-	}
-	else if (mode == 3)
-	{
-		if (read[0] == ' ')
-			result = ft_strjoin(result, "'", 1);
-		else
-			result = ft_strjoin(result, "'", 1);
-	}
-	else
-		result = ft_strjoin(result, " ", 1);
-	if (mode == 2 || mode == 3)
-		result = ft_strjoin(result, read + 2, 0);
-	else
-		result = ft_strjoin(result, read, 1);
-	if (mode == 2)
-		result = ft_strjoin(result, "\"", 1);
-	else if (mode == 3)
-		result = ft_strjoin(result, "'", 1);
-	return (result);
-}
 
 const char* get_token_name(t_type token)
 {

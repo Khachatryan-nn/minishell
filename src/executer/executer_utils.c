@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   executer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 19:42:05 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/26 16:22:08 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/07/27 02:12:15 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strnstr( char *str, char *str1, int len)
+char	*restore_cmd_line(t_parser *stack);
+
+char	*restore_cmd_line(t_parser *stack)
 {
-	int	i;
+	char		*cmd;
+	int			mode;
+	t_parser	*ptr;
 
-	i = 0;
-	if (len == 0)
+	cmd = NULL;
+	ptr = stack;
+	while (ptr && ptr->cmd)
 	{
-		while (str[i] == str1[i])
-			i++;
-		if (str[i] || str1[i])
-			return (NULL);
+		mode = (ptr->flag & (1 << 1)) && 1;
+		if (!cmd || mode == 0)
+			cmd = ft_strjoin(cmd, ptr->cmd, 1);
 		else
-			return (str);
+			cmd = strjoin_helper(cmd, ptr->cmd, 0);
+		ptr = ptr->next;
 	}
-	else
-	{
-		while (str[i] == str1[i] && i < len)
-			i++;
-		if (str[i]!= '\0' && str1[i] != '\0')
-			return (str);
-		else
-			return (NULL);	
-	}	
+	return (cmd);
 }

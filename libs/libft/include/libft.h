@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:23:02 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/25 16:44:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/26 16:21:16 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ typedef struct s_list
 {
 	struct s_list	*next;
 	struct s_list	*prev;
-	char	*ptr;
-	char	*value;
-	char	*type;
-	int		flag;
-	void	*content;
-}			t_list;
+	char			*ptr;
+	char			*value;
+	char			*type;
+	int				flag;
+	void			*content;
+}					t_list;
 
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
@@ -35,7 +35,6 @@ int		ft_isdigit(int c);
 int		ft_isprint(int c);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
-// int		ft_strcmp(const char *s1, const char *s2, int n);
 char	*ft_strnstr( char *str, char *str1, int len);
 int		ft_toupper(int c);
 int		ft_tolower(int c);

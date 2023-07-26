@@ -1,8 +1,8 @@
 # MAIN
 NAME			=	minishell
 CC				=	cc
-RM          	=   rm -rf
-MK          	=   mkdir -p
+RM				=	rm -rf
+MK				=	mkdir -p
 CFLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=address
 
 # COLORS
@@ -27,7 +27,7 @@ DEPS			=	$(wildcard $(INCS_DIR)/*.h) Makefile
 SRC_DIR			=	./src
 BUILD			=	./build
 SUBDIRS			=	lexer parser utils executer builtins
-SRCDIRS			:=	$(addprefix $(SRC_DIR)/, $(SUBDIRS))
+SRCDIRS			:=	$(addprefix $(SRC_DIR)/, $(SUBDIRS)) 
 SRCS			:=	$(notdir $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))) $(notdir $(SRC_DIR)/main.c)
 
 # OBJECTS
@@ -43,17 +43,22 @@ MGOALS			=	$(filter-out bonus, $(MAKECMDGOALS))
 .DEFAULT_GOAL	=	all
 
 # PROGRESS BAR
-TOTAL_SRCS := $(words $(SRCS))
-COMPILED_SRCS := 0
+TOTAL_SRCS		:= $(words $(SRCS))
+#BUILD_EXISTS	:= $(shell [ -e $(BUILD) ] && echo 1 || echo 0 )
+COMPILED_SRCS	:= 0
 
+#	ifeq ($(BUILD_EXISTS), 0)
 define update_progress
-	$(eval COMPILED_SRCS := $(shell echo $$(($(COMPILED_SRCS)+1))))
-	$(eval PERCENTAGE := $(shell echo $$(($(COMPILED_SRCS)*100/$(TOTAL_SRCS)))))
-	@printf "${GREEN}\rBuilding : ["
-	@printf "%-*s" $$(($(PERCENTAGE) / 2)) "" | tr ' ' ░
-	@printf "\r%-*s" $$((7)) "" | tr ' ' '\t'
-	@printf "] (%d%%)$(RESET)" $(PERCENTAGE)
+		$(eval COMPILED_SRCS := $(shell echo \
+			$$(( $(COMPILED_SRCS) +1)) ))
+		$(eval PERCENTAGE := $(shell echo \
+			$$(( $(COMPILED_SRCS) * 100 / $(TOTAL_SRCS) )) ))
+		@printf "${GREEN}\rBuilding : ["
+		@printf "%-*s" $$(($(PERCENTAGE) / 2)) "" | tr ' ' ░
+		@printf "\r%-*s" $$((7)) "" | tr ' ' '\t'
+		@printf "] (%d%%)$(RESET)" $(PERCENTAGE)
 endef
+#	endif
 
 # RULES
 

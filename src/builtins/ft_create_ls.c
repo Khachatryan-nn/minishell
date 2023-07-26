@@ -6,35 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:16:12 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/23 19:34:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/26 16:15:35 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_ls(char *str)
+char	*ft_ls(char *str)
 {
-// 	// int minishell_ls(char *directory) {
-//     DIR *dir;
-//     struct dirent *entry;
-
-//     // Open the directory
-//     dir = opendir(str);
-//     if (dir == NULL)
-// 	{
-//         perror("opendir");
-//         return (NULL);
-//     }
-
-//     // Read and print directory entries
-//     while ((entry = readdir(dir)) != NULL) 
-// 			str = ft_strjoin(ft_strjoin(str, entry->d_name), "\t");
-
-//     // Close the directory
-//     closedir(dir);
-
-//     return (str);
-// }
 	DIR				*dir;
 	struct dirent	*entry;
 
@@ -56,5 +35,4 @@ char *ft_ls(char *str)
 	}
 	closedir(dir);
 	return (str);
-	return (str);
-	}
+}

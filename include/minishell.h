@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/25 23:35:49 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/27 01:52:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,14 @@ void		lstback(t_parser **lst, t_parser *new);
 void		destroy_structure(t_parser *root);
 void		destroy_init(t_init *init);
 void		lstclear(t_parser **lst);
+t_list		*ft_lstnew_2(char *str);
 t_parser	*lstlast(t_parser *lst);
 int			lstsize(t_parser *lst);
-t_list		*ft_lstnew_2(char *str);
 
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
 int 		check_ast(t_init *init, t_parser *pars, t_list *env);
-void		lex(char *line, t_init *init);
 int			lexer(t_parser **res, char *line);
+void		lex(char *line, t_init *init);
 void		parser(t_init *init);
 
 /* - - - - - --!-- - - - - - ! RPN and AST ! - - - - - --!-- - - - - - */
@@ -135,12 +135,14 @@ void		print_ast(t_parser *ast, int indent, int lrc);
 void		push(t_parser **a, t_parser **b);
 void		pop(t_parser **stack);
 
+/* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
+char		*restore_cmd_line(t_parser *stack);
+char		*check_cmd(char *cmd, char **path);
+
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
 char		*strjoin_helper(char *result, char *read, int mode);
-int			restore_cmd_line(t_parser *lex, char **str);
 int			ft_isspace(char *line, int i, int j);
-void		find_path(t_cmd *cmd, t_list *env);
-int			check_cmd(t_cmd *cmd, t_list *env);
+void		find_path(t_init *init, t_list *env);
 int			is_delitimer(t_parser *root);
 int			parse_error(char *err_str);
 void		print_types(t_parser *ptr);
@@ -163,10 +165,7 @@ char		*ft_ls(char *str);
 /* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
 
 int			ft_list_change(t_list *new, t_list *env);
-void		find_path(t_cmd *cmd, t_list *env);
 char		*ft_find_symbol(char *str, char c);
-int			check_cmd(t_cmd *cm, t_list *env);
 int			ft_strcmp(char *s1, char *s2);
-int			checker(t_cmd *cmd);
 
 #endif

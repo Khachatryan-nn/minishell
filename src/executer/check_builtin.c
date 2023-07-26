@@ -1,12 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_builtin.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/07/26 16:08:02 by tikhacha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int check_built(char *str, t_list *env)
+int	check_built(char *str, t_list *env)
 {
-	//char *ls;
-	// char *str;
-
-	//ls = NULL;
-	// str = ft_strdup(cmd->cmd_line);
 	if (ft_strcmp(str, "env") == 0)
 	{
 		ft_env (env);

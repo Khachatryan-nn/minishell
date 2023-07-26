@@ -6,18 +6,17 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/23 19:37:44 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/27 02:13:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	find_path(t_cmd *cmd, t_list *env);
-int		check_cmd(t_cmd *cmd, t_list *env);
-int		checker(t_cmd *cmd);
+char static	*find_cmdpath(char *cmd, char **path);
+void		find_path(t_init *init, t_list *env);
+char		*check_cmd(char *cmd, char **path);
 
-//Function to find and create matrix of cmd PATHs
-void	find_path(t_cmd *cmd, t_list *env)
+void	find_path(t_init *init, t_list *env)
 {
 	t_list	*env1;
 
@@ -28,53 +27,47 @@ void	find_path(t_cmd *cmd, t_list *env)
 			break ;
 		env1 = env1->next;
 	}
-	cmd->path = ft_split(env1->value, ':');
+	init->path = ft_split(env1->value, ':');
 }
 
-int	checker(t_cmd *cmd)
+
+char static	*find_cmdpath(char *cmd, char **path)
 {
-	char	*cmd_path;
-	char	*temp;
+	char	*cmdpath;
 	int		i;
 
 	i = -1;
-	while (cmd->path[++i])
+	cmdpath = NULL;
+	while (path[++i])
 	{
-		temp = ft_strjoin("/", cmd->cmd_args[0], 0);
-		cmd_path = ft_strjoin(cmd->path[i], temp, 0);
-		free(temp);
-		temp = 0;
-		if (access(cmd_path, X_OK) == -1)
-		{
-			cmd->cmd_path = cmd_path;
-			return (1);
-		}
-		free(cmd_path);
-		cmd_path = 0;
+		cmdpath = ft_strjoin(path[i], "/", 0);
+		cmdpath = ft_strjoin(cmdpath, cmd, 1);
+		if (access(cmdpath, X_OK) == -1)
+			free (cmdpath);
+		else
+			return (cmdpath);
 	}
-	return (0);
+	return (cmd);
 }
 
-//Function to check if there are existing cmd like that
-int	check_cmd(t_cmd *cmd, t_list *env)
+char	*check_cmd(char *cmd, char **path)
 {
-	while (*cmd->cmd_line == ' ')
-		cmd->cmd_line++;
-	cmd->cmd_args = ft_split(cmd->cmd_line, ' ');
-	if (check_built(cmd->cmd_line, env))
-		return (1);
-	if (access(cmd->cmd_args[0], X_OK) == -1)
+	char	*cmd_path;
+
+	cmd_path = NULL;
+	if (access(cmd, X_OK) == -1)
 	{
-		if (ft_strchr(cmd->cmd_args[0], '/') != NULL)
+		if (ft_strchr(cmd, '/'))
 		{
-			write (2, "Error: Unknown command.\n", 24);
-			return (1);
+			dprintf(2, "minishell: %s: No such file or directory\n", cmd);
+			return (cmd_path);
 		}
-		else if (!checker(cmd))
+		cmd_path = find_cmdpath(cmd, path);
+		if (!cmd_path)
 		{
-			write (2, "Error: Unknown command.\n", 24);
-			return (1);
+			dprintf(2, "minishell: %s: command not found\n", cmd);
+			return (cmd_path);
 		}
 	}
-	return (0);
+	return (cmd_path);
 }

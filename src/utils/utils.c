@@ -6,14 +6,25 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 16:40:59 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/26 19:14:05 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strcmp( char *s1, char *s2);
-int	ft_onlyspaces(char *str);
+char	*strjoin_helper(char *result, char *read, int mode);
+int		ft_strcmp( char *s1, char *s2);
+int		ft_onlyspaces(char *str);
+
+char	*strjoin_helper(char *result, char *read, int mode)
+{
+	if (mode == 1)
+		result = ft_strjoin(result, "\n", 1);
+	else
+		result = ft_strjoin(result, " ", 1);
+	result = ft_strjoin(result, read, 1);
+	return (result);
+}
 
 int	ft_onlyspaces(char *str)
 {
