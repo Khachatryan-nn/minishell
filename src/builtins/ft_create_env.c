@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:23:59 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/06/25 21:24:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:20:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_find_symbol(char *str, char c)
 		i++;
 	if (str[i] == '\0')
 		return(str);
-	ptr = (char *)malloc(sizeof(char) * i);
+	ptr = (char *)malloc(sizeof(char) * (i + 1));
 	if (!ptr)
 	return(NULL);
 	while (j < i)

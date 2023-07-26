@@ -3,7 +3,7 @@ NAME			=	minishell
 CC				=	cc
 RM          	=   rm -rf
 MK          	=   mkdir -p
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=address
 
 # COLORS
 GRAY			=	\033[38;5;8m
@@ -62,17 +62,14 @@ $(BUILD):
 						@echo "${GREY}Building minishell...${RESET}"
 
 $(BUILD)/%.o:		$(SRC_DIR)/%.c $(DEPS)
-#						@echo "${GRAY}${CC} ${CFLAGS} ${IFLAGS} -c $< -o $@ ${RESET}"
 						@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 						$(call update_progress)
 
 $(BUILD)/%.o:		$(SRC_DIR)/*/%.c $(DEPS)
-#						@echo "${GRAY}${CC} ${CFLAGS} ${IFLAGS} -c $< -o $@ ${RESET}"
 						@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 						$(call update_progress)
 
 $(NAME):			$(BUILD) $(OBJS) $(LIBFT) $(PRINTF)
-						@cp -f $(NAME) $(NAME)_old 2> /dev/null || :
 						@echo "$(GREEN)\nSources and libraries compiled.$(RESET)"
 						@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) $(OBJS) -o $(NAME)
 						@echo "$(GREEN)Build completed.$(RESET)"
@@ -95,7 +92,7 @@ clean:
 
 fclean:	clean
 			@echo "$(GRAY)Processing...$(RESET)"
-			@$(RM) $(NAME)
+			@$(RM) $(NAME) $(NAME)_old "$(NAME) "* 2> /dev/null || :
 			@$(MAKE) fclean -C $(LIBFT_DIR)
 			@$(MAKE) fclean -C $(PRINTF_DIR)
 			@echo "$(RED)Cleaned everything.$(RESET)"

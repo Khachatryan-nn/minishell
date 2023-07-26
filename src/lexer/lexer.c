@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 19:03:13 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:21:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	lexer(t_parser **res, char *line)
 
 	i = -1;
 	l = -1;
-	while (line[++i])
+	while (line && line[++i])
 	{
 		counter = i;
 		while (line[i])

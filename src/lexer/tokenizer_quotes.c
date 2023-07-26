@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 15:46:51 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:23:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	handle_dquotes(t_parser **res, char *line, int i, int count)
 		if (k < (int) ft_strlen(result))
 			lexer(res, result + k + 1);
 	}
-	return (counter);
+	return (counter - 1);
 }
 
 int	handle_squotes(t_parser **res, char *line, int i, int count)
@@ -165,5 +165,5 @@ int	handle_squotes(t_parser **res, char *line, int i, int count)
 		if (k < (int) ft_strlen(result) - 1)
 			lexer(res, result + k + 1);
 	}
-	return (counter);
+	return (counter - 1);
 }

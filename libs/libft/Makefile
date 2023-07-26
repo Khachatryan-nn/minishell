@@ -1,29 +1,29 @@
 # MAIN
-NAME				=	libft.a
-CC					=	cc
-RM					=	rm -rf
-MK					=	mkdir -p
-AR					=	ar rcs
-CFLAGS				=	-Wall -Wextra -Werror
-IFLAGS				=	-Iinclude
+NAME			=	libft.a
+CC				=	cc
+RM				=	rm -rf
+MK				=	mkdir -p
+AR				=	ar rcs
+CFLAGS			=	-Wall -Wextra -Werror
+IFLAGS			=	-Iinclude
 
 # COLORS
-GRAY				=	\033[38;5;8m
-GREEN				=	\033[38;5;46m
-RED					=	\033[38;5;196m
-RESET				=	\033m
+GRAY			=	\033[38;5;8m
+GREEN			=	\033[38;5;46m
+RED				=	\033[38;5;196m
+RESET			=	\033m
 
 # DEPENDENCIES
-DEPS				=	include/libft.h Makefile
+DEPS			=	include/libft.h Makefile
 
 # SOURCES
-SRC_DIR				=	./srcs
-SRCS				=	$(wildcard $(SRC_DIR)/*.c)
-BUILD				=	./build
-OBJS				=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(SRCS))
+SRC_DIR			=	./srcs
+SRCS			=	$(wildcard $(SRC_DIR)/*.c)
+BUILD			=	./build
+OBJS			=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(SRCS))
 
 
-.DEFAULT_GOAL		=	all
+.DEFAULT_GOAL	=	all
 
 # PROGRESS BAR
 TOTAL_SRCS := $(words $(SRCS))
@@ -40,19 +40,17 @@ endef
 
 # RULES
 
-$(BUILD)/%.o:		$(SRC_DIR)/%.c $(DEPS)
-						@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
-						$(call update_progress)
-#						@echo "$(GRAY)$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@$(RESET)"
+$(BUILD)/%.o:	$(SRC_DIR)/%.c $(DEPS)
+					@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+					$(call update_progress)
 
-$(NAME):			$(BUILD) $(OBJS) $(DEPS)
-						@cp -f $(NAME) $(NAME)_old 2> /dev/null || :
-						@$(AR) $(NAME) $(OBJS)
-						@echo "\n$(GRAY)Libft build completed.$(RESET)"
+$(NAME):		$(BUILD) $(OBJS) $(DEPS)
+					@$(AR) $(NAME) $(OBJS)
+					@echo "\n$(GRAY)Libft build completed.$(RESET)"
 
 $(BUILD):
-						@mkdir $(BUILD)
-						@echo "${GRAY}Building libft...${RESET}"
+					@mkdir $(BUILD)
+					@echo "${GRAY}Building libft...${RESET}"
 
 all:	$(NAME)
 
@@ -61,7 +59,7 @@ clean:
 			@echo "$(GRAY)Cleaned libft build.$(RESET)"
 
 fclean:	clean
-			@$(RM) $(NAME)
+			@$(RM) $(NAME) libft*.a 2> /dev/null || :
 			@echo "$(GRAY)Cleaned everything in libft.$(RESET)"
 
 re:		fclean $(NAME)
