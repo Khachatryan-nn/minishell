@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:50:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/27 16:36:17 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/28 01:01:50 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void    ft_export(t_list *env)
     }
     i = 0;
     env1 = env;
-    while (ptr[i] != '\0' && *ptr != NULL && env1)
+    while (*ptr[i] != '\0' && *ptr != NULL && env1)
     {
         if (env1->type == 1 && env1->flag == 1)
         {

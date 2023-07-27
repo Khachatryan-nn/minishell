@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/27 16:24:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/28 01:02:22 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	ft_cd(t_list *str, char *ptr)
 	char	*text1;
 
 	(void)str;
+	(void)env;
+	(void)env1;
+	(void)start;
+	(void)text1;
 	text = NULL;
 	text1 = NULL;
 	text = ptr;
