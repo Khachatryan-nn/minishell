@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 23:50:14 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:24:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,20 @@
 
 void	ft_cd(t_list *str, char *ptr)
 {
-	t_list	*env;
-	t_list	*env1;
-	t_list	*start;
+	t_list *env;
+	t_list *env1;
+	t_list *start;
 	char	*text;
 	char	*text1;
 
-	(void) str;
-	(void) env;
-	(void) env1;
-	(void) start;
-	(void) text1;
+	(void)str;
 	text = NULL;
 	text1 = NULL;
 	text = ptr;
 	env = NULL;
 	env1 = NULL;
 	start = NULL;
-	while (*text == ' ' && *text)
+ 	while (*text == ' ' && *text)
 		text++;
 	while (*text != ' ' && *text)
 		text++;
@@ -39,7 +35,10 @@ void	ft_cd(t_list *str, char *ptr)
 		text++;
 	text1 = getcwd(NULL, 0);
 	if (chdir(text) == 0)
-		;
+	{
+		(void)str;
+	}
 	else
 		perror("minishell");
+
 }
