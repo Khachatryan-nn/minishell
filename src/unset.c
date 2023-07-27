@@ -5,8 +5,6 @@ void ft_unset(char *ptr, t_list *env)
     t_list  *lst;
     char    **ttr;
     char    *str;
-    t_list  *swap;
-    t_list *swap1;
 
     int     i;
     int     j;
@@ -16,7 +14,6 @@ void ft_unset(char *ptr, t_list *env)
     j = 0;
     k = 0;
     ttr = NULL;
-    swap = NULL;
     str = (char *)malloc(sizeof(char) * 1000);
     while (ptr[i] == ' ' && ptr[i] != '\0')
     i++;
@@ -63,12 +60,6 @@ void ft_unset(char *ptr, t_list *env)
      }
          ttr[k] = 0;
     }
-    // k = 0;
-    // while (ttr[k])
-    // {
-    //     printf("%s\n", ttr[k]);
-    //     k++;
-    // }
     k = 0;
    while (ttr[k] && *ttr)
    {
@@ -91,20 +82,21 @@ void ft_unset(char *ptr, t_list *env)
             k++;
             continue;
         }
-        swap = NULL;
-        swap1 = NULL;
         lst = env;
         while (lst)
         {
             if(ft_strcmp(lst->ptr, ttr[k]) == 0)
+                 lst->type = 0;
+            lst = lst->next;
+        }
+        lst = env;
+        while (lst)
+        {
+            if (ft_strcmp(lst->ptr, "PWD") == 0)
             {
-                if (ft_strcmp(lst->ptr, "PWD"))
-                {
-                    printf("aaa\n");
-                    lst->flag++;
-                    printf("%d\n", lst->flag);
-                }
-                lst->type = ft_strdup("no");
+                lst->flag = 0;
+                lst->type = 0;
+                break;
             }
             lst = lst->next;
         }

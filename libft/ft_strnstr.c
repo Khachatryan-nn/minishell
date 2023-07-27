@@ -35,7 +35,26 @@ char	*ft_strnstr( char *str, char *str1, int len)
 		else
 			return(NULL);		
 	}
+}
 
+
+int	ft_strnstr_2(char *str, char *str1, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (str[i] == str1[i])
+			i++;
+		else
+			break;
+	}
+	if (i == len)
+		return(1);
+	else
+		return(0);
+}
 	// int		i;
 	// char		*ptr;
 	// char		*ptr1;
@@ -60,4 +79,4 @@ char	*ft_strnstr( char *str, char *str1, int len)
 	// 	++str;
 	// }
 	// return (NULL);
-}
+

@@ -77,17 +77,12 @@ void    ft_export(t_list *env)
     env1 = env;
     while (ptr[i] != '\0' && *ptr != NULL && env1)
     {
-        if (ft_strcmp(env1->type, "yes") == 0)
+        if (env1->type == 1 && env1->flag == 1)
         {
             printf("declare - x ");
             printf("%s", ft_find_symbol(ptr[i], '='));
-            if (ft_strchr(ptr[i], '='))
-            {
-             printf("%c", '=');
-             printf ("%c", '"');
-             printf("%s", (ft_strchr(ptr[i], '=') + 1));
-             printf("%c\n", '"');
-            }
+            if(ft_strchr(ptr[i], '='))
+                 printf("= \"%s\"\n", (ft_strchr(ptr[i], '=') + 1));
              else
              printf("\n");
         }

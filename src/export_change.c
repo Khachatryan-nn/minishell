@@ -99,7 +99,8 @@ int    ft_list_change(t_list *new, t_list *env)
         if (ft_strcmp(new->ptr, str->ptr) == 0)
             {
                 str->value = ft_strdup(new->value);
-                str->type = ft_strdup("yes");
+                str->type = 1;
+                str->flag = 1;
                 return(1);
             }
         str = str->next;

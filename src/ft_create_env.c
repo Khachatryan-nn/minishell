@@ -43,8 +43,8 @@ t_list	*ft_lstnew_2(char *str)
 	lst = malloc(sizeof(t_list));
 	lst->ptr = ft_strdup(ft_find_symbol(str, '='));
 	lst->value = ft_strdup(ft_strchr(str, '='));
-	lst->type = ft_strdup("yes");
-	lst->flag = 0;
+	lst->type = 1;
+	lst->flag = 1;
 	lst->next = NULL;
 	lst->prev = NULL;
 	return(lst);
@@ -53,14 +53,25 @@ t_list	*ft_lstnew_2(char *str)
 void	ft_create_env(char **str, t_list **stack)
 {
 	int		i;
+	int		flag;
 	t_list	*stack_a;
 
 	i = 0;
+	flag = 0;
+	stack_a = NULL;
 	while (str[i])
 	{
 		stack_a = ft_lstnew_2(str[i]);
 		ft_lstadd_back(stack, stack_a);
+		if (ft_strcmp(stack_a->ptr, "OLDPWD") == 0)
+			flag = 1;
 		i++;
+	}
+	if (flag == 0)
+	{
+		stack_a = ft_lstnew_2("OLDPWD");
+		stack_a->type = 0;
+		ft_lstadd_back(stack, stack_a);
 	}
 }
 
@@ -72,7 +83,7 @@ void	ft_env(t_list *env)
 	lst = env;
 	while ((lst))
 	{
-		if (ft_strcmp(lst->type, "yes") == 0)
+		if (lst->type > 0 && lst->flag > 0)
 		{
 			printf("%s", lst->ptr);
 			printf("%s\n", lst->value);

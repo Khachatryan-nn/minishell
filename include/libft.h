@@ -24,7 +24,7 @@ typedef struct s_list
 	struct s_list	*prev;
 	char	*ptr;
 	char	*value;
-	char	*type;
+	int		type;
 	int		flag;
 	void	*content;
 }			t_list;
@@ -71,5 +71,6 @@ t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
+int		ft_strnstr_2(char *str, char *str1, int len);
 
 #endif
