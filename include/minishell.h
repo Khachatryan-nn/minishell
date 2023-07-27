@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/27 01:52:39 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/27 17:07:22 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,8 @@ int			is_valid(t_init *init);
 /* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */
 void		ft_export_change(char *line, t_list *env);
 void		ft_create_env(char **str, t_list **stack);
+int			check_built(t_parser *stack, t_list *env);
 void		ft_cd_prev(t_list *str, char *text);
-int			check_built(char *str, t_list *env);
 void		ft_unset(char *ptr, t_list *env);
 void		ft_cd(t_list *str, char *ptr);
 void		ft_export(t_list *env);

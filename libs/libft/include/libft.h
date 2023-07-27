@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:23:02 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/27 16:12:48 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:36:53 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_list
 	struct s_list	*prev;
 	char	*ptr;
 	char	*value;
-	char	*type;
+	int		type;
 	int		flag;
 	void	*content;
 }			t_list;

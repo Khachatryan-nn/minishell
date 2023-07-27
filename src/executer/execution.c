@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/27 02:12:13 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/27 17:05:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 {
 	if (pars->left == NULL && pars->right == NULL)
 	{
-		if (!check_built(pars->cmd, env))
+		if (!check_built(pars, env))
 			call_cmd(pars, init, env);
 	}
 	if (pars->left != NULL)

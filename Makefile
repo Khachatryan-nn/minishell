@@ -3,13 +3,13 @@ NAME			=	minishell
 CC				=	cc
 RM				=	rm -rf
 MK				=	mkdir -p
-CFLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror #-g3 -fsanitize=address
 
 # COLORS
 GRAY			=	\033[38;5;8m
 GREEN			=	\033[38;5;46m
 RED				=	\033[38;5;196m
-RESET			=	\033m
+RESET			=	\033[0m
 
 # LIBRARIES
 LIBFT_DIR		=	./libs/libft
@@ -58,7 +58,6 @@ define update_progress
 		@printf "\r%-*s" $$((7)) "" | tr ' ' '\t'
 		@printf "] (%d%%)$(RESET)" $(PERCENTAGE)
 endef
-#	endif
 
 # RULES
 

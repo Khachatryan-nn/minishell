@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/27 02:13:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/27 13:27:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	find_path(t_init *init, t_list *env)
 {
 	t_list	*env1;
 
-	env1 = env;
+	env1 = env; 
 	while (env1)
 	{
 		if (ft_strcmp(env1->ptr, "PATH") == 0)
