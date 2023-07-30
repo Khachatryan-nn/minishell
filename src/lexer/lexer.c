@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/26 15:21:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/30 20:39:11 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,13 @@ void	lex(char *line, t_init *init)
 	if (!(lexer(&init->lex, line)))
 	{
 		destroy_init(init);
+		init->exit_status = 258;
 		return ;
 	}
 	if (!is_valid(init))
 	{
 		destroy_init(init);
+		init->exit_status = 258;
 		return ;
 	}
 	parser(init);

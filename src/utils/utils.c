@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/26 19:14:05 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/29 17:22:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_onlyspaces(char *str)
 
 int	ft_strcmp( char *s1, char *s2)
 {
-	int			i;
+	int		i;
 	char	*ptr1;
 	char	*ptr2;
 
@@ -51,7 +51,7 @@ int	ft_strcmp( char *s1, char *s2)
 	ptr2 = (char *)s2;
 	if (!s1 && !s2)
 		return (0);
-	while (ptr1[i] == ptr2[i] && ptr1[i] && ptr2[i])
+	while (ptr1[i] && ptr2[i] && ptr1[i] == ptr2[i])
 	{
 		if (ptr1[i] == '\0' && ptr2[i] == '\0')
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/26 16:23:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/30 20:45:09 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 		new->right = most_prev(abstract_syntax_tree(init, stack));
 		return (new);
 	}
-	if (ptr->type == XOR || ptr->type == XAND || ptr->type == PIPE || \
-		ptr->type == HEREDOC || ptr->type == INPUT || ptr->type == WRITE_APPEND \
-		|| ptr->type == WRITE_TRUNC)
+	if (check_type(ptr->type))
 	{
 		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
 		pop(stack);

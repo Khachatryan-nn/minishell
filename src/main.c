@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/27 15:47:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/30 19:02:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int ac, char **av, char **env1)
 	init.pars = NULL;
 	init.temp = NULL;
 	init.path = NULL;
+	init.exit_status = 0;
 	env = NULL;
 	(void) init;
 	ft_create_env(env1, &env);
@@ -55,12 +56,13 @@ int	main(int ac, char **av, char **env1)
 					free(env->value);
 					env = env->next;
 				}
-				return (127);
+				exit (init.exit_status);
 			}
 			else if (!ft_onlyspaces(str))
 			{
 				lex(str, &init);
-				check_ast(&init, init.pars, env);
+				if (init.pars)
+					check_ast(&init, init.pars, env);
 			}
 			add_history(str);
 			//system("leaks minishell");

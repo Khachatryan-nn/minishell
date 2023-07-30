@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/27 17:07:22 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/30 20:08:10 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef enum e_token_type
 	XAND,
 	PIPE,
 	HEREDOC,
+	HEREDOC_ARG,
 	WRITE_APPEND,
 	WRITE_TRUNC,
 	INPUT,
@@ -66,6 +67,8 @@ typedef struct s_cmd
 	char		*cmd;
 	t_type		type;
 	int			prc;
+	int 		flag;
+	int			err_code;
 	t_parser	*next;
 	t_parser	*prev;
 	t_parser	*left;
@@ -74,6 +77,7 @@ typedef struct s_cmd
 typedef struct s_parser
 {
 	char			*cmd;
+	char			*val;
 	t_type			type;
 	int				prc;
 	int				flag;
@@ -85,6 +89,7 @@ typedef struct s_parser
 }					t_parser;
 
 /*
+	int			exit_status;
 	char		**path;
 	t_parser	*pars;
 	t_parser	*lex;
@@ -92,6 +97,7 @@ typedef struct s_parser
 */
 typedef struct s_init
 {
+	int			exit_status;
 	char		**path;
 	t_parser	*pars;
 	t_parser	*lex;
@@ -110,6 +116,7 @@ void		handle_space(t_parser **res, char *line, int i, int count);
 int			handle_pipe(t_parser **res, char *line, int i, int count);
 int			handle_xand(t_parser **res, char *line, int i, int count);
 int			handle_xor(t_parser **res, char *line, int i, int count);
+void		heredoc_input(char	*limiter, t_parser **res);
 const char	*get_token_name(t_type token);
 
 /* - - - - - --!-- - - - - ! Nodes and lists ! - - - - --!-- - - - - - */
@@ -126,6 +133,7 @@ int			lstsize(t_parser *lst);
 int 		check_ast(t_init *init, t_parser *pars, t_list *env);
 int			lexer(t_parser **res, char *line);
 void		lex(char *line, t_init *init);
+int			check_type(t_type type);
 void		parser(t_init *init);
 
 /* - - - - - --!-- - - - - - ! RPN and AST ! - - - - - --!-- - - - - - */
@@ -138,6 +146,7 @@ void		pop(t_parser **stack);
 /* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
 char		*restore_cmd_line(t_parser *stack);
 char		*check_cmd(char *cmd, char **path);
+int			error_code(int error_num);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
 char		*strjoin_helper(char *result, char *read, int mode);

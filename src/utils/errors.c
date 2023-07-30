@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_utils.c                                  :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/30 20:43:18 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/07/28 17:31:55 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/07/28 17:35:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_input(char	*limiter, t_parser **res);
+int	error_code(int error_num);
 
-void	heredoc_input(char	*limiter, t_parser **res)
+int	error_code(int error_num)
 {
-	char	*line;
-	char	*result;
-
-	line = NULL;
-	result = NULL;
-	while (1)
-	{
-		ft_dprintf(1, "> ");
-		line = get_next_line(0);
-		if (!ft_strcmp(line, limiter))
-			break ;
-		else
-			result = ft_strjoin(result, line, 1);
-	}
-	//lstlast(*res)->val = result;
-	lstback(res, lstnew_pars(result, WORD, 0, 1));
+	if (error_num == 256)
+		return (1);
+	return (0);
 }
