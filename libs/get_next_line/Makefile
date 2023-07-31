@@ -58,7 +58,7 @@ clean:
 			@echo "$(GRAY)Cleaned gnl build.$(RESET)"
 
 fclean:	clean
-			@$(RM) $(NAME) libftdprintf*.a 2> /dev/null || :
+			@$(RM) $(NAME) libgnl*.a 2> /dev/null || :
 			@echo "$(GRAY)Cleaned everything in gnl.$(RESET)"
 
 re:		fclean $(NAME)

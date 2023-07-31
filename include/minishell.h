@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/30 20:08:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/31 22:16:21 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ typedef struct s_cmd
 typedef struct s_parser
 {
 	char			*cmd;
-	char			*val;
+	char			*rpath;
+	char			*lpath;
 	t_type			type;
 	int				prc;
 	int				flag;

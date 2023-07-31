@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/30 20:38:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:53:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 int	check_type(t_type type);
 int	is_valid(t_init *init);
 
+
+/// @brief check_type
+/// @param type
+/// @return 2 if i/o
+/// @return 1 etc
 int	check_type(t_type type)
 {
 	if (type == XAND || type == XOR || type == PIPE)
