@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/31 22:18:44 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:24:24 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,15 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 	if (check_type(ptr->type))
 	{
 		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
+		if (ptr->flag & 1 << 6)
+			new->flag += 1 << 6;
 		pop(stack);
 		new->right = most_prev(abstract_syntax_tree(init, stack));
 		new->left = most_prev(abstract_syntax_tree(init, stack));
 		if (check_type(new->type) == 2)
 		{
-			new->left->flag = new->left->flag + (1 << 3);
-			new->right->flag = new->right->flag + (1 << 3);
+			new->left->flag += 1 << 3;
+			new->right->flag += 1 << 3;
 			new->rpath = new->right->cmd;
 			new->lpath = new->left->cmd;
 		}
@@ -104,20 +106,3 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 	}
 	return (new);
 }
-
-
-
-//	xxxx1 -> command
-//	xxx1x -> space
-//	xx1xx -> executed or not (???)
-//	x1xxx -> command for I/O
-//	1xxxx -> arg for I/O
-
-
-
-
-//	1 << 0 -> 00001 -> 1	| cmd
-//	1 << 1 -> 00010 -> 2	| space
-//	1 << 2 -> 00100 -> 4	| exec stat
-//	1 << 3 -> 01000 -> 8	| I/O
-//	1 << 4 -> 10000 -> 16	| I/O arg

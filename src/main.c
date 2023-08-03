@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/30 19:02:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:28:42 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,7 @@ int	main(int ac, char **av, char **env1)
 		while (1)
 		{
 			str = readline("minishell$ ");
-			if (ft_strcmp(str, "exit") == 0)
-			{
-				while (env)
-				{
-					free(env->ptr);
-					free(env->value);
-					env = env->next;
-				}
-				exit (init.exit_status);
-			}
-			else if (!ft_onlyspaces(str))
+			if (!ft_onlyspaces(str))
 			{
 				lex(str, &init);
 				if (init.pars)

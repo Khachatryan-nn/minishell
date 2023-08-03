@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/31 22:48:13 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:52:08 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ int	andor_check(t_parser *stack)
 
 int	check_ast(t_init *init, t_parser *pars, t_list *env)
 {
+	int	pid;
+
+	pid = 0;
+	printf("fork or not %s %d\n", pars->cmd, pars->flag & 1 << 6);
 	if (!pars)
 	{
 		init->exit_status = 258;
@@ -48,12 +52,48 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 			init->exit_status = pars->err_code;
 		}
 	}
-	else if (pars->lpath && pars->rpath)
-		exec_iocmd(init, pars, env);
-	if (pars->left != NULL && !(pars->left->flag << 3 & 1))
-		pars->err_code = check_ast(init, pars->left, env);
-	if (pars->right != NULL && andor_check(pars) && !(pars->left->flag << 3 & 1))
-		pars->err_code = check_ast(init, pars->right, env);
+	// else if (pars->lpath && pars->rpath)
+	// {
+	// 	printf("io command found\n");
+	// 	exec_iocmd(init, pars, env);
+	// }
+	// else if (pars->type == PIPE || pars->flag & (1 << 5))
+	// {
+	// 	printf("pipe found\n");
+	// 	pipe_prepair(pars);
+	// }
+	if (pars->left != NULL && !(pars->left->flag & 1 << 3))
+	{
+		printf("fork or not %s %d\n", pars->cmd, pars->flag & 1 << 6);
+		if (pars->flag & 1 << 6)
+		{
+			pid = fork();
+			if (pid == -1)
+				return (127);
+			else if (pid == 0)
+			{
+				pars->err_code = check_ast(init, pars->left, env);
+			}
+			return (1);
+		}
+		else
+			pars->err_code = check_ast(init, pars->left, env);
+	}
+	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & 1 << 3))
+	{
+		printf("fork or not %s %d\n", pars->cmd, pars->flag & 1 << 6);
+		if (pars->flag & 1 << 6)
+		{
+			pid = fork();
+			if (pid == -1)
+				return (127);
+			else if (pid == 0)
+				pars->err_code = check_ast(init, pars->right, env);
+			return (1);
+		}
+		else
+			pars->err_code = check_ast(init, pars->right, env);
+	}
 	return (0);
 }
 

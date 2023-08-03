@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/31 22:16:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/01 19:14:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,38 @@ typedef enum e_token_type
 	END,
 }	t_type;
 
-/*
-	char	*cmd_line;
-	char	*cmd_path;
-	char	**cmd_args;
-	char	**path;
-	int		stdin;
-	int		stdout;
-*/
+//	@brief
+//	@tparam char	*cmd_line
+//	@tparam	char	*cmd_path
+//	@tparam	char	**cmd_args
+//	@tparam	char	**path
+//	@tparam int		stdin
+//	@tparam	int		stdout
+//	@tparam	int		pipes[2]
 typedef struct s_cmd
 {
+	int		*pipes;
+	char	**cmd_args;
 	char	*cmd_line;
 	char	*cmd_path;
-	char	**cmd_args;
 	char	**path;
-	int		stdin;
 	int		stdout;
+	int		stdin;
 }			t_cmd;
 
-/*
-	char		*cmd;
-	t_type		type;
-	int			prc;
-	int 		flag;
-	int			err_code;
-	t_parser	*next;
-	t_parser	*prev;
-	t_parser	*left;
-	t_parser	*right;
-*/
+//	@brief
+//	@tparam char		*cmd
+//	@tparam	char		*rpath
+//	@tparam	char		*lpath
+//	@tparam	t_type		type
+//	@tparam int			prc
+//	@tparam	int			flag
+//	@tparam	int			err_code
+//	@tparam	int			(*pipes)[2]
+//	@tparam	s_parser	*next
+//	@tparam	s_parser	*prev
+//	@tparam	s_parser	*left
+//	@tparam	s_parser	*right
 typedef struct s_parser
 {
 	char			*cmd;
@@ -83,19 +86,19 @@ typedef struct s_parser
 	int				prc;
 	int				flag;
 	int				err_code;
+	int				*pipes;
 	struct s_parser	*next;
 	struct s_parser	*prev;
 	struct s_parser	*left;
 	struct s_parser	*right;
 }					t_parser;
 
-/*
-	int			exit_status;
-	char		**path;
-	t_parser	*pars;
-	t_parser	*lex;
-	t_parser	*temp;
-*/
+//	@brief
+//	@tparam int			exit_status
+//	@tparam	char		**path
+//	@tparam	t_parser	*pars
+//	@tparam	t_parser	*lex
+//	@tparam	t_parser	*temp
 typedef struct s_init
 {
 	int			exit_status;
@@ -145,8 +148,10 @@ void		push(t_parser **a, t_parser **b);
 void		pop(t_parser **stack);
 
 /* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
+int			exec_iocmd(t_init *init, t_parser *stack, t_list *env);
 char		*restore_cmd_line(t_parser *stack);
 char		*check_cmd(char *cmd, char **path);
+int			pipe_prepair(t_parser *pars);
 int			error_code(int error_num);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/29 17:22:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:15:37 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ int	ft_onlyspaces(char *str)
 	return (1);
 }
 
+/// @brief
+/// @return 0 if there are equal
+///	@return or difference between non-eq. symbols
 int	ft_strcmp( char *s1, char *s2)
 {
 	int		i;
