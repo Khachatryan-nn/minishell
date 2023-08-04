@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/31 22:16:56 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 20:23:16 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag)
 	elt->cmd = ft_strdup(content);
 	elt->type = type;
 	elt->prc = prec;
+	elt->subshell_code = 0;
 	elt->flag = flag;
 	elt->err_code = 0;
 	elt->lpath = NULL;

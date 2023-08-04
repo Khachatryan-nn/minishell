@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/04 15:47:06 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 20:48:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	int	pid;
 
 	pid = 0;
-	printf("fork or not %s %d\n", pars->cmd, pars->flag & (1 << 6));
+	// printf("exit segfault\n");
 	if (!pars)
 	{
 		init->exit_status = 258;
@@ -46,7 +46,23 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	}
 	if (pars->left == NULL && pars->right == NULL)
 	{
-		if (!check_built(pars, env))
+		// if (pars->flag & (1 << 6))
+		if (pars->subshell_code)
+		{
+			pid = fork();
+			if (pid == -1)
+				return (127);
+			else if (pid == 0)
+			{
+				if (!check_built(pars, env))
+				{
+					pars->err_code = call_cmd(pars, init, env);
+					init->exit_status = pars->err_code;
+				}
+			}
+			return (1);
+		}
+		else if (!check_built(pars, env))
 		{
 			pars->err_code = call_cmd(pars, init, env);
 			init->exit_status = pars->err_code;
@@ -64,8 +80,8 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	// }
 	if (pars->left != NULL && !(pars->left->flag & (1 << 3)))
 	{
-		printf("fork or not %s %d\n", pars->cmd, pars->flag & (1 << 6));
-		if (pars->flag & (1 << 6))
+		// if (pars->left->flag & (1 << 6))
+		if (pars->left->subshell_code)
 		{
 			pid = fork();
 			if (pid == -1)
@@ -81,8 +97,8 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	}
 	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (1 << 3)))
 	{
-		printf("fork or not %s %d\n", pars->cmd, pars->flag & (1 << 6));
-		if (pars->flag & (1 << 6))
+		// if (pars->right->subshell_code) 00100001 & 00100000
+		if (pars->right->flag & (1 << 6))
 		{
 			pid = fork();
 			if (pid == -1)

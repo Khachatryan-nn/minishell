@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/03 16:28:42 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 20:37:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,19 @@ int	main(int ac, char **av, char **env1)
 		while (1)
 		{
 			str = readline("minishell$ ");
+			printf("%s\n", str);
 			if (!ft_onlyspaces(str))
 			{
 				lex(str, &init);
 				if (init.pars)
+				{
 					check_ast(&init, init.pars, env);
+					destroy_init(&init);
+				}
 			}
 			add_history(str);
+			printf("verjum: %s\n", str);
+
 			//system("leaks minishell");
 		}
 	}

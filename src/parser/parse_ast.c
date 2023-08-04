@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/04 15:47:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 17:01:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	print_ast(t_parser *ast, int indent, int lrc)
 		printf("\t");
 	}
 	if (lrc == 0)
-		printf("\033[38;5;46m╠══════\033[0m[%s][%d]\n", ast->cmd, (ast->flag & (1 << 1)) && 1);
+		printf("\033[38;5;46m╠══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & (1 << 1)) && 1, (ast->flag & (1 << 6)) && 1);
 	else if (lrc == 1)
-		printf("\033[38;5;46m╔══════\033[0m[%s][%d]\n", ast->cmd, (ast->flag & (1 << 1)) && 1);
+		printf("\033[38;5;46m╔══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & (1 << 1)) && 1, (ast->flag & (1 << 6)) && 1);
 	else if (lrc == 2)
-		printf("\033[38;5;46m╚══════\033[0m[%s][%d]\n", ast->cmd, (ast->flag & (1 << 1)) && 1);
+		printf("\033[38;5;46m╚══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & (1 << 1)) && 1, (ast->flag & (1 << 6)) && 1);
 	if (ast->next)
 		print_ast(ast->next, indent + 1, 2);
 	print_ast(ast->left, indent + 1, 2);
@@ -74,8 +74,6 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 	if (check_type(ptr->type))
 	{
 		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
-		if (ptr->flag & (1 << 6))
-			new->flag += 1 << 6;
 		pop(stack);
 		new->right = most_prev(abstract_syntax_tree(init, stack));
 		new->left = most_prev(abstract_syntax_tree(init, stack));

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/04 16:45:35 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:23:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int	lexer(t_parser **res, char *line)
 	int	i;
 	int	l;
 	int	counter;
+	int	subsh;
 
 	i = -1;
 	l = -1;
+	subsh = 0;
 	while (line && line[++i])
 	{
 		counter = i;
@@ -33,9 +35,25 @@ int	lexer(t_parser **res, char *line)
 			else if (line[i] == 39)
 				l = handle_squotes(res, line, i, counter) + 1;
 			else if (line[i] == ')')
-				l = parse_error(")");
+			{
+				if (subsh)
+				{
+					l = handle_cprnthses(res, line, i, counter);
+					subsh--;
+				}
+				else
+					l = parse_error(")");
+			}
 			else if (line[i] == '(')
-				l = handle_prnthses(res, line, i, counter);
+			{
+				if (handle_prnthses(res, line, i, counter))
+				{
+					subsh++;
+					l = -1;
+				}
+				else
+					l = 0;
+			}
 			else if (line[i] == '|' && line[i + 1] == '|')
 				l = handle_xor(res, line, i, counter);
 			else if (line[i] == '&' && line[i + 1] == '&')

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/01 19:14:48 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 20:22:57 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_parser
 	t_type			type;
 	int				prc;
 	int				flag;
+	int				subshell_code;
 	int				err_code;
 	int				*pipes;
 	struct s_parser	*next;
@@ -134,6 +135,7 @@ t_parser	*lstlast(t_parser *lst);
 int			lstsize(t_parser *lst);
 
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
+int			handle_cprnthses(t_parser **res, char *line, int i, int count);
 int 		check_ast(t_init *init, t_parser *pars, t_list *env);
 int			lexer(t_parser **res, char *line);
 void		lex(char *line, t_init *init);
