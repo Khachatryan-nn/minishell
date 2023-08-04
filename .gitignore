@@ -1,0 +1,27 @@
+# folder with obj #
+###################
+build
+
+# Compiled source #
+###################
+*.o
+
+# Packages #
+############
+*.dmg
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
