@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/30 20:39:11 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:43:21 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	lexer(t_parser **res, char *line)
 			else if (line[i] == '(')
 				l = handle_prnthses(res, line, i, counter);
 			else if (line[i] == '|' && line[i + 1] == '|')
-				l = handle_xor(res, line, i, counter);
+				l = handle_xor(res, line, i, counter) - 1;
 			else if (line[i] == '&' && line[i + 1] == '&')
-				l = handle_xand(res, line, i, counter);
+				l = handle_xand(res, line, i, counter) - 1;
 			else if (line[i] == '<' && line[i + 1] == '<')
 				l = handle_heredoc(res, line, i, counter);
 			else if (line[i] == '>' && line[i + 1] == '>')

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/03 17:52:08 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:47:06 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	int	pid;
 
 	pid = 0;
-	printf("fork or not %s %d\n", pars->cmd, pars->flag & 1 << 6);
+	printf("fork or not %s %d\n", pars->cmd, pars->flag & (1 << 6));
 	if (!pars)
 	{
 		init->exit_status = 258;
@@ -62,10 +62,10 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	// 	printf("pipe found\n");
 	// 	pipe_prepair(pars);
 	// }
-	if (pars->left != NULL && !(pars->left->flag & 1 << 3))
+	if (pars->left != NULL && !(pars->left->flag & (1 << 3)))
 	{
-		printf("fork or not %s %d\n", pars->cmd, pars->flag & 1 << 6);
-		if (pars->flag & 1 << 6)
+		printf("fork or not %s %d\n", pars->cmd, pars->flag & (1 << 6));
+		if (pars->flag & (1 << 6))
 		{
 			pid = fork();
 			if (pid == -1)
@@ -79,10 +79,10 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 		else
 			pars->err_code = check_ast(init, pars->left, env);
 	}
-	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & 1 << 3))
+	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (1 << 3)))
 	{
-		printf("fork or not %s %d\n", pars->cmd, pars->flag & 1 << 6);
-		if (pars->flag & 1 << 6)
+		printf("fork or not %s %d\n", pars->cmd, pars->flag & (1 << 6));
+		if (pars->flag & (1 << 6))
 		{
 			pid = fork();
 			if (pid == -1)
