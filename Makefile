@@ -18,7 +18,7 @@ LIBFT			=	$(LIBFT_DIR)/libft.a
 PRINTF_DIR		=	./libs/ft_dprintf
 PRINTF			=	$(PRINTF_DIR)/libftdprintf.a
 GNL_DIR			=	./libs/get_next_line
-GNL				=	$(GNL_DIR)/get_next_line.a
+GNL				=	$(GNL_DIR)/libgnl.a
 INCS_DIR		=	./include
 
 # DEPENDENCIES
@@ -36,9 +36,9 @@ OBJS			:=	$(patsubst %.c, $(BUILD)/%.o, $(SRCS))
 
 # COMPILATION
 SANITIZER		=	-g3 fsanitize=address
-LIBS			=	libft ft_dprintf
-LFLAGS			=	-L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftdprintf -lreadline -L./mutik/lib
-IFLAGS			=	-Iinclude -I$(LIBFT_DIR)/include -I$(PRINTF_DIR)/include -I./mutik/include
+LIBS			=	libft ft_dprintf gnl
+LFLAGS			=	-L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftdprintf -L$(GNL_DIR) -lgnl -lreadline -L./mutik/lib
+IFLAGS			=	-Iinclude -I$(LIBFT_DIR)/include -I$(PRINTF_DIR)/include -I$(GNL_DIR)/include -I./mutik/include
 MGOALS			=	$(filter-out bonus, $(MAKECMDGOALS))
 
 .DEFAULT_GOAL	=	all
@@ -88,11 +88,15 @@ libft:
 ft_dprintf:
 			@$(MAKE) $(MGOALS) -C $(PRINTF_DIR)
 
+gnl:
+			@$(MAKE) $(MGOALS) -C $(GNL_DIR)
+
 clean:
 			@echo "$(GRAY)Processing...$(RESET)"
 			@$(RM) $(BUILD)
 			@$(MAKE) clean -C $(LIBFT_DIR)
 			@$(MAKE) clean -C $(PRINTF_DIR)
+			@$(MAKE) clean -C $(GNL_DIR)
 			@echo "$(RED)Cleaned object files.$(RESET)"
 
 fclean:	clean
@@ -100,10 +104,11 @@ fclean:	clean
 			@$(RM) $(NAME) $(NAME)_old "$(NAME) "* 2> /dev/null || :
 			@$(MAKE) fclean -C $(LIBFT_DIR)
 			@$(MAKE) fclean -C $(PRINTF_DIR)
+			@$(MAKE) fclean -C $(GNL_DIR)
 			@echo "$(RED)Cleaned everything.$(RESET)"
 readline:
 			cd readline-master && make clean && ./configure --prefix=$(PREFIX) && make && make install	
 
 re:		fclean all
 
-.PHONY:	all libft ft_dprintf clean fclean re update_progress
+.PHONY:	all libft ft_dprintf gnl clean fclean re update_progress

@@ -6,22 +6,28 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/27 16:51:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:53:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	check_type(t_type type);
 int	is_valid(t_init *init);
 
-int	static	check_type(t_type type)
+
+/// @brief check_type
+/// @param type
+/// @return 2 if i/o
+/// @return 1 etc
+int	check_type(t_type type)
 {
 	if (type == XAND || type == XOR || type == PIPE)
 		return (1);
 	else if (type == WRITE_APPEND || type == WRITE_TRUNC)
-		return (1);
+		return (2);
 	else if (type == HEREDOC || type == INPUT)
-		return (1);
+		return (2);
 	return (0);
 }
 
@@ -55,13 +61,15 @@ int	is_valid(t_init *init)
 		return (0);
 	while (ptr->next != NULL)
 	{
-		if (check_type(ptr->type) && check_type(ptr->next->type))
+		if (check_type(ptr->type) && check_type(ptr->next->type) == 1)
 		{
-			if (check_type(ptr->next->type == HEREDOC))
-				return (parse_error(type_is(ptr->type)));
-			else
+			//if (ptr->next->type == HEREDOC))
+			//	return (parse_error(type_is(ptr->type)));
+			//else
 				return (parse_error(type_is(ptr->next->type)));
 		}
+		else if (check_type(ptr->type) && ptr->next->type == END)
+			return (parse_error("newline"));
 		ptr = ptr->next;
 	}
 	return (1);

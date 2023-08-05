@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/27 17:13:15 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 20:44:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	shunting_yard(t_parser **p, t_parser **ops, t_parser **otp)
 			while (*ops && lstlast(*ops)->type != SUBSH_OPEN)
 				push(ops, otp);
 			pop(ops);
+			lstlast(*otp)->subshell_code = 1;
+			// lstlast(*otp)->flag = lstlast(*otp)->flag + (1 << 6);
 		}
 		else if ((*p)->type != SUBSH_OPEN)
 		{
@@ -91,6 +93,7 @@ void	parser(t_init *init)
 	t_parser	*stack_otp;
 
 	ptr = init->lex;
+	init->pars = NULL;
 	stack_ops = NULL;
 	stack_otp = NULL;
 	while (ptr)
@@ -100,6 +103,7 @@ void	parser(t_init *init)
 	}
 	while (stack_ops)
 		push(&stack_ops, &stack_otp);
+	print_types(stack_otp);
 	init->pars = abstract_syntax_tree(init, &stack_otp);
 	print_ast(init->pars, 0, 0);
 }

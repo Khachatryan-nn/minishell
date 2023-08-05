@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer_utils.c                                   :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/31 22:48:35 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/07/28 17:31:55 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/07/28 17:35:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*restore_cmd_line(t_parser *stack);
+int	error_code(int error_num);
 
-char	*restore_cmd_line(t_parser *stack)
+int	error_code(int error_num)
 {
-	char		*cmd;
-	int			mode;
-	t_parser	*ptr;
-
-	cmd = NULL;
-	ptr = stack;
-	while (ptr && ptr->cmd)
-	{
-		mode = (ptr->flag & (1 << 1)) && 1;
-		if (!cmd || (mode == 0 && \
-			(ptr->type == DQUOTE || ptr->type == SQUOTE)))
-			cmd = ft_strjoin(cmd, ptr->cmd, 1);
-		else
-			cmd = strjoin_helper(cmd, ptr->cmd, 0);
-		ptr = ptr->next;
-	}
-	return (cmd);
+	if (error_num == 256)
+		return (1);
+	return (0);
 }

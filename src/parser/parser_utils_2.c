@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:45:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/26 18:57:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:40:20 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int			parse_error(char *err_str);
 
 int	parse_error(char *err_str)
 {
-	printf("minishell: syntax error near unexpected token `%s'\n", err_str);
+	if (err_str[0] == '(')
+		printf("minishell: syntax error missing token `%s'\n", ")");
+	else
+		printf("minishell: syntax error near unexpected token `%s'\n", err_str);
 	return (0);
 }
 
@@ -28,9 +31,9 @@ void	print_types(t_parser *ptr)
 	while (ptr)
 	{
 		if (ptr->next != NULL)
-			printf("%s ", ptr->cmd);
+			printf("%s [%d] ", ptr->cmd, ptr->flag & (1 << 6));
 		else
-			printf("%s", ptr->cmd);
+			printf("%s [%d]", ptr->cmd, ptr->flag & (1 << 6));
 		ptr = ptr->next;
 	}
 	printf("\n");

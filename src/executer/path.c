@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/27 13:27:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/07/28 17:39:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char static	*find_cmdpath(char *cmd, char **path)
 		else
 			return (cmdpath);
 	}
-	return (cmd);
+	return (NULL);
 }
 
 char	*check_cmd(char *cmd, char **path)
