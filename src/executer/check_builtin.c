@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	check_built(t_parser *stack, t_list *env)
+int	check_built(t_parser *stack, t_list *env, t_init *init)
 {
 	char	*str;
 
@@ -33,12 +33,12 @@ int	check_built(t_parser *stack, t_list *env)
 		if (ft_strcmp(str, "export") == 0)
 			ft_export (env);
 		else
-			ft_export_change (str, env);
+			ft_export_change (str, env, init);
 		return (1);
 	}
 	else if (ft_strnstr(str, "unset", 5) == 0)
 	{
-		ft_unset(str, env);
+		ft_unset(str, env, init);
 		return (1);
 	}
 	else if (ft_strnstr(str, "cd", 2) == 0)

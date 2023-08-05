@@ -26,6 +26,7 @@ typedef struct s_list
 	char	*value;
 	int		type;
 	int		flag;
+	int		unset;
 	void	*content;
 }			t_list;
 

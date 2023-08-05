@@ -46,6 +46,7 @@ t_list	*ft_lstnew_2(char *str)
 	lst->value = ft_strdup(ft_strchr(str, '='));
 	lst->type = 1;
 	lst->flag = 1;
+	lst->unset = 1;
 	lst->next = NULL;
 	lst->prev = NULL;
 	return (lst);
@@ -71,7 +72,8 @@ void	ft_create_env(char **str, t_list **stack)
 	if (flag == 0)
 	{
 		stack_a = ft_lstnew_2("OLDPWD");
-		stack_a->type = 0;
+		stack_a->value = ft_strdup("\0");
+		stack_a->flag = 0;
 		ft_lstadd_back(stack, stack_a);
 	}
 }
@@ -84,10 +86,10 @@ void	ft_env(t_list *env)
 	lst = env;
 	while ((lst))
 	{
-		if (lst->type > 0 && lst->flag > 0)
+		if (lst->type > 0 && lst->flag > 0 && lst->unset > 0 && lst->ptr && lst->value)
 		{
 			printf("%s", lst->ptr);
-			printf("%s\n", lst->value);
+			printf("%s\n", ft_strchr(lst->value, '='));
 		}
 		(lst) = (lst)->next;
 	}

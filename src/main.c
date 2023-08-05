@@ -6,11 +6,12 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/27 15:47:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/05 15:51:24 by musimony         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
 void static	print_logo(void)
 {
@@ -28,8 +29,9 @@ void static	print_logo(void)
 \033[0m", 2215);
 }
 
-int	main(int ac, char **av, char **env1)
+int	main(int ac, char**av, char** env1)
 {
+
 	char	*str;
 	t_list	*env;
 	t_init	init;
@@ -39,15 +41,31 @@ int	main(int ac, char **av, char **env1)
 	init.temp = NULL;
 	init.path = NULL;
 	env = NULL;
-	(void) init;
+	init.flag = 1;
+			
+	str = (char *)malloc(sizeof(char) * 1024);
 	ft_create_env(env1, &env);
+	rl_catch_signals = 0;
 	if (ac == 1 && av)
 	{
 		print_logo();
 		while (1)
 		{
+			ft_signal();
 			str = readline("minishell$ ");
-			if (ft_strcmp(str, "exit") == 0)
+			if (!str)
+			{
+				printf("exit\n");
+				while (env)
+				{
+					free(env->ptr);
+					free(env->value);
+					env = env->next;
+				}
+				free(str);			
+				break;
+			}
+			else if (ft_strcmp(str, "exit") == 0)
 			{
 				while (env)
 				{
@@ -55,6 +73,7 @@ int	main(int ac, char **av, char **env1)
 					free(env->value);
 					env = env->next;
 				}
+				free(str);
 				return (127);
 			}
 			else if (!ft_onlyspaces(str))
@@ -62,12 +81,13 @@ int	main(int ac, char **av, char **env1)
 				lex(str, &init);
 				check_ast(&init, init.pars, env);
 			}
+			// ft_check_main(str, env, init);
 			add_history(str);
-			//system("leaks minishell");
-		}
+	}
 	}
 	return(0);
 }
+
 
 // command not found -> 127
 // syntax || parsing error -> 258

@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -96,6 +97,7 @@ typedef struct s_init
 	t_parser	*pars;
 	t_parser	*lex;
 	t_parser	*temp;
+	int			flag;
 }				t_init;
 
 /* - - - - --!-- - - - - ! Handling spec tokens ! - - - - --!-- - - - - */
@@ -151,11 +153,12 @@ void		free_matrix(void **ptr);
 int			is_valid(t_init *init);
 
 /* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */
-void		ft_export_change(char *line, t_list *env);
+void		ft_export_change(char *line, t_list *env, t_init *init);
+char		**ft_change_2(char *str);
 void		ft_create_env(char **str, t_list **stack);
-int			check_built(t_parser *stack, t_list *env);
-void		ft_cd_prev(t_list *str, char *text);
-void		ft_unset(char *ptr, t_list *env);
+int			check_built(t_parser *stack, t_list *env, t_init *init);
+// void		ft_cd_prev(t_list *str, char *text);
+void		ft_unset(char *ptr, t_list *env, t_init *init);
 void		ft_cd(t_list *str, char *ptr);
 void		ft_export(t_list *env);
 void		ft_pwd(t_list *env);
@@ -164,8 +167,13 @@ char		*ft_ls(char *str);
 
 /* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
 
-int			ft_list_change(t_list *new, t_list *env);
+int			ft_list_change(t_list *new, t_list *env, t_init *init);
 char		*ft_find_symbol(char *str, char c);
 int			ft_strcmp(char *s1, char *s2);
 
+
+/*   avelacvac  */
+void	ft_check_main(char *str, t_list env, t_init init);
+void	ft_handle(int signal);
+void	ft_signal();
 #endif

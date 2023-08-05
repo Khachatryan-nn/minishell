@@ -1,11 +1,12 @@
 #include "minishell.h"
 
-void ft_unset(char *ptr, t_list *env)
+void ft_unset(char *ptr, t_list *env, t_init *init)
 {
     t_list  *lst;
     char    **ttr;
     char    *str;
 
+    int     flag1;
     int     i;
     int     j;
     int     k;
@@ -13,6 +14,8 @@ void ft_unset(char *ptr, t_list *env)
     i = 0;
     j = 0;
     k = 0;
+    flag1 = 0;
+    lst = NULL;
     ttr = NULL;
     str = (char *)malloc(sizeof(char) * 1000);
     while (ptr[i] == ' ' && ptr[i] != '\0')
@@ -86,19 +89,28 @@ void ft_unset(char *ptr, t_list *env)
         while (lst)
         {
             if(ft_strcmp(lst->ptr, ttr[k]) == 0)
-                 lst->type = 0;
-            lst = lst->next;
-        }
-        lst = env;
-        while (lst)
-        {
-            if (ft_strcmp(lst->ptr, "PWD") == 0)
             {
-                lst->flag = 0;
-                lst->type = 0;
-                break;
+                if (ft_strcmp(ttr[k], "PATH") == 0)
+                    init->flag = 2;
+                 lst->type = 0;
+                 lst->flag = 0;
+                 lst->unset = 0;
             }
             lst = lst->next;
+        }
+        if (flag1 == 1)
+        {
+            lst = env;
+            while (lst)
+            {
+                if (ft_strcmp(lst->ptr, "OLDPWD") == 0)
+                    {
+                        lst->value = ft_strdup("=");
+                        lst->unset = 1;
+                        break;
+                    }
+                lst = lst->next;
+            }
         }
         k++;
    }

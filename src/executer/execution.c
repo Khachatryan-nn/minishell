@@ -19,7 +19,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 {
 	if (pars->left == NULL && pars->right == NULL)
 	{
-		if (!check_built(pars, env))
+		if (!check_built(pars, env, init))
 			call_cmd(pars, init, env);
 	}
 	if (pars->left != NULL)

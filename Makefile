@@ -3,7 +3,7 @@ NAME			=	minishell
 CC				=	cc
 RM				=	rm -rf
 MK				=	mkdir -p
-CFLAGS			=	-Wall -Wextra -Werror #-g3 -fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=address
 
 # COLORS
 GRAY			=	\033[38;5;8m
@@ -12,6 +12,7 @@ RED				=	\033[38;5;196m
 RESET			=	\033[0m
 
 # LIBRARIES
+PREFIX = $(shell find ${HOME} -name mutik 2>/dev/null)
 LIBFT_DIR		=	./libs/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
 PRINTF_DIR		=	./libs/ft_dprintf
@@ -36,8 +37,8 @@ OBJS			:=	$(patsubst %.c, $(BUILD)/%.o, $(SRCS))
 # COMPILATION
 SANITIZER		=	-g3 fsanitize=address
 LIBS			=	libft ft_dprintf
-LFLAGS			=	-L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftdprintf -lreadline
-IFLAGS			=	-Iinclude -I$(LIBFT_DIR)/include -I$(PRINTF_DIR)/include
+LFLAGS			=	-L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftdprintf -lreadline -L./mutik/lib
+IFLAGS			=	-Iinclude -I$(LIBFT_DIR)/include -I$(PRINTF_DIR)/include -I./mutik/include
 MGOALS			=	$(filter-out bonus, $(MAKECMDGOALS))
 
 .DEFAULT_GOAL	=	all
@@ -100,6 +101,8 @@ fclean:	clean
 			@$(MAKE) fclean -C $(LIBFT_DIR)
 			@$(MAKE) fclean -C $(PRINTF_DIR)
 			@echo "$(RED)Cleaned everything.$(RESET)"
+readline:
+			cd readline-master && make clean && ./configure --prefix=$(PREFIX) && make && make install	
 
 re:		fclean all
 
