@@ -6,12 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 21:42:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/29 16:07:37 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/06 00:38:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
+
+
 static char	*find_next_line(int fd, char *buffer, char *backup)
 {
 	int		len;
@@ -25,10 +26,10 @@ static char	*find_next_line(int fd, char *buffer, char *backup)
 		else if (len == 0)
 			break ;
 		if (!backup)
-			backup = ft_strdup("");
+			backup = gnl_strdup("");
 		buffer[len] = '\0';
-		backup = ft_strjoin(backup, buffer);
-		if (ft_strchr (buffer, '\n'))
+		backup = gnl_strjoin(backup, buffer);
+		if (gnl_strchr (buffer, '\n'))
 			break ;
 	}
 	return (backup);
@@ -45,8 +46,8 @@ static char	*del_excess_part(char *line)
 		i++;
 	if (line[i] == '\0')
 		return (0);
-	len = ft_strlen(line) - i;
-	new_backup = ft_substr(line, i + 1, len);
+	len = gnl_strlen(line) - i;
+	new_backup = gnl_substr(line, i + 1, len);
 	if (*new_backup == '\0')
 	{
 		free(new_backup);
@@ -56,7 +57,6 @@ static char	*del_excess_part(char *line)
 	return (new_backup);
 }
 
-#include <stdio.h>
 char	*get_next_line(int fd)
 {
 	char		*line;

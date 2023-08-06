@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 21:41:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/29 16:09:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/06 00:38:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
 	int		n;
 	int		i;
@@ -36,7 +36,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	i = 0;
-	n = ft_strlen(s1) + ft_strlen(s2) + 1;
+	n = gnl_strlen(s1) + gnl_strlen(s2) + 1;
 	p = (char *)malloc(sizeof(char) * n);
 	if (!p)
 		return (NULL);
@@ -53,7 +53,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (p);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*gnl_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*p;
 	size_t	i;
@@ -61,9 +61,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	l = ft_strlen(s);
+	l = gnl_strlen(s);
 	if ((size_t)start > l)
-		return (ft_strdup(""));
+		return (gnl_strdup(""));
 	if (len > l)
 		len = l;
 	p = (char *)malloc(sizeof(char) * (len + 1));
@@ -79,13 +79,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (p);
 }
 
-char	*ft_strdup(const char *s1)
+char	*gnl_strdup(const char *s1)
 {
 	char	*p;
 	int		i;
 
 	i = 0;
-	p = (char *)malloc(sizeof(char) * (ft_strlen((char *)s1) + 1));
+	p = (char *)malloc(sizeof(char) * (gnl_strlen((char *)s1) + 1));
 	if (p == NULL)
 		return (NULL);
 	while (s1[i])
@@ -97,7 +97,7 @@ char	*ft_strdup(const char *s1)
 	return (p);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	while (*s)
 	{

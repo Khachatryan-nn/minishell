@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/28 01:02:22 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/06 00:40:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_cd(t_list *str, char *ptr)
 		text++;
 	while (*text == ' ' && *text)
 		text++;
-	if (text == '\0')
+	if (!text)
 	{
 		env = str;
 		while (env)

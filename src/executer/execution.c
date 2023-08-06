@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/05 23:15:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/06 00:39:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 			}
 			return (1);
 		}
-		else if (!check_built(pars, env))
+		else if (!check_built(pars, env, init))
 		{
 			pars->err_code = call_cmd(pars, init, env);
 			init->exit_status = pars->err_code;

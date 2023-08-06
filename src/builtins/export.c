@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:50:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/05 23:14:45 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/06 00:39:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void    ft_export(t_list *env)
     ptr[i] = 0;
 
     i = 0;
-    while (ptr[i] != '\0')
+    while (ptr[i] != NULL)
     {
             printf("declare - x ");
             printf("%s", ft_find_symbol(ptr[i], '='));

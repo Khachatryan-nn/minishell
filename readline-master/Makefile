@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /Users/musimony/Desktop/urishminishell/minishell/readline-master
+BUILD_DIR = /Users/tigrankhachatryan/Desktop/all/42/minishell/readline-master
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /Users/musimony/Desktop/urishminishell/minishell/mutik
+prefix = /usr/local
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
