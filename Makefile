@@ -3,7 +3,7 @@ NAME			=	minishell
 CC				=	cc
 RM				=	rm -rf
 MK				=	mkdir -p
-CFLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror #-g3 -fsanitize=address
 
 # COLORS
 GRAY			=	\033[38;5;8m

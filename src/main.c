@@ -81,7 +81,6 @@ int	main(int ac, char**av, char** env1)
 				lex(str, &init);
 				check_ast(&init, init.pars, env);
 			}
-			// ft_check_main(str, env, init);
 			add_history(str);
 	}
 	}

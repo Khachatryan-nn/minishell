@@ -2,9 +2,7 @@
 
 void	ft_handle(int signal)
 {
-	if (signal == SIGINT)
-		printf("\n");
-	else if (signal == SIGQUIT)
+	if (signal == SIGINT || signal == SIGQUIT)
 		printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);

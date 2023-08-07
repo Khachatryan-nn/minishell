@@ -32,5 +32,6 @@ char	*restore_cmd_line(t_parser *stack)
 			cmd = strjoin_helper(cmd, ptr->cmd, 0);
 		ptr = ptr->next;
 	}
+	cmd[ft_strlen(cmd)] = '\0';
 	return (cmd);
 }

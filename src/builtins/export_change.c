@@ -6,7 +6,7 @@
 /*   By: musimony <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 19:29:55 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/04 19:42:34 by musimony         ###   ########.fr       */
+/*   Updated: 2023/08/06 17:22:20 by musimony         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	ft_export_change(char *line, t_list *env, t_init *init)
 		k++;
 	}
 	ttr[k] = 0;
+	k = -1;
+	while (ttr[++k])
+		printf("%s\n", ttr[k]);
 	k = 0;
 	j = 0;
 	while (ttr[k])

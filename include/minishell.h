@@ -157,13 +157,23 @@ void		ft_export_change(char *line, t_list *env, t_init *init);
 char		**ft_change_2(char *str);
 void		ft_create_env(char **str, t_list **stack);
 int			check_built(t_parser *stack, t_list *env, t_init *init);
-// void		ft_cd_prev(t_list *str, char *text);
 void		ft_unset(char *ptr, t_list *env, t_init *init);
 void		ft_cd(t_list *str, char *ptr);
+void		ft_cd_continue(t_list *str, t_list *env, t_list *env1, char *text1);
+void		ft_cd_continue2(t_list *env1, t_list *env, char *text1);
+void		ft_cd_continue3(t_list *env1, t_list *env, char *text1);
+void		ft_cd_home(t_list *str, t_list *env);
 void		ft_export(t_list *env);
+char		**ft_export_continue(t_list *env1);
+char		**ft_export_continue2(t_list *env, t_list *env1, char **ptr, int a);
 void		ft_pwd(t_list *env);
 void		ft_env(t_list *env);
-char		*ft_ls(char *str);
+void		ft_echo(t_list *env, t_init *init);
+void		ft_echo_change(char *str, t_list *env);
+int			ft_echo_change2(char *str, int start, int end);
+void		ft_echo_change3(char *str, t_list *env);
+int			ft_check_echo(char *str, t_list *env);
+// char		*ft_dollar(char *str);
 
 /* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
 

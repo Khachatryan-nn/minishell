@@ -46,5 +46,10 @@ int	check_built(t_parser *stack, t_list *env, t_init *init)
 		ft_cd (env, str);
 		return (1);
 	}
+	else if (ft_strnstr(str, "echo", 4) == 0)
+	{
+		ft_echo(env, init);
+		return (1);
+	}
 	return (0);
 }
