@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/04 18:23:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/07 17:58:33 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	lexer(t_parser **res, char *line)
 	int	counter;
 	int	subsh;
 
-	i = -1;
+	i = 0;
 	l = -1;
 	subsh = 0;
-	while (line && line[++i])
+	while (line && line[i] != '\0')
 	{
 		counter = i;
-		while (line[i])
+		while (line[i] != '\0')
 		{
 			if (line[i] == '"')
 				l = handle_dquotes(res, line, i, counter) + 1;
@@ -86,6 +86,9 @@ int	lexer(t_parser **res, char *line)
 			}
 			break ;
 		}
+		if (line[i] == '\0')
+			break ;
+		i++;
 	}
 	lstback(res, lstnew_pars("AST", END, 1, 2));
 	return (1);

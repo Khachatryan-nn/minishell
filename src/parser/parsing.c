@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/04 20:44:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:49:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	shunting_yard(t_parser **p, t_parser **ops, t_parser **otp)
 				push(ops, otp);
 			pop(ops);
 			lstlast(*otp)->subshell_code = 1;
-			// lstlast(*otp)->flag = lstlast(*otp)->flag + (1 << 6);
 		}
 		else if ((*p)->type != SUBSH_OPEN)
 		{

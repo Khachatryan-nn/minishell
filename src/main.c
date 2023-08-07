@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/05 23:14:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:20:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void static	print_logo(void)
 
 int	main(int ac, char**av, char** env1)
 {
-
 	char	*str;
 	t_list	*env;
 	t_init	init;
@@ -43,7 +42,6 @@ int	main(int ac, char**av, char** env1)
 	init.exit_status = 0;
 	env = NULL;
 	init.flag = 1;
-			
 	str = (char *)malloc(sizeof(char) * 1024);
 	ft_create_env(env1, &env);
 	rl_catch_signals = 0;
@@ -77,7 +75,7 @@ int	main(int ac, char**av, char** env1)
 			}
 			// ft_check_main(str, env, init);
 			add_history(str);
-	}
+		}
 	}
 	return(0);
 }

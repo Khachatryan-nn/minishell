@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/04 20:22:57 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/07 17:03:00 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <signal.h>
 # include <unistd.h>
 # include "libft.h"
 # include "get_next_line.h"

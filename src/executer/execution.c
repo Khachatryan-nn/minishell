@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/06 00:39:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/07 20:00:18 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ int	andor_check(t_parser *stack)
 
 int	check_ast(t_init *init, t_parser *pars, t_list *env)
 {
-	int	pid;
+	pid_t	pid;
+	int		status;
 
 	pid = 0;
-	// printf("exit segfault\n");
+	status = 0;
 	if (!pars)
 	{
 		init->exit_status = 258;
-		return (pars->err_code);
+		return (init->exit_status);
 	}
 	if (pars->left == NULL && pars->right == NULL)
 	{
-		// if (pars->flag & (1 << 6))
 		if (pars->subshell_code)
 		{
 			pid = fork();
@@ -54,13 +54,23 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 				return (127);
 			else if (pid == 0)
 			{
-				if (!check_built(pars, env, init))
+				if (check_built(pars, env, init))
+					kill(pid, SIGKILL);
+				else
 				{
 					pars->err_code = call_cmd(pars, init, env);
 					init->exit_status = pars->err_code;
 				}
 			}
-			return (1);
+			else
+			{
+				if (wait(&status) < 0)
+				{
+					perror("wait");
+					return (1);
+				}
+				return (status);
+			}
 		}
 		else if (!check_built(pars, env, init))
 		{
@@ -68,19 +78,8 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 			init->exit_status = pars->err_code;
 		}
 	}
-	// else if (pars->lpath && pars->rpath)
-	// {
-	// 	printf("io command found\n");
-	// 	exec_iocmd(init, pars, env);
-	// }
-	// else if (pars->type == PIPE || pars->flag & (1 << 5))
-	// {
-	// 	printf("pipe found\n");
-	// 	pipe_prepair(pars);
-	// }
 	if (pars->left != NULL && !(pars->left->flag & (1 << 3)))
 	{
-		// if (pars->left->flag & (1 << 6))
 		if (pars->left->subshell_code)
 		{
 			pid = fork();
@@ -88,23 +87,37 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 				return (127);
 			else if (pid == 0)
 			{
+				pid = 1;
 				pars->err_code = check_ast(init, pars->left, env);
+				// kill(pid, SIGKILL);
 			}
-			return (1);
+			else
+			{
+				if (wait(&status) < 0)
+				{
+					perror("wait");
+					return (1);
+				}
+				return (status);
+			}
 		}
 		else
 			pars->err_code = check_ast(init, pars->left, env);
 	}
 	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (1 << 3)))
 	{
-		// if (pars->right->subshell_code) 00100001 & 00100000
-		if (pars->right->flag & (1 << 6))
+		if (pars->right->subshell_code)
 		{
 			pid = fork();
 			if (pid == -1)
 				return (127);
 			else if (pid == 0)
+			{
 				pars->err_code = check_ast(init, pars->right, env);
+				// kill(pid, SIGKILL);
+			}
+			else
+				wait(NULL);
 			return (1);
 		}
 		else

@@ -12,7 +12,7 @@ RED				=	\033[38;5;196m
 RESET			=	\033[0m
 
 # LIBRARIES
-PREFIX = $(shell find ${HOME} -name mutik 2>/dev/null)
+PREFIX			=	$(shell find ${HOME} -name mutik 2>/dev/null)
 LIBFT_DIR		=	./libs/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
 PRINTF_DIR		=	./libs/ft_dprintf
@@ -111,4 +111,4 @@ readline:
 
 re:		fclean all
 
-.PHONY:	all libft ft_dprintf gnl clean fclean re update_progress
+.PHONY: all libft ft_dprintf gnl clean fclean re update_progress readline

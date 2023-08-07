@@ -1,4 +1,4 @@
-prefix=/Users/musimony/Desktop/urishminishell/minishell/mutik
+prefix=/Users/tikhacha/Desktop/all/minishell/mutik
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
