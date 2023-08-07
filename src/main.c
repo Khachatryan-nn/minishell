@@ -73,13 +73,17 @@ int	main(int ac, char**av, char** env1)
 					free(env->value);
 					env = env->next;
 				}
-				free(str);
-				return (127);
+				free(str);			
+				break;
 			}
 			else if (!ft_onlyspaces(str))
 			{
 				lex(str, &init);
-				check_ast(&init, init.pars, env);
+				if (init.pars)
+				{
+					check_ast(&init, init.pars, env);
+					destroy_init(&init);
+				}
 			}
 			add_history(str);
 	}

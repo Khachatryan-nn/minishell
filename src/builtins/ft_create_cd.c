@@ -30,82 +30,59 @@ void	ft_cd(t_list *str, char *ptr)
 		text++;
 	while (*text == ' ' && *text)
 		text++;
-	if (chdir(text) == 0)
-		ft_cd_continue(str, env, env1, text1);
-	else if (text)
-		ft_cd_home(str, env);
-	else
-		perror("minishell");
-}
-
-void	ft_cd_continue(t_list *str, t_list *env, t_list *env1, char *text1)
-{
-	env = str;
-	while (env)
+	if (text == '\0')
 	{
-		if (ft_strcmp(env->ptr, "PWD") == 0)
+		env = str;
+		while (env)
 		{
-			text1 = ft_strdup(env->value);
-			free(env->value);
-			env->value = ft_strjoin("=", ft_strdup(getcwd(NULL, 0)), 0);
-			break ;
+			if (ft_strcmp("HOME", env->ptr) == 0)
+				{
+					chdir(env->value + 1);
+					break;
+				}
+			env = env->next;
 		}
-		env = env->next;
 	}
-	env1 = str;
-	ft_cd_continue2(env1, env, text1);
-}
-
-void	ft_cd_continue2(t_list *env1, t_list *env, char *text1)
-{
-	while (env1)
+	else if (chdir(text) == 0)
 	{
-		if (ft_strcmp(env1->ptr, "OLDPWD") == 0)
+		env = str;
+		while (env)
 		{
-			ft_cd_continue3(env1, env, text1);
-			break ;
-		}
-		env1 = env1->next;
-	}
-}
-
-void	ft_cd_continue3(t_list *env1, t_list *env, char *text1)
-{
-	if (env1->flag == 0)
-		env1->flag = 1;
-	if (env->unset == 0)
-	{
-		free(env1->ptr);
-		env1->ptr = ft_strdup("OLDPWD");
-		free(env1->value);
-		env1->value = ft_strdup("=");
-		env->unset = 1;
-	}
-	else
-	{
-		free(env1->ptr);
-		env1->ptr = ft_strdup("OLDPWD");
-		free(env1->value);
-		env1->value = ft_strdup(text1);
-	}
-}
-
-void	ft_cd_home(t_list *str, t_list *env)
-{
-	env = str;
-	while (env)
-	{
-		if (ft_strcmp("HOME", env->ptr) == 0)
-		{
-			if (env->unset == 0)
+			if (ft_strcmp(env->ptr, "PWD") == 0)
 			{
-				printf("minishell$ cd: HOME not set\n");
-				break ;
+				if (env->unset == 0)
+					flag1 = 1;
+				text1 = ft_strdup(env->value);
+				free(env->value);
+				env->value = ft_strjoin("=", ft_strdup(getcwd(NULL, 0)), 0);
+				break;
 			}
-			else
+			env = env->next;
+		}
+		env1 = str;
+		while (env1)
+		{
+			if (ft_strcmp(env1->ptr, "OLDPWD") == 0)
 			{
-				chdir(env->value + 1);
-				break ;
+				if (env1->flag == 0)
+					env1->flag = 1;
+				if (flag1 == 1)
+				{
+					free(env1->ptr);
+					env1->ptr = ft_strdup("OLDPWD");
+					free(env1->value);
+					env1->value = ft_strdup("=");
+					env->unset = 1;
+					break;
+				}
+				else
+					{
+						free(env1->ptr);
+						env1->ptr = ft_strdup("OLDPWD");
+						free(env1->value);
+						env1->value = ft_strdup(text1);
+						break;
+					}
 			}
 		}
 		env = env->next;

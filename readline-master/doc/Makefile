@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = /Users/musimony/Desktop/urishminishell/minishell/mutik
+prefix = /usr/local
 
 datarootdir = ${prefix}/share
 
@@ -49,7 +49,7 @@ RM = rm -f
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 
-BUILD_DIR = /Users/musimony/Desktop/urishminishell/minishell/readline-master
+BUILD_DIR = /Users/tigrankhachatryan/Desktop/all/42/minishell/readline-master
 TEXINPUTDIR = $(srcdir)
 
 MAKEINFO    = LANGUAGE= makeinfo

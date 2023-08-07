@@ -19,8 +19,69 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 {
 	if (pars->left == NULL && pars->right == NULL)
 	{
-		if (!check_built(pars, env, init))
-			call_cmd(pars, init, env);
+		// if (pars->flag & (1 << 6))
+		if (pars->subshell_code)
+		{
+			pid = fork();
+			if (pid == -1)
+				return (127);
+			else if (pid == 0)
+			{
+				if (!check_built(pars, env, init))
+				{
+					pars->err_code = call_cmd(pars, init, env);
+					init->exit_status = pars->err_code;
+				}
+			}
+			return (1);
+		}
+		else if (!check_built(pars, env, init))
+		{
+			pars->err_code = call_cmd(pars, init, env);
+			init->exit_status = pars->err_code;
+		}
+	}
+	// else if (pars->lpath && pars->rpath)
+	// {
+	// 	printf("io command found\n");
+	// 	exec_iocmd(init, pars, env);
+	// }
+	// else if (pars->type == PIPE || pars->flag & (1 << 5))
+	// {
+	// 	printf("pipe found\n");
+	// 	pipe_prepair(pars);
+	// }
+	if (pars->left != NULL && !(pars->left->flag & (1 << 3)))
+	{
+		// if (pars->left->flag & (1 << 6))
+		if (pars->left->subshell_code)
+		{
+			pid = fork();
+			if (pid == -1)
+				return (127);
+			else if (pid == 0)
+			{
+				pars->err_code = check_ast(init, pars->left, env);
+			}
+			return (1);
+		}
+		else
+			pars->err_code = check_ast(init, pars->left, env);
+	}
+	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (1 << 3)))
+	{
+		// if (pars->right->subshell_code) 00100001 & 00100000
+		if (pars->right->flag & (1 << 6))
+		{
+			pid = fork();
+			if (pid == -1)
+				return (127);
+			else if (pid == 0)
+				pars->err_code = check_ast(init, pars->right, env);
+			return (1);
+		}
+		else
+			pars->err_code = check_ast(init, pars->right, env);
 	}
 	if (pars->left != NULL)
 		check_ast(init, pars->left, env);
