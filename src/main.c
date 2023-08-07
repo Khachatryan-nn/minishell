@@ -65,17 +65,6 @@ int	main(int ac, char**av, char** env1)
 				free(str);			
 				break;
 			}
-			else if (ft_strcmp(str, "exit") == 0)
-			{
-				while (env)
-				{
-					free(env->ptr);
-					free(env->value);
-					env = env->next;
-				}
-				free(str);			
-				break;
-			}
 			else if (!ft_onlyspaces(str))
 			{
 				lex(str, &init);
@@ -86,7 +75,7 @@ int	main(int ac, char**av, char** env1)
 				}
 			}
 			add_history(str);
-	}
+		}
 	}
 	return(0);
 }

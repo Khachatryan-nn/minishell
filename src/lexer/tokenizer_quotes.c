@@ -6,12 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/27 00:45:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/04 20:18:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int		handle_cprnthses(t_parser **res, char *line, int i, int count);
 int		handle_prnthses(t_parser **res, char *line, int i, int count);
 int		handle_squotes(t_parser **res, char *line, int i, int count);
 int		handle_dquotes(t_parser **res, char *line, int i, int count);
@@ -19,11 +20,7 @@ int		handle_dquotes(t_parser **res, char *line, int i, int count);
 int	handle_prnthses(t_parser **res, char *line, int i, int count)
 {
 	int		counter;
-	int		enable;
-	char	*read;
-	char	*result;
 	int		lst;
-	int		k;
 
 	lst = 1;
 	if (!ft_isspace(line, count, i) && is_delitimer(*res))
@@ -41,33 +38,19 @@ int	handle_prnthses(t_parser **res, char *line, int i, int count)
 			lst--;
 	}
 	if (line[counter] == ')')
-	{
-		line[counter] = '\0';
-		lexer(res, line + i + 1);
-		line[counter] = ')';
-	}
+		return (1);
 	else
-	{
-		enable = 1;
-		result = ft_substr(line, i + 1, counter - i - 1);
-		if (!result)
-			ft_strdup(result);
-		while (enable)
-		{
-			read = readline("subsh> ");
-			if (ft_strchr(read, ')'))
-				enable = 0;
-			result = strjoin_helper(result, read, 1);
-		}
-		k = 0;
-		while (result[k] && result[k] != ')')
-			k++;
-		lexer(res, ft_substr(result, 0, k));
-		if (k < (int) ft_strlen(result))
-			lexer(res, result + k + 1);
-	}
-	lstback(res, lstnew_pars(")", SUBSH_CLOSE, 1, 1));
-	return (counter);
+		return (0 & parse_error("("));
+}
+
+int	handle_cprnthses(t_parser **res, char *line, int i, int count)
+{
+	if (!ft_isspace(line, count, i) && is_delitimer(*res))
+		lstback(res, lstnew_pars(ft_substr(line, count, i - count), WORD, 0, 1));
+	else if (!ft_isspace(line, count, i))
+		lstback(res, lstnew_pars(ft_substr(line, count, i - count), WORD, 0, 0));
+	lstback(res, lstnew_pars(")", SUBSH_CLOSE, 1, 0));
+	return (i + 1);
 }
 
 int	handle_dquotes(t_parser **res, char *line, int i, int count)
@@ -99,7 +82,8 @@ int	handle_dquotes(t_parser **res, char *line, int i, int count)
 			ft_strdup(result);
 		while (enable)
 		{
-			read = readline("dquote> ");
+			printf("dquote> ");
+			read = get_next_line(0);
 			if (ft_strchr(read, '"'))
 				enable = 0;
 			result = strjoin_helper(result, read, 1);
@@ -148,7 +132,8 @@ int	handle_squotes(t_parser **res, char *line, int i, int count)
 			ft_strdup(result);
 		while (enable)
 		{
-			read = readline("quote> ");
+			printf("quote> ");
+			read = get_next_line(0);
 			if (ft_strchr(read, 39))
 				enable = 0;
 			result = strjoin_helper(result, read, 1);

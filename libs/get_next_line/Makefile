@@ -1,9 +1,9 @@
 # MAIN
-NAME			=	libft.a
+NAME			=	libgnl.a
 CC				=	cc
 RM				=	rm -rf
-MK				=	mkdir -p
 AR				=	ar rcs
+MK				=	mkdir -p
 CFLAGS			=	-Wall -Wextra -Werror
 IFLAGS			=	-Iinclude
 
@@ -14,14 +14,13 @@ RED				=	\033[38;5;196m
 RESET			=	\033m[0m
 
 # DEPENDENCIES
-DEPS			=	include/libft.h Makefile
+DEPS			=	include/get_next_line.h Makefile
 
 # SOURCES
 SRC_DIR			=	./srcs
 SRCS			=	$(wildcard $(SRC_DIR)/*.c)
 BUILD			=	./build
 OBJS			=	$(patsubst $(SRC_DIR)/%.c, $(BUILD)/%.o, $(SRCS))
-
 
 .DEFAULT_GOAL	=	all
 
@@ -46,22 +45,22 @@ $(BUILD)/%.o:	$(SRC_DIR)/%.c $(DEPS)
 
 $(NAME):		$(BUILD) $(OBJS) $(DEPS)
 					@$(AR) $(NAME) $(OBJS)
-					@echo "\n$(GRAY)Libft build completed.$(RESET)"
+					@echo "\n$(GRAY)gnl build completed.$(RESET)"
 
 $(BUILD):
 					@mkdir $(BUILD)
-					@echo "${GRAY}Building libft...${RESET}"
+					@echo "${GRAY}Building gnl...${RESET}"
 
 all:	$(NAME)
 
 clean:
 			@$(RM) $(BUILD)
-			@echo "$(GRAY)Cleaned libft build.$(RESET)"
+			@echo "$(GRAY)Cleaned gnl build.$(RESET)"
 
 fclean:	clean
-			@$(RM) $(NAME) libft*.a 2> /dev/null || :
-			@echo "$(GRAY)Cleaned everything in libft.$(RESET)"
+			@$(RM) $(NAME) libgnl*.a 2> /dev/null || :
+			@echo "$(GRAY)Cleaned everything in gnl.$(RESET)"
 
 re:		fclean $(NAME)
 
-.PHONY:	all clean fclean re pdate_progress
+.PHONY:	all clean fclean re update_progress

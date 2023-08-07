@@ -17,7 +17,18 @@ int	check_built(t_parser *stack, t_list *env, t_init *init)
 	char	*str;
 
 	str = restore_cmd_line(stack);
-	if (ft_strcmp(str, "env") == 0)
+	if (ft_strcmp(str, "exit") == 0)
+	{
+		printf("exit");
+		while (env)
+		{
+			free(env->ptr);
+			free(env->value);
+			env = env->next;
+		}
+		exit (0);
+	}
+	else if (ft_strcmp(str, "env") == 0)
 	{
 		ft_env (env);
 		return (1);

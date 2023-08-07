@@ -88,6 +88,9 @@ libft:
 ft_dprintf:
 			@$(MAKE) $(MGOALS) -C $(PRINTF_DIR)
 
+gnl:
+			@$(MAKE) $(MGOALS) -C $(GNL_DIR)
+
 clean:
 			@echo "$(GRAY)Processing...$(RESET)"
 			@$(RM) $(BUILD)
@@ -101,6 +104,7 @@ fclean:	clean
 			@$(MAKE) fclean -C $(LIBFT_DIR)
 			@$(MAKE) fclean -C $(PRINTF_DIR)
 			@echo "$(RED)Cleaned everything.$(RESET)"
+
 readline:
 			cd readline-master && make clean && ./configure --prefix=$(PREFIX) && make && make install	
 

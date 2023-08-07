@@ -45,59 +45,70 @@ typedef enum e_token_type
 	END,
 }	t_type;
 
-/*
-	char	*cmd_line;
-	char	*cmd_path;
-	char	**cmd_args;
-	char	**path;
-	int		stdin;
-	int		stdout;
-*/
+//	@brief
+//	@tparam char	*cmd_line
+//	@tparam	char	*cmd_path
+//	@tparam	char	**cmd_args
+//	@tparam	char	**path
+//	@tparam int		stdin
+//	@tparam	int		stdout
+//	@tparam	int		pipes[2]
 typedef struct s_cmd
 {
+	int		*pipes;
+	char	**cmd_args;
 	char	*cmd_line;
 	char	*cmd_path;
-	char	**cmd_args;
 	char	**path;
-	int		stdin;
 	int		stdout;
+	int		stdin;
 }			t_cmd;
 
-/*
-	char		*cmd;
-	t_type		type;
-	int			prc;
-	t_parser	*next;
-	t_parser	*prev;
-	t_parser	*left;
-	t_parser	*right;
-*/
+//	@brief
+//	@tparam char		*cmd
+//	@tparam	char		*rpath
+//	@tparam	char		*lpath
+//	@tparam	t_type		type
+//	@tparam int			prc
+//	@tparam	int			flag
+//	@tparam	int			err_code
+//	@tparam	int			(*pipes)[2]
+//	@tparam	s_parser	*next
+//	@tparam	s_parser	*prev
+//	@tparam	s_parser	*left
+//	@tparam	s_parser	*right
 typedef struct s_parser
 {
 	char			*cmd;
+	char			*rpath;
+	char			*lpath;
 	t_type			type;
 	int				prc;
 	int				flag;
+	int				subshell_code;
 	int				err_code;
+	int				*pipes;
 	struct s_parser	*next;
 	struct s_parser	*prev;
 	struct s_parser	*left;
 	struct s_parser	*right;
 }					t_parser;
 
-/*
-	char		**path;
-	t_parser	*pars;
-	t_parser	*lex;
-	t_parser	*temp;
-*/
+//	@brief
+//	@tparam int			exit_status
+//	@tparam	char		**path
+//	@tparam	int			flag
+//	@tparam	t_parser	*pars
+//	@tparam	t_parser	*lex
+//	@tparam	t_parser	*temp
 typedef struct s_init
 {
+	int			exit_status;
 	char		**path;
+	int			flag;
 	t_parser	*pars;
 	t_parser	*lex;
 	t_parser	*temp;
-	int			flag;
 }				t_init;
 
 /* - - - - --!-- - - - - ! Handling spec tokens ! - - - - --!-- - - - - */
@@ -112,6 +123,7 @@ void		handle_space(t_parser **res, char *line, int i, int count);
 int			handle_pipe(t_parser **res, char *line, int i, int count);
 int			handle_xand(t_parser **res, char *line, int i, int count);
 int			handle_xor(t_parser **res, char *line, int i, int count);
+void		heredoc_input(char	*limiter, t_parser **res);
 const char	*get_token_name(t_type token);
 
 /* - - - - - --!-- - - - - ! Nodes and lists ! - - - - --!-- - - - - - */
@@ -125,9 +137,11 @@ t_parser	*lstlast(t_parser *lst);
 int			lstsize(t_parser *lst);
 
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
+int			handle_cprnthses(t_parser **res, char *line, int i, int count);
 int 		check_ast(t_init *init, t_parser *pars, t_list *env);
 int			lexer(t_parser **res, char *line);
 void		lex(char *line, t_init *init);
+int			check_type(t_type type);
 void		parser(t_init *init);
 
 /* - - - - - --!-- - - - - - ! RPN and AST ! - - - - - --!-- - - - - - */
@@ -138,8 +152,11 @@ void		push(t_parser **a, t_parser **b);
 void		pop(t_parser **stack);
 
 /* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
+int			exec_iocmd(t_init *init, t_parser *stack, t_list *env);
 char		*restore_cmd_line(t_parser *stack);
 char		*check_cmd(char *cmd, char **path);
+int			pipe_prepair(t_parser *pars);
+int			error_code(int error_num);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
 char		*strjoin_helper(char *result, char *read, int mode);

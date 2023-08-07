@@ -16,6 +16,7 @@ void	ft_cd(t_list *str, char *ptr)
 {
 	t_list	*env;
 	t_list	*env1;
+	int		flag1;
 	char	*text;
 	char	*text1;
 
@@ -24,6 +25,7 @@ void	ft_cd(t_list *str, char *ptr)
 	text = ptr;
 	env = NULL;
 	env1 = NULL;
+	flag1 = 0;
 	while (*text == ' ' && *text)
 		text++;
 	while (*text != ' ' && *text)
