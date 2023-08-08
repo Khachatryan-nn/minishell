@@ -48,7 +48,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *b, int c, size_t len);
-int		ft_atoi(const char *str);
+long long	ft_atoi(const char *str);
 void	*ft_calloc(size_t nitems, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_getstart(const char *s1, const char *set);

@@ -71,9 +71,6 @@ void	ft_export_change(char *line, t_list *env, t_init *init)
 		k++;
 	}
 	ttr[k] = 0;
-	k = -1;
-	while (ttr[++k])
-		printf("%s\n", ttr[k]);
 	k = 0;
 	j = 0;
 	while (ttr[k])

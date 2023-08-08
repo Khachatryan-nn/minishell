@@ -18,5 +18,5 @@ int	error_code(int error_num)
 {
 	if (error_num == 256)
 		return (1);
-	return (0);
+	return (error_num % 256);
 }

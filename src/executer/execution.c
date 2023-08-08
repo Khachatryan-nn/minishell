@@ -57,6 +57,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 				{
 					pars->err_code = call_cmd(pars, init, env);
 					init->exit_status = pars->err_code;
+					exit_env(init->exit_status, env);
 				}
 			}
 			return (1);
@@ -65,6 +66,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 		{
 			pars->err_code = call_cmd(pars, init, env);
 			init->exit_status = pars->err_code;
+			exit_env(init->exit_status % 256, env);
 		}
 	}
 	// else if (pars->lpath && pars->rpath)
@@ -113,7 +115,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 
 int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path)
 {
-	pid_t	pid;
+	pid_t				pid;
 	int		childExitCode;
 
 	childExitCode = 0;
@@ -136,7 +138,7 @@ int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path)
 	else
 	{
 		wait (&childExitCode);
-		return (childExitCode);
+		return (childExitCode / 256);
 	}
 }
 

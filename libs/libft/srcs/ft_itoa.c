@@ -43,7 +43,6 @@ static void	convert_nb(char *str, long n, unsigned int nb_digit,
 	if (sign == -1)
 		str[0] = '-';
 }
-
 char	*ft_itoa(int n)
 {
 	char			*str;

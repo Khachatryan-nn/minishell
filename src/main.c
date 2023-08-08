@@ -42,7 +42,6 @@ int	main(int ac, char**av, char** env1)
 	init.path = NULL;
 	env = NULL;
 	init.flag = 1;
-			
 	str = (char *)malloc(sizeof(char) * 1024);
 	ft_create_env(env1, &env);
 	rl_catch_signals = 0;
@@ -65,7 +64,9 @@ int	main(int ac, char**av, char** env1)
 				free(str);			
 				break;
 			}
-			else if (!ft_onlyspaces(str))
+			str = ft_expand(str, env);
+			printf("---%s\n", str);
+			 if (!ft_onlyspaces(str))
 			{
 				lex(str, &init);
 				if (init.pars)

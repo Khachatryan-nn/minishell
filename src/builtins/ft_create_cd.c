@@ -32,7 +32,7 @@ void	ft_cd(t_list *str, char *ptr)
 		text++;
 	while (*text == ' ' && *text)
 		text++;
-	if (text == '\0')
+	if (*text == '\0')
 	{
 		env = str;
 		while (env)
@@ -86,7 +86,9 @@ void	ft_cd(t_list *str, char *ptr)
 						break;
 					}
 			}
+		env1 = env1->next;
 		}
-		env = env->next;
 	}
+	else
+		perror("minishell$");
 }

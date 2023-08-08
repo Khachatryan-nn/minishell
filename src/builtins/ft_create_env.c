@@ -76,6 +76,13 @@ void	ft_create_env(char **str, t_list **stack)
 		stack_a->flag = 0;
 		ft_lstadd_back(stack, stack_a);
 	}
+	stack_a = ft_lstnew_2("?=0");
+	{
+		ft_lstadd_back(stack, stack_a);
+		stack_a->type = 0;
+		stack_a->flag = 0;
+		stack_a->unset = 0;
+	}
 }
 
 void	ft_env(t_list *env)
