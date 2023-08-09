@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/04 19:26:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/08 19:26:51 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	is_delitimer(t_parser *root)
 	if (!ptr)
 		return (2);
 	ptr = lstlast(ptr);
-	if (ptr->type == PIPE || ptr->type == HEREDOC)
+	if (ptr->type == PIPE || ptr->type == HEREDOC || ptr->type == INPUT)
 		return (1);
 	else if (ptr->type == XOR || ptr->type == XAND)
 		return (1);

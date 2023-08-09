@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/07 17:03:00 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:03:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,9 @@ void		push(t_parser **a, t_parser **b);
 void		pop(t_parser **stack);
 
 /* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
+int			to_execute(t_parser *pars, t_list *env, t_init *init, int status);
+int			subsh_execute(t_parser *pars, t_list *env, t_init *init, int pid);
+int			call_cmd(t_parser *stack, t_init *init, t_list *env);
 int			exec_iocmd(t_init *init, t_parser *stack, t_list *env);
 char		*restore_cmd_line(t_parser *stack);
 char		*check_cmd(char *cmd, char **path);
@@ -163,8 +166,8 @@ int			error_code(int error_num);
 char		*strjoin_helper(char *result, char *read, int mode);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_init *init, t_list *env);
+int			parse_error(char *err_str, int mode);
 int			is_delitimer(t_parser *root);
-int			parse_error(char *err_str);
 void		print_types(t_parser *ptr);
 int			ft_onlyspaces(char *str);
 void		free_matrix(void **ptr);

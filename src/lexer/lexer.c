@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/07 17:58:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:46:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	lexer(t_parser **res, char *line)
 					subsh--;
 				}
 				else
-					l = parse_error(")");
+					l = parse_error(")", 0);
 			}
 			else if (line[i] == '(')
 			{

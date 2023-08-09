@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/07 19:26:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:46:51 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	handle_prnthses(t_parser **res, char *line, int i, int count)
 	if (line[counter] == ')')
 		return (1);
 	else
-		return (0 & parse_error("("));
+		return (0 & parse_error("(", 0));
 }
 
 int	handle_cprnthses(t_parser **res, char *line, int i, int count)

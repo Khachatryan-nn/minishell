@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/01 17:15:37 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:57:24 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ char	*strjoin_helper(char *result, char *read, int mode);
 int		ft_strcmp( char *s1, char *s2);
 int		ft_onlyspaces(char *str);
 
+/// @brief
+/// @param mode 1 -> new line
+///	@param mode else -> space
 char	*strjoin_helper(char *result, char *read, int mode)
 {
 	if (mode == 1)

@@ -3,7 +3,7 @@ NAME			=	minishell
 CC				=	cc
 RM				=	rm -rf
 MK				=	mkdir -p
-CFLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror #-g3 -fsanitize=address
 
 # COLORS
 GRAY			=	\033[38;5;8m
@@ -35,7 +35,7 @@ SRCS			:=	$(notdir $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))) $(notdir 
 OBJS			:=	$(patsubst %.c, $(BUILD)/%.o, $(SRCS))
 
 # COMPILATION
-SANITIZER		=	-g3 fsanitize=address
+SANITIZER		=	-g3 -fsanitize=address
 LIBS			=	libft ft_dprintf gnl
 LFLAGS			=	-L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftdprintf -L$(GNL_DIR) -lgnl -lreadline -L./mutik/lib
 IFLAGS			=	-Iinclude -I$(LIBFT_DIR)/include -I$(PRINTF_DIR)/include -I$(GNL_DIR)/include -I./mutik/include
@@ -67,16 +67,16 @@ $(BUILD):
 						@echo "${GREY}Building minishell...${RESET}"
 
 $(BUILD)/%.o:		$(SRC_DIR)/%.c $(DEPS)
-						@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+						@$(CC) $(CFLAGS) $(SANITIZER) $(IFLAGS) -c $< -o $@
 						$(call update_progress)
 
 $(BUILD)/%.o:		$(SRC_DIR)/*/%.c $(DEPS)
-						@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+						@$(CC) $(CFLAGS) $(SANITIZER) $(IFLAGS) -c $< -o $@
 						$(call update_progress)
 
 $(NAME):			$(BUILD) $(OBJS) $(LIBFT) $(PRINTF)
 						@echo "$(GREEN)\nSources and libraries compiled.$(RESET)"
-						@$(CC) $(CFLAGS) $(LFLAGS) $(IFLAGS) $(OBJS) -o $(NAME)
+						@$(CC) $(CFLAGS) $(SANITIZER) $(LFLAGS) $(IFLAGS) $(OBJS) -o $(NAME)
 						@echo "$(GREEN)Build completed.$(RESET)"
 
 

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/07 16:52:24 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/08 19:27:56 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_parser	*most_prev(t_parser	*stack)
 		return (NULL);
 	while (ptr && ptr->prev != NULL)
 		ptr = ptr->prev;
+	if (!ptr)
+		return (NULL);
 	return (ptr);
 }
 
@@ -69,9 +71,11 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
 		pop(stack);
 		new->right = most_prev(abstract_syntax_tree(init, stack));
+		if (!new)
+			return (NULL);
 		return (new);
 	}
-	if (check_type(ptr->type))
+	else if (check_type(ptr->type))
 	{
 		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
 		if (ptr->subshell_code)
@@ -79,10 +83,13 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 		pop(stack);
 		new->right = most_prev(abstract_syntax_tree(init, stack));
 		new->left = most_prev(abstract_syntax_tree(init, stack));
+		// if (new->left)
 		if (check_type(new->type) == 2)
 		{
-			new->left->flag += 1 << 3;
-			new->right->flag += 1 << 3;
+			if (new->left)
+				new->left->flag += 1 << 3;
+			if (new->right)
+				new->right->flag += 1 << 3;
 			new->rpath = new->right->cmd;
 			new->lpath = new->left->cmd;
 		}

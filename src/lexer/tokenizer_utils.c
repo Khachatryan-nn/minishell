@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/30 20:43:18 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:43:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ void	heredoc_input(char	*limiter, t_parser **res)
 	result = NULL;
 	while (1)
 	{
-		ft_dprintf(1, "> ");
-		line = get_next_line(0);
+		line = readline("> ");
+		if (!line)
+			break ;
 		if (!ft_strcmp(line, limiter))
 			break ;
+		if (!result)
+			result = line;
 		else
-			result = ft_strjoin(result, line, 1);
+			result = strjoin_helper(result, line, 1);
 	}
-	//lstlast(*res)->val = result;
 	lstback(res, lstnew_pars(result, WORD, 0, 1));
 }

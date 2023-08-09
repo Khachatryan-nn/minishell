@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/07 16:49:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:47:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	pop(t_parser **stack)
 	t_parser	*temp;
 
 	temp = lstlast(*stack);
+	if (!temp)
+		*stack = NULL;
 	if (temp->prev)
 	{
 		temp->prev->next = NULL;
@@ -102,7 +104,6 @@ void	parser(t_init *init)
 	}
 	while (stack_ops)
 		push(&stack_ops, &stack_otp);
-	print_types(stack_otp);
 	init->pars = abstract_syntax_tree(init, &stack_otp);
 	print_ast(init->pars, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/07 20:00:18 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:02:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,36 +47,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	}
 	if (pars->left == NULL && pars->right == NULL)
 	{
-		if (pars->subshell_code)
-		{
-			pid = fork();
-			if (pid == -1)
-				return (127);
-			else if (pid == 0)
-			{
-				if (check_built(pars, env, init))
-					kill(pid, SIGKILL);
-				else
-				{
-					pars->err_code = call_cmd(pars, init, env);
-					init->exit_status = pars->err_code;
-				}
-			}
-			else
-			{
-				if (wait(&status) < 0)
-				{
-					perror("wait");
-					return (1);
-				}
-				return (status);
-			}
-		}
-		else if (!check_built(pars, env, init))
-		{
-			pars->err_code = call_cmd(pars, init, env);
-			init->exit_status = pars->err_code;
-		}
+		return(to_execute(pars, env, init, status));
 	}
 	if (pars->left != NULL && !(pars->left->flag & (1 << 3)))
 	{

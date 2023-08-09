@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/31 21:53:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:47:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int	is_valid(t_init *init)
 			//if (ptr->next->type == HEREDOC))
 			//	return (parse_error(type_is(ptr->type)));
 			//else
-				return (parse_error(type_is(ptr->next->type)));
+				return (parse_error(type_is(ptr->next->type), 0));
 		}
 		else if (check_type(ptr->type) && ptr->next->type == END)
-			return (parse_error("newline"));
+			return (parse_error("newline", 0));
 		ptr = ptr->next;
 	}
 	return (1);
