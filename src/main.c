@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/07 19:20:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:16:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int ac, char**av, char** env1)
 	t_list	*env;
 	t_init	init;
 
-	init.lex = NULL;
 	init.pars = NULL;
 	init.temp = NULL;
 	init.path = NULL;

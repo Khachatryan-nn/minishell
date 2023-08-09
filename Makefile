@@ -106,6 +106,7 @@ fclean:	clean
 			@$(MAKE) fclean -C $(PRINTF_DIR)
 			@$(MAKE) fclean -C $(GNL_DIR)
 			@echo "$(RED)Cleaned everything.$(RESET)"
+
 readline:
 			cd readline-master && make clean && ./configure --prefix=$(PREFIX) && make && make install	
 

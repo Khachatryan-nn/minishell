@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/09 15:02:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:13:44 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 				return (127);
 			else if (pid == 0)
 			{
-				pid = 1;
 				pars->err_code = check_ast(init, pars->left, env);
 				// kill(pid, SIGKILL);
 			}
