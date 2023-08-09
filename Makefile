@@ -96,6 +96,7 @@ clean:
 			@$(RM) $(BUILD)
 			@$(MAKE) clean -C $(LIBFT_DIR)
 			@$(MAKE) clean -C $(PRINTF_DIR)
+			@$(MAKE) clean -C $(GNL_DIR)
 			@echo "$(RED)Cleaned object files.$(RESET)"
 
 fclean:	clean
@@ -103,6 +104,7 @@ fclean:	clean
 			@$(RM) $(NAME) $(NAME)_old "$(NAME) "* 2> /dev/null || :
 			@$(MAKE) fclean -C $(LIBFT_DIR)
 			@$(MAKE) fclean -C $(PRINTF_DIR)
+			@$(MAKE) fclean -C $(GNL_DIR)
 			@echo "$(RED)Cleaned everything.$(RESET)"
 
 readline:
