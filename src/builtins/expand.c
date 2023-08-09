@@ -17,7 +17,7 @@ char	*ft_substr2(char *s1, int i, int j)
 
 	str = NULL;
 	a = 0;
-	str = (char *)malloc(sizeof(ft_strlen2(str) - i + j + 1));
+	str = (char *)malloc(sizeof(char) * (ft_strlen2(s1) - i + j + 1));
 	while (j > 0)
 	{
 		str[a] = s1[i];
@@ -91,11 +91,13 @@ char	*ft_expand(char *str, t_list *env)
 	ttr = NULL;
 	ptr = NULL;
 	(void)env;
+	if (!str)
+		return (NULL);
 	if (ft_strchr(str, '\"'))
 		str = ft_check_str(str);
-		while (str[i] != '\0')
+		while (str && str[i] != '\0')
 		{
-			if (str[i] == '\'')
+			if (str && str[i] == '\'')
 			{
 				i++;
 				while (str[i] != '\0' && str[i] != '\'')
