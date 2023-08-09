@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/07 16:56:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:59:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,9 @@ int	check_built(t_parser *stack, t_list *env, t_init *init)
 	char	*str;
 
 	str = restore_cmd_line(stack);
-	if (ft_strcmp(str, "exit") == 0)
-	{
-		dprintf(1, "exit\n");
-		while (env)
-		{
-			free(env->ptr);
-			free(env->value);
-			env = env->next;
-		}
-		exit (0);
-	}
-	else if (ft_strcmp(str, "env") == 0)
+	if (ft_strcmp(init->lex->cmd, "exit") == 0)
+		ft_exit(env, init);
+	 if (ft_strcmp(str, "env") == 0)
 	{
 		ft_env (env);
 		return (1);
@@ -55,6 +46,11 @@ int	check_built(t_parser *stack, t_list *env, t_init *init)
 	else if (ft_strnstr(str, "cd", 2) == 0)
 	{
 		ft_cd (env, str);
+		return (1);
+	}
+	else if (ft_strnstr(str, "echo", 4) == 0)
+	{
+		ft_echo(env, init);
 		return (1);
 	}
 	return (0);

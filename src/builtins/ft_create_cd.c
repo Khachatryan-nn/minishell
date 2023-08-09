@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/06 00:40:26 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/06 16:36:28 by musimony         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,25 @@
 
 void	ft_cd(t_list *str, char *ptr)
 {
-	t_list *env;
-	t_list *env1;
-	t_list *start;
+	t_list	*env;
+	t_list	*env1;
+	int		flag1;
 	char	*text;
 	char	*text1;
-	int flag1;
 
-	(void)str;
-	(void)env;
-	(void)env1;
-	(void)start;
-	(void)text1;
 	text = NULL;
 	text1 = NULL;
 	text = ptr;
 	env = NULL;
 	env1 = NULL;
-	start = NULL;
- 	while (*text == ' ' && *text)
+	flag1 = 0;
+	while (*text == ' ' && *text)
 		text++;
 	while (*text != ' ' && *text)
 		text++;
 	while (*text == ' ' && *text)
 		text++;
-	if (!text)
+	if (*text == '\0')
 	{
 		env = str;
 		while (env)
@@ -92,10 +86,9 @@ void	ft_cd(t_list *str, char *ptr)
 						break;
 					}
 			}
-			env1 = env1->next;
+		env1 = env1->next;
 		}
 	}
 	else
-		perror("minishell");
-
+		perror("minishell$");
 }

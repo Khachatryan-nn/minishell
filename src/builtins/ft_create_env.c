@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:23:59 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/26 16:13:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/06 17:28:56 by musimony         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_find_symbol(char *str, char c)
 		i++;
 	if (str[i] == '\0')
 		return (str);
-	ptr = (char *)malloc(sizeof(char) * (i + 1));
+	ptr = (char *)malloc(sizeof(char) * i);
 	if (!ptr)
 		return (NULL);
 	while (j < i)
@@ -76,6 +76,13 @@ void	ft_create_env(char **str, t_list **stack)
 		stack_a->flag = 0;
 		ft_lstadd_back(stack, stack_a);
 	}
+	stack_a = ft_lstnew_2("?=0");
+	{
+		ft_lstadd_back(stack, stack_a);
+		stack_a->type = 0;
+		stack_a->flag = 0;
+		stack_a->unset = 0;
+	}
 }
 
 void	ft_env(t_list *env)
@@ -86,7 +93,8 @@ void	ft_env(t_list *env)
 	lst = env;
 	while ((lst))
 	{
-		if (lst->type > 0 && lst->flag > 0 && lst->unset > 0 && lst->ptr && lst->value)
+		if (lst->type > 0 && lst->flag > 0 && lst->unset > 0
+			&& lst->ptr && lst->value)
 		{
 			printf("%s", lst->ptr);
 			printf("%s\n", ft_strchr(lst->value, '='));

@@ -11,19 +11,17 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-int	ft_atoi(const char *str)
+long long	ft_atoi(const char *str)
 {
-	int	i;
-	int	j;
-	int	k;
+	long long	i;
+	long long	j;
+	long long 	k;
 
 	i = 0;
 	j = 1;
 	k = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r' || str[i] == '\t')
-		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/09 15:03:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:58:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef enum e_token_type
 	XAND,
 	PIPE,
 	HEREDOC,
-	HEREDOC_ARG,
 	WRITE_APPEND,
 	WRITE_TRUNC,
 	INPUT,
@@ -99,6 +98,7 @@ typedef struct s_parser
 //	@brief
 //	@tparam int			exit_status
 //	@tparam	char		**path
+//	@tparam	int			flag
 //	@tparam	t_parser	*pars
 //	@tparam	t_parser	*lex
 //	@tparam	t_parser	*temp
@@ -106,10 +106,10 @@ typedef struct s_init
 {
 	int			exit_status;
 	char		**path;
+	int			flag;
 	t_parser	*pars;
 	t_parser	*lex;
 	t_parser	*temp;
-	int			flag;
 }				t_init;
 
 /* - - - - --!-- - - - - ! Handling spec tokens ! - - - - --!-- - - - - */
@@ -178,13 +178,27 @@ void		ft_export_change(char *line, t_list *env, t_init *init);
 char		**ft_change_2(char *str);
 void		ft_create_env(char **str, t_list **stack);
 int			check_built(t_parser *stack, t_list *env, t_init *init);
-// void		ft_cd_prev(t_list *str, char *text);
 void		ft_unset(char *ptr, t_list *env, t_init *init);
 void		ft_cd(t_list *str, char *ptr);
 void		ft_export(t_list *env);
+char		**ft_export_continue(t_list *env1);
+char		**ft_export_continue2(t_list *env, t_list *env1, char **ptr, int a);
 void		ft_pwd(t_list *env);
 void		ft_env(t_list *env);
-char		*ft_ls(char *str);
+void		ft_echo(t_list *env, t_init *init);
+void		ft_echo_dollar(char *str, t_list *env);
+void		ft_check_echo_env(char *str, t_list *env);
+void		ft_exit(t_list *env, t_init *init);
+void		exit_env(int a, t_list *env);
+int			ft_atoi_2(long long a);
+void		ft_check_valid(char *str, t_list *env);
+void		ft_check_valid_2(char *str, t_list *env);
+void		ft_check_valid_3(t_init *lst, t_list *env);
+void		ft_find_env_echo(t_list *env);
+char		*ft_expand(char *str, t_list *env);
+char		*expand_change(char *str, int i, t_list *env);
+char		*ft_kes(char *str, int i, t_list *env);
+char		*ft_kes_2(char *ptr, char *ttr, char *str);
 
 /* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
 

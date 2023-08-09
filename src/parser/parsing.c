@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/08 17:47:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:02:14 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	parser(t_init *init)
 	t_parser	*stack_otp;
 
 	ptr = init->lex;
-	init->pars = NULL;
 	stack_ops = NULL;
 	stack_otp = NULL;
 	while (ptr)

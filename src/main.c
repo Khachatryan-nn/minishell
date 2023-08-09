@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/09 17:16:26 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:57:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	main(int ac, char**av, char** env1)
 	init.pars = NULL;
 	init.temp = NULL;
 	init.path = NULL;
-	init.exit_status = 0;
 	env = NULL;
 	init.flag = 1;
 	str = (char *)malloc(sizeof(char) * 1024);
@@ -63,7 +62,9 @@ int	main(int ac, char**av, char** env1)
 				free(str);			
 				break;
 			}
-			else if (!ft_onlyspaces(str))
+			str = ft_expand(str, env);
+			printf("---%s\n", str);
+			 if (!ft_onlyspaces(str))
 			{
 				lex(str, &init);
 				if (init.pars)
@@ -72,7 +73,6 @@ int	main(int ac, char**av, char** env1)
 					destroy_init(&init);
 				}
 			}
-			// ft_check_main(str, env, init);
 			add_history(str);
 		}
 	}

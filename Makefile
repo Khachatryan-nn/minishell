@@ -18,7 +18,7 @@ LIBFT			=	$(LIBFT_DIR)/libft.a
 PRINTF_DIR		=	./libs/ft_dprintf
 PRINTF			=	$(PRINTF_DIR)/libftdprintf.a
 GNL_DIR			=	./libs/get_next_line
-GNL				=	$(GNL_DIR)/libgnl.a
+GNL				=	$(GNL_DIR)/get_next_line.a
 INCS_DIR		=	./include
 
 # DEPENDENCIES
@@ -96,7 +96,6 @@ clean:
 			@$(RM) $(BUILD)
 			@$(MAKE) clean -C $(LIBFT_DIR)
 			@$(MAKE) clean -C $(PRINTF_DIR)
-			@$(MAKE) clean -C $(GNL_DIR)
 			@echo "$(RED)Cleaned object files.$(RESET)"
 
 fclean:	clean
@@ -104,7 +103,6 @@ fclean:	clean
 			@$(RM) $(NAME) $(NAME)_old "$(NAME) "* 2> /dev/null || :
 			@$(MAKE) fclean -C $(LIBFT_DIR)
 			@$(MAKE) fclean -C $(PRINTF_DIR)
-			@$(MAKE) fclean -C $(GNL_DIR)
 			@echo "$(RED)Cleaned everything.$(RESET)"
 
 readline:
