@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.0
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /Users/tigrankhachatryan/Desktop/all/42/minishell/rd_lib
+prefix = /Users/tigrankhachatryan/Desktop/all/42/minishell/mutik
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

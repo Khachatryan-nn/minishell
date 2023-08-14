@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = /Users/tigrankhachatryan/Desktop/all/42/minishell/rd_lib
+prefix = 
 
 datarootdir = ${prefix}/share
 

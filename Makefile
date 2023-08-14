@@ -12,7 +12,7 @@ RED				=	\033[38;5;196m
 RESET			=	\033[0m
 
 # LIBRARIES
-PREFIX			=	$(shell find ${HOME} -name mutik 2>/dev/null)
+PREFIX			=	$(shell pwd)/rd_lib
 LIBFT_DIR		=	./libs/libft
 LIBFT			=	$(LIBFT_DIR)/libft.a
 PRINTF_DIR		=	./libs/ft_dprintf
@@ -37,8 +37,8 @@ OBJS			:=	$(patsubst %.c, $(BUILD)/%.o, $(SRCS))
 # COMPILATION
 SANITIZER		=	-g3 -fsanitize=address
 LIBS			=	libft ft_dprintf gnl
-LFLAGS			=	-L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftdprintf -L$(GNL_DIR) -lgnl -lreadline -L./mutik/lib
-IFLAGS			=	-Iinclude -I$(LIBFT_DIR)/include -I$(PRINTF_DIR)/include -I$(GNL_DIR)/include -I./mutik/include
+LFLAGS			=	-L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftdprintf -L$(GNL_DIR) -lgnl -lreadline -L./rd_lib/lib
+IFLAGS			=	-Iinclude -I$(LIBFT_DIR)/include -I$(PRINTF_DIR)/include -I$(GNL_DIR)/include -I./rd_lib/include
 MGOALS			=	$(filter-out bonus, $(MAKECMDGOALS))
 
 .DEFAULT_GOAL	=	all

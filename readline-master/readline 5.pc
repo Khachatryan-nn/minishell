@@ -1,4 +1,4 @@
-prefix=/Users/tigrankhachatryan/Desktop/all/42/minishell/rd_lib
+prefix=
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
