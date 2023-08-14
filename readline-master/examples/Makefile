@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.0
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /Users/tikhacha/Desktop/all/minishell/mutik
+prefix = 
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /Users/tikhacha/Desktop/all/minishell/readline-master
+BUILD_DIR = /Users/tigrankhachatryan/Desktop/all/42/minishell/readline-master
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c

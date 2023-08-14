@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:50:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/06 17:21:53 by musimony         ###   ########.fr       */
+/*   Updated: 2023/08/09 21:52:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_export(t_list *env)
 	ptr = NULL;
 	ptr = ft_export_continue(env);
 	i = 0;
-	while (ptr[i] != '\0')
+	while (ptr[i] != 0)
 	{
 		printf("declare - x ");
 		printf("%s", ft_find_symbol(ptr[i], '='));
@@ -65,10 +65,8 @@ char	**ft_export_continue(t_list *env1)
 {
 	char	**ptr;
 	t_list	*env;
-	int		i;
 	int		a;
 
-	i = 0;
 	a = 0;
 	ptr = NULL;
 	env = NULL;

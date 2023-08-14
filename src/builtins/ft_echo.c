@@ -1,13 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/09 21:52:40 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/08/09 21:52:52 by tikhacha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_echo(t_list *env, t_init *init)
 {
 	t_init *str;
-	int		i;
 
 	str = NULL;
 	str = init;
-	i = 0;
 	str->lex = str->lex->next;
 	while (ft_strcmp(str->lex->cmd, "AST") != 0 && str->lex->cmd)
 	{

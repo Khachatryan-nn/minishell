@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/09 18:02:49 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/13 22:26:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ t_parser	*most_prev(t_parser	*stack)
 		return (NULL);
 	while (ptr && ptr->prev != NULL)
 		ptr = ptr->prev;
-	if (!ptr)
-		return (NULL);
 	return (ptr);
 }
 
@@ -84,14 +82,20 @@ t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
 		new->right = most_prev(abstract_syntax_tree(init, stack));
 		new->left = most_prev(abstract_syntax_tree(init, stack));
 		// if (new->left)
-		if (check_type(new->type) == 2)
+		if (new && check_type(new->type) == 2)
 		{
 			if (new->left)
+			{
 				new->left->flag += 1 << 3;
+				if (new->left->cmd)
+					new->lpath = new->left->cmd;
+			}
 			if (new->right)
+			{
 				new->right->flag += 1 << 3;
-			new->rpath = new->right->cmd;
-			new->lpath = new->left->cmd;
+				if (new->right->cmd)
+					new->rpath = new->right->cmd;
+			}
 		}
 		return (new);
 	}
