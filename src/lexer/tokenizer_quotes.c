@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/08 16:46:51 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/14 19:52:50 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ int	handle_dquotes(t_parser **res, char *line, int i, int count)
 	char	*read;
 	char	*result;
 	int		k;
+	char	*str;
 
+	str = NULL;
 	if (!ft_isspace(line, count, i) && is_delitimer(*res))
 		lstback(res, lstnew_pars(ft_substr(line, count, i - count), WORD, 0, 1));
 	else if (!ft_isspace(line, count, i))

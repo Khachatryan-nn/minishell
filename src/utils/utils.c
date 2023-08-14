@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/08 16:57:24 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/14 19:34:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,18 @@ int	ft_onlyspaces(char *str)
 /// @brief
 /// @return 0 if there are equal
 ///	@return or difference between non-eq. symbols
-int	ft_strcmp( char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int		i;
 	char	*ptr1;
 	char	*ptr2;
 
 	i = 0;
-	ptr1 = (char *)s1;
-	ptr2 = (char *)s2;
+	printf ("%s | %s\n", s1, s2);
 	if (!s1 && !s2)
 		return (0);
+	ptr1 = s1;
+	ptr2 = s2;
 	while (ptr1[i] && ptr2[i] && ptr1[i] == ptr2[i])
 	{
 		if (ptr1[i] == '\0' && ptr2[i] == '\0')
