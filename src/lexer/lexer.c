@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/08 16:46:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:53:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	lexer(t_parser **res, char *line)
 		while (line[i] != '\0')
 		{
 			if (line[i] == '"')
-				l = handle_dquotes(res, line, i, counter) + 1;
+				l = handle_dquotes(res, line, i, counter);
 			else if (line[i] == 39)
-				l = handle_squotes(res, line, i, counter) + 1;
+				l = handle_squotes(res, line, i, counter);
 			else if (line[i] == ')')
 			{
 				if (subsh)

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/14 19:34:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:04:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_strcmp(char *s1, char *s2)
 	char	*ptr2;
 
 	i = 0;
-	printf ("%s | %s\n", s1, s2);
+	// printf ("%s | %s\n", s1, s2);
 	if (!s1 && !s2)
 		return (0);
 	ptr1 = s1;

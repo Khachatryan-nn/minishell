@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/09 17:58:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:46:55 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int			lstsize(t_parser *lst);
 
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
 int			handle_cprnthses(t_parser **res, char *line, int i, int count);
+int			add_new_quote(t_parser **res, char *line, int i, int type);
 int 		check_ast(t_init *init, t_parser *pars, t_list *env);
 int			lexer(t_parser **res, char *line);
 void		lex(char *line, t_init *init);
