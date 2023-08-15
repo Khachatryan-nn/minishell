@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/09 18:02:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 01:00:46 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 const char	*get_token_name(t_type token);
-int			is_delitimer(t_parser *root);
+int			is_delimiter(t_parser *root);
 
 const char* get_token_name(t_type token)
 {
@@ -49,7 +49,7 @@ const char* get_token_name(t_type token)
 		return ("UNKNOWN");
 }
 
-int	is_delitimer(t_parser *root)
+int	is_delimiter(t_parser *root)
 {
 	t_parser	*ptr;
 

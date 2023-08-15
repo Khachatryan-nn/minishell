@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/15 16:46:55 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 01:54:05 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ typedef struct s_init
 
 /* - - - - --!-- - - - - ! Handling spec tokens ! - - - - --!-- - - - - */
 int			handle_prnthses(t_parser **res, char *line, int i, int count);
-int			handle_squotes(t_parser **res, char *line, int i, int count);
-int			handle_dquotes(t_parser **res, char *line, int i, int count);
+int			handle_squotes(t_parser **res, char **line, int i, int count);
+int			handle_dquotes(t_parser **res, char **line, int i, int count);
 int			handle_heredoc(t_parser **res, char *line, int i, int count);
 int			handle_wappend(t_parser **res, char *line, int i, int count);
 int			handle_wtrunc(t_parser **res, char *line, int i, int count);
@@ -141,8 +141,8 @@ int			lstsize(t_parser *lst);
 int			handle_cprnthses(t_parser **res, char *line, int i, int count);
 int			add_new_quote(t_parser **res, char *line, int i, int type);
 int 		check_ast(t_init *init, t_parser *pars, t_list *env);
-int			lexer(t_parser **res, char *line);
-void		lex(char *line, t_init *init);
+int			lexer(t_parser **res, char **line);
+void		lex(char **line, t_init *init);
 int			check_type(t_type type);
 void		parser(t_init *init);
 
@@ -168,7 +168,7 @@ char		*strjoin_helper(char *result, char *read, int mode);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_init *init, t_list *env);
 int			parse_error(char *err_str, int mode);
-int			is_delitimer(t_parser *root);
+int			is_delimiter(t_parser *root);
 void		print_types(t_parser *ptr);
 int			ft_onlyspaces(char *str);
 void		free_matrix(void **ptr);

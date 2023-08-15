@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/15 15:14:27 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 01:53:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int ac, char**av, char** env1)
 			// printf("---%s\n", str);
 			 if (!ft_onlyspaces(str))
 			{
-				lex(str, &init);
+				lex(&str, &init);
 				if (init.pars)
 				{
 					check_ast(&init, init.pars, env);

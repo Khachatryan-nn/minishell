@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:39:26 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/15 20:12:27 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 01:08:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,13 @@ void	handle_space(t_parser **res, char *line, int i, int count)
 	str = NULL;
 	if (ft_isspace(line, count, i))
 		return ;
-	if (is_delitimer(*res))
-	{
-		str = ft_substr(line, count, i - count);
+	str = ft_substr(line, count, i - count);
+	if (is_delimiter(*res))
 		lstback(res, lstnew_pars(str, WORD, 0, 3));
-	}
 	else if (i > 1 && line[i - 1] == ' ')
-	{
-		str = ft_substr(line, count, i - count)
 		lstback(res, lstnew_pars(str, WORD, 0, 2));
-	}
 	else
-	{
-		str = ft_substr(line, count, i - count);
 		lstback(res, lstnew_pars(str, WORD, 0, 0));
-	}
 	if (str)
 		free(str);
 }
@@ -48,7 +40,7 @@ int	handle_xor(t_parser **res, char *line, int i, int count)
 	char *str;
 
 	str = NULL;
-	if (!ft_isspace(line, count, i) && is_delitimer(*res))
+	if (!ft_isspace(line, count, i) && is_delimiter(*res))
 	{
 		str = ft_substr(line, count, i - count);
 		lstback(res, lstnew_pars(str, WORD, 0, 1));
@@ -71,7 +63,7 @@ int	handle_xand(t_parser **res, char *line, int i, int count)
 	char	*str;
 
 	str = NULL;
-	if (!ft_isspace(line, count, i) && is_delitimer(*res))
+	if (!ft_isspace(line, count, i) && is_delimiter(*res))
 	{
 		str = ft_substr(line, count, i - count);
 		lstback(res, lstnew_pars(str, WORD, 0, 1));
@@ -94,7 +86,7 @@ int	handle_pipe(t_parser **res, char *line, int i, int count)
 	char	*str;
 
 	str = NULL;
-	if (!ft_isspace(line, count, i) && is_delitimer(*res))
+	if (!ft_isspace(line, count, i) && is_delimiter(*res))
 	{
 		str = ft_substr(line, count, i - count);
 		lstback(res, lstnew_pars(str, WORD, 0, 1));
