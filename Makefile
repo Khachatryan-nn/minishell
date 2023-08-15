@@ -102,6 +102,7 @@ clean:
 fclean:	clean
 			@echo "$(GRAY)Processing...$(RESET)"
 			@$(RM) $(NAME) $(NAME)_old "$(NAME) "* 2> /dev/null || :
+			@$(RM) */*\ 2* */*\ 3* */*\ 4* */*/*\ 2* */*/*\ 3* */*/*\ 4* 2> /dev/null || :
 			@$(MAKE) fclean -C $(LIBFT_DIR)
 			@$(MAKE) fclean -C $(PRINTF_DIR)
 			@$(MAKE) fclean -C $(GNL_DIR)
