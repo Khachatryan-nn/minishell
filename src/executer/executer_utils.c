@@ -6,13 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 17:44:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:20:15 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	*restore_cmd_line(t_parser *stack);
+char	**env_matrix(t_list *env);
 
 char	*restore_cmd_line(t_parser *stack)
 {
@@ -38,15 +39,22 @@ char	*restore_cmd_line(t_parser *stack)
 
 char	**env_matrix(t_list *env)
 {
-	char	**str;
+	char	**tmp;
 	t_list	*ptr;
 	int		i;
 
 	ptr = env;
 	i = 0;
-	str = (char **)malloc(sizeof(char *) * (ft_lstsize(env) + 1));
+	tmp = (char **)malloc(sizeof(char *) * (ft_lstsize(env) + 1));
 	while (ptr)
 	{
-		//i = 
+		if (ptr->ptr && ptr->value)
+		{
+			tmp[i] = ft_strjoin(ptr->ptr, ptr->value, 0);
+			i++;
+		}
+		ptr = ptr->next;
 	}
+	tmp[i] = NULL;
+	return (tmp);
 }

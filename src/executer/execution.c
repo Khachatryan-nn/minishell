@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 17:18:34 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:17:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path, t_list *env);
+int	execute_cmd(char *cmd_path, char **cmd_matrix, char **env);
 int	check_ast(t_init *init, t_parser *pars, t_list *env);
 int	call_cmd(t_parser *stack, t_init *init, t_list *env);
 int	andor_check(t_parser *stack);
@@ -98,14 +98,19 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	return (0);
 }
 
-int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path, t_list *env)
+int	execute_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx)
 {
 	pid_t	pid;
 	int		childExitCode;
-	char	**env_mtrx;
 
 	childExitCode = 0;
-	env_mtrx = 0;
+	// int i = 0;
+	// while (env_mtrx[i])
+	// {
+	// 	printf("%s\n", env_mtrx[i]);
+	// 	i++;
+	// }
+
 	pid = fork();
 	if (pid == -1)
 	{
@@ -114,9 +119,8 @@ int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path, t_list *env)
 	}
 	else if (pid == 0)
 	{
-		env_matrix(env);
-		if (env_mtrx && execve(cmd_path, cmd_matrix, path) == -1 && \
-			execve(cmd_matrix[0], cmd_matrix, path) == -1)
+		if (execve(cmd_path, cmd_matrix, env_mtrx) == -1 && \
+			execve(cmd_matrix[0], cmd_matrix, env_mtrx) == -1)
 		{
 			perror("minishell");
 			exit (1);
@@ -125,7 +129,7 @@ int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path, t_list *env)
 	}
 	else
 	{
-		wait (&childExitCode);
+		waitpid(pid, &childExitCode, 0);
 		return (childExitCode / 256);
 	}
 }
@@ -135,10 +139,12 @@ int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 	char	*cmd;
 	char	**cmd_matrix;
 	char	*cmd_path;
+	char	**env_mtrx;
 
 	if (!init->path)
 		find_path(init, env);
 	cmd = restore_cmd_line(stack);
+	env_mtrx = env_matrix(env);
 	if (!cmd)
 		return (1);
 	cmd_matrix = ft_split(cmd, ' ');
@@ -147,7 +153,7 @@ int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 	cmd_path = check_cmd(cmd_matrix[0], init->path);
 	if (!cmd_path)
 		return (127);
-	return (error_code(execute_cmd(cmd_path, cmd_matrix, init->path, env)));
+	return (error_code(execute_cmd(cmd_path, cmd_matrix, env_mtrx)));
 }
 
 // command not found			->	127

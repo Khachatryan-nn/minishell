@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/16 16:34:27 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:28:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,16 @@ void static	print_logo(void)
 \033[0m", 2215);
 }
 
-int	main(int ac, char **av, char** env1)
+int	main(int ac, char **av, char **envp)
 {
 	char	*str;
 	t_list	*env;
 	t_init	init;
 
-	init.pars = NULL;
-	init.temp = NULL;
-	init.path = NULL;
 	env = NULL;
 	init.flag = 1;
-	str = (char *)malloc(sizeof(char) * 1024);
-	ft_create_env(env1, &env);
+	str = NULL;
+	ft_create_env(envp, &env);
 	rl_catch_signals = 0;
 	if (ac == 1 && av)
 	{

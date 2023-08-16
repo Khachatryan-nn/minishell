@@ -286,11 +286,11 @@
 
 /* #undef HAVE_USG_SIGHOLD */
 
-#define MUST_REINSTALL_SIGHANDLERS 1
+/* #undef MUST_REINSTALL_SIGHANDLERS */
 
-/* #undef HAVE_POSIX_SIGSETJMP */
+#define HAVE_POSIX_SIGSETJMP 1
 
-/* #undef CTYPE_NON_ASCII */
+#define CTYPE_NON_ASCII 1
 
 /* modify settings or make new ones based on what autoconf tells us. */
 

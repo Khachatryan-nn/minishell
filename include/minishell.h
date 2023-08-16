@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/16 17:16:16 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 18:02:55 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,11 +156,12 @@ void		pop(t_parser **stack);
 /* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
 int			to_execute(t_parser *pars, t_list *env, t_init *init, int status);
 int			subsh_execute(t_parser *pars, t_list *env, t_init *init, int pid);
-int			call_cmd(t_parser *stack, t_init *init, t_list *env);
 int			exec_iocmd(t_init *init, t_parser *stack, t_list *env);
+int			call_cmd(t_parser *stack, t_init *init, t_list *env);
 char		*restore_cmd_line(t_parser *stack);
 char		*check_cmd(char *cmd, char **path);
 int			pipe_prepair(t_parser *pars);
+char		**env_matrix(t_list *env);
 int			error_code(int error_num);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
