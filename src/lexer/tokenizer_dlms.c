@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:39:26 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 01:08:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:37:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	handle_space(t_parser **res, char *line, int i, int count)
 	str = ft_substr(line, count, i - count);
 	if (is_delimiter(*res))
 		lstback(res, lstnew_pars(str, WORD, 0, 3));
-	else if (i > 1 && line[i - 1] == ' ')
+	else if (count > 1 && line[count - 1] == ' ')
 		lstback(res, lstnew_pars(str, WORD, 0, 2));
 	else
 		lstback(res, lstnew_pars(str, WORD, 0, 0));

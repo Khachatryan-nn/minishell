@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/27 13:27:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:54:23 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	find_path(t_init *init, t_list *env)
 {
 	t_list	*env1;
 
-	env1 = env; 
+	env1 = env;
 	while (env1)
 	{
+	printf("%s=%s\n", env1->ptr, env1->value);
 		if (ft_strcmp(env1->ptr, "PATH") == 0)
 			break ;
 		env1 = env1->next;
@@ -47,7 +48,7 @@ char static	*find_cmdpath(char *cmd, char **path)
 		else
 			return (cmdpath);
 	}
-	return (cmd);
+	return (NULL);
 }
 
 char	*check_cmd(char *cmd, char **path)
@@ -64,10 +65,8 @@ char	*check_cmd(char *cmd, char **path)
 		}
 		cmd_path = find_cmdpath(cmd, path);
 		if (!cmd_path)
-		{
 			dprintf(2, "minishell: %s: command not found\n", cmd);
-			return (cmd_path);
-		}
+		return (cmd_path);
 	}
-	return (cmd_path);
+	return (cmd);
 }

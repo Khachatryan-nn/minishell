@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/16 01:53:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:34:27 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void static	print_logo(void)
 \033[0m", 2215);
 }
 
-int	main(int ac, char**av, char** env1)
+int	main(int ac, char **av, char** env1)
 {
 	char	*str;
 	t_list	*env;

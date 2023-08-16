@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/15 16:04:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 17:18:34 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path);
+int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path, t_list *env);
 int	check_ast(t_init *init, t_parser *pars, t_list *env);
 int	call_cmd(t_parser *stack, t_init *init, t_list *env);
 int	andor_check(t_parser *stack);
@@ -98,12 +98,14 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	return (0);
 }
 
-int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path)
+int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path, t_list *env)
 {
-	pid_t				pid;
+	pid_t	pid;
 	int		childExitCode;
+	char	**env_mtrx;
 
 	childExitCode = 0;
+	env_mtrx = 0;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -112,7 +114,8 @@ int	execute_cmd(char *cmd_path, char **cmd_matrix, char **path)
 	}
 	else if (pid == 0)
 	{
-		if (execve(cmd_path, cmd_matrix, path) == -1 && \
+		env_matrix(env);
+		if (env_mtrx && execve(cmd_path, cmd_matrix, path) == -1 && \
 			execve(cmd_matrix[0], cmd_matrix, path) == -1)
 		{
 			perror("minishell");
@@ -144,7 +147,7 @@ int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 	cmd_path = check_cmd(cmd_matrix[0], init->path);
 	if (!cmd_path)
 		return (127);
-	return (error_code(execute_cmd(cmd_path, cmd_matrix, init->path)));
+	return (error_code(execute_cmd(cmd_path, cmd_matrix, init->path, env)));
 }
 
 // command not found			->	127

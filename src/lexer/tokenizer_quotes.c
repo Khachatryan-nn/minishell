@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 02:26:43 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:20:57 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,50 +65,34 @@ int	handle_dquotes(t_parser **res, char **line, int i, int count)
 	 		result = strjoin_helper(result, read, 1);
 	 	}
 		val = add_new_quote(res, result, 0, DQUOTE);
-	 	if (val + 1 < (int) ft_strlen(result))
-		{
-			*line = ft_strjoin(*line, result, 1);
-			val += i;
-		}
+		*line = ft_strjoin(*line, result, 1);
+		while ((*line)[val] != '"')
+			val += 1;
 	}
 	return (val);
 }
 
 int	handle_squotes(t_parser **res, char **line, int i, int count)
 {
-	// int		counter;
-	// int		enable;
-	// char	*read;
-	// char	*result;
-	// int		k;
+	 int	val;
+	 char	*read;
+	 char	*result;
 
 	handle_space(res, *line, i, count);
-	// if (!add_new_quotes(res, line, i, SQUOTE))
-	// {
-	// 	enable = 1;
-	// 	result = ft_substr(line, i + 1, counter - i - 1);
-	// 	if (!result)
-	// 		ft_strdup(result);
-	// 	while (enable)
-	// 	{
-	// 		printf("quote> ");
-	// 		read = get_next_line(0);
-	// 		if (ft_strchr(read, 39))
-	// 			enable = 0;
-	// 		result = strjoin_helper(result, read, 1);
-	// 	}
-	// 	k = 0;
-	// 	while (result[k] && result[k] != 39)
-	// 		k++;
-	// 	if (is_delimiter(*res))
-	// 		lstback(res, lstnew_pars(ft_substr(result, 0, k), SQUOTE, 0, 1));
-	// 	else if (i > 1 && line[i - 1])
-	// 		lstback(res, lstnew_pars(ft_substr(result, 0, k), SQUOTE, 0, 2));
-	// 	else
-	// 		lstback(res, lstnew_pars(ft_substr(result, 0, k), SQUOTE, 0, 0));
-	// 	if (k < (int) ft_strlen(result) - 1)
-	// 		lexer(res, result + k + 1);
-	// }
-	int a = add_new_quote(res, *line, i, SQUOTE);
-	return (a);
+	val = add_new_quote(res, *line, i, SQUOTE);
+	if ((*line)[val] != '"')
+	{
+		read = NULL;
+	 	result = ft_substr(*line, i + 1, val - i + 1);
+	 	while (!read || !ft_strchr(read, '"'))
+	 	{
+	 		read = readline("quote> ");
+	 		result = strjoin_helper(result, read, 1);
+	 	}
+		val = add_new_quote(res, result, 0, SQUOTE);
+		*line = ft_strjoin(*line, result, 1);
+		while ((*line)[val] != '"')
+			val += 1;
+	}
+	return (val);
 }
