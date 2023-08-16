@@ -50,7 +50,7 @@ $(NAME):		$(BUILD) $(OBJS) $(DEPS)
 
 $(BUILD):
 					@mkdir $(BUILD)
-					@echo "${GRAY}Building libft...${RESET}"
+					@echo "$(GRAY)Building libft...$(RESET)"
 
 all:	$(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/14 19:41:57 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:48:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_parser	*lstlast(t_parser *lst)
 	ptr = lst;
 	if (!ptr)
 		return (NULL);
-	while (ptr->next != NULL)
+	while (ptr && ptr->next != NULL)
 		ptr = ptr->next;
 	return (ptr);
 }
