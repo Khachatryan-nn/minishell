@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:39:26 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 16:37:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:59:09 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,10 @@ int	handle_xor(t_parser **res, char *line, int i, int count)
 
 int	handle_xand(t_parser **res, char *line, int i, int count)
 {
-	char	*str;
-
-	str = NULL;
-	if (!ft_isspace(line, count, i) && is_delimiter(*res))
-	{
-		str = ft_substr(line, count, i - count);
-		lstback(res, lstnew_pars(str, WORD, 0, 1));
-	}
-	else if (!ft_isspace(line, count, i))
-	{
-		str = ft_substr(line, count, i - count);
-		lstback(res, lstnew_pars(str, WORD, 0, 0));
-	}
+	handle_space(res, line, i, count);
 	if (!(*res))
 		return (parse_error("&&", 0));
 	lstback(res, lstnew_pars("&&", XAND, 2, 1));
-	if (str)
-		free(str);
 	return (i + 1);
 }
 

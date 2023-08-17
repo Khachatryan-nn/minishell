@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 01:56:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 19:45:59 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lex(char **line,  t_init *init);
 int		lexer(t_parser **res, char **line);
+void	lex(char **line,  t_init *init);
 
 int	lexer(t_parser **res, char **line)
 {

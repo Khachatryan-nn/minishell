@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 19:09:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:52:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	destroy_structure(t_parser *root);
 void	destroy_init(t_init *init);
-void	free_matrix(void **ptr);
+void	free_matrix(char **ptr);
 
-void	free_matrix(void **ptr)
+void	free_matrix(char **ptr)
 {
 	int	i;
 

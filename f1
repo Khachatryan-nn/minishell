@@ -1,5 +1,0 @@
-asd
-asdsadasdasdasdasdas
-destroy_initasd
-asdsadasdasdasdasdasd
-asdsadasdasdasdasdas

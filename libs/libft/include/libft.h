@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:23:02 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/16 20:20:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:47:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_list
 	int				flag;
 	int				unset;
 	void			*content;
-}			t_list;
+}					t_list;
 
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);

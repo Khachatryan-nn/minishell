@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/16 18:02:55 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:52:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int			parse_error(char *err_str, int mode);
 int			is_delimiter(t_parser *root);
 void		print_types(t_parser *ptr);
 int			ft_onlyspaces(char *str);
-void		free_matrix(void **ptr);
+void		free_matrix(char **ptr);
 int			is_valid(t_init *init);
 
 /* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */

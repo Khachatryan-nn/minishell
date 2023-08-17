@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 18:19:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:08:37 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	find_path(t_init *init, t_list *env)
 			break ;
 		env1 = env1->next;
 	}
-	init->path = ft_split(env1->value, ':');
+	init->path = ft_split(&env1->value[1], ':');
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 23:54:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:52:57 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	print_ast(t_parser *ast, int indent, int lrc)
 		printf("\t");
 	}
 	if (lrc == 0)
-		printf("\033[38;5;46m╠══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & (1 << 1)) && 1, ast->subshell_code);
+		printf("\033[38;5;46m╠══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & (1 << 3)) && 1, ast->subshell_code);
 	else if (lrc == 1)
-		printf("\033[38;5;46m╔══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & (1 << 1)) && 1, ast->subshell_code);
+		printf("\033[38;5;46m╔══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & (1 << 3)) && 1, ast->subshell_code);
 	else if (lrc == 2)
-		printf("\033[38;5;46m╚══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & (1 << 1)) && 1, ast->subshell_code);
+		printf("\033[38;5;46m╚══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & (1 << 3)) && 1, ast->subshell_code);
 	if (ast->next)
 		print_ast(ast->next, indent + 1, 2);
 	print_ast(ast->left, indent + 1, 2);

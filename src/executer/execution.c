@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 19:17:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 19:52:08 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 		init->exit_status = to_execute(pars, env, init, status);
 		exit_env(init->exit_status, env);
 		return(init->exit_status);
+	}
+	if (pars->left && pars->right && check_type(pars->type) == 2)
+	{
+		exec_iocmd(init, pars, env);
 	}
 	if (pars->left != NULL && !(pars->left->flag & (1 << 3)))
 	{
@@ -104,13 +108,6 @@ int	execute_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx)
 	int		childExitCode;
 
 	childExitCode = 0;
-	// int i = 0;
-	// while (env_mtrx[i])
-	// {
-	// 	printf("%s\n", env_mtrx[i]);
-	// 	i++;
-	// }
-
 	pid = fork();
 	if (pid == -1)
 	{
@@ -146,14 +143,31 @@ int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 	cmd = restore_cmd_line(stack);
 	env_mtrx = env_matrix(env);
 	if (!cmd)
+	{
+		free_matrix(env_mtrx);
 		return (1);
+	}
 	cmd_matrix = ft_split(cmd, ' ');
 	if (!cmd_matrix)
+	{
+		free(cmd);
+		free_matrix(env_mtrx);
 		return (2);
+	}
 	cmd_path = check_cmd(cmd_matrix[0], init->path);
 	if (!cmd_path)
-		return (127);
-	return (error_code(execute_cmd(cmd_path, cmd_matrix, env_mtrx)));
+	{
+		free(cmd);
+		free_matrix(cmd_matrix);
+		free_matrix(env_mtrx);
+			return (127);
+	}
+	int k = execute_cmd(cmd_path, cmd_matrix, env_mtrx);
+	free(cmd);
+	free(cmd_path);
+	free_matrix(cmd_matrix);
+	free_matrix(env_mtrx);
+	return (error_code(k));
 }
 
 // command not found			->	127

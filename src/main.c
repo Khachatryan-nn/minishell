@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/16 19:28:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:07:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int ac, char **av, char **envp)
 
 	env = NULL;
 	init.flag = 1;
+	init.path = NULL;
 	str = NULL;
 	ft_create_env(envp, &env);
 	rl_catch_signals = 0;

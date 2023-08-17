@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/09 17:59:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:07:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	check_built(t_parser *stack, t_list *env, t_init *init)
 		ft_unset(str, env, init);
 		return (1);
 	}
-	else if (ft_strnstr(str, "cd", 2) == 0)
+	else if (ft_strnstr(str, "cd", 2) == 0) 
 	{
 		ft_cd (env, str);
 		return (1);

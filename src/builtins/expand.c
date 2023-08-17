@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/17 14:08:43 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/08/17 14:10:41 by tikhacha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	ft_strlen2(char *str)
@@ -7,7 +19,7 @@ int	ft_strlen2(char *str)
 	i = 0;
 	while (str[i] != '\0')
 		i++;
-		return (i);
+	return (i);
 }
 
 char	*ft_substr2(char *s1, int i, int j)
