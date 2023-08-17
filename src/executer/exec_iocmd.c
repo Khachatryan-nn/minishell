@@ -6,15 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/18 00:17:24 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/18 00:59:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int exec_iocmd(t_init *init, t_parser *stack, t_list *env);
-int	io_out(t_init *init, t_parser *stack, t_list *env);
 int io_heredoc(t_init *init, t_parser *stack, t_list *env);
+int	io_input(t_init *init, t_parser *stack, t_list *env);
+int	io_out(t_init *init, t_parser *stack, t_list *env);
 
 int	io_out(t_init *init, t_parser *stack, t_list *env)
 {
@@ -102,6 +103,7 @@ int io_heredoc(t_init *init, t_parser *stack, t_list *env)
 			if (ft_strcmp(stack->left->cmd, "(NULL)"))
 				init->exit_status = to_execute(stack->left, env, init, 0);
 		}
+		close (fd[0]);
 		if (dup2(stdin_backup, STDIN_FILENO) < 0)
 		{
 			perror("minishell");
@@ -112,13 +114,74 @@ int io_heredoc(t_init *init, t_parser *stack, t_list *env)
 	return (0);
 }
 
+int	io_input(t_init *init, t_parser *stack, t_list *env)
+{
+	int		status;
+	int		fd[2];
+	int		file_fd;
+	int		backup;
+	char	*str;
+	int		pid;
+
+	backup = dup(STDIN_FILENO);
+	if (pipe(fd) < 0)
+	{
+		perror("minishell");
+		return (EXIT_FAILURE);
+	}
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("minishell");
+		close(fd[0]);
+		close(fd[1]);
+		return (EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		close(fd[0]);
+		file_fd = open(stack->right->cmd, O_RDONLY);
+		while (1)
+		{
+			str = get_next_line(file_fd);
+			if (!str)
+				break ;
+			ft_putstr_fd(str, fd[1]);
+		}
+		close (fd[1]);
+		close (file_fd);
+		exit (EXIT_SUCCESS);
+	}
+	else
+	{
+		close(fd[1]);
+		if (dup2(fd[0], STDIN_FILENO) < 0)
+		{
+			perror("minishell");
+			close (fd[0]);
+			return (EXIT_FAILURE);
+		}
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && !WEXITSTATUS(status))
+			init->exit_status = to_execute(stack->left, env, init, 0);
+		close (fd[0]);
+		if (dup2(backup, STDIN_FILENO) < 0)
+		{
+			perror("minishell");
+			return (EXIT_FAILURE);
+		}
+		close (backup);
+	}
+	return (0);
+}
+
 int exec_iocmd(t_init *init, t_parser *stack, t_list *env)
 {
 	if (stack->type == WRITE_APPEND || stack->type == WRITE_TRUNC)
 		return (io_out(init, stack, env));
 	else if (stack->type == HEREDOC)
 		return (io_heredoc(init, stack, env));
-	// else if (stack->type == INPUT)
-	// 	return (io_in(init, stack, env));
+	 else if (stack->type == INPUT)
+	 	return (io_input(init, stack, env));
 	return (1);
 }
