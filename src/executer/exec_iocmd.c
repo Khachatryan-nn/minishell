@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/17 17:55:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/18 00:17:24 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,32 +61,54 @@ int io_heredoc(t_init *init, t_parser *stack, t_list *env)
 {
 	int	fd[2];
 	int	stdin_backup;
+	int	pid;
+	int status;
 
 	stdin_backup = 0;
+	status = 0;
+	stdin_backup = dup(STDIN_FILENO);
 	if (pipe(fd) < 0)
 	{
 		perror("minishell");
 		return (1);
 	}
-	stdin_backup = dup(STDIN_FILENO);
-	if (dup2(fd[0], STDIN_FILENO) < 0)
+	pid = fork();
+	if (pid < 0)
 	{
+		perror("minishell");
 		close(fd[0]);
 		close(fd[1]);
-		perror("minishell");
 		return (1);
 	}
-	ft_putstr_fd(stack->right->cmd, fd[0]);
-	if (ft_strcmp(stack->left->cmd, "(NULL)"))
-		init->exit_status = to_execute(stack->left, env, init, 0);
-	close (fd[0]);
-	close (fd[1]);
-	if (dup2(stdin_backup, STDIN_FILENO) < 0)
+	else if (pid == 0)
 	{
-		perror("minishell");
-		return (1);
+		close(fd[0]); //close the read end
+		ft_putstr_fd(stack->right->cmd, fd[1]);
+		close(fd[1]);
+		exit(0);
 	}
-	close (stdin_backup);
+	else
+	{
+		close (fd[1]); //close the write end
+		if (dup2(fd[0], STDIN_FILENO) < 0)
+		{
+			close(fd[0]);
+			perror("minishell");
+			return (1);
+		}
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && !WEXITSTATUS(status))
+		{
+			if (ft_strcmp(stack->left->cmd, "(NULL)"))
+				init->exit_status = to_execute(stack->left, env, init, 0);
+		}
+		if (dup2(stdin_backup, STDIN_FILENO) < 0)
+		{
+			perror("minishell");
+			return (1);
+		}
+		close (stdin_backup);
+	}
 	return (0);
 }
 

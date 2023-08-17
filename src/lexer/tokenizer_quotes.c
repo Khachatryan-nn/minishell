@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/17 19:58:15 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/17 22:50:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ int	handle_dquotes(t_parser **res, char **line, int i, int count)
 	 		result = strjoin_helper(result, read, 1);
 	 	}
 		val = add_new_quote(res, result, 0, DQUOTE);
-		// printf("--%s--\n", *line);
 		*line = ft_strjoin(*line, result, 1);
-		// *line = strjoin_helper(*line, result, 1);
-		// printf("--%s--\n--%s--\n", *line, result);
 		while ((*line)[val] != '"')
 			val += 1;
 	}
