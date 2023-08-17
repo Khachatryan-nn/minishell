@@ -34,7 +34,7 @@ define update_progress
 	@printf "${GRAY}\rBuilding : ["
 	@printf "%-*s" $$(($(PERCENTAGE) / 2)) "" | tr ' ' ░
 	@printf "\r%-*s" $$((7)) "" | tr ' ' '\t'
-	@printf "] (%d%%)$(RESET)" $(PERCENTAGE)
+	@printf "] (%d%%)" $(PERCENTAGE)
 endef
 
 # RULES
@@ -45,7 +45,7 @@ $(BUILD)/%.o:	$(SRC_DIR)/%.c $(DEPS)
 
 $(NAME):		$(BUILD) $(OBJS) $(DEPS)
 					@$(AR) $(NAME) $(OBJS)
-					@echo "\n$(GRAY)gnl build completed.$(RESET)"
+					@echo "\n$(GRAY)gnl build completed."
 
 $(BUILD):
 					@mkdir $(BUILD)
@@ -55,11 +55,11 @@ all:	$(NAME)
 
 clean:
 			@$(RM) $(BUILD)
-			@echo "$(GRAY)Cleaned gnl build.$(RESET)"
+			@echo "$(GRAY)Cleaned gnl build."
 
 fclean:	clean
 			@$(RM) $(NAME) libgnl*.a 2> /dev/null || :
-			@echo "$(GRAY)Cleaned everything in gnl.$(RESET)"
+			@echo "$(GRAY)Cleaned everything in gnl."
 
 re:		fclean $(NAME)
 
