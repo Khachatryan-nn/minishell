@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:42:05 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/27 16:35:59 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/18 12:38:59 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,42 +22,17 @@ char	*ft_strnstr( char *str, char *str1, int len)
 		while (str[i] == str1[i])
 			i++;
 		if (str[i] || str1[i])
-			return(NULL);
+			return (str);
 		else
-			return(str);
+			return(NULL);
 	}
 	else
 	{
 		while (str[i] == str1[i] && i < len)
 			i++;
-		if (str[i]!= '\0' && str1[i] != '\0')
+		if (str[i] != '\0' || str1[i] != '\0')
 			return(str);
 		else
 			return(NULL);		
 	}
-
-	// int		i;
-	// char		*ptr;
-	// char		*ptr1;
-
-	// if (!*str1)
-	// 	return ((char *)str);
-	// while (len-- && *str)
-	// {
-	// 	if (*str == *str1)
-	// 	{
-	// 		i = len;
-	// 		ptr = (char *)str + 1;
-	// 		ptr1 = (char *)str1 + 1;
-	// 		while (i-- && *ptr && *ptr1 && *ptr1 == *ptr)
-	// 		{
-	// 			++ptr1;
-	// 			++ptr;
-	// 		}
-	// 		if (*ptr1 == '\0')
-	// 			return ((char *)str);
-	// 	}
-	// 	++str;
-	// }
-	// return (NULL);
 }
