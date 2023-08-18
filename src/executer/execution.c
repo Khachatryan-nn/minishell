@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/18 15:47:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/18 16:36:56 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,13 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 		return(init->exit_status);
 	}
 	if (pars->left && pars->right && check_type(pars->type) == 2)
+	{
+		if (pars->left->left)
+			check_ast(init, pars->left, env);
 		init->exit_status = exec_iocmd(init, pars, env);
+	}
 	//else if (pars->left && pars->right && pars->type == pipe)
-	if (pars->left != NULL && \
-		!((pars->left->flag & (1 << 3)) && check_type(pars->left->type) != 2))
+	if (pars->left != NULL && !(pars->left->flag & (1 << 3)))
 	{
 		if (pars->left->subshell_code)
 		{
@@ -80,8 +83,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 		else
 			pars->err_code = check_ast(init, pars->left, env);
 	}
-	if (pars->right != NULL && andor_check(pars) && \
-		!((pars->right->flag & (1 << 3)) && check_type(pars->right->type) != 2))
+	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (1 << 3)))
 	{
 		if (pars->right->subshell_code)
 		{

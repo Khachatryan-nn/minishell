@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/18 15:42:11 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/18 16:50:43 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,12 @@ int	io_input(t_init *init, t_parser *stack, t_list *env)
 	{
 		close(fd[0]);
 		file_fd = open(stack->right->cmd, O_RDONLY);
+		if (file_fd < 0)
+		{
+			perror("minishell");
+			close (fd[1]);
+			exit(EXIT_FAILURE);
+		}
 		while (1)
 		{
 			str = get_next_line(file_fd);
