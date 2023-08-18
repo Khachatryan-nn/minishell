@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 23:54:59 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:45:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ void	shunting_yard(t_parser **p, t_parser **ops, t_parser **otp)
 {
 	if ((*p)->prc == 0)
 	{
-		lstback(otp, lstnew_pars((*p)->cmd, \
-		(*p)->type, (*p)->prc, (*p)->flag));
+		lstback(otp, lstnew_pars((*p)->cmd, (*p)->type, (*p)->prc, (*p)->flag));
 	}
 	else if ((*p)->prc > 0)
 	{
@@ -73,17 +72,17 @@ void	shunting_yard(t_parser **p, t_parser **ops, t_parser **otp)
 			pop(ops);
 			lstlast(*otp)->subshell_code = 1;
 		}
-		else if ((*p)->type != SUBSH_OPEN)
+		else
 		{
-			while (*ops && lstlast(*ops)->prc >= (*p)->prc \
-				&& lstlast(*ops)->type != SUBSH_OPEN)
-				push(ops, otp);
+			if ((*p)->type != SUBSH_OPEN)
+			{
+				while (*ops && lstlast(*ops)->prc >= (*p)->prc \
+					&& lstlast(*ops)->type != SUBSH_OPEN)
+					push(ops, otp);
+			}
 			lstback(ops, lstnew_pars((*p)->cmd, \
 				(*p)->type, (*p)->prc, (*p)->flag));
 		}
-		else
-			lstback(ops, lstnew_pars((*p)->cmd, (*p)->type, (*p)->prc, \
-			(*p)->flag));
 	}
 }
 

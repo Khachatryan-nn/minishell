@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/17 11:52:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/19 00:11:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 void	destroy_structure(t_parser *root);
 void	destroy_init(t_init *init);
 void	free_matrix(char **ptr);
+void	close_pipes(int *fd);
+
+void	close_pipes(int *fd)
+{
+	close (fd[0]);
+	close (fd[1]);
+}
 
 void	free_matrix(char **ptr)
 {

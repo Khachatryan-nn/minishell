@@ -6,26 +6,73 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:34:10 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/18 13:33:50 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/19 00:58:00 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pipe_prepair(t_parser *pars);
+int	pipe_prepair(t_init *init, t_parser *pars, t_list *env);
 
-int	pipe_prepair(t_parser *pars)
+static void	child_process(t_init *init, t_parser *pars, t_list *env, int *pipes)
 {
-	pars->left->flag += 1 << 5;
-	pars->right->flag += 1 << 5;
-	if (pipe(pars->pipes) == -1)
+	int	status;
+
+	close(pipes[0]); // Close read end
+	dup2(pipes[1], STDOUT_FILENO);
+	status = check_ast(init, pars, env);
+	close(pipes[1]);
+	exit(status); // Use call_cmd to execute the command
+}
+
+static void	parent_process(t_init *init, t_parser *pars, t_list *env, int *pipes, int pid)
+{
+	int status;
+
+	waitpid(pid, &status, 0);
+	pars->err_code = WEXITSTATUS(status);
+	close(pipes[1]); // Close write end
+	if (!(pars->flag & (1 << 5))) // Assuming 5 represents pipe child flag
+		close(pipes[0]); // Close read end
+	else
+		pars->pipes[0] = pipes[0];
+	status = check_ast(init, pars, env);
+}
+
+int	pipe_prepair(t_init *init, t_parser *pars, t_list *env)
+{
+	int		pipes[2];
+	pid_t	pid;
+
+	pars->left->flag |= (1 << 5);
+	pars->right->flag |= (1 << 5);
+
+	if (pipe(pipes) == -1)
 	{
 		pars->err_code = 1;
 		perror("minishell");
 		return (1);
 	}
+
+	pid = fork();
+	if (pid < 0)
+	{
+		pars->err_code = 1;
+		close_pipes(pipes);
+		perror("minishell");
+		return (1);
+	}
+	else if (pid == 0)
+		child_process(init, pars->left, env, pipes);
+	else
+	{
+		parent_process(init, pars->right, env, pipes, pid);
+		return (pars->err_code);
+	}
 	return (0);
 }
+
+
 
 //	xxxxxx1 -> command
 //	xxxxx1x -> space

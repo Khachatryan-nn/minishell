@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/17 11:52:38 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/19 00:12:03 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_parser
 	int				flag;
 	int				subshell_code;
 	int				err_code;
-	int				*pipes;
+	int				pipes[2];
 	struct s_parser	*next;
 	struct s_parser	*prev;
 	struct s_parser	*left;
@@ -156,11 +156,11 @@ void		pop(t_parser **stack);
 /* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
 int			to_execute(t_parser *pars, t_list *env, t_init *init, int status);
 int			subsh_execute(t_parser *pars, t_list *env, t_init *init, int pid);
+int			pipe_prepair(t_init *init, t_parser *pars, t_list *env);
 int			exec_iocmd(t_init *init, t_parser *stack, t_list *env);
 int			call_cmd(t_parser *stack, t_init *init, t_list *env);
 char		*restore_cmd_line(t_parser *stack);
 char		*check_cmd(char *cmd, char **path);
-int			pipe_prepair(t_parser *pars);
 char		**env_matrix(t_list *env);
 int			error_code(int error_num);
 
@@ -174,6 +174,7 @@ void		print_types(t_parser *ptr);
 int			ft_onlyspaces(char *str);
 void		free_matrix(char **ptr);
 int			is_valid(t_init *init);
+void		close_pipes(int *fd);
 
 /* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */
 void		ft_export_change(char *line, t_list *env, t_init *init);

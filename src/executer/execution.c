@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/18 16:36:56 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/19 00:54:58 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_cmd(char *cmd_path, char **cmd_matrix, char **env);
+int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_list *env);
 int	check_ast(t_init *init, t_parser *pars, t_list *env);
 int	call_cmd(t_parser *stack, t_init *init, t_list *env);
 int	andor_check(t_parser *stack);
@@ -42,23 +42,27 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	status = 0;
 	if (!pars)
 	{
-		init->exit_status = 258;
-		return (init->exit_status);
+		pars->err_code = 258;
+		return (pars->err_code);
 	}
 	if (pars->left == NULL && pars->right == NULL)
 	{
-		init->exit_status = to_execute(pars, env, init, status);
-		exit_env(init->exit_status, env);
-		return(init->exit_status);
+		pars->err_code = to_execute(pars, env, init, status);
+		return (pars->err_code);
 	}
 	if (pars->left && pars->right && check_type(pars->type) == 2)
 	{
 		if (pars->left->left)
 			check_ast(init, pars->left, env);
-		init->exit_status = exec_iocmd(init, pars, env);
+		pars->err_code = exec_iocmd(init, pars, env);
 	}
-	//else if (pars->left && pars->right && pars->type == pipe)
-	if (pars->left != NULL && !(pars->left->flag & (1 << 3)))
+	else if (pars->left && pars->right && pars->type == PIPE)
+	{
+		if (pars->left->left)
+			check_ast(init, pars->left, env);
+		pars->err_code = pipe_prepair(init, pars, env);
+	}
+	if (pars->left != NULL && !(pars->left->flag & (1 << 3)) && !(pars->left->flag & (1 << 5)))
 	{
 		if (pars->left->subshell_code)
 		{
@@ -68,7 +72,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 			else if (pid == 0)
 			{
 				pars->err_code = check_ast(init, pars->left, env);
-				// kill(pid, SIGKILL);
+				exit(pars->err_code);
 			}
 			else
 			{
@@ -77,13 +81,14 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 					perror("wait");
 					return (1);
 				}
+				exit_env(status, env);
 				return (status);
 			}
 		}
 		else
 			pars->err_code = check_ast(init, pars->left, env);
 	}
-	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (1 << 3)))
+	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (1 << 3)) && !(pars->right->flag & (1 << 5)))
 	{
 		if (pars->right->subshell_code)
 		{
@@ -93,7 +98,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 			else if (pid == 0)
 			{
 				pars->err_code = check_ast(init, pars->right, env);
-				// kill(pid, SIGKILL);
+				exit(pars->err_code);
 			}
 			else
 				wait(NULL);
@@ -105,7 +110,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	return (0);
 }
 
-int	execute_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx)
+int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_list *env)
 {
 	pid_t	pid;
 	int		childExitCode;
@@ -130,6 +135,7 @@ int	execute_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx)
 	else
 	{
 		waitpid(pid, &childExitCode, 0);
+		exit_env(childExitCode / 256, env);
 		return (childExitCode / 256);
 	}
 }
@@ -140,6 +146,7 @@ int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 	char	**cmd_matrix;
 	char	*cmd_path;
 	char	**env_mtrx;
+	int		exit_code;
 
 	if (!init->path)
 		find_path(init, env);
@@ -163,14 +170,14 @@ int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 		free(cmd);
 		free_matrix(cmd_matrix);
 		free_matrix(env_mtrx);
-			return (127);
+		return (127);
 	}
-	int k = execute_cmd(cmd_path, cmd_matrix, env_mtrx);
+	exit_code = exec_cmd(cmd_path, cmd_matrix, env_mtrx, env);
 	free(cmd);
 	free(cmd_path);
 	free_matrix(cmd_matrix);
 	free_matrix(env_mtrx);
-	return (error_code(k));
+	return (exit_code);
 }
 
 // command not found			->	127

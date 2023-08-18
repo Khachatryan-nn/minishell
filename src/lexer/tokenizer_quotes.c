@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/17 22:50:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:40:10 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	handle_prnthses(t_parser **res, char *line, int i, int count)
 int	handle_cprnthses(t_parser **res, char *line, int i, int count)
 {
 	handle_space(res, line, i, count);
+	if (lstlast(*res)->type == SUBSH_OPEN)
+		return (0 & parse_error(")", 0));
 	lstback(res, lstnew_pars(")", SUBSH_CLOSE, 1, 0));
 	return (i + 1);
 }

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:43 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/17 14:10:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:58:20 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_substr2(char *s1, int i, int j)
 		i++;
 		j--;
 	}
-	str[i] = '\0';
+	str[a] = '\0';
 	return(str);
 }
 
@@ -189,7 +189,8 @@ char	*expand_change(char *str, int i, t_list *env)
 	{
 		j++;
 	}
-	ptr = ft_substr2(str, i, j - i);
+	//ptr = ft_substr2(str, i, j - i);
+	ptr = ft_substr(str, i, j - i);
 	while (lst)
 		{
 			if (ft_strcmp(lst->ptr, ptr) == 0)
