@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/18 00:59:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/18 15:42:11 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	io_out(t_init *init, t_parser *stack, t_list *env)
 		close(fd);
 		return (1);
 	}
+	while (stack->left->type != WORD)
+		stack = stack->left;
 	if (ft_strcmp(stack->left->cmd, "(NULL)"))
 		init->exit_status = to_execute(stack->left, env, init, 0);
 	if (fd != 0 && dup2(stdout_backup, STDOUT_FILENO) == -1)
@@ -100,6 +102,8 @@ int io_heredoc(t_init *init, t_parser *stack, t_list *env)
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status) && !WEXITSTATUS(status))
 		{
+			while (stack->left->type != WORD)
+				stack = stack->left;
 			if (ft_strcmp(stack->left->cmd, "(NULL)"))
 				init->exit_status = to_execute(stack->left, env, init, 0);
 		}
@@ -162,6 +166,8 @@ int	io_input(t_init *init, t_parser *stack, t_list *env)
 			return (EXIT_FAILURE);
 		}
 		waitpid(pid, &status, 0);
+		while (stack->left->type != WORD)
+			stack = stack->left;
 		if (WIFEXITED(status) && !WEXITSTATUS(status))
 			init->exit_status = to_execute(stack->left, env, init, 0);
 		close (fd[0]);
