@@ -6,35 +6,48 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 19:20:15 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/19 15:53:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*restore_cmd_line(t_parser *stack);
+char	**restore_cmd_line(t_parser *stack);
 char	**env_matrix(t_list *env);
 
-char	*restore_cmd_line(t_parser *stack)
+char	**restore_cmd_line(t_parser *stack)
 {
-	char		*cmd;
+	char		**cmd_matrix;
 	int			mode;
 	t_parser	*ptr;
+	int			i;
 
-	cmd = NULL;
 	ptr = stack;
+	i = 0;
+	cmd_matrix = (char **) malloc (sizeof(char *) * (lstsize(ptr) + 1));
+	if (!cmd_matrix)
+		return (NULL);
+	while (i < lstsize(ptr))
+		cmd_matrix[i++] = NULL;
+	i = -1;
 	while (ptr && ptr->cmd)
 	{
 		mode = (ptr->flag & (1 << 1)) && 1;
-		if (!cmd || (mode == 0 && \
-			check_type(ptr->type) == 0))
-			cmd = ft_strjoin(cmd, ptr->cmd, 1);
+		if (mode == 0 && check_type(ptr->type) == 0)
+		{
+			if (i < 0)
+				i++;
+			cmd_matrix[i] = ft_strjoin(cmd_matrix[i], ptr->cmd, 1);
+		}
 		else
-			cmd = strjoin_helper(cmd, ptr->cmd, 0);
+		{
+			i++;
+			cmd_matrix[i] = ft_strdup(ptr->cmd);
+		}
 		ptr = ptr->next;
 	}
-	cmd[ft_strlen(cmd)] = '\0';
-	return (cmd);
+	cmd_matrix[i + 1] = NULL;
+	return (cmd_matrix);
 }
 
 char	**env_matrix(t_list *env)

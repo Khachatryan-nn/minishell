@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/19 00:54:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/19 15:21:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_list *env)
 
 int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 {
-	char	*cmd;
 	char	**cmd_matrix;
 	char	*cmd_path;
 	char	**env_mtrx;
@@ -150,30 +149,26 @@ int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 
 	if (!init->path)
 		find_path(init, env);
-	cmd = restore_cmd_line(stack);
 	env_mtrx = env_matrix(env);
-	if (!cmd)
+	if (!env_mtrx)
 	{
 		free_matrix(env_mtrx);
 		return (1);
 	}
-	cmd_matrix = ft_split(cmd, ' ');
+	cmd_matrix = restore_cmd_line(stack);
 	if (!cmd_matrix)
 	{
-		free(cmd);
 		free_matrix(env_mtrx);
 		return (2);
 	}
 	cmd_path = check_cmd(cmd_matrix[0], init->path);
 	if (!cmd_path)
 	{
-		free(cmd);
 		free_matrix(cmd_matrix);
 		free_matrix(env_mtrx);
 		return (127);
 	}
 	exit_code = exec_cmd(cmd_path, cmd_matrix, env_mtrx, env);
-	free(cmd);
 	free(cmd_path);
 	free_matrix(cmd_matrix);
 	free_matrix(env_mtrx);

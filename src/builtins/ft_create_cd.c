@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/06 16:36:28 by musimony         ###   ########.fr       */
+/*   Updated: 2023/08/19 15:24:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_cd(t_list *str, char *ptr)
+void	ft_cd(t_list *str, char **ptr)
 {
 	t_list	*env;
 	t_list	*env1;
@@ -22,7 +22,7 @@ void	ft_cd(t_list *str, char *ptr)
 
 	text = NULL;
 	text1 = NULL;
-	text = ptr;
+	text = ptr[0];
 	env = NULL;
 	env1 = NULL;
 	flag1 = 0;

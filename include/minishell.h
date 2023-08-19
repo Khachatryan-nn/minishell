@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/19 00:12:03 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/19 15:23:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int			subsh_execute(t_parser *pars, t_list *env, t_init *init, int pid);
 int			pipe_prepair(t_init *init, t_parser *pars, t_list *env);
 int			exec_iocmd(t_init *init, t_parser *stack, t_list *env);
 int			call_cmd(t_parser *stack, t_init *init, t_list *env);
-char		*restore_cmd_line(t_parser *stack);
+char		**restore_cmd_line(t_parser *stack);
 char		*check_cmd(char *cmd, char **path);
 char		**env_matrix(t_list *env);
 int			error_code(int error_num);
@@ -182,7 +182,7 @@ char		**ft_change_2(char *str);
 void		ft_create_env(char **str, t_list **stack);
 int			check_built(t_parser *stack, t_list *env, t_init *init);
 void		ft_unset(char *ptr, t_list *env, t_init *init);
-void		ft_cd(t_list *str, char *ptr);
+void		ft_cd(t_list *str, char **ptr);
 void		ft_export(t_list *env);
 char		**ft_export_continue(t_list *env1);
 char		**ft_export_continue2(t_list *env, t_list *env1, char **ptr, int a);
