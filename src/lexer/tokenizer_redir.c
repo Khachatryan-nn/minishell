@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:38:30 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/17 22:51:34 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/20 21:49:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	handle_heredoc(t_parser **res, char *line, int i, int count)
 	if (is_delimiter(*res))
 		lstback(res, lstnew_pars("(NULL)", WORD, 0, 1));
 	lstback(res, lstnew_pars("<<", HEREDOC, 4, 1));
-	k = 1;
+	k = 0;
 	start = 0;
 	limiter = NULL;
 	while ((int)ft_strlen(line) >= i + k && line[i + ++k])
@@ -72,7 +72,7 @@ int	handle_wappend(t_parser **res, char *line, int i, int count)
 	if (is_delimiter(*res))
 		lstback(res, lstnew_pars("(NULL)", WORD, 0, 1));
 	lstback(res, lstnew_pars(">>", WRITE_APPEND, 4, 1));
-	k = 1;
+	k = 0;
 	while ((int)ft_strlen(line) >= i + k && line[i + ++k])
 	{
 		if (line[i + k] != ' ')
@@ -89,7 +89,7 @@ int	handle_wtrunc(t_parser **res, char *line, int i, int count)
 	if (is_delimiter(*res))
 		lstback(res, lstnew_pars("(NULL)", WORD, 0, 1));
 	lstback(res, lstnew_pars(">", WRITE_TRUNC, 4, 1));
-	k = 1;
+	k = 0;
 	while ((int)ft_strlen(line) >= i + k && line[i + ++k])
 	{
 		if (line[i + k] != ' ')
@@ -106,7 +106,7 @@ int	handle_input(t_parser **res, char *line, int i, int count)
 	if (is_delimiter(*res))
 		lstback(res, lstnew_pars("(NULL)", WORD, 0, 1));
 	lstback(res, lstnew_pars("<", INPUT, 4, 1));
-	k = 1;
+	k = 0;
 	while ((int)ft_strlen(line) >= i + k && line[i + ++k])
 	{
 		if (line[i + k] != ' ')
