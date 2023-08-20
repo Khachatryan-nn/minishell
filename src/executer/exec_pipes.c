@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:34:10 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/19 00:58:00 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:58:17 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,27 @@
 
 int	pipe_prepair(t_init *init, t_parser *pars, t_list *env);
 
-static void	child_process(t_init *init, t_parser *pars, t_list *env, int *pipes)
+static int	child_left(t_init *init, t_parser *pars, t_list *env, int *pipes)
 {
-	int	status;
+	int		status;
+	pid_t	pid;
 
-	close(pipes[0]); // Close read end
-	dup2(pipes[1], STDOUT_FILENO);
-	status = check_ast(init, pars, env);
-	close(pipes[1]);
-	exit(status); // Use call_cmd to execute the command
+	pid = fork();
+	if (pid < 0)
+		return (-1);
+	if (pid == 0)
+	{
+		if (dup2(pipes[1], STDOUT_FILENO) < 0)
+			return (-1);
+		close(pipes[0]);
+		close(pipes[1]);
+		status = check_ast(init, pars, env);
+		exit(status);
+	}
+	return (pid); // Use call_cmd to execute the command
 }
 
-static void	parent_process(t_init *init, t_parser *pars, t_list *env, int *pipes, int pid)
+static int	child_right(t_init *init, t_parser *pars, t_list *env, int *pipes)
 {
 	int status;
 
@@ -41,34 +50,22 @@ static void	parent_process(t_init *init, t_parser *pars, t_list *env, int *pipes
 
 int	pipe_prepair(t_init *init, t_parser *pars, t_list *env)
 {
+	pid_t	pid_right;
+	pid_t	pid_left;
 	int		pipes[2];
-	pid_t	pid;
+	int		status;
 
 	pars->left->flag |= (1 << 5);
 	pars->right->flag |= (1 << 5);
-
 	if (pipe(pipes) == -1)
 	{
 		pars->err_code = 1;
 		perror("minishell");
 		return (1);
 	}
-
+	pid_left = child_left(init, pars->left, env, pipes);
 	pid = fork();
-	if (pid < 0)
-	{
-		pars->err_code = 1;
-		close_pipes(pipes);
-		perror("minishell");
-		return (1);
-	}
-	else if (pid == 0)
-		child_process(init, pars->left, env, pipes);
-	else
-	{
-		parent_process(init, pars->right, env, pipes, pid);
-		return (pars->err_code);
-	}
+	
 	return (0);
 }
 
