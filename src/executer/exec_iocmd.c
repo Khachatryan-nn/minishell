@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/18 16:50:43 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/21 18:04:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ int	io_out(t_init *init, t_parser *stack, t_list *env)
 	while (stack->left->type != WORD)
 		stack = stack->left;
 	if (ft_strcmp(stack->left->cmd, "(NULL)"))
-		init->exit_status = to_execute(stack->left, env, init, 0);
+		init->exit_status = check_ast(init, stack->left, env);
+	else if (ZSH)
+		init->exit_status = to_execute(lstnew_pars("cat", WORD, 0, 0), env, init, 0);
 	if (fd != 0 && dup2(stdout_backup, STDOUT_FILENO) == -1)
 	{
 		perror("minishell");

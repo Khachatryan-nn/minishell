@@ -45,10 +45,8 @@ MGOALS			=	$(filter-out bonus, $(MAKECMDGOALS))
 
 # PROGRESS BAR
 TOTAL_SRCS		:= $(words $(SRCS))
-#BUILD_EXISTS	:= $(shell [ -e $(BUILD) ] && echo 1 || echo 0 )
 COMPILED_SRCS	:= 0
 
-#	ifeq ($(BUILD_EXISTS), 0)
 define update_progress
 		$(eval COMPILED_SRCS := $(shell echo \
 			$$(( $(COMPILED_SRCS) +1)) ))
@@ -113,4 +111,4 @@ readline:
 
 re:		fclean all
 
-.PHONY: all libft ft_dprintf gnl clean fclean re update_progress readline
+.PHONY: all libft ft_dprintf gnl clean fclean re update_progress readline bash

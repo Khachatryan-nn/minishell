@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/19 15:23:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:38:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@
 # include "get_next_line.h"
 # include "ft_dprintf.h"
 # include <dirent.h>
+
+# ifndef ZSH
+# 	define ZSH 0
+# endif
+
 
 typedef enum e_token_type
 {

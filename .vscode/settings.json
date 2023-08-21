@@ -27,6 +27,7 @@
 		"type_traits": "c",
 		"vector": "c",
 		"sstream": "c",
-		"__locale": "c"
+		"__locale": "c",
+		"ft_dprintf.h": "c"
 	}
 }
