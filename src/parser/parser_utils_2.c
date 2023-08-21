@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:45:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/08 16:45:51 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 01:30:20 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	print_types(t_parser *ptr)
 	while (ptr)
 	{
 		if (ptr->next != NULL)
-			printf("%s [%d] ", ptr->cmd, ptr->flag & (1 << 6));
+			printf("%s [%d] ", ptr->cmd, ptr->flag & (_SUBSH_));
 		else
-			printf("%s [%d]", ptr->cmd, ptr->flag & (1 << 6));
+			printf("%s [%d]", ptr->cmd, ptr->flag & (_SUBSH_));
 		ptr = ptr->next;
 	}
 	printf("\n");

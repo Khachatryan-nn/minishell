@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/21 13:12:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 01:32:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	{
 		pars->err_code = pipe_prepair(init, pars, env);
 	}
-	if (pars->left != NULL && !(pars->left->flag & (1 << 3)) && !(pars->left->flag & (1 << 5)))
+	if (pars->left != NULL && !(pars->left->flag & (_REDIR_)) && !(pars->left->flag & _PIPES_))
 	{
 		if (pars->left->subshell_code)
 		{
@@ -86,7 +86,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 		else
 			pars->err_code = check_ast(init, pars->left, env);
 	}
-	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (1 << 3)) && !(pars->right->flag & (1 << 5)))
+	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (_REDIR_)) && !(pars->right->flag & _PIPES_))
 	{
 		if (pars->right->subshell_code)
 		{

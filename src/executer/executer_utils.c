@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/19 15:53:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 01:30:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**restore_cmd_line(t_parser *stack)
 	i = -1;
 	while (ptr && ptr->cmd)
 	{
-		mode = (ptr->flag & (1 << 1)) && 1;
+		mode = (ptr->flag & (_ISCMD_)) && 1;
 		if (mode == 0 && check_type(ptr->type) == 0)
 		{
 			if (i < 0)

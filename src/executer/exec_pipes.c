@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:34:10 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/21 14:15:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 01:32:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	pipe_prepair(t_init *init, t_parser *pars, t_list *env)
 	int		pipes[2];
 	int		status;
 
-	pars->left->flag |= (1 << 5);
-	pars->right->flag |= (1 << 5);
+	pars->left->flag |= (_PIPES_);
+	pars->right->flag |= (_PIPES_);
 	if (pipe(pipes) == -1)
 	{
 		pars->err_code = 1;
@@ -92,10 +92,10 @@ int	pipe_prepair(t_init *init, t_parser *pars, t_list *env)
 //	1xxxxxx -> subsh first cmd
 
 //	1 << 0 -> 0000001 -> 1	| cmd						-> +++ USED
-//	1 << 1 -> 0000010 -> 2	| space						-> +++ USED
+//	_ISCMD_ -> 0000010 -> 2	| space						-> +++ USED
 //	1 << 2 -> 0000100 -> 4	| exec stat					-> --- unUSED
-//	1 << 3 -> 0001000 -> 8	| I/O						-> +++ USED
+//	_REDIR_ -> 0001000 -> 8	| I/O						-> +++ USED
 //	1 << 4 -> 0010000 -> 16	| I/O arg					-> --- unUSED
-//	1 << 5 -> 0100000 -> 32	| PIPE childs				-> ???
-//	1 << 6 -> 1000000 -> 64 | SUBSH first command		-> +++ USED
+//	_PIPES_ -> 0100000 -> 32	| PIPE childs				-> ???
+//	_SUBSH_ -> 1000000 -> 64 | SUBSH first command		-> +++ USED
 //	1111111 -> 127

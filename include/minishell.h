@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/21 17:38:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 01:31:09 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # 	define ZSH 0
 # endif
 
+# define _ISCMD_	1 << 1
+# define _REDIR_	1 << 3
+# define _PIPES_	1 << 5
+# define _SUBSH_	1 << 6
 
 typedef enum e_token_type
 {
