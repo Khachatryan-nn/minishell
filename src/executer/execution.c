@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/20 22:00:20 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:12:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	}
 	else if (pars->left && pars->right && pars->type == PIPE)
 	{
-		if (pars->left->left)
-			check_ast(init, pars->left, env);
 		pars->err_code = pipe_prepair(init, pars, env);
 	}
 	if (pars->left != NULL && !(pars->left->flag & (1 << 3)) && !(pars->left->flag & (1 << 5)))

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/19 00:37:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:09:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	main(int ac, char **av, char **envp)
 				if (init.pars)
 				{
 					init.exit_status = check_ast(&init, init.pars, env);
-					print_ast(init.pars, 0, 0);
 					exit_env(init.exit_status, env);
 					destroy_init(&init);
 				}

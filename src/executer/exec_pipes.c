@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:34:10 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/21 00:58:17 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:15:58 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	pipe_prepair(t_init *init, t_parser *pars, t_list *env);
 
-static int	child_left(t_init *init, t_parser *pars, t_list *env, int *pipes)
+static pid_t	child_left(t_init *init, t_parser *pars, t_list *env, int *pipes)
 {
 	int		status;
 	pid_t	pid;
@@ -29,23 +29,29 @@ static int	child_left(t_init *init, t_parser *pars, t_list *env, int *pipes)
 		close(pipes[0]);
 		close(pipes[1]);
 		status = check_ast(init, pars, env);
-		exit(status);
+		exit (status);
 	}
-	return (pid); // Use call_cmd to execute the command
+	return (pid);
 }
 
-static int	child_right(t_init *init, t_parser *pars, t_list *env, int *pipes)
+static pid_t	child_right(t_init *init, t_parser *pars, t_list *env, int *pipes)
 {
-	int status;
+	int		status;
+	pid_t	pid;
 
-	waitpid(pid, &status, 0);
-	pars->err_code = WEXITSTATUS(status);
-	close(pipes[1]); // Close write end
-	if (!(pars->flag & (1 << 5))) // Assuming 5 represents pipe child flag
-		close(pipes[0]); // Close read end
-	else
-		pars->pipes[0] = pipes[0];
-	status = check_ast(init, pars, env);
+	pid = fork();
+	if (pid < 0)
+		return (-1);
+	if (pid == 0)
+	{
+		if (dup2(pipes[0], STDIN_FILENO) < 0)
+			return (-1);
+		close(pipes[0]);
+		close(pipes[1]);
+		status = check_ast(init, pars, env);
+		exit (status);
+	}
+	return (pid);
 }
 
 int	pipe_prepair(t_init *init, t_parser *pars, t_list *env)
@@ -64,11 +70,17 @@ int	pipe_prepair(t_init *init, t_parser *pars, t_list *env)
 		return (1);
 	}
 	pid_left = child_left(init, pars->left, env, pipes);
-	pid = fork();
-	
-	return (0);
+	if (pid_left < 0)
+		return (1);
+	pid_right = child_right(init, pars->right, env, pipes);
+	if (pid_right < 0)
+		return (1);
+	close(pipes[0]);
+	close(pipes[1]);
+	waitpid(pid_left, &status, 0);
+	waitpid(pid_right, &status, 0);
+	return (status);
 }
-
 
 
 //	xxxxxx1 -> command
