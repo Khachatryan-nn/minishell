@@ -6,12 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 01:00:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 14:30:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+const char	*token_is(t_type token);
 const char	*get_token_name(t_type token);
 int			is_delimiter(t_parser *root);
 
@@ -39,15 +40,38 @@ const char* get_token_name(t_type token)
 		return ("WRITE_APPEND");
 	else if (token == WRITE_TRUNC)
 		return ("WRITE_TRUNC");
-	else if (token == FILEIN)
-		return ("FILEIN");
-	else if (token == FILEOUT)
-		return ("FILEOUT");
 	else if (token == END)
 		return ("END");
-	else
-		return ("UNKNOWN");
+	return ("UNKNOWN");
 }
+
+const char	*token_is(t_type token)
+{
+	if (token == DQUOTE)
+		return ("\"");
+	else if (token == SQUOTE)
+		return ("'");
+	else if (token == SUBSH_OPEN)
+		return ("(");
+	else if (token == SUBSH_CLOSE)
+		return (")");
+	else if (token == XOR)
+		return ("||");
+	else if (token == XAND)
+		return ("&&");
+	else if (token == PIPE)
+		return ("|");
+	else if (token == HEREDOC)
+		return ("<<");
+	else if (token == WRITE_APPEND)
+		return (">>");
+	else if (token == WRITE_TRUNC)
+		return (">");
+	else if (token == INPUT)
+		return ("<");
+	return ("AST");
+}
+
 
 int	is_delimiter(t_parser *root)
 {

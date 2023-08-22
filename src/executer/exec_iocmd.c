@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/21 18:04:07 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 16:44:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,14 @@ int io_heredoc(t_init *init, t_parser *stack, t_list *env)
 {
 	int	fd[2];
 	int	stdin_backup;
+	int	stdout_backup;
 	int	pid;
 	int status;
 
 	stdin_backup = 0;
 	status = 0;
 	stdin_backup = dup(STDIN_FILENO);
+	stdout_backup = dup(STDOUT_FILENO);
 	if (pipe(fd) < 0)
 	{
 		perror("minishell");
@@ -87,14 +89,27 @@ int io_heredoc(t_init *init, t_parser *stack, t_list *env)
 	}
 	else if (pid == 0)
 	{
-		close(fd[0]); //close the read end
+		close(fd[0]);
+		if (dup2(fd[1], STDOUT_FILENO) < 0)
+		{
+			close(fd[1]);
+			perror("minishell");
+			return (1);
+		}
 		ft_putstr_fd(stack->right->cmd, fd[1]);
 		close(fd[1]);
+		if (dup2(stdout_backup, STDOUT_FILENO) < 0)
+		{
+			perror("minishell");
+			return (1);
+		}
+		close(stdin_backup);
+		close(stdout_backup);
 		exit(0);
 	}
 	else
 	{
-		close (fd[1]); //close the write end
+		close (fd[1]);
 		if (dup2(fd[0], STDIN_FILENO) < 0)
 		{
 			close(fd[0]);

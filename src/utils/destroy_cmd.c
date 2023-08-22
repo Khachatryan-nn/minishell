@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils_1.c                                    :+:      :+:    :+:   */
+/*   destroy_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 11:37:26 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/08/22 13:02:07 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/08/22 13:05:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			ft_isspace(char *line, int i, int j);
+int	destroy_cmd(char *cmd, char **cmd_matrix, char **env_matrix);
 
-//Checks if there only spaces from i -> j.\
-//If there are only spaces returns 1.
-int	ft_isspace(char *line, int i, int j)
+int	destroy_cmd(char *cmd, char **cmd_matrix, char **env_matrix)
 {
-	while (i < j && line[i])
-	{
-		if (line[i] != ' ' && line[i] != '	')
-			return (0);
-		i++;
-	}
+	if (cmd)
+		free (cmd);
+	if (cmd_matrix)
+		free_matrix(cmd_matrix);
+	if (env_matrix)
+		free_matrix(env_matrix);
 	return (1);
 }

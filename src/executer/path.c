@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/20 22:36:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 13:42:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char static	*find_cmdpath(char *cmd, char **path)
 
 	i = -1;
 	cmdpath = NULL;
+	if (cmd[0] == '\0')
+		return (NULL);
 	while (path[++i])
 	{
 		cmdpath = ft_strjoin(path[i], "/", 0);
@@ -55,7 +57,7 @@ char	*check_cmd(char *cmd, char **path)
 	char	*cmd_path;
 
 	cmd_path = NULL;
-	if (ft_strchr(cmd, '/') && access(cmd, X_OK) == -1)
+	if ((ft_strchr(cmd, '/') && access(cmd, X_OK) == -1))
 	{
 		dprintf(2, "minishell: %s: No such file or directory\n", cmd);
 		return (cmd_path);

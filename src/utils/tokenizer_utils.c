@@ -6,13 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/18 00:22:16 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 16:40:42 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		add_new_quote(t_parser **res, char *line, int i, int type);
+int		find_limiter_end(char *line, int i, int start);
 void	heredoc_input(char	*limiter, t_parser **res);
 
 void	heredoc_input(char	*limiter, t_parser **res)
@@ -35,12 +36,12 @@ void	heredoc_input(char	*limiter, t_parser **res)
 			result = strjoin_helper(result, line, 1);
 	}
 	if (!result)
-		return lstback(res, lstnew_pars("", WORD, 0, 1));
+		return (lstback(res, lstnew_pars("", WORD, 0, 1)));
 	result = ft_strjoin(result, "\n", 1);
 	lstback(res, lstnew_pars(result, WORD, 0, 1));
 }
 
-int add_new_quote(t_parser **res, char *line, int i, int type)
+int	add_new_quote(t_parser **res, char *line, int i, int type)
 {
 	int		counter;
 	char	c;
@@ -66,4 +67,30 @@ int add_new_quote(t_parser **res, char *line, int i, int type)
 		lstback(res, lstnew_pars(str, type, 0, 0));
 	free(str);
 	return (counter);
+}
+
+int	find_limiter_end(char *line, int i, int start)
+{
+	int	end;
+
+	end = start;
+	while (line[end] && line[end] != ' ')
+	{
+		if (line[end] == '&' && line[end + 1] == '&')
+			break ;
+		else if (line[end] == '|' || line[end] == '<' || \
+			line[end] == '>')
+			break ;
+		else if (line[end] == '(' || line[end] == ')')
+			break ;
+		end++;
+	}
+	if (end == start)
+	{
+		if (line[i] == '\0')
+			return (parse_error("newline", 1));
+		else
+			return (parse_error((char *)token_is(token_name(line + start)), 0));
+	}
+	return (end);
 }

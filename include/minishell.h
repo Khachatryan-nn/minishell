@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/22 01:31:09 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 16:25:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,13 +174,17 @@ char		**env_matrix(t_list *env);
 int			error_code(int error_num);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
+int			destroy_cmd(char *cmd, char **cmd_matrix, char **env_matrix);
 char		*strjoin_helper(char *result, char *read, int mode);
+int			find_limiter_end(char *line, int i, int start);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_init *init, t_list *env);
 int			parse_error(char *err_str, int mode);
+t_type		token_name(char *token);
 int			is_delimiter(t_parser *root);
 void		print_types(t_parser *ptr);
 int			ft_onlyspaces(char *str);
+const char	*token_is(t_type token);
 void		free_matrix(char **ptr);
 int			is_valid(t_init *init);
 void		close_pipes(int *fd);

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/17 19:45:59 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/22 15:43:51 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	lexer(t_parser **res, char **line)
 void	lex(char **line, t_init *init)
 {
 	init->lex = NULL;
+	init->pars = NULL;
 	if (!(lexer(&init->lex, line)))
 	{
 		destroy_init(init);
