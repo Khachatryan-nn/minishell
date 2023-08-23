@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/23 01:02:53 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/24 02:09:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,8 @@ void		handle_space(t_parser **res, char *line, int i, int count);
 int			handle_pipe(t_parser **res, char *line, int i, int count);
 int			handle_xand(t_parser **res, char *line, int i, int count);
 int			handle_xor(t_parser **res, char *line, int i, int count);
-void		heredoc_input(char	*limiter, t_parser **res);
 const char	*get_token_name(t_type token);
+char		*heredoc_input(char	*limiter);
 
 /* - - - - - --!-- - - - - ! Nodes and lists ! - - - - --!-- - - - - - */
 t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag);

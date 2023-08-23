@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:38:30 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/23 19:39:39 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/24 00:34:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	handle_heredoc(t_parser **res, char *line, int i, int count)
 {
 	char	*limiter;
 	int		end;
-	int		pid;
 	int		start;
 
 	handle_space(res, line, i, count);
@@ -43,7 +42,9 @@ int	handle_heredoc(t_parser **res, char *line, int i, int count)
 	limiter = ft_substr(line, start, end - start);
 	if (limiter)
 	{
-		 
+		lstback(res, lstnew_pars(limiter, WORD, 0, 1));
+		free (limiter);
+		return (end - 1);
 	}
 	return (parse_error("newline", 0));
 }

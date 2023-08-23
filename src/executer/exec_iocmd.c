@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/23 19:00:55 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/24 02:10:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,58 @@ int io_heredoc(t_init *init, t_parser *stack, t_list *env)
 {
 	int			stdin_backup;
 	t_parser	*temp;
+	int			pid;
+	int			status;
+	char		*res;
 
-	stdin_backup = dup(STDIN_FILENO);
-	if (dup2(stack->pipes[0], STDIN_FILENO) < 0)
+	if (pipe(stack->pipes) < 0)
 	{
 		perror("minishell");
-		return (1 + _close_(stdin_backup) + close_pipes(stack->pipes));
+		return (EXIT_FAILURE);
 	}
-	temp = stack;
-	while (temp->left->type != WORD)
-		temp = temp->left;
-	if (ft_strcmp(temp->left->cmd, "(NULL)"))
-		init->exit_status = check_ast(init, temp->left, env);
-	if (dup2(stdin_backup, STDIN_FILENO) < 0)
+	pid = fork();
+	if (pid < 0)
 	{
 		perror("minishell");
-		return (1);
+		return (EXIT_FAILURE + close_pipes(stack->pipes));
 	}
-	close(stdin_backup);
-	close_pipes(stack->pipes);
-	return (0);
+	else if (pid == 0)
+	{
+		close(stack->pipes[0]);
+		res = heredoc_input(stack->right->cmd);
+		if (dup2(stack->pipes[1], STDOUT_FILENO) < 0)
+		{
+			perror("minishell");
+			exit(EXIT_FAILURE + close_pipes(stack->pipes));
+		}
+		write(STDOUT_FILENO, res, ft_strlen(res));
+		exit(EXIT_SUCCESS + _close_(stack->pipes[1]));
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (status == EXIT_FAILURE)
+			return (1);
+		close(stack->pipes[1]);
+		stdin_backup = dup(STDIN_FILENO);
+		if (dup2(stack->pipes[0], STDIN_FILENO) < 0)
+		{
+			perror("minishell");
+			return (EXIT_FAILURE + _close_(stdin_backup) + close_pipes(stack->pipes));
+		}
+		temp = stack;
+		while (temp->left->type != WORD)
+			temp = temp->left;
+		if (ft_strcmp(temp->left->cmd, "(NULL)"))
+			init->exit_status = check_ast(init, temp->left, env);
+		if (dup2(stdin_backup, STDIN_FILENO) < 0)
+		{
+			perror("minishell");
+			return (1);
+		}
+		return (0 + _close2_(stdin_backup, stack->pipes[0]));
+	}
+	return (EXIT_FAILURE);
 }
 
 int	io_input(t_init *init, t_parser *stack, t_list *env)
