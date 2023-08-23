@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:38:30 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/22 16:47:11 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:39:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,23 @@ int	handle_heredoc(t_parser **res, char *line, int i, int count)
 {
 	char	*limiter;
 	int		end;
+	int		pid;
 	int		start;
 
 	handle_space(res, line, i, count);
 	if (is_delimiter(*res))
 		lstback(res, lstnew_pars("(NULL)", WORD, 0, 1));
 	lstback(res, lstnew_pars("<<", HEREDOC, 4, 1));
-	limiter = NULL;
 	start = i + 2;
 	while (line[start] && line[start] == ' ')
 		start++;
 	end = find_limiter_end(line, i, start);
-	if (end == 0)
+	if (!end)
 		return (0);
 	limiter = ft_substr(line, start, end - start);
 	if (limiter)
 	{
-		heredoc_input(limiter, res);
-		return (end);
+		 
 	}
 	return (parse_error("newline", 0));
 }

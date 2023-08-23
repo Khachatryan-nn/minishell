@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/23 01:06:17 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:00:55 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,137 +64,58 @@ int	io_out(t_init *init, t_parser *stack, t_list *env)
 
 int io_heredoc(t_init *init, t_parser *stack, t_list *env)
 {
-	int	fd[2];
-	int	stdin_backup;
-	int	stdout_backup;
-	int	pid;
-	int status;
+	int			stdin_backup;
+	t_parser	*temp;
 
-	stdin_backup = 0;
-	status = 0;
 	stdin_backup = dup(STDIN_FILENO);
-	stdout_backup = dup(STDOUT_FILENO);
-	if (pipe(fd) < 0)
+	if (dup2(stack->pipes[0], STDIN_FILENO) < 0)
+	{
+		perror("minishell");
+		return (1 + _close_(stdin_backup) + close_pipes(stack->pipes));
+	}
+	temp = stack;
+	while (temp->left->type != WORD)
+		temp = temp->left;
+	if (ft_strcmp(temp->left->cmd, "(NULL)"))
+		init->exit_status = check_ast(init, temp->left, env);
+	if (dup2(stdin_backup, STDIN_FILENO) < 0)
 	{
 		perror("minishell");
 		return (1);
 	}
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("minishell");
-		close(fd[0]);
-		close(fd[1]);
-		return (1);
-	}
-	else if (pid == 0)
-	{
-		close(fd[0]);
-		if (dup2(fd[1], STDOUT_FILENO) < 0)
-		{
-			close(fd[1]);
-			perror("minishell");
-			return (1);
-		}
-		ft_putstr_fd(stack->right->cmd, fd[1]);
-		close(fd[1]);
-		if (dup2(stdout_backup, STDOUT_FILENO) < 0)
-		{
-			perror("minishell");
-			return (1);
-		}
-		close(stdin_backup);
-		close(stdout_backup);
-		exit(0);
-	}
-	else
-	{
-		close (fd[1]);
-		if (dup2(fd[0], STDIN_FILENO) < 0)
-		{
-			close(fd[0]);
-			perror("minishell");
-			return (1);
-		}
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status) && !WEXITSTATUS(status))
-		{
-			while (stack->left->type != WORD)
-				stack = stack->left;
-			if (ft_strcmp(stack->left->cmd, "(NULL)"))
-				init->exit_status = to_execute(stack->left, env, init, 0);
-		}
-		close (fd[0]);
-		if (dup2(stdin_backup, STDIN_FILENO) < 0)
-		{
-			perror("minishell");
-			return (1);
-		}
-		close (stdin_backup);
-	}
+	close(stdin_backup);
+	close_pipes(stack->pipes);
 	return (0);
 }
 
 int	io_input(t_init *init, t_parser *stack, t_list *env)
 {
-	int		status;
-	int		fd[2];
 	int		file_fd;
 	int		backup;
-	char	*str;
-	int		pid;
 
 	backup = dup(STDIN_FILENO);
-	if (pipe(fd) < 0)
+	if (backup < 0)
+		perror("minishell");
+	file_fd = open(stack->right->cmd, O_RDONLY);
+	if (file_fd < 0)
+	{
+		perror("minishell");
+		exit(EXIT_FAILURE + _close_(backup));
+	}
+	if (dup2(file_fd, STDIN_FILENO) < 0)
+	{
+		perror("minishell");
+		return (EXIT_FAILURE + _close2_ (file_fd, backup));
+	}
+	while (stack->left->type != WORD)
+		stack = stack->left;
+	init->exit_status = to_execute(stack->left, env, init, 0);
+	if (dup2(backup, STDIN_FILENO) < 0)
 	{
 		perror("minishell");
 		return (EXIT_FAILURE);
 	}
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("minishell");
-		return (EXIT_FAILURE + close_pipes(fd)));
-	}
-	else if (pid == 0)
-	{
-		_close_(fd[0]);
-		file_fd = open(stack->right->cmd, O_RDONLY);
-		if (file_fd < 0)
-		{
-			perror("minishell");
-			exit(EXIT_FAILURE + _close_ (fd[1]));
-		}
-		while (1)
-		{
-			str = get_next_line(file_fd);
-			if (!str)
-				break ;
-			ft_putstr_fd(str, fd[1]);
-		}
-		exit (EXIT_SUCCESS + _exit2_(fd[1], file_fd));
-	}
-	else
-	{
-		close(fd[1]);
-		if (dup2(fd[0], STDIN_FILENO) < 0)
-		{
-			perror("minishell");
-			return (EXIT_FAILURE + _close_ (fd[0]));
-		}
-		waitpid(pid, &status, 0);
-		while (stack->left->type != WORD)
-			stack = stack->left;
-		if (WIFEXITED(status) && !WEXITSTATUS(status))
-			init->exit_status = to_execute(stack->left, env, init, 0);
-		if (dup2(backup, STDIN_FILENO) < 0)
-		{
-			perror("minishell");
-			return (EXIT_FAILURE);
-		}
-		_close2_ (fd[0], backup);
-	}
-	return (0);
+	return (0 + _close2_(backup, file_fd));
 }
 
 int exec_iocmd(t_init *init, t_parser *stack, t_list *env)

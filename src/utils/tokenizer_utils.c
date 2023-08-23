@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/22 16:40:42 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:57:10 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	heredoc_input(char	*limiter, t_parser **res)
 
 	line = NULL;
 	result = NULL;
+	close((*res)->pipes[0]);
 	while (1)
 	{
 		line = readline("> ");
@@ -36,9 +37,16 @@ void	heredoc_input(char	*limiter, t_parser **res)
 			result = strjoin_helper(result, line, 1);
 	}
 	if (!result)
-		return (lstback(res, lstnew_pars("", WORD, 0, 1)));
-	result = ft_strjoin(result, "\n", 1);
-	lstback(res, lstnew_pars(result, WORD, 0, 1));
+		result = ft_strdup("");
+	else
+		result = ft_strjoin(result, "\n", 1);
+	if (dup2((*res)->pipes[1], STDOUT_FILENO) < 0)
+	{
+		perror("minishell");
+		exit(_close_((*res)->pipes[1]));
+	}
+	write((*res)->pipes[1], result, ft_strlen(result));
+	_close_((*res)->pipes[1]);
 }
 
 int	add_new_quote(t_parser **res, char *line, int i, int type)
