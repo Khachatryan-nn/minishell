@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/22 16:44:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/23 01:06:17 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,19 +154,16 @@ int	io_input(t_init *init, t_parser *stack, t_list *env)
 	if (pid < 0)
 	{
 		perror("minishell");
-		close(fd[0]);
-		close(fd[1]);
-		return (EXIT_FAILURE);
+		return (EXIT_FAILURE + close_pipes(fd)));
 	}
 	else if (pid == 0)
 	{
-		close(fd[0]);
+		_close_(fd[0]);
 		file_fd = open(stack->right->cmd, O_RDONLY);
 		if (file_fd < 0)
 		{
 			perror("minishell");
-			close (fd[1]);
-			exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE + _close_ (fd[1]));
 		}
 		while (1)
 		{
@@ -175,9 +172,7 @@ int	io_input(t_init *init, t_parser *stack, t_list *env)
 				break ;
 			ft_putstr_fd(str, fd[1]);
 		}
-		close (fd[1]);
-		close (file_fd);
-		exit (EXIT_SUCCESS);
+		exit (EXIT_SUCCESS + _exit2_(fd[1], file_fd));
 	}
 	else
 	{
@@ -185,21 +180,19 @@ int	io_input(t_init *init, t_parser *stack, t_list *env)
 		if (dup2(fd[0], STDIN_FILENO) < 0)
 		{
 			perror("minishell");
-			close (fd[0]);
-			return (EXIT_FAILURE);
+			return (EXIT_FAILURE + _close_ (fd[0]));
 		}
 		waitpid(pid, &status, 0);
 		while (stack->left->type != WORD)
 			stack = stack->left;
 		if (WIFEXITED(status) && !WEXITSTATUS(status))
 			init->exit_status = to_execute(stack->left, env, init, 0);
-		close (fd[0]);
 		if (dup2(backup, STDIN_FILENO) < 0)
 		{
 			perror("minishell");
 			return (EXIT_FAILURE);
 		}
-		close (backup);
+		_close2_ (fd[0], backup);
 	}
 	return (0);
 }

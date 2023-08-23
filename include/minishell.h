@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/22 16:25:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/23 01:02:53 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,14 +180,17 @@ int			find_limiter_end(char *line, int i, int start);
 int			ft_isspace(char *line, int i, int j);
 void		find_path(t_init *init, t_list *env);
 int			parse_error(char *err_str, int mode);
-t_type		token_name(char *token);
+int			_close3_(int fd1, int fd2, int fd3);
 int			is_delimiter(t_parser *root);
+int			_close2_(int fd1, int fd2);
 void		print_types(t_parser *ptr);
 int			ft_onlyspaces(char *str);
 const char	*token_is(t_type token);
 void		free_matrix(char **ptr);
+t_type		token_name(char *token);
 int			is_valid(t_init *init);
-void		close_pipes(int *fd);
+int			close_pipes(int *fd);
+int			_close_(int	fd);
 
 /* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */
 void		ft_export_change(char *line, t_list *env, t_init *init);
