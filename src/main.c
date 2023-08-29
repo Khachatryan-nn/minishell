@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/23 19:05:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:44:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ int	main(int ac, char **av, char **envp)
 	t_init	init;
 
 	env = NULL;
-	init.flag = 1;
-	init.path = NULL;
 	str = NULL;
+	init.flag = 1;
+	init.hdoc = 0;
+	init.redir = 0;
+	init.path = NULL;
 	ft_create_env(envp, &env);
 	rl_catch_signals = 0;
 	if (ac == 1 && av)

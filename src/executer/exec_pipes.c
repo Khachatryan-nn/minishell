@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:34:10 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/22 01:32:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:33:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	pipe_prepair(t_init *init, t_parser *pars, t_list *env)
 	int		pipes[2];
 	int		status;
 
-	pars->left->flag |= (_PIPES_);
-	pars->right->flag |= (_PIPES_);
+	pars->left->flag |= _PIPES_;
+	pars->right->flag |= _PIPES_;
 	if (pipe(pipes) == -1)
 	{
 		pars->err_code = 1;
@@ -75,8 +75,7 @@ int	pipe_prepair(t_init *init, t_parser *pars, t_list *env)
 	pid_right = child_right(init, pars->right, env, pipes);
 	if (pid_right < 0)
 		return (1);
-	close(pipes[0]);
-	close(pipes[1]);
+	close_pipes(pipes);
 	waitpid(pid_left, &status, 0);
 	waitpid(pid_right, &status, 0);
 	return (status);

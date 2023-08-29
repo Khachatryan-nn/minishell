@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/24 01:42:37 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:47:51 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 	if (pars->left == NULL && pars->right == NULL)
 	{
 		pars->err_code = to_execute(pars, env, init, status);
+		//handle_dollar(pars->err_code, env);
 		return (pars->err_code);
 	}
 	if (pars->left && pars->right && check_type(pars->type) == 2)
@@ -57,10 +58,8 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 		pars->err_code = exec_iocmd(init, pars, env);
 	}
 	else if (pars->left && pars->right && pars->type == PIPE)
-	{
 		pars->err_code = pipe_prepair(init, pars, env);
-	}
-	if (pars->left != NULL && !(pars->left->flag & (_REDIR_)) && !(pars->left->flag & _PIPES_))
+	if (pars->left != NULL && !(pars->left->flag & _REDIR_) && !(pars->left->flag & _PIPES_))
 	{
 		if (pars->left->subshell_code)
 		{
@@ -76,10 +75,10 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 			{
 				if (wait(&status) < 0)
 				{
-					perror("wait");
+					perror("minishell");
 					return (1);
 				}
-				exit_env(status, env);
+				//exit_env(status, env);
 				return (status);
 			}
 		}
@@ -111,9 +110,9 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_list *env)
 {
 	pid_t	pid;
-	int		childExitCode;
+	int		child_exit_code;
 
-	childExitCode = 0;
+	child_exit_code = 0;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -132,9 +131,9 @@ int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_list *env)
 	}
 	else
 	{
-		waitpid(pid, &childExitCode, 0);
-		exit_env(childExitCode / 256, env);
-		return (childExitCode / 256);
+		waitpid(pid, &child_exit_code, 0);
+		exit_env(child_exit_code / 256, env);
+		return (child_exit_code / 256);
 	}
 }
 
@@ -145,12 +144,15 @@ int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 	char	**env_mtrx;
 	int		exit_code;
 
-	if (!init->path)
+	if (init->flag)
+	{
 		find_path(init, env);
+		init->flag = 0;
+	}
 	env_mtrx = env_matrix(env);
 	if (!env_mtrx)
 		return (127);
-	cmd_matrix = restore_cmd_line(stack);
+	cmd_matrix = restore_cmd_line(stack, -1);
 	if (!cmd_matrix)
 		return (destroy_cmd(0, 0, env_mtrx) + 1);
 	cmd_path = check_cmd(cmd_matrix[0], init->path);

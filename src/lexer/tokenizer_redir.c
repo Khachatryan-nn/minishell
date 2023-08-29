@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:38:30 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/24 00:34:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/30 00:53:33 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	handle_heredoc(t_parser **res, char *line, int i, int count)
 	if (!end)
 		return (0);
 	limiter = ft_substr(line, start, end - start);
+	//if (ft_strchr(limiter, '\'') != 0 || ft_strchr(limiter, '"') != 0)
+	//	limiter = rem_quotes_lim(limiter);
 	if (limiter)
 	{
 		lstback(res, lstnew_pars(limiter, WORD, 0, 1));

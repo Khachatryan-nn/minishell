@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/16 23:48:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/29 20:44:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag)
 	elt->subshell_code = 0;
 	elt->flag = flag;
 	elt->err_code = 0;
+	elt->red = 0;
+	elt->last_hdoc = 0;
 	elt->lpath = NULL;
 	elt->rpath = NULL;
 	elt->next = NULL;

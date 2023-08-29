@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/23 19:07:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:34:44 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_built(t_parser *stack, t_list *env, t_init *init)
 {
 	char	**cmd_matrix;
 
-	cmd_matrix = restore_cmd_line(stack);
+	cmd_matrix = restore_cmd_line(stack, -1);
 	if (ft_strcmp(init->lex->cmd, "exit") == 0)
 		ft_exit(env, init);
 	 if (ft_strcmp(cmd_matrix[0], "env") == 0)

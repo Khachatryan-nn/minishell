@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/24 02:09:39 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:36:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ typedef struct s_parser
 	t_type			type;
 	int				prc;
 	int				flag;
+	int				red;
+	int				last_hdoc;
 	int				subshell_code;
 	int				err_code;
 	int				pipes[2];
@@ -116,10 +118,23 @@ typedef struct s_init
 	int			exit_status;
 	char		**path;
 	int			flag;
+	int			hdoc;
+	int			redir;
 	t_parser	*pars;
 	t_parser	*lex;
 	t_parser	*temp;
 }				t_init;
+
+//	@brief 
+//	@tparam	s_wcard		*next
+//	@tparam	s_wcard		*prev
+//	@tparam	char		*file
+typedef struct s_wcard
+{
+	struct s_wcard		*next;
+	struct s_wcard		*prev;
+	char				*file;
+}						t_wcard;
 
 /* - - - - --!-- - - - - ! Handling spec tokens ! - - - - --!-- - - - - */
 int			handle_prnthses(t_parser **res, char *line, int i, int count);
@@ -138,8 +153,13 @@ char		*heredoc_input(char	*limiter);
 
 /* - - - - - --!-- - - - - ! Nodes and lists ! - - - - --!-- - - - - - */
 t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag);
+void		lstback_wcard(t_wcard **pars, t_wcard *new);
 void		lstback(t_parser **lst, t_parser *new);
 void		destroy_structure(t_parser *root);
+void		lstclear_wcard(t_wcard **lst);
+t_wcard		*lstlast_wcard(t_wcard *lst);
+t_wcard		*lstadd_wcard(char *string);
+int			lstsize_wcard(t_wcard *lst);
 void		destroy_init(t_init *init);
 void		lstclear(t_parser **lst);
 t_list		*ft_lstnew_2(char *str);
@@ -151,7 +171,9 @@ int			handle_cprnthses(t_parser **res, char *line, int i, int count);
 int			add_new_quote(t_parser **res, char *line, int i, int type);
 int 		check_ast(t_init *init, t_parser *pars, t_list *env);
 int			lexer(t_parser **res, char **line);
+char		*rem_lim_quotes(char *limiter);
 void		lex(char **line, t_init *init);
+int			quote_count(char *limiter);
 int			check_type(t_type type);
 void		parser(t_init *init);
 
@@ -163,12 +185,20 @@ void		push(t_parser **a, t_parser **b);
 void		pop(t_parser **stack);
 
 /* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
+char		**alloc_cmd_matrix(char **matrix, char *cmd, t_wcard *wild, int *i);
+char		**alloc_wc_matrix(char **matrix, t_parser *stack, t_wcard **wcard);
 int			to_execute(t_parser *pars, t_list *env, t_init *init, int status);
 int			subsh_execute(t_parser *pars, t_list *env, t_init *init, int pid);
 int			pipe_prepair(t_init *init, t_parser *pars, t_list *env);
 int			exec_iocmd(t_init *init, t_parser *stack, t_list *env);
+void		wcard_logic_2(char **pattern, char **string, int star);
 int			call_cmd(t_parser *stack, t_init *init, t_list *env);
-char		**restore_cmd_line(t_parser *stack);
+void		fill_wc_matrix(t_parser *stack, t_wcard **wild);
+void		handle_dollar(int exit_status, t_list **env);
+char		**restore_cmd_line(t_parser *stack, int i);
+int			wcard_logic(char *pattern, char *string);
+void		get_file(char *path, t_wcard **wcard);
+char		*handle_heredoc_input(char *string);
 char		*check_cmd(char *cmd, char **path);
 char		**env_matrix(t_list *env);
 int			error_code(int error_num);

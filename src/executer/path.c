@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/22 13:42:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:48:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,23 @@ char		*check_cmd(char *cmd, char **path);
 
 void	find_path(t_init *init, t_list *env)
 {
-	t_list	*env1;
+	t_list	*temp;
 
-	env1 = env;
-	while (env1)
+	temp = env;
+	while (temp)
 	{
-		if (ft_strcmp(env1->ptr, "PATH") == 0)
+		if (ft_strcmp(temp->ptr, "PATH") == 0)
+		{
+			if (!temp->flag)
+			{
+				init->path = NULL;
+				return ;
+			}
 			break ;
-		env1 = env1->next;
+		}
+		temp = temp->next;
 	}
-	init->path = ft_split(&env1->value[1], ':');
+	init->path = ft_split(&temp->value[1], ':');
 }
 
 
@@ -40,11 +47,11 @@ char static	*find_cmdpath(char *cmd, char **path)
 	cmdpath = NULL;
 	if (cmd[0] == '\0')
 		return (NULL);
-	while (path[++i])
+	while (path && path[++i])
 	{
 		cmdpath = ft_strjoin(path[i], "/", 0);
 		cmdpath = ft_strjoin(cmdpath, cmd, 1);
-		if (access(cmdpath, X_OK) == -1)
+		if (access(cmdpath, X_OK | F_OK) == -1)
 			free (cmdpath);
 		else
 			return (cmdpath);
