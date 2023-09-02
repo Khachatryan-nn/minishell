@@ -6,15 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 19:19:51 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/25 22:30:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_lst	*ft_lstlast(t_lst *lst)
 {
-	t_list	*ptr;
+	t_lst	*ptr;
 
 	ptr = lst;
 	if (!ptr)

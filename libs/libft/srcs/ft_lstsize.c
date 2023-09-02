@@ -6,16 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 19:16:04 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/25 22:30:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_lst *lst)
 {
 	int	i;
-	t_list *str;
+	t_lst *str;
 
 	i = 0;
 	str = NULL;

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_exit(t_list *env, t_init *init)
+void	ft_exit(t_lst *env, t_init *init)
 {
 	t_init	*lst;
 	char	*str;
@@ -33,9 +33,9 @@ void	ft_exit(t_list *env, t_init *init)
 	}
 }
 
-void	exit_env(int a, t_list *env)
+void	exit_env(int a, t_lst *env)
 {
-	t_list *lst;
+	t_lst *lst;
 	char	*ptr;
 
 	lst = NULL;
@@ -63,7 +63,7 @@ int	ft_atoi_2(long long a)
 		return (0);
 }
 
-void	ft_check_valid(char *str, t_list *env)
+void	ft_check_valid(char *str, t_lst *env)
 {
 	int	i;
 
@@ -83,7 +83,7 @@ void	ft_check_valid(char *str, t_list *env)
 	}
 }
 
-void	ft_check_valid_2(char *str, t_list *env)
+void	ft_check_valid_2(char *str, t_lst *env)
 {
 	if (str[0] == '-')
 	{
@@ -107,7 +107,7 @@ void	ft_check_valid_2(char *str, t_list *env)
 	}
 }
 
-void	ft_check_valid_3(t_init *lst, t_list *env)
+void	ft_check_valid_3(t_init *lst, t_lst *env)
 {
 	if (ft_strcmp(lst->lex->next->cmd, "AST") != 0)
 		{

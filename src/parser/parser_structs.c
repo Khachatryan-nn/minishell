@@ -6,45 +6,50 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/29 20:44:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:56:27 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag);
-void		lstback(t_parser **lst, t_parser *new);
-void		lstclear(t_parser **lst);
-t_parser	*lstlast(t_parser *lst);
-int			lstsize(t_parser *lst);
+t_tok	*lstnew_pars(char *content, t_type type, int prec, int flag);
+void		lstback(t_tok **lst, t_tok *new);
+void		lstclear(t_tok **lst);
+t_tok	*lstlast(t_tok *lst);
+int			lstsize(t_tok *lst);
 
-t_parser	*lstnew_pars(char *content, t_type type, int prec, int flag)
+t_tok	*lstnew_pars(char *content, t_type type, int prec, int flag)
 {
-	t_parser	*elt;
+	t_tok		*elt;
 
-	elt = (t_parser *)malloc(sizeof(t_parser));
+	elt = (t_tok *)malloc(sizeof(t_tok));
 	if (!elt)
 		return (NULL);
-	elt->cmd = ft_strdup(content);
-	elt->type = type;
 	elt->prc = prec;
-	elt->subshell_code = 0;
 	elt->flag = flag;
+	elt->type = type;
 	elt->err_code = 0;
-	elt->red = 0;
+	elt->last_red = -1;
 	elt->last_hdoc = 0;
-	elt->lpath = NULL;
-	elt->rpath = NULL;
+	elt->last_input = -1;
+	elt->subshell_code = 0;
+	elt->fd = -42;
+	elt->_stdin_ = -42;
+	elt->_stdout_ = -42;
+	elt->stdin_backup = -42;
+	elt->stdout_backup = -42;
+	elt->left = NULL;
 	elt->next = NULL;
 	elt->prev = NULL;
 	elt->right = NULL;
-	elt->left = NULL;
+	elt->hdoc_fname = NULL;
+	elt->cmd = ft_strdup(content);
 	return (elt);
 }
 
-t_parser	*lstlast(t_parser *lst)
+t_tok	*lstlast(t_tok *lst)
 {
-	t_parser	*ptr;
+	t_tok	*ptr;
 
 	ptr = lst;
 	if (!ptr)
@@ -54,9 +59,9 @@ t_parser	*lstlast(t_parser *lst)
 	return (ptr);
 }
 
-void	lstback(t_parser **lst, t_parser *new)
+void	lstback(t_tok **lst, t_tok *new)
 {
-	t_parser	*ptr;
+	t_tok	*ptr;
 
 	ptr = lstlast(*lst);
 	if (!ptr)
@@ -68,9 +73,9 @@ void	lstback(t_parser **lst, t_parser *new)
 	}
 }
 
-void	lstclear(t_parser **lst)
+void	lstclear(t_tok **lst)
 {
-	t_parser	*ptr;
+	t_tok	*ptr;
 
 	ptr = NULL;
 	if (!lst || !*lst)
@@ -85,7 +90,7 @@ void	lstclear(t_parser **lst)
 	ptr = NULL;
 }
 
-int	lstsize(t_parser *lst)
+int	lstsize(t_tok *lst)
 {
 	int	i;
 

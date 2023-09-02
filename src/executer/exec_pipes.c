@@ -6,15 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:34:10 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/30 01:33:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pipe_prepair(t_init *init, t_parser *pars, t_list *env);
+int	pipe_prepair(t_init *init, t_tok *pars, t_lst *env);
 
-static pid_t	child_left(t_init *init, t_parser *pars, t_list *env, int *pipes)
+static pid_t	child_left(t_init *init, t_tok *pars, t_lst *env, int *pipes)
 {
 	int		status;
 	pid_t	pid;
@@ -34,7 +34,7 @@ static pid_t	child_left(t_init *init, t_parser *pars, t_list *env, int *pipes)
 	return (pid);
 }
 
-static pid_t	child_right(t_init *init, t_parser *pars, t_list *env, int *pipes)
+static pid_t	child_right(t_init *init, t_tok *pars, t_lst *env, int *pipes)
 {
 	int		status;
 	pid_t	pid;
@@ -54,7 +54,7 @@ static pid_t	child_right(t_init *init, t_parser *pars, t_list *env, int *pipes)
 	return (pid);
 }
 
-int	pipe_prepair(t_init *init, t_parser *pars, t_list *env)
+int	pipe_prepair(t_init *init, t_tok *pars, t_lst *env)
 {
 	pid_t	pid_right;
 	pid_t	pid_left;

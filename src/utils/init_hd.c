@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   init_hd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 19:28:58 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/09/02 12:59:57 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/09/02 13:02:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_back(t_lst **lst, t_lst *new)
+void	init_hd(t_hd **hd);
+
+void	init_hd(t_hd **hd)
 {
-	t_lst	*ptr;
+	int		i;
+	char	*str;
 
-	ptr = ft_lstlast(*lst);
-	if (!ptr)
-		*lst = new;
-	else
+	i = 0;
+	if (*hd)
+		return ;
+	(*hd) = (t_hd *)malloc(sizeof(t_hd));
+	(*hd)->i = -1;
+	(*hd)->matrix = (char **)malloc(sizeof(char *) * 16);
+	while (i < 16)
 	{
-		ptr->next = new;
-		ptr->next->prev = ptr;
+		(*hd)->matrix[i] = ft_strdup(".heredoc");
+		str = ft_itoa(i);
+		(*hd)->matrix[i] = ft_strjoin((*hd)->matrix[i], str, 1);
+		free(str);
+		i++;
 	}
 }

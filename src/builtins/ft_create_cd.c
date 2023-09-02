@@ -6,16 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/19 15:24:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_cd(t_list *str, char **ptr)
+void	ft_cd(t_lst *str, char **ptr)
 {
-	t_list	*env;
-	t_list	*env1;
+	t_lst	*env;
+	t_lst	*env1;
 	int		flag1;
 	char	*text;
 	char	*text1;

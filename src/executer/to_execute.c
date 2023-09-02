@@ -6,16 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/23 19:06:17 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	to_execute(t_parser *pars, t_list *env, t_init *init, int status);
-int	subsh_execute(t_parser *pars, t_list *env, t_init *init, int pid);
+int	to_execute(t_tok *pars, t_lst *env, t_init *init, int status);
+int	subsh_execute(t_tok *pars, t_lst *env, t_init *init, int pid);
 
-int	subsh_execute(t_parser *pars, t_list *env, t_init *init, int pid)
+int	subsh_execute(t_tok *pars, t_lst *env, t_init *init, int pid)
 {
 	int	status;
 
@@ -44,7 +44,7 @@ int	subsh_execute(t_parser *pars, t_list *env, t_init *init, int pid)
 	return (0);
 }
 
-int	to_execute(t_parser *pars, t_list *env, t_init *init, int status)
+int	to_execute(t_tok *pars, t_lst *env, t_init *init, int status)
 {
 	int	pid;
 

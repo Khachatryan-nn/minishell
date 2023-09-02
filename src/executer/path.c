@@ -6,19 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/30 01:48:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char static	*find_cmdpath(char *cmd, char **path);
-void		find_path(t_init *init, t_list *env);
+void		find_path(t_init *init, t_lst *env);
 char		*check_cmd(char *cmd, char **path);
 
-void	find_path(t_init *init, t_list *env)
+void	find_path(t_init *init, t_lst *env)
 {
-	t_list	*temp;
+	t_lst	*temp;
 
 	temp = env;
 	while (temp)

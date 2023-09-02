@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export_change.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musimony <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 19:29:55 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/06 17:22:20 by musimony         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_export_change(char *line, t_list *env, t_init *init)
+void	ft_export_change(char *line, t_lst *env, t_init *init)
 {
-	t_list	*stack_a;
+	t_lst	*stack_a;
 	int		i;
 	int		j;
 	int		k;
@@ -100,9 +100,9 @@ void	ft_export_change(char *line, t_list *env, t_init *init)
 	free(ptr);
 }
 
-int	ft_list_change(t_list *new, t_list *env, t_init *init)
+int	ft_list_change(t_lst *new, t_lst *env, t_init *init)
 {
-	t_list	*str;
+	t_lst	*str;
 
 	str = env;
 	while (str)

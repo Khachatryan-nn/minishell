@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/23 01:02:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	destroy_structure(t_parser *root);
+void	destroy_structure(t_tok *root);
 void	destroy_init(t_init *init);
 void	free_matrix(char **ptr);
 int		close_pipes(int *fd);
@@ -47,7 +47,7 @@ void	destroy_init(t_init *init)
 	init->lex = NULL;
 }
 
-void	destroy_structure(t_parser *root)
+void	destroy_structure(t_tok *root)
 {
 	if (!root)
 		return ;

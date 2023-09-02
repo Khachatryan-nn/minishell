@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/22 14:35:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 11:48:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ t_type	token_name(char *token)
 	else if (token[0] == '<' && token[1] == '<')
 		return (HEREDOC);
 	else if (token[0] == '>' && token[1] == '>')
-		return (WRITE_APPEND);
+		return (WR_APPEND);
 	else if (token[0] == '>')
-		return (WRITE_TRUNC);
+		return (WR_TRUNC);
 	else if (token[0] == '<')
 		return (INPUT);
 	else if (token[0] == '\0')

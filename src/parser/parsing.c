@@ -6,20 +6,20 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/22 14:41:34 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:56:55 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	shunting_yard(t_parser **p, t_parser **ops, t_parser **otp);
+void	shunting_yard(t_tok **p, t_tok **ops, t_tok **otp);
 void	parser(t_init *init);
-void	push(t_parser **a, t_parser **b);
-void	pop(t_parser **stack);
+void	push(t_tok **a, t_tok **b);
+void	pop(t_tok **stack);
 
-void	pop(t_parser **stack)
+void	pop(t_tok **stack)
 {
-	t_parser	*temp;
+	t_tok	*temp;
 
 	temp = lstlast(*stack);
 	if (!temp)
@@ -34,10 +34,10 @@ void	pop(t_parser **stack)
 		*stack = NULL;
 }
 
-void	push(t_parser **a, t_parser **b)
+void	push(t_tok **a, t_tok **b)
 {
-	t_parser	*ptr1;
-	t_parser	*ptr2;
+	t_tok	*ptr1;
+	t_tok	*ptr2;
 
 	ptr1 = lstlast(*a);
 	ptr2 = lstlast(*b);
@@ -57,12 +57,10 @@ void	push(t_parser **a, t_parser **b)
 	}
 }
 
-void	shunting_yard(t_parser **p, t_parser **ops, t_parser **otp)
+void	shunting_yard(t_tok **p, t_tok **ops, t_tok **otp)
 {
 	if ((*p)->prc == 0)
-	{
-		lstback(otp, lstnew_pars((*p)->cmd, (*p)->type, (*p)->prc, (*p)->flag));
-	}
+		lstback(otp, ast_branch(*p));
 	else if ((*p)->prc > 0)
 	{
 		if ((*p)->type == SUBSH_CLOSE)
@@ -72,25 +70,23 @@ void	shunting_yard(t_parser **p, t_parser **ops, t_parser **otp)
 			pop(ops);
 			lstlast(*otp)->subshell_code = 1;
 		}
-		else
+		else if ((*p)->type != SUBSH_OPEN)
 		{
-			if ((*p)->type != SUBSH_OPEN)
-			{
-				while (*ops && lstlast(*ops)->prc >= (*p)->prc \
-					&& lstlast(*ops)->type != SUBSH_OPEN)
-					push(ops, otp);
-			}
-			lstback(ops, lstnew_pars((*p)->cmd, \
-				(*p)->type, (*p)->prc, (*p)->flag));
+			while (*ops && lstlast(*ops)->prc >= (*p)->prc \
+				&& lstlast(*ops)->type != SUBSH_OPEN)
+				push(ops, otp);
+			lstback(ops, ast_branch(*p));
 		}
+		else
+			lstback(ops, ast_branch(*p));
 	}
 }
 
 void	parser(t_init *init)
 {
-	t_parser	*ptr;
-	t_parser	*stack_ops;
-	t_parser	*stack_otp;
+	t_tok	*ptr;
+	t_tok	*stack_ops;
+	t_tok	*stack_otp;
 
 	ptr = init->lex;
 	stack_ops = NULL;

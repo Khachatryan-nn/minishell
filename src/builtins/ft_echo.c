@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:52:40 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/09 21:52:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(t_list *env, t_init *init)
+void	ft_echo(t_lst *env, t_init *init)
 {
 	t_init *str;
 
@@ -34,7 +34,7 @@ void	ft_echo(t_list *env, t_init *init)
 	printf("\n");
 }
 
-void	ft_echo_dollar(char *str, t_list *env)
+void	ft_echo_dollar(char *str, t_lst *env)
 {
 	int		i;
 	int		start;
@@ -92,9 +92,9 @@ void	ft_echo_dollar(char *str, t_list *env)
 	free(ptr);
 }
 
-void	ft_check_echo_env(char *str, t_list *env)
+void	ft_check_echo_env(char *str, t_lst *env)
 {
-	t_list *lst;
+	t_lst *lst;
 
 	lst = NULL;
 	lst = env;
@@ -110,9 +110,9 @@ void	ft_check_echo_env(char *str, t_list *env)
 	}
 }
 
-void	ft_find_env_echo(t_list *env)
+void	ft_find_env_echo(t_lst *env)
 {
-	t_list *lst;
+	t_lst *lst;
 
 	lst = NULL;
 	lst = env;

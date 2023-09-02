@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_check_main(char *str, t_list *env, t_init init)
+void	ft_check_main(char *str, t_lst *env, t_init init)
 {
 	if (!str)
 	{

@@ -6,18 +6,18 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/30 01:47:51 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_list *env);
-int	check_ast(t_init *init, t_parser *pars, t_list *env);
-int	call_cmd(t_parser *stack, t_init *init, t_list *env);
-int	andor_check(t_parser *stack);
+int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_lst *env);
+int	check_ast(t_init *init, t_tok *root, t_lst *env);
+int	call_cmd(t_tok *stack, t_init *init, t_lst *env);
+int	andor_check(t_tok *stack);
 
-int	andor_check(t_parser *stack)
+int	andor_check(t_tok *stack)
 {
 	if (stack->type == XAND && stack->left && stack->left->err_code != 0)
 	{
@@ -33,43 +33,45 @@ int	andor_check(t_parser *stack)
 		return (1);
 }
 
-int	check_ast(t_init *init, t_parser *pars, t_list *env)
+int	check_ast(t_init *init, t_tok *root, t_lst *env)
 {
 	pid_t	pid;
 	int		status;
 
 	pid = 0;
 	status = 0;
-	if (!pars)
+	if (!root)
 	{
-		pars->err_code = 258;
-		return (pars->err_code);
+		root->err_code = 258;
+		return (root->err_code);
 	}
-	if (pars->left == NULL && pars->right == NULL)
+	if (root->left == NULL && root->right == NULL)
 	{
-		pars->err_code = to_execute(pars, env, init, status);
-		//handle_dollar(pars->err_code, env);
-		return (pars->err_code);
+		root->err_code = to_execute(root, env, init, status);
+		//handle_dollar(root->err_code, env);
+		return (root->err_code);
 	}
-	if (pars->left && pars->right && check_type(pars->type) == 2)
+	if (root->left && root->right && check_type(root->type) == 2)
 	{
-		if (pars->left->left)
-			check_ast(init, pars->left, env);
-		pars->err_code = exec_iocmd(init, pars, env);
+		check_lasts(init, root, 0);
+		if (root->left->left)
+			check_ast(init, root->left, env);
+		root->err_code = exec_iocmd(init, root, env);
 	}
-	else if (pars->left && pars->right && pars->type == PIPE)
-		pars->err_code = pipe_prepair(init, pars, env);
-	if (pars->left != NULL && !(pars->left->flag & _REDIR_) && !(pars->left->flag & _PIPES_))
+	else if (root->left && root->right && root->type == PIPE)
+		root->err_code = pipe_prepair(init, root, env);
+	if (root->left != NULL && !(root->left->flag & _REDIR_) && !(root->left->flag & _PIPES_))
 	{
-		if (pars->left->subshell_code)
+		check_lasts(init, root, 1);
+		if (root->left->subshell_code)
 		{
 			pid = fork();
 			if (pid == -1)
 				return (127);
 			else if (pid == 0)
 			{
-				pars->err_code = check_ast(init, pars->left, env);
-				exit(pars->err_code);
+				root->err_code = check_ast(init, root->left, env);
+				exit(root->err_code);
 			}
 			else
 			{
@@ -83,31 +85,32 @@ int	check_ast(t_init *init, t_parser *pars, t_list *env)
 			}
 		}
 		else
-			pars->err_code = check_ast(init, pars->left, env);
+			root->err_code = check_ast(init, root->left, env);
 	}
-	if (pars->right != NULL && andor_check(pars) && !(pars->right->flag & (_REDIR_)) && !(pars->right->flag & _PIPES_))
+	if (root->right != NULL && andor_check(root) && !(root->right->flag & (_REDIR_)) && !(root->right->flag & _PIPES_))
 	{
-		if (pars->right->subshell_code)
+		check_lasts(init, root, 1);
+		if (root->right->subshell_code)
 		{
 			pid = fork();
 			if (pid == -1)
 				return (127);
 			else if (pid == 0)
 			{
-				pars->err_code = check_ast(init, pars->right, env);
-				exit(pars->err_code);
+				root->err_code = check_ast(init, root->right, env);
+				exit(root->err_code);
 			}
 			else
 				wait(NULL);
 			return (1);
 		}
 		else
-			pars->err_code = check_ast(init, pars->right, env);
+			root->err_code = check_ast(init, root->right, env);
 	}
 	return (0);
 }
 
-int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_list *env)
+int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_lst *env)
 {
 	pid_t	pid;
 	int		child_exit_code;
@@ -137,7 +140,7 @@ int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_list *env)
 	}
 }
 
-int	call_cmd(t_parser *stack, t_init *init, t_list *env)
+int	call_cmd(t_tok *stack, t_init *init, t_lst *env)
 {
 	char	**cmd_matrix;
 	char	*cmd_path;
@@ -164,7 +167,7 @@ int	call_cmd(t_parser *stack, t_init *init, t_list *env)
 }
 
 // command not found			->	127
-// syntax || parsing error		->	258
+// syntax || rooting error		->	258
 // empty ()						->	1
 // unknown flag || parameter	->	1
 

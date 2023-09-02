@@ -6,18 +6,18 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/18 18:40:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		handle_cprnthses(t_parser **res, char *line, int i, int count);
-int		handle_prnthses(t_parser **res, char *line, int i, int count);
-int		handle_squotes(t_parser **res, char **line, int i, int count);
-int		handle_dquotes(t_parser **res, char **line, int i, int count);
+int		handle_cprnthses(t_tok **res, char *line, int i, int count);
+int		handle_prnthses(t_tok **res, char *line, int i, int count);
+int		handle_squotes(t_tok **res, char **line, int i, int count);
+int		handle_dquotes(t_tok **res, char **line, int i, int count);
 
-int	handle_prnthses(t_parser **res, char *line, int i, int count)
+int	handle_prnthses(t_tok **res, char *line, int i, int count)
 {
 	int		counter;
 	int		lst;
@@ -40,7 +40,7 @@ int	handle_prnthses(t_parser **res, char *line, int i, int count)
 		return (0 & parse_error("(", 0));
 }
 
-int	handle_cprnthses(t_parser **res, char *line, int i, int count)
+int	handle_cprnthses(t_tok **res, char *line, int i, int count)
 {
 	handle_space(res, line, i, count);
 	if (lstlast(*res)->type == SUBSH_OPEN)
@@ -49,7 +49,7 @@ int	handle_cprnthses(t_parser **res, char *line, int i, int count)
 	return (i + 1);
 }
 
-int	handle_dquotes(t_parser **res, char **line, int i, int count)
+int	handle_dquotes(t_tok **res, char **line, int i, int count)
 {
 	int 	val;
 	char	*read;
@@ -74,7 +74,7 @@ int	handle_dquotes(t_parser **res, char **line, int i, int count)
 	return (val);
 }
 
-int	handle_squotes(t_parser **res, char **line, int i, int count)
+int	handle_squotes(t_tok **res, char **line, int i, int count)
 {
 	int 	val;
 	char	*read;

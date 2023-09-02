@@ -6,15 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 00:41:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/06 00:41:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_unset(char *ptr, t_list *env, t_init *init)
+void ft_unset(char *ptr, t_lst *env, t_init *init)
 {
-    t_list  *lst;
+    t_lst  *lst;
     char    **ttr;
     char    *str;
 

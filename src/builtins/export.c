@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:50:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/09 21:52:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_strncmp(char *s1, char *s2, int n)
 	return (ptr1[i] - ptr2[i]);
 }
 
-void	ft_export(t_list *env)
+void	ft_export(t_lst *env)
 {
 	int		i;
 	char	**ptr;
@@ -61,10 +61,10 @@ void	ft_export(t_list *env)
 	free (ptr);
 }
 
-char	**ft_export_continue(t_list *env1)
+char	**ft_export_continue(t_lst *env1)
 {
 	char	**ptr;
-	t_list	*env;
+	t_lst	*env;
 	int		a;
 
 	a = 0;
@@ -82,7 +82,7 @@ char	**ft_export_continue(t_list *env1)
 	return (ptr);
 }
 
-char	**ft_export_continue2(t_list *env, t_list *env1, char **ptr, int a)
+char	**ft_export_continue2(t_lst *env, t_lst *env1, char **ptr, int a)
 {
 	int	i;
 

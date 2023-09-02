@@ -6,18 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/22 01:32:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:53:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack);
-void		print_ast(t_parser *ast, int indent, int lrc);
+t_tok	*abstract_syntax_tree(t_init *init, t_tok **stack);
+void	print_ast(t_tok *ast, int indent, int lrc);
+t_tok	*most_prev(t_tok	*stack);
 
-t_parser	*most_prev(t_parser	*stack)
+t_tok	*most_prev(t_tok	*stack)
 {
-	t_parser	*ptr;
+	t_tok	*ptr;
 
 	ptr = stack;
 	if (!ptr)
@@ -27,7 +28,7 @@ t_parser	*most_prev(t_parser	*stack)
 	return (ptr);
 }
 
-void	print_ast(t_parser *ast, int indent, int lrc)
+void	print_ast(t_tok *ast, int indent, int lrc)
 {
 	int	i;
 
@@ -35,81 +36,70 @@ void	print_ast(t_parser *ast, int indent, int lrc)
 	if (!ast)
 		return ;
 	else if (ast->type == END)
-	{
-		print_ast(ast->right, indent, 0);
-		return ;
-	}
+		return print_ast(ast->right, indent, 0);
 	print_ast(ast->right, indent + 1, 1);
 	while (i++ < indent)
-	{
 		printf("\t");
-	}
 	if (lrc == 0)
-		printf("\033[38;5;46m╠══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & _PIPES_) && 1, ast->subshell_code);
+		printf("\033[38;5;46m╠══════\033[0m[%s][%d][%d]\n", ast->cmd, \
+		(ast->flag & _PIPES_) && 1, ast->subshell_code);
 	else if (lrc == 1)
-		printf("\033[38;5;46m╔══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & _PIPES_) && 1, ast->subshell_code);
+		printf("\033[38;5;46m╔══════\033[0m[%s][%d][%d]\n", ast->cmd, \
+		(ast->flag & _PIPES_) && 1, ast->subshell_code);
 	else if (lrc == 2)
-		printf("\033[38;5;46m╚══════\033[0m[%s][%d][%d]\n", ast->cmd, (ast->flag & _PIPES_) && 1, ast->subshell_code);
+		printf("\033[38;5;46m╚══════\033[0m[%s][%d][%d]\n", ast->cmd, \
+		(ast->flag & _PIPES_) && 1, ast->subshell_code);
 	if (ast->next)
 		print_ast(ast->next, indent + 1, 2);
 	print_ast(ast->left, indent + 1, 2);
 }
 
-t_parser	*abstract_syntax_tree(t_init *init, t_parser **stack)
+t_tok	*abstract_syntax_tree(t_init *init, t_tok **stack)
 {
-	t_parser	*ptr;
-	t_parser	*new;
+	t_tok	*tmp;
+	t_tok	*new;
 
+	tmp = lstlast(*stack);
 	new = NULL;
-	ptr = lstlast(*stack);
-	if (!ptr)
+	if (!tmp)
 		return (NULL);
-	if (ptr->type == END)
+	else if (tmp->type == END)
 	{
-		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
+		new = ast_branch(tmp);
 		pop(stack);
 		new->right = most_prev(abstract_syntax_tree(init, stack));
 		if (!new)
 			return (NULL);
 		return (new);
 	}
-	else if (check_type(ptr->type))
+	else if (check_type(tmp->type))
 	{
-		new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
-		if (ptr->subshell_code)
+		new = ast_branch(tmp);
+		if (tmp->subshell_code)
 			new->subshell_code = 1;
 		pop(stack);
 		new->right = most_prev(abstract_syntax_tree(init, stack));
 		new->left = most_prev(abstract_syntax_tree(init, stack));
-		// if (new->left)
 		if (new && check_type(new->type) == 2)
 		{
 			if (new->left)
-			{
 				new->left->flag += _REDIR_;
-				if (new->left->cmd)
-					new->lpath = new->left->cmd;
-			}
 			if (new->right)
-			{
 				new->right->flag += _REDIR_;
-				if (new->right->cmd)
-					new->rpath = new->right->cmd;
-			}
 		}
 		return (new);
 	}
-	else if (ptr && ptr->type != END)
+	else if (tmp && tmp->type != END)
 	{
-		while (ptr && ptr->cmd && (ptr->flag & 1) == 0)
+		while (tmp && tmp->cmd && (tmp->flag & 1) == 0)
 		{
 			push(stack, &init->temp);
-			ptr = lstlast(*stack);
+			tmp = lstlast(*stack);
 		}
-		if (ptr && ptr->cmd && (ptr->flag & 1) == 1)
+		if (tmp && tmp->cmd && (tmp->flag & 1) == 1)
 		{
-			new = lstnew_pars(ptr->cmd, ptr->type, ptr->prc, ptr->flag);
-			if (ptr->subshell_code)
+			new = ast_branch(tmp);
+			if (tmp->subshell_code)
 				new->subshell_code = 1;
 			pop(stack);
 			while (init && init->temp)

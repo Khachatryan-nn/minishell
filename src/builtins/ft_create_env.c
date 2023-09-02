@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:23:59 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/09 18:08:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ char	*ft_find_symbol(char *str, char c)
 	return (ptr);
 }
 
-t_list	*ft_lstnew_2(char *str)
+t_lst	*ft_lstnew_2(char *str)
 {
-	t_list	*lst;
+	t_lst	*lst;
 
-	lst = malloc(sizeof(t_list));
+	lst = malloc(sizeof(t_lst));
 	lst->ptr = ft_strdup(ft_find_symbol(str, '='));
 	lst->value = ft_strdup(ft_strchr(str, '='));
 	lst->type = 1;
@@ -52,11 +52,11 @@ t_list	*ft_lstnew_2(char *str)
 	return (lst);
 }
 
-void	ft_create_env(char **str, t_list **stack)
+void	ft_create_env(char **str, t_lst **stack)
 {
 	int		i;
 	int		flag;
-	t_list	*stack_a;
+	t_lst	*stack_a;
 
 	i = 0;
 	flag = 0;
@@ -85,9 +85,9 @@ void	ft_create_env(char **str, t_list **stack)
 	}
 }
 
-void	ft_env(t_list *env)
+void	ft_env(t_lst *env)
 {
-	t_list	*lst;
+	t_lst	*lst;
 
 	lst = NULL;
 	lst = env;

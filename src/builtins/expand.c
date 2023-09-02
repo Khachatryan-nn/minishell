@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:43 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/21 18:49:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*ft_check_str(char *str)
 }
 
 
-char	*ft_expand(char *str, t_list *env)
+char	*ft_expand(char *str, t_lst *env)
 {
 	char	*ptr;
 	char	*ttr;
@@ -175,10 +175,10 @@ char	*ft_expand(char *str, t_list *env)
 	return(str);
 }
 
-char	*expand_change(char *str, int i, t_list *env)
+char	*expand_change(char *str, int i, t_lst *env)
 {
 	int		j;
-	t_list *lst;
+	t_lst *lst;
 	char	*ptr;
 
 	j = i;

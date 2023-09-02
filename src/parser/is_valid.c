@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/08 16:47:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_type(t_type type)
 {
 	if (type == XAND || type == XOR || type == PIPE)
 		return (1);
-	else if (type == WRITE_APPEND || type == WRITE_TRUNC)
+	else if (type == WR_APPEND || type == WR_TRUNC)
 		return (2);
 	else if (type == HEREDOC || type == INPUT)
 		return (2);
@@ -39,9 +39,9 @@ char static	*type_is(t_type	type)
 		return ("||");
 	else if (type == PIPE)
 		return ("|");
-	else if (type == WRITE_APPEND)
+	else if (type == WR_APPEND)
 		return (">>");
-	else if (type == WRITE_TRUNC)
+	else if (type == WR_TRUNC)
 		return (">");
 	else if (type == HEREDOC)
 		return ("<<");
@@ -54,7 +54,7 @@ char static	*type_is(t_type	type)
 
 int	is_valid(t_init *init)
 {
-	t_parser	*ptr;
+	t_tok	*ptr;
 
 	ptr = init->lex;
 	if (!ptr)

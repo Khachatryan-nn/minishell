@@ -6,16 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:38:30 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/30 00:53:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		handle_heredoc(t_parser **res, char *line, int i, int count);
-int		handle_wappend(t_parser **res, char *line, int i, int count);
-int		handle_wtrunc(t_parser **res, char *line, int i, int count);
-int		handle_input(t_parser **res, char *line, int i, int count);
+int		handle_heredoc(t_tok **res, char *line, int i, int count);
+int		handle_wappend(t_tok **res, char *line, int i, int count);
+int		handle_wtrunc(t_tok **res, char *line, int i, int count);
+int		handle_input(t_tok **res, char *line, int i, int count);
 
 /// @brief 
 /// @param res 
@@ -23,7 +23,7 @@ int		handle_input(t_parser **res, char *line, int i, int count);
 /// @param i 
 /// @param count 
 /// @return 
-int	handle_heredoc(t_parser **res, char *line, int i, int count)
+int	handle_heredoc(t_tok **res, char *line, int i, int count)
 {
 	char	*limiter;
 	int		end;
@@ -51,14 +51,14 @@ int	handle_heredoc(t_parser **res, char *line, int i, int count)
 	return (parse_error("newline", 0));
 }
 
-int	handle_wappend(t_parser **res, char *line, int i, int count)
+int	handle_wappend(t_tok **res, char *line, int i, int count)
 {
 	int	k;
 
 	handle_space(res, line, i, count);
 	if (is_delimiter(*res))
 		lstback(res, lstnew_pars("(NULL)", WORD, 0, 1));
-	lstback(res, lstnew_pars(">>", WRITE_APPEND, 4, 1));
+	lstback(res, lstnew_pars(">>", WR_APPEND, 4, 1));
 	k = 0;
 	while ((int)ft_strlen(line) >= i + k && line[i + ++k])
 	{
@@ -69,14 +69,14 @@ int	handle_wappend(t_parser **res, char *line, int i, int count)
 	return (parse_error("newline", 0));
 }
 
-int	handle_wtrunc(t_parser **res, char *line, int i, int count)
+int	handle_wtrunc(t_tok **res, char *line, int i, int count)
 {
 	int	k;
 
 	handle_space(res, line, i, count);
 	if (is_delimiter(*res))
 		lstback(res, lstnew_pars("(NULL)", WORD, 0, 1));
-	lstback(res, lstnew_pars(">", WRITE_TRUNC, 4, 1));
+	lstback(res, lstnew_pars(">", WR_TRUNC, 4, 1));
 	k = 0;
 	while ((int)ft_strlen(line) >= i + k && line[i + ++k])
 	{
@@ -87,7 +87,7 @@ int	handle_wtrunc(t_parser **res, char *line, int i, int count)
 	return (parse_error("newline", 0));
 }
 
-int	handle_input(t_parser **res, char *line, int i, int count)
+int	handle_input(t_tok **res, char *line, int i, int count)
 {
 	int	k;
 

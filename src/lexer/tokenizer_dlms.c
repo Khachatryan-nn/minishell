@@ -6,18 +6,18 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:39:26 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/17 22:50:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_space(t_parser **res, char *line, int i, int count);
-int		handle_pipe(t_parser **res, char *line, int i, int count);
-int		handle_xand(t_parser **res, char *line, int i, int count);
-int		handle_xor(t_parser **res, char *line, int i, int count);
+void	handle_space(t_tok **res, char *line, int i, int count);
+int		handle_pipe(t_tok **res, char *line, int i, int count);
+int		handle_xand(t_tok **res, char *line, int i, int count);
+int		handle_xor(t_tok **res, char *line, int i, int count);
 
-void	handle_space(t_parser **res, char *line, int i, int count)
+void	handle_space(t_tok **res, char *line, int i, int count)
 {
 	char	*str;
 
@@ -35,7 +35,7 @@ void	handle_space(t_parser **res, char *line, int i, int count)
 		free(str);
 }
 
-int	handle_xor(t_parser **res, char *line, int i, int count)
+int	handle_xor(t_tok **res, char *line, int i, int count)
 {
 	char *str;
 
@@ -49,7 +49,7 @@ int	handle_xor(t_parser **res, char *line, int i, int count)
 	return (i + 1);
 }
 
-int	handle_xand(t_parser **res, char *line, int i, int count)
+int	handle_xand(t_tok **res, char *line, int i, int count)
 {
 	handle_space(res, line, i, count);
 	if (!(*res))
@@ -58,7 +58,7 @@ int	handle_xand(t_parser **res, char *line, int i, int count)
 	return (i + 1);
 }
 
-int	handle_pipe(t_parser **res, char *line, int i, int count)
+int	handle_pipe(t_tok **res, char *line, int i, int count)
 {
 	char	*str;
 

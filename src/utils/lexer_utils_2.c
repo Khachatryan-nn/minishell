@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/30 00:52:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 const char	*token_is(t_type token);
 int			quote_count(char *limiter);
-int			is_delimiter(t_parser *root);
+int			is_delimiter(t_tok *root);
 const char	*get_token_name(t_type token);
 char		*rem_lim_quotes(char *limiter);
 
@@ -37,10 +37,10 @@ const char* get_token_name(t_type token)
 		return ("PIPE");
 	else if (token == HEREDOC)
 		return ("HEREDOC");
-	else if (token == WRITE_APPEND)
-		return ("WRITE_APPEND");
-	else if (token == WRITE_TRUNC)
-		return ("WRITE_TRUNC");
+	else if (token == WR_APPEND)
+		return ("WR_APPEND");
+	else if (token == WR_TRUNC)
+		return ("WR_TRUNC");
 	else if (token == END)
 		return ("END");
 	return ("UNKNOWN");
@@ -64,9 +64,9 @@ const char	*token_is(t_type token)
 		return ("|");
 	else if (token == HEREDOC)
 		return ("<<");
-	else if (token == WRITE_APPEND)
+	else if (token == WR_APPEND)
 		return (">>");
-	else if (token == WRITE_TRUNC)
+	else if (token == WR_TRUNC)
 		return (">");
 	else if (token == INPUT)
 		return ("<");
@@ -74,9 +74,9 @@ const char	*token_is(t_type token)
 }
 
 
-int	is_delimiter(t_parser *root)
+int	is_delimiter(t_tok *root)
 {
-	t_parser	*ptr;
+	t_tok	*ptr;
 
 	ptr = root;
 	if (!ptr)
@@ -86,7 +86,7 @@ int	is_delimiter(t_parser *root)
 		return (1);
 	else if (ptr->type == XOR || ptr->type == XAND)
 		return (1);
-	else if (ptr->type == WRITE_APPEND || ptr->type == WRITE_TRUNC)
+	else if (ptr->type == WR_APPEND || ptr->type == WR_TRUNC)
 		return (1);
 	else if (ptr->type == SUBSH_OPEN || ptr->type == SUBSH_CLOSE)
 		return (1);

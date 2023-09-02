@@ -6,22 +6,22 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:07:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/30 01:41:50 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	**alloc_cmd_matrix(char **matrix, char *cmd, t_wcard *wild, int *i);
-char	**alloc_wc_matrix(char **matrix, t_parser *stack, t_wcard **wcard);
-void	fill_wcmatrix(t_parser *stack, t_wcard **wild);
-char	**restore_cmd_line(t_parser *stack, int i);
+char	**alloc_wc_matrix(char **matrix, t_tok *stack, t_wcard **wcard);
+void	fill_wcmatrix(t_tok *stack, t_wcard **wild);
+char	**restore_cmd_line(t_tok *stack, int i);
 
-char	**restore_cmd_line(t_parser *stack, int i)
+char	**restore_cmd_line(t_tok *stack, int i)
 {
 	char		**cmd_matrix;
 	int			mode;
-	t_parser	*ptr;
+	t_tok	*ptr;
 	t_wcard		*wcard;
 
 	ptr = stack;
@@ -46,7 +46,7 @@ char	**restore_cmd_line(t_parser *stack, int i)
 	return (cmd_matrix);
 }
 
-char	**alloc_wc_matrix(char **matrix, t_parser *stack, t_wcard **wcard)
+char	**alloc_wc_matrix(char **matrix, t_tok *stack, t_wcard **wcard)
 {
 	int			i;
 
@@ -90,9 +90,9 @@ char	**alloc_cmd_matrix(char **matrix, char *cmd, t_wcard *wild, int *i)
 	return (matrix);
 }
 
-void	fill_wc_matrix(t_parser *stack, t_wcard **wild)
+void	fill_wc_matrix(t_tok *stack, t_wcard **wild)
 {
-	t_parser	*tmp;
+	t_tok	*tmp;
 
 	tmp = stack;
 	while (tmp)

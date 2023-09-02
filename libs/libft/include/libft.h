@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:23:02 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/17 11:47:39 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_list
 	int				flag;
 	int				unset;
 	void			*content;
-}					t_list;
+}					t_lst;
 
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
@@ -65,12 +65,12 @@ char		*ft_strchr(const char *str, int c);
 size_t		ft_strlcat(char *dest, const char *src, size_t size);
 char		*ft_strjoin(char *s1, char *s2, int mode);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
-t_list		*ft_lstlast(t_list *lst);
-void		ft_lstadd_back(t_list **lst, t_list *new);
-void		ft_lstadd_front(t_list **lst, t_list *new);
-t_list		*ft_lstnew(void *content);
-int			ft_lstsize(t_list *lst);
-void		ft_lstdelone(t_list *lst, void (*del)(void*));
-void		ft_lstclear(t_list **lst, void (*del)(void*));
+t_lst		*ft_lstlast(t_lst *lst);
+void		ft_lstadd_back(t_lst **lst, t_lst *new);
+void		ft_lstadd_front(t_lst **lst, t_lst *new);
+t_lst		*ft_lstnew(void *content);
+int			ft_lstsize(t_lst *lst);
+void		ft_lstdelone(t_lst *lst, void (*del)(void*));
+void		ft_lstclear(t_lst **lst, void (*del)(void*));
 
 #endif

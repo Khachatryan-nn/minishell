@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-// void	ft_echo_change(char *str, t_list *env)
+// void	ft_echo_change(char *str, t_lst *env)
 // {
 // 	int		start;
 // 	int		end;
@@ -59,7 +59,7 @@
 // 	return (0);
 // }
 
-// void	ft_echo_change3(char *str, t_list *env)
+// void	ft_echo_change3(char *str, t_lst *env)
 // {
 // 	int	start;
 

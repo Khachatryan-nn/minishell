@@ -6,20 +6,21 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/30 01:39:27 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/02 13:04:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**env_matrix(t_list *env);
+char	**env_matrix(t_lst *env);
+void	save_backup(t_init **init);
 char	*handle_heredoc_input(char *string);
-void	handle_dollar(int exit_status, t_list **env);
+void	handle_dollar(int exit_status, t_lst **env);
 
-char	**env_matrix(t_list *env)
+char	**env_matrix(t_lst *env)
 {
 	char	**tmp;
-	t_list	*ptr;
+	t_lst	*ptr;
 	int		i;
 
 	ptr = env;
@@ -67,9 +68,9 @@ char	*handle_heredoc_input(char *string)
 	return (res);
 }
 
-void	handle_dollar(int exit_status, t_list **env)
+void	handle_dollar(int exit_status, t_lst **env)
 {
-	t_list	*tmp;
+	t_lst	*tmp;
 	char	*status;
 
 	tmp = (*env);
@@ -85,4 +86,14 @@ void	handle_dollar(int exit_status, t_list **env)
 		tmp = tmp->next;
 	}
 	free(status);
+}
+
+void	save_backup(t_init **init)
+{
+	(*init)->stdin_backup = dup(STDIN_FILENO);
+	if ((*init)->stdin_backup == -1)
+		perror("Minishell");
+	(*init)->stdout_backup = dup(STDOUT_FILENO);
+	if ((*init)->stdout_backup == -1)
+		perror("Minishell");
 }
