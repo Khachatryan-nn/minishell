@@ -6,13 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/03 01:02:39 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_lst *env);
+int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack);
 int	check_ast(t_init *init, t_tok *root, t_lst *env);
 int	call_cmd(t_tok *stack, t_init *init, t_lst *env);
 int	andor_check(t_tok *stack);
@@ -58,7 +58,7 @@ int	check_ast(t_init *init, t_tok *root, t_lst *env)
 			check_ast(init, root->left, env);
 		root->err_code = exec_iocmd(init, root, env);
 	}
-	else if (root->left && root->right && root->type == PIPE)
+	else if (root->left && root->right && root->type == PIPE) // && stack->left->type != HEREDOC && stack->right->type != HEREDOC)
 		root->err_code = pipe_prepair(init, root, env);
 	if (root->left != NULL && !(root->left->flag & _REDIR_) && !(root->left->flag & _PIPES_))
 	{
@@ -110,33 +110,69 @@ int	check_ast(t_init *init, t_tok *root, t_lst *env)
 	return (0);
 }
 
-int	exec_cmd(char *cmd_path, char **cmd_matrix, char **env_mtrx, t_lst *env)
+int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 {
 	pid_t	pid;
-	int		child_exit_code;
+	int		child_exit;
 
-	child_exit_code = 0;
+	child_exit = 0;
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("minishell");
+		perror("Minishell");
 		return (1);
 	}
 	else if (pid == 0)
 	{
-		if (execve(cmd_path, cmd_matrix, env_mtrx) == -1 && \
-			execve(cmd_matrix[0], cmd_matrix, env_mtrx) == -1)
+		if (stack->_stdin_ > 0)
 		{
-			perror("minishell");
-			exit (1);
+			if (dup2(stack->_stdin_, STDIN_FILENO) < 0)
+			{
+				perror("minishell");
+				return (EXIT_FAILURE + close(stack->_stdin_));
+			}
+			close(stack->_stdin_);
 		}
-		exit (0);
+		if (stack->_stdout_ > 0)
+		{
+			if (dup2(stack->_stdout_, STDOUT_FILENO) < 0)
+			{
+				unlink(stack->hdoc_fname);
+				perror("minishell");
+				return (EXIT_FAILURE + close(stack->_stdout_));
+			}
+			close(stack->_stdout_);
+		}
+		if (execve(cmd, matrix, env) == -1 && \
+			execve(matrix[0], matrix, env) == -1)
+		{
+			perror("Minishell");
+			exit(EXIT_FAILURE);
+		}
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		waitpid(pid, &child_exit_code, 0);
-		exit_env(child_exit_code / 256, env);
-		return (child_exit_code / 256);
+		waitpid(pid, &child_exit, 0);
+		if (stack->stdin_backup > 0)
+		{
+			if (dup2(STDIN_FILENO, stack->stdin_backup) < 0)
+			{
+				perror("minishell");
+				return (EXIT_FAILURE);
+			}
+			close(stack->stdin_backup);
+		}
+		if (stack->stdout_backup > 0)
+		{
+			if (dup2(STDOUT_FILENO, stack->stdout_backup) == -1)
+			{
+				perror("Minishell");
+				return (1);
+			}
+			close(stack->stdout_backup);
+		}
+		return (child_exit / 256);
 	}
 }
 
@@ -161,7 +197,7 @@ int	call_cmd(t_tok *stack, t_init *init, t_lst *env)
 	cmd_path = check_cmd(cmd_matrix[0], init->path);
 	if (!cmd_path)
 		return (destroy_cmd(0, cmd_matrix, env_mtrx) + 126);
-	exit_code = exec_cmd(cmd_path, cmd_matrix, env_mtrx, env);
+	exit_code = exec_cmd(cmd_path, cmd_matrix, env_mtrx, stack);
 	destroy_cmd(cmd_path, cmd_matrix, env_mtrx);
 	return (exit_code);
 }

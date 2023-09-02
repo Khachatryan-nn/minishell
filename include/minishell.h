@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/02 13:48:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/03 01:05:14 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct s_tok
 ///	@tparam int		input
 ///	@tparam	int		redir
 ///	@tparam	char	**path
+///	@tparam	int		fd_fail;
 ///	@tparam	int		last_hdoc
 ///	@tparam	int		last_redir
 ///	@tparam	int		last_input
@@ -156,6 +157,7 @@ typedef struct s_init
 	int		input;
 	int		redir;
 	char	**path;
+	int		fd_fail;
 	int		last_hdoc;
 	int		last_redir;
 	int		last_input;
@@ -208,6 +210,7 @@ int			lstsize(t_tok *lst);
 
 /* - - - - - --!-- - - - - ! Lexer and parser ! - - - - --!-- - - - - - */
 int			handle_cprnthses(t_tok **res, char *line, int i, int count);
+void		handle_heredoc_input(t_init *init, t_tok *tok, char *str);
 int			add_new_quote(t_tok **res, char *line, int i, int type);
 int 		check_ast(t_init *init, t_tok *root, t_lst *env);
 int			lexer(t_tok **res, char **line);
@@ -239,7 +242,6 @@ void		handle_dollar(int exit_status, t_lst **env);
 int			wcard_logic(char *pattern, char *string);
 char		**restore_cmd_line(t_tok *stack, int i);
 void		get_file(char *path, t_wcard **wcard);
-char		*handle_heredoc_input(char *string);
 char		*check_cmd(char *cmd, char **path);
 int			error_code(int error_num);
 char		**env_matrix(t_lst *env);
@@ -248,11 +250,12 @@ char		**env_matrix(t_lst *env);
 int			destroy_cmd(char *cmd, char **cmd_matrix, char **env_matrix);
 char		*strjoin_helper(char *result, char *read, int mode);
 int			find_limiter_end(char *line, int i, int start);
+int			_free3_(void *ptr1, void *ptr2, void *ptr3);
 int			ft_isspace(char *line, int i, int j);
 int			parse_error(char *err_str, int mode);
 int			_close3_(int fd1, int fd2, int fd3);
 void		find_path(t_init *init, t_lst *env);
-void		save_backup(t_init **init);
+void		save_backup(t_init *init);
 int			_close2_(int fd1, int fd2);
 int			is_delimiter(t_tok *root);
 int			ft_onlyspaces(char *str);

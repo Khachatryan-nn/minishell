@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:56:55 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/03 00:35:06 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,15 @@ void	parser(t_init *init)
 	t_tok	*stack_otp;
 
 	ptr = init->lex;
+	while (ptr)
+	{
+		if (ptr->type == HEREDOC)
+			handle_heredoc_input(init, ptr, NULL);
+		ptr = ptr->next;
+	}
 	stack_ops = NULL;
 	stack_otp = NULL;
+	ptr = init->lex;
 	while (ptr)
 	{
 		shunting_yard(&ptr, &stack_ops, &stack_otp);
@@ -98,7 +105,6 @@ void	parser(t_init *init)
 	}
 	while (stack_ops)
 		push(&stack_ops, &stack_otp);
-	init->temp = NULL;
 	init->pars = abstract_syntax_tree(init, &stack_otp);
 	print_ast(init->pars, 0, 0);
 }

@@ -6,23 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/03 00:33:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	destroy_structure(t_tok *root);
-void	destroy_init(t_init *init);
 void	free_matrix(char **ptr);
-int		close_pipes(int *fd);
-
-int	close_pipes(int *fd)
-{
-	close (fd[0]);
-	close (fd[1]);
-	return (0);
-}
+void	destroy_init(t_init *init);
+void	destroy_structure(t_tok *root);
+int		_free3_(void *ptr1, void *ptr2, void *ptr3);
 
 void	free_matrix(char **ptr)
 {
@@ -62,4 +55,15 @@ void	destroy_structure(t_tok *root)
 	free (root);
 	root = NULL;
 	return ;
+}
+
+int		_free3_(void *ptr1, void *ptr2, void *ptr3)
+{
+	if (ptr1)
+		free (ptr1);
+	if (ptr2)
+		free (ptr1);
+	if (ptr3)
+		free (ptr1);
+	return (0);
 }

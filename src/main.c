@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/02 13:02:05 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/03 01:05:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ void static	print_logo(void)
 void	init_in(t_init *root)
 {
 	root->hdoc = 0;
-	root->input = 0;
 	root->redir = 0;
+	root->input = 0;
+	root->fd_fail = 0;
 	root->hd = NULL;
 	root->lex = NULL;
 	root->path = NULL;
 	root->pars = NULL;
+	root->temp = NULL;
 	root->last_hdoc = -42;
 	root->exit_status = 0;
 }
@@ -58,6 +60,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		print_logo();
 		init_hd(&init.hd);
+		save_backup(&init);
 		while (1)
 		{
 			ft_signal();
@@ -84,6 +87,7 @@ int	main(int ac, char **av, char **envp)
 					init.exit_status = check_ast(&init, init.pars, env);
 					exit_env(init.exit_status, env);
 					destroy_init(&init);
+					init.hd->i = 0;
 				}
 			}
 			add_history(str);

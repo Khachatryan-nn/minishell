@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:58:34 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/03 01:14:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	io_out(t_init *init, t_tok *stack, t_lst *env);
 
 int	io_out(t_init *init, t_tok *stack, t_lst *env)
 {
-	int	fd;
-	int	stdout_backup;
+	int		fd;
+	t_tok	*tmp;
 
-	fd = 0;
+	fd = -42;
 	init->redir--;
 	if (stack->type == WR_APPEND)
 		fd = open(stack->right->cmd, O_WRONLY | O_CREAT | O_APPEND, 00655);
@@ -33,29 +33,20 @@ int	io_out(t_init *init, t_tok *stack, t_lst *env)
 		perror("minishell");
 		return (1);
 	}
-	stdout_backup = dup(STDOUT_FILENO);
-	if (stdout_backup == -1)
-	{
-		perror("minishell");
-		return (1 + _close_(fd));
-	}
-	if (fd != 0 && dup2(fd, STDOUT_FILENO) == -1)
-	{
-		perror("minishell");
-		return (1 + _close_(fd));
-	}
-	while (stack->left->type != WORD)
-		stack = stack->left;
+	if (stack->last_red != 1)
+		return (0);
+	tmp = stack;
+	while (tmp->left->type != WORD)
+		tmp = tmp->left;
 	if (ft_strcmp(stack->left->cmd, "(NULL)") && !(stack->flag & (1 << 7)))
+	{
+		tmp->left->_stdout_ = fd;
+		tmp->left->stdout_backup = init->stdout_backup;
 		init->exit_status = check_ast(init, stack->left, env);
+	}
 	else if (ZSH)
 		init->exit_status = to_execute(lstnew_pars("cat", WORD, 0, 0), env, init, 0);
-	if (fd != 0 && dup2(stdout_backup, STDOUT_FILENO) == -1)
-	{
-		perror("minishell");
-		return (1 + _close_(fd));
-	}
-	return (init->exit_status + _close2_(fd, stdout_backup));
+	return (init->exit_status + _close_(fd));
 }
 
 int io_heredoc(t_init *init, t_tok *stack, t_lst *env)
@@ -80,8 +71,7 @@ int io_heredoc(t_init *init, t_tok *stack, t_lst *env)
 	{
 		tmp->left->stdin_backup = init->stdin_backup;
 		tmp->left->_stdin_ = fd;
-		unlink(stack->hdoc_fname);
-		return (1);
+		return (1 + unlink(stack->hdoc_fname));
 	}
 	if (ft_strcmp(tmp->left->cmd, "(NULL)"))
 	{
@@ -96,32 +86,33 @@ int io_heredoc(t_init *init, t_tok *stack, t_lst *env)
 
 int	io_input(t_init *init, t_tok *stack, t_lst *env)
 {
+	t_tok	*tmp;
 	int		file_fd;
-	int		backup;
 
-	backup = dup(STDIN_FILENO);
-	if (backup < 0)
-		perror("minishell");
 	file_fd = open(stack->right->cmd, O_RDONLY);
 	if (file_fd < 0)
 	{
 		perror("minishell");
-		exit(EXIT_FAILURE + _close_(backup));
+		init->fd_fail = 1;
+		exit(EXIT_FAILURE);
 	}
-	if (dup2(file_fd, STDIN_FILENO) < 0)
+	if (file_fd == 1)
+		return (1);
+	tmp = stack;
+	while (tmp->left->type != WORD)
+		tmp = tmp->left;
+	if (stack->last_input != 1)
+		return (0);
+	if (init->redir != 0)
 	{
-		perror("minishell");
-		return (EXIT_FAILURE + _close2_ (file_fd, backup));
+		tmp->left->stdin_backup = init->stdin_backup;
+		tmp->left->_stdin_ = file_fd;
+		return (1);
 	}
-	while (stack->left->type != WORD)
-		stack = stack->left;
-	init->exit_status = to_execute(stack->left, env, init, 0);
-	if (dup2(backup, STDIN_FILENO) < 0)
-	{
-		perror("minishell");
-		return (EXIT_FAILURE);
-	}
-	return (0 + _close2_(backup, file_fd));
+	tmp->left->stdin_backup = init->stdin_backup;
+	tmp->left->_stdin_ = file_fd;
+	init->exit_status = to_execute(tmp->left, env, init, 0);
+	return (init->exit_status);
 }
 
 int exec_iocmd(t_init *init, t_tok *stack, t_lst *env)

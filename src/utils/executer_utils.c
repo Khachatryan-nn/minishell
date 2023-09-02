@@ -6,16 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 13:04:45 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/03 00:30:51 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	**env_matrix(t_lst *env);
-void	save_backup(t_init **init);
-char	*handle_heredoc_input(char *string);
+void	save_backup(t_init *init);
 void	handle_dollar(int exit_status, t_lst **env);
+void	handle_heredoc_input(t_init *init, t_tok *tok, char *str);
 
 char	**env_matrix(t_lst *env)
 {
@@ -39,33 +39,33 @@ char	**env_matrix(t_lst *env)
 	return (tmp);
 }
 
-char	*handle_heredoc_input(char *string)
+void	handle_heredoc_input(t_init *init, t_tok *tok, char *str)
 {
-	char	*line;
 	char	*res;
 
-	line = NULL;
 	res = NULL;
+	tok->hdoc_fname = ft_strdup(init->hd->matrix[++init->hd->i]);
+	tok->fd = open(init->hd->matrix[init->hd->i], O_RDWR | O_CREAT | O_TRUNC, 0655);
 	while (1)
 	{
-		line = readline("> ");
-		if (!line || ft_strcmp(line, string) == 0)
+		str = readline("> ");
+		if (!str || ft_strcmp(str, tok->next->cmd) == 0)
 		{
-			if (line)
-				free(line);
+			free(str);
 			break ;
 		}
 		if (!res)
-			res = ft_strdup(line);
+			res = ft_strdup(str);
 		else
-			res = strjoin_helper(res, line, 1);
-		free(line);
+			res = strjoin_helper(res, str, 1);
+		free(str);
 	}
-	if (!res)
-		ft_strdup("");
-	else
+	if (res)
 		res = ft_strjoin(res, "\n", 1);
-	return (res);
+	else
+		res = ft_strdup("");
+	write(tok->fd, res, ft_strlen(res));
+	_close2_(tok->fd, _free3_(res, NULL, NULL) - 42);
 }
 
 void	handle_dollar(int exit_status, t_lst **env)
@@ -88,12 +88,12 @@ void	handle_dollar(int exit_status, t_lst **env)
 	free(status);
 }
 
-void	save_backup(t_init **init)
+void	save_backup(t_init *init)
 {
-	(*init)->stdin_backup = dup(STDIN_FILENO);
-	if ((*init)->stdin_backup == -1)
+	init->stdin_backup = dup(STDIN_FILENO);
+	if (init->stdin_backup == -1)
 		perror("Minishell");
-	(*init)->stdout_backup = dup(STDOUT_FILENO);
-	if ((*init)->stdout_backup == -1)
+	init->stdout_backup = dup(STDOUT_FILENO);
+	if (init->stdout_backup == -1)
 		perror("Minishell");
 }
