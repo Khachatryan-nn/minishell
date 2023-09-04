@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/03 00:50:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:22:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,14 @@ int	to_execute(t_tok *pars, t_lst *env, t_init *init, int status)
 		pid = fork();
 		return (subsh_execute(pars, env, init, pid));
 	}
-	else if (!check_built(pars, env, init))
+	status = check_built(pars, env, init);
+	if (status == 0)
 	{
 		pars->err_code = call_cmd(pars, init, env);
 		init->exit_status = pars->err_code;
 	}
-	else
-	{
-		if (pars->stdin_backup > 0)
-		{
-			if (dup2(pars->stdin_backup, STDIN_FILENO) < 0)
-			{
-				perror("minishell");
-				return (EXIT_FAILURE + close(pars->stdin_backup));
-			}
-			close(pars->stdin_backup);
-		}
-		if (pars->stdout_backup > 0)
-		{
-			if (dup2(pars->stdout_backup, STDOUT_FILENO) == -1)
-			{
-				perror("Minishell");
-				return (1);
-			}
-			close(pars->stdout_backup);
-		}		
-	}
+	else if (status == -1 || \
+		io_backup(pars->stdin_backup, pars->stdout_backup))
+		return (1);
 	return (status);
 }

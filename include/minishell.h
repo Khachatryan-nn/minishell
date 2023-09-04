@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/03 01:05:14 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 09:00:34 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,13 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-# ifndef ZSH
-# 	define ZSH 0
-# endif
+# define _CD_		"cd"
+# define _PWD_		"pwd"
+# define _ENV_		"env"
+# define _EXIT_		"exit"
+# define _ECHO_		"echo"
+# define _UNSET_	"unset"
+# define _EXPORT_	"export"
 
 # define _ISCMD_	1 << 1
 # define _REDIR_	1 << 3
@@ -237,12 +241,14 @@ int			pipe_prepair(t_init *init, t_tok *pars, t_lst *env);
 int			exec_iocmd(t_init *init, t_tok *stack, t_lst *env);
 void		check_lasts(t_init *init, t_tok *stack, int mode);
 int			call_cmd(t_tok *stack, t_init *init, t_lst *env);
+int			io_backup(int stdin_backup, int stdout_backup);
 void		fill_wc_matrix(t_tok *stack, t_wcard **wild);
 void		handle_dollar(int exit_status, t_lst **env);
 int			wcard_logic(char *pattern, char *string);
 char		**restore_cmd_line(t_tok *stack, int i);
 void		get_file(char *path, t_wcard **wcard);
 char		*check_cmd(char *cmd, char **path);
+int			io_dup2(int _stdin, int _stdout);
 int			error_code(int error_num);
 char		**env_matrix(t_lst *env);
 
