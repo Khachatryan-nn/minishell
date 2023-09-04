@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 19:16:04 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:49:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_lstsize(t_lst *lst)
 {
-	int	i;
-	t_lst *str;
+	int		i;
+	t_lst	*str;
 
 	i = 0;
 	str = NULL;

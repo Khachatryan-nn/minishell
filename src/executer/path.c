@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:30:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	find_path(t_init *init, t_lst *env)
 	}
 	init->path = ft_split(&temp->value[1], ':');
 }
-
 
 char static	*find_cmdpath(char *cmd, char **path)
 {

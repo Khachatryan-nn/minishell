@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:34:10 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:33:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	pipe_prepair(t_init *init, t_tok *pars, t_lst *env)
 	waitpid(pid_right, &status, 0);
 	return (status);
 }
-
 
 //	xxxxxx1 -> command
 //	xxxxx1x -> space

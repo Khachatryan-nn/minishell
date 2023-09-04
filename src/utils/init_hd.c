@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 12:59:57 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 13:02:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:40:03 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	init_hd(t_hd **hd)
 		return ;
 	(*hd) = (t_hd *)malloc(sizeof(t_hd));
 	(*hd)->i = -1;
-	(*hd)->matrix = (char **)malloc(sizeof(char *) * 16);
+	(*hd)->fn = (char **)malloc(sizeof(char *) * 16);
 	while (i < 16)
 	{
-		(*hd)->matrix[i] = ft_strdup(".heredoc");
+		(*hd)->fn[i] = ft_strdup(".heredoc");
 		str = ft_itoa(i);
-		(*hd)->matrix[i] = ft_strjoin((*hd)->matrix[i], str, 1);
+		(*hd)->fn[i] = ft_strjoin((*hd)->fn[i], str, 1);
 		free(str);
 		i++;
 	}

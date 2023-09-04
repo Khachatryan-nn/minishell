@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 13:28:44 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 16:33:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	check_ast(t_init *init, t_tok *root, t_lst *env)
 	}
 	else if (root->left && root->right && root->type == PIPE) // && stack->left->type != HEREDOC && stack->right->type != HEREDOC)
 		root->err_code = pipe_prepair(init, root, env);
-	if (root->left != NULL && !(root->left->flag & _REDIR_) && !(root->left->flag & _PIPES_))
+	if (root->left != NULL && !(root->left->flag & _REDIR_) && \
+		!(root->left->flag & _PIPES_))
 	{
 		check_lasts(init, root, 1);
 		if (root->left->subshell_code)
@@ -87,7 +88,8 @@ int	check_ast(t_init *init, t_tok *root, t_lst *env)
 		else
 			root->err_code = check_ast(init, root->left, env);
 	}
-	if (root->right != NULL && andor_check(root) && !(root->right->flag & (_REDIR_)) && !(root->right->flag & _PIPES_))
+	if (root->right != NULL && andor_check(root) && \
+		!(root->right->flag & (_REDIR_)) && !(root->right->flag & _PIPES_))
 	{
 		check_lasts(init, root, 1);
 		if (root->right->subshell_code)
@@ -124,25 +126,8 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 	}
 	else if (pid == 0)
 	{
-		if (stack->_stdin_ > 0)
-		{
-			if (dup2(stack->_stdin_, STDIN_FILENO) < 0)
-			{
-				perror("minishell");
-				return (EXIT_FAILURE + close(stack->_stdin_));
-			}
-			close(stack->_stdin_);
-		}
-		if (stack->_stdout_ > 0)
-		{
-			if (dup2(stack->_stdout_, STDOUT_FILENO) < 0)
-			{
-				unlink(stack->hdoc_fname);
-				perror("minishell");
-				return (EXIT_FAILURE + close(stack->_stdout_));
-			}
-			close(stack->_stdout_);
-		}
+		if (io_dup2(stack->_stdin_, stack->_stdout_))
+			return (EXIT_FAILURE);
 		if (execve(cmd, matrix, env) == -1 && \
 			execve(matrix[0], matrix, env) == -1)
 		{
@@ -154,24 +139,7 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 	else
 	{
 		waitpid(pid, &child_exit, 0);
-		if (stack->stdin_backup > 0)
-		{
-			if (dup2(STDIN_FILENO, stack->stdin_backup) < 0)
-			{
-				perror("minishell");
-				return (EXIT_FAILURE);
-			}
-			close(stack->stdin_backup);
-		}
-		if (stack->stdout_backup > 0)
-		{
-			if (dup2(STDOUT_FILENO, stack->stdout_backup) == -1)
-			{
-				perror("Minishell");
-				return (1);
-			}
-			close(stack->stdout_backup);
-		}
+		io_backup(stack->stdin_backup, stack->stdin_backup);
 		return (child_exit / 256);
 	}
 }
@@ -206,6 +174,3 @@ int	call_cmd(t_tok *stack, t_init *init, t_lst *env)
 // syntax || rooting error		->	258
 // empty ()						->	1
 // unknown flag || parameter	->	1
-
-// maximum exit value is 0->255, example: exit 256 -> 256 - 256 = 0, exit 300 -> 300 - 256 = 44
-// exit "20"1 is the same, as exit "201" and exit 201

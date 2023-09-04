@@ -6,12 +6,11 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 21:42:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/06 00:38:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:54:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
 
 static char	*find_next_line(int fd, char *buffer, char *backup)
 {

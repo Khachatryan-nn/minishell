@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:33:55 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/25 22:30:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:51:37 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	convert_nb(char *str, long n, unsigned int nb_digit,
 	if (sign == -1)
 		str[0] = '-';
 }
+
 char	*ft_itoa(int n)
 {
 	char			*str;

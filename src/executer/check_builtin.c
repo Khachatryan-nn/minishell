@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 13:33:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 16:38:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,49 @@
 
 int	is_builtin(char **matrix, t_tok	*stack);
 int	check_built(t_tok *stack, t_lst *env, t_init *init);
+int	execute_builtin(t_init *init, t_tok *stack, t_lst *env, char **matrix);
 
 int	check_built(t_tok *stack, t_lst *env, t_init *init)
 {
 	char	**cmd_matrix;
-	int		is_built;
+	int		status;
 
 	cmd_matrix = restore_cmd_line(stack, -1);
-	is_built = is_builtin(cmd_matrix, stack);
-	if (is_built <= 0)
-		return (is_built);
-	if (ft_strcmp(init->lex->cmd, "exit") == 0)
+	if (!cmd_matrix || !cmd_matrix[0])
+		return (0);
+	status = is_builtin(cmd_matrix, stack);
+	if (status <= 0)
+		return (status);
+	status = execute_builtin(init, stack, env, cmd_matrix);
+	free_matrix(cmd_matrix);
+	return (status);
+}
+
+int	execute_builtin(t_init *init, t_tok *stack, t_lst *env, char **matrix)
+{
+	if (ft_strcmp(stack->cmd, "exit") == 0)
 		ft_exit(env, init);
-	 if (ft_strcmp(cmd_matrix[0], "env") == 0)
-	{
+	else if (ft_strcmp(matrix[0], "env") == 0)
 		ft_env (env);
-		return (1);
-	}
-	else if (ft_strnstr(cmd_matrix[0], "pwd", 3) == 0)
-	{
+	else if (ft_strnstr(matrix[0], "pwd", 3) == 0)
 		ft_pwd (env);
-		return (1);
-	}
-	else if (ft_strnstr(cmd_matrix[0], "export", 6) == 0)
+	else if (ft_strnstr(matrix[0], "export", 6) == 0)
 	{
-		printf ("input: %s\n", cmd_matrix[0]);
-		if (ft_strcmp(cmd_matrix[0], "export") == 0)
+		printf ("input: %s\n", matrix[0]);
+		if (ft_strcmp(matrix[0], "export") == 0)
 			ft_export (env);
 		else
-			ft_export_change (cmd_matrix[0], env, init);
-		return (1);
+			ft_export_change (matrix[0], env, init);
 	}
-	else if (ft_strnstr(cmd_matrix[0], "unset", 5) == 0)
-	{
-		ft_unset(cmd_matrix[0], env, init);
-		return (1);
-	}
-	else if (ft_strnstr(cmd_matrix[0], "cd", 2) == 0) 
-	{
-		ft_cd (env, cmd_matrix);
-		return (1);
-	}
-	else if (ft_strnstr(cmd_matrix[0], "echo", 4) == 0)
-	{
+	else if (ft_strnstr(matrix[0], "unset", 5) == 0)
+		ft_unset(matrix[0], env, init);
+	else if (ft_strnstr(matrix[0], "cd", 2) == 0)
+		ft_cd (env, matrix);
+	else if (ft_strnstr(matrix[0], "echo", 4) == 0)
 		ft_echo(env, init);
-		return (1);
-	}
-	return (0);
+	else
+		return (0);
+	return (1);
 }
 
 int	is_builtin(char **matrix, t_tok	*stack)

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:39:26 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:46:24 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	handle_space(t_tok **res, char *line, int i, int count)
 
 int	handle_xor(t_tok **res, char *line, int i, int count)
 {
-	char *str;
+	char	*str;
 
 	str = NULL;
 	handle_space(res, line, i, count);

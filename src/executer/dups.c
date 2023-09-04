@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 08:52:58 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 08:56:06 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 16:36:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
 int	io_backup(int stdin_backup, int stdout_backup);
 int	io_dup2(int _stdin, int _stdout);
-
-#include "minishell.h"
 
 int	io_dup2(int _stdin, int _stdout)
 {

@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 13:31:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:32:00 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int exec_iocmd(t_init *init, t_tok *stack, t_lst *env);
-int io_heredoc(t_init *init, t_tok *stack, t_lst *env);
+int	exec_iocmd(t_init *init, t_tok *stack, t_lst *env);
+int	io_heredoc(t_init *init, t_tok *stack, t_lst *env);
 int	io_input(t_init *init, t_tok *stack, t_lst *env);
 int	io_out(t_init *init, t_tok *stack, t_lst *env);
 
@@ -44,7 +44,7 @@ int	io_out(t_init *init, t_tok *stack, t_lst *env)
 	return (stack->err_code);
 }
 
-int io_heredoc(t_init *init, t_tok *stack, t_lst *env)
+int	io_heredoc(t_init *init, t_tok *stack, t_lst *env)
 {
 	t_tok	*tmp;
 	int		fd;
@@ -72,7 +72,6 @@ int io_heredoc(t_init *init, t_tok *stack, t_lst *env)
 	return (stack->err_code);
 }
 
-
 int	io_input(t_init *init, t_tok *stack, t_lst *env)
 {
 	t_tok	*tmp;
@@ -98,13 +97,13 @@ int	io_input(t_init *init, t_tok *stack, t_lst *env)
 	return (stack->err_code);
 }
 
-int exec_iocmd(t_init *init, t_tok *stack, t_lst *env)
+int	exec_iocmd(t_init *init, t_tok *stack, t_lst *env)
 {
 	if (stack->type == WR_APPEND || stack->type == WR_TRUNC)
 		return (io_out(init, stack, env));
 	else if (stack->type == HEREDOC)
 		return (io_heredoc(init, stack, env));
-	 else if (stack->type == INPUT)
-	 	return (io_input(init, stack, env));
+	else if (stack->type == INPUT)
+		return (io_input(init, stack, env));
 	return (1);
 }

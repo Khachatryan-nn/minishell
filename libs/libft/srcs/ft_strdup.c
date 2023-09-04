@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 01:27:06 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/25 22:30:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:49:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup(const char *s1)
 
 	s1cpy = (char *)s1;
 	if (!s1)
-		return(NULL);
+		return (NULL);
 	len = ft_strlen(s1cpy);
 	s1cpy = malloc((len + 1) * sizeof(char));
 	i = 0;

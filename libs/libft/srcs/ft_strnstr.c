@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:42:05 by musimony          #+#    #+#             */
-/*   Updated: 2023/08/18 12:38:59 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:51:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ char	*ft_strnstr( char *str, char *str1, int len)
 		if (str[i] || str1[i])
 			return (str);
 		else
-			return(NULL);
+			return (NULL);
 	}
 	else
 	{
 		while (str[i] == str1[i] && i < len)
 			i++;
 		if (str[i] != '\0' || str1[i] != '\0')
-			return(str);
+			return (str);
 		else
-			return(NULL);		
+			return (NULL);
 	}
 }

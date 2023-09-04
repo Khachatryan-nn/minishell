@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 21:42:49 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/08/06 00:39:06 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/09/04 14:52:42 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/09/04 14:53:08 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100

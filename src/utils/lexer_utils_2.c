@@ -6,18 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:42:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 const char	*token_is(t_type token);
 int			quote_count(char *limiter);
 int			is_delimiter(t_tok *root);
 const char	*get_token_name(t_type token);
 char		*rem_lim_quotes(char *limiter);
 
-const char* get_token_name(t_type token)
+const char	*get_token_name(t_type token)
 {
 	if (token == WORD)
 		return ("WORD");
@@ -73,7 +74,6 @@ const char	*token_is(t_type token)
 	return ("AST");
 }
 
-
 int	is_delimiter(t_tok *root)
 {
 	t_tok	*ptr;
@@ -125,7 +125,7 @@ int	quote_count(char *limiter)
 	int	dquote;
 	int	squote;
 	int	i;
-	
+
 	i = -1;
 	dquote = ((squote = 0));
 	while (limiter && limiter[++i])

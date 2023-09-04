@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:47:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	handle_cprnthses(t_tok **res, char *line, int i, int count)
 
 int	handle_dquotes(t_tok **res, char **line, int i, int count)
 {
-	int 	val;
+	int		val;
 	char	*read;
 	char	*result;
 
@@ -60,12 +60,12 @@ int	handle_dquotes(t_tok **res, char **line, int i, int count)
 	if ((*line)[val] != '"')
 	{
 		read = NULL;
-	 	result = ft_substr(*line, i + 1, val - i + 1);
-	 	while (!read || !ft_strchr(read, '"'))
-	 	{
-	 		read = readline("dquote> ");
-	 		result = strjoin_helper(result, read, 1);
-	 	}
+		result = ft_substr(*line, i + 1, val - i + 1);
+		while (!read || !ft_strchr(read, '"'))
+		{
+			read = readline("dquote> ");
+			result = strjoin_helper(result, read, 1);
+		}
 		val = add_new_quote(res, result, 0, DQUOTE);
 		*line = ft_strjoin(*line, result, 1);
 		while ((*line)[val] != '"')
@@ -76,7 +76,7 @@ int	handle_dquotes(t_tok **res, char **line, int i, int count)
 
 int	handle_squotes(t_tok **res, char **line, int i, int count)
 {
-	int 	val;
+	int		val;
 	char	*read;
 	char	*result;
 
@@ -85,12 +85,12 @@ int	handle_squotes(t_tok **res, char **line, int i, int count)
 	if ((*line)[val] != '\'')
 	{
 		read = NULL;
-	 	result = ft_substr(*line, i + 1, val - i + 1);
-	 	while (!read || !ft_strchr(read, '\''))
-	 	{
-	 		read = readline("squote> ");
-	 		result = strjoin_helper(result, read, 1);
-	 	}
+		result = ft_substr(*line, i + 1, val - i + 1);
+		while (!read || !ft_strchr(read, '\''))
+		{
+			read = readline("squote> ");
+			result = strjoin_helper(result, read, 1);
+		}
 		val = add_new_quote(res, result, 0, SQUOTE);
 		*line = ft_strjoin(*line, result, 1);
 		while ((*line)[val] != '\'')

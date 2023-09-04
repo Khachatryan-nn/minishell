@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/03 01:05:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 16:38:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1 && av)
 	{
 		print_logo();
-		init_hd(&init.hd);
-		save_backup(&init);
 		while (1)
 		{
+			init_hd(&init.hd);
+			save_backup(&init);
 			ft_signal();
 			str = readline("minishell$ ");
 			if (!str)
@@ -74,8 +74,8 @@ int	main(int ac, char **av, char **envp)
 					free(env->value);
 					env = env->next;
 				}
-				free(str);			
-				break;
+				free (str);
+				break ;
 			}
 			// str = ft_expand(str, env);
 			// printf("---%s\n", str);
@@ -93,9 +93,8 @@ int	main(int ac, char **av, char **envp)
 			add_history(str);
 		}
 	}
-	return(0);
+	return (0);
 }
-
 
 // command not found -> 127
 // syntax || parsing error -> 258

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 01:09:33 by musimony          #+#    #+#             */
-/*   Updated: 2023/07/25 22:30:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:51:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ long long	ft_atoi(const char *str)
 {
 	long long	i;
 	long long	j;
-	long long 	k;
+	long long	k;
 
 	i = 0;
 	j = 1;

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:08:43 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:08:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,70 +107,70 @@ char	*ft_expand(char *str, t_lst *env)
 		return (NULL);
 	if (ft_strchr(str, '\"'))
 		str = ft_check_str(str);
-		while (str && str[i] != '\0')
+	while (str && str[i] != '\0')
+	{
+		if (str && str[i] == '\'')
 		{
-			if (str && str[i] == '\'')
-			{
-				i++;
-				while (str[i] != '\0' && str[i] != '\'')
-					i++;
-				if (str[i] == '\'')
-					i++;
-			}
-			if(str[i] == '$')
-			{
-				printf("aaa\n");
-				ttr = expand_change(str, i + 1, env);
-				printf("!!%c!!\n", str[i]);
-				end = 0;
-				while (str[i] != '\0' && str[i] != ' ' && str[i] != '|' && str[i] != '<' && str[i] != '>' && str[i] != 34)
-				{
-					if (str[i] == 39)
-					{
-						while (str[i] != '\0' && str[i] != 39)
-							i++;
-						if (str[i] == 39)
-						i++;
-						flag = 1;
-					}
-					i++;
-					end++;
-				}
-				if (flag == 0)
-				{
-				ptr = (char *)malloc(sizeof(char) * (ft_strlen2(str) - end + ft_strlen2(ttr) + 1));
-				end = 0;
-				j = 0;
-				while (str[end] != '$')
-				{
-					if (str[i] == 39)
-					{
-						while (str[i] != '\0' && str[i] != 39)
-							i++;
-						if (str[i] == 39)
-						i++;
-					}
-					ptr[end] = str[end];
-					end++;
-				}
-				while (ttr[j] != '\0')
-				{
-					ptr[end] = ttr[j];
-					end++;
-					j++;
-				}
-				while(str[i] != '\0')
-				{
-					ptr[end] = str[i];
-					end++;
-					i++;
-				}
-				ptr[end] = '\0';
-				str = ft_strdup(ptr);
-				free(ptr);
-				}
-			 }
 			i++;
+			while (str[i] != '\0' && str[i] != '\'')
+				i++;
+			if (str[i] == '\'')
+				i++;
+		}
+		if(str[i] == '$')
+		{
+			printf("aaa\n");
+			ttr = expand_change(str, i + 1, env);
+			printf("!!%c!!\n", str[i]);
+			end = 0;
+			while (str[i] != '\0' && str[i] != ' ' && str[i] != '|' && str[i] != '<' && str[i] != '>' && str[i] != 34)
+			{
+				if (str[i] == 39)
+				{
+					while (str[i] != '\0' && str[i] != 39)
+						i++;
+					if (str[i] == 39)
+					i++;
+					flag = 1;
+				}
+				i++;
+				end++;
+			}
+			if (flag == 0)
+			{
+			ptr = (char *)malloc(sizeof(char) * (ft_strlen2(str) - end + ft_strlen2(ttr) + 1));
+			end = 0;
+			j = 0;
+			while (str[end] != '$')
+			{
+				if (str[i] == 39)
+				{
+					while (str[i] != '\0' && str[i] != 39)
+						i++;
+					if (str[i] == 39)
+					i++;
+				}
+				ptr[end] = str[end];
+				end++;
+			}
+			while (ttr[j] != '\0')
+			{
+				ptr[end] = ttr[j];
+				end++;
+				j++;
+			}
+			while(str[i] != '\0')
+			{
+				ptr[end] = str[i];
+				end++;
+				i++;
+			}
+			ptr[end] = '\0';
+			str = ft_strdup(ptr);
+			free(ptr);
+			}
+		 }
+		i++;
 	}
 	return(str);
 }
@@ -192,14 +192,14 @@ char	*expand_change(char *str, int i, t_lst *env)
 	ptr = ft_substr2(str, i, j - i);
 	ptr = ft_substr(str, i, j - i);
 	while (lst)
+	{
+		if (ft_strcmp(lst->ptr, ptr) == 0)
 		{
-			if (ft_strcmp(lst->ptr, ptr) == 0)
-			{
-				ptr = ft_strdup(lst->value + 1);
-				break ;
-			}
-			lst = lst->next;
+			ptr = ft_strdup(lst->value + 1);
+			break ;
 		}
+		lst = lst->next;
+	}
 	if (!lst)
 		ptr = ft_strdup("$");
 	return(ptr);

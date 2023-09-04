@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/04 09:00:34 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:39:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ typedef enum e_token_type
 
 
 /// @brief 
-///	@tparam **matrix;
+///	@tparam **fn;
 ///	@tparam int		i;
 typedef	struct s_hd
 {
-	char	**matrix;
+	char	**fn;
 	int		i;
 }	t_hd;
 

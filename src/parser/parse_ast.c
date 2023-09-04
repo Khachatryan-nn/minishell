@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 00:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:53:39 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:44:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_ast(t_tok *ast, int indent, int lrc)
 	if (!ast)
 		return ;
 	else if (ast->type == END)
-		return print_ast(ast->right, indent, 0);
+		return (print_ast(ast->right, indent, 0));
 	print_ast(ast->right, indent + 1, 1);
 	while (i++ < indent)
 		printf("\t");

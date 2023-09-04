@@ -6,18 +6,18 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 00:57:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 13:26:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:41:14 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	_close_(int	fd);
+int	_close_(int fd);
 int	close_pipes(int *fd);
 int	_close2_(int fd1, int fd2);
 int	_close3_(int fd1, int fd2, int fd3);
 
-int	_close_(int	fd)
+int	_close_(int fd)
 {
 	if (close(fd) < 0)
 	{

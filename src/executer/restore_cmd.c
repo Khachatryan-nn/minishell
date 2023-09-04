@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:07:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:15:14 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 char	**alloc_cmd_matrix(char **matrix, char *cmd, t_wcard *wild, int *i);
 char	**alloc_wc_matrix(char **matrix, t_tok *stack, t_wcard **wcard);
-void	fill_wcmatrix(t_tok *stack, t_wcard **wild);
+void	fill_wc_matrix(t_tok *stack, t_wcard **wild);
 char	**restore_cmd_line(t_tok *stack, int i);
 
 char	**restore_cmd_line(t_tok *stack, int i)
 {
-	char		**cmd_matrix;
-	int			mode;
+	char	**cmd_matrix;
+	int		mode;
 	t_tok	*ptr;
-	t_wcard		*wcard;
+	t_wcard	*wcard;
 
 	ptr = stack;
-	wcard = (void *) ((cmd_matrix = NULL));
+	wcard = (void *)((cmd_matrix = NULL));
 	cmd_matrix = alloc_wc_matrix(cmd_matrix, stack, &wcard);
 	if (!cmd_matrix)
 		return (NULL);
 	while (ptr && ptr->cmd)
 	{
-		mode = (ptr->flag & (_ISCMD_)) && 1;
+		mode = (ptr->flag & (_ISCMD_));
 		if (mode == 0 && check_type(ptr->type) == 0)
 		{
 			if (i < 0)
@@ -53,7 +53,8 @@ char	**alloc_wc_matrix(char **matrix, t_tok *stack, t_wcard **wcard)
 	i = 0;
 	fill_wc_matrix(stack, wcard);
 	if (*wcard)
-		matrix = (char **)malloc(sizeof(char *) * (lstsize(stack) + lstsize_wcard(*wcard)));
+		matrix = (char **)malloc(sizeof(char *) * \
+		(lstsize(stack) + lstsize_wcard(*wcard)));
 	else
 		matrix = (char **)malloc(sizeof(char *) * (lstsize(stack) + 1));
 	if (!matrix)
@@ -70,7 +71,7 @@ char	**alloc_wc_matrix(char **matrix, t_tok *stack, t_wcard **wcard)
 
 char	**alloc_cmd_matrix(char **matrix, char *cmd, t_wcard *wild, int *i)
 {
-	t_wcard *temp;
+	t_wcard	*temp;
 
 	temp = wild;
 	if (temp && ft_strchr(cmd, '*'))

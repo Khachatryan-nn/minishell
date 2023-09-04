@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/03 00:33:07 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:40:46 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	destroy_structure(t_tok *root)
 	return ;
 }
 
-int		_free3_(void *ptr1, void *ptr2, void *ptr3)
+int	_free3_(void *ptr1, void *ptr2, void *ptr3)
 {
 	if (ptr1)
 		free (ptr1);

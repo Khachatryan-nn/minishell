@@ -6,17 +6,17 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:56:27 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:45:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_tok	*lstnew_pars(char *content, t_type type, int prec, int flag);
-void		lstback(t_tok **lst, t_tok *new);
-void		lstclear(t_tok **lst);
+void	lstback(t_tok **lst, t_tok *new);
+void	lstclear(t_tok **lst);
 t_tok	*lstlast(t_tok *lst);
-int			lstsize(t_tok *lst);
+int		lstsize(t_tok *lst);
 
 t_tok	*lstnew_pars(char *content, t_type type, int prec, int flag)
 {

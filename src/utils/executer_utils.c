@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/03 00:30:51 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:39:18 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	handle_heredoc_input(t_init *init, t_tok *tok, char *str)
 	char	*res;
 
 	res = NULL;
-	tok->hdoc_fname = ft_strdup(init->hd->matrix[++init->hd->i]);
-	tok->fd = open(init->hd->matrix[init->hd->i], O_RDWR | O_CREAT | O_TRUNC, 0655);
+	tok->hdoc_fname = ft_strdup(init->hd->fn[++init->hd->i]);
+	tok->fd = open(init->hd->fn[init->hd->i], O_RDWR | O_CREAT | O_TRUNC, 0655);
 	while (1)
 	{
 		str = readline("> ");
