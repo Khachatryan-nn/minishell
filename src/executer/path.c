@@ -6,26 +6,26 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 14:30:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 00:13:57 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char static	*find_cmdpath(char *cmd, char **path);
-void		find_path(t_init *init, t_lst *env);
+void		find_path(t_init *init, t_env *env);
 char		*check_cmd(char *cmd, char **path);
 
-void	find_path(t_init *init, t_lst *env)
+void	find_path(t_init *init, t_env *env)
 {
-	t_lst	*temp;
+	t_env	*temp;
 
 	temp = env;
 	while (temp)
 	{
-		if (ft_strcmp(temp->ptr, "PATH") == 0)
+		if (ft_strcmp(temp->key, "PATH") == 0)
 		{
-			if (!temp->flag)
+			if (temp->flag)
 			{
 				init->path = NULL;
 				return ;
@@ -34,7 +34,7 @@ void	find_path(t_init *init, t_lst *env)
 		}
 		temp = temp->next;
 	}
-	init->path = ft_split(&temp->value[1], ':');
+	init->path = ft_split(temp->data, ':');
 }
 
 char static	*find_cmdpath(char *cmd, char **path)

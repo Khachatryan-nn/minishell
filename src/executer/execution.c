@@ -6,15 +6,13 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 16:33:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 02:17:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack);
-int	check_ast(t_init *init, t_tok *root, t_lst *env);
-int	call_cmd(t_tok *stack, t_init *init, t_lst *env);
+int	check_ast(t_init *init, t_tok *root, t_env *env);
 int	andor_check(t_tok *stack);
 
 int	andor_check(t_tok *stack)
@@ -33,7 +31,7 @@ int	andor_check(t_tok *stack)
 		return (1);
 }
 
-int	check_ast(t_init *init, t_tok *root, t_lst *env)
+int	check_ast(t_init *init, t_tok *root, t_env *env)
 {
 	pid_t	pid;
 	int		status;
@@ -47,7 +45,7 @@ int	check_ast(t_init *init, t_tok *root, t_lst *env)
 	}
 	if (root->left == NULL && root->right == NULL)
 	{
-		root->err_code = to_execute(root, env, init, status);
+		root->err_code = to_execute(init, root, env);
 		//handle_dollar(root->err_code, env);
 		return (root->err_code);
 	}
@@ -111,66 +109,3 @@ int	check_ast(t_init *init, t_tok *root, t_lst *env)
 	}
 	return (0);
 }
-
-int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
-{
-	pid_t	pid;
-	int		child_exit;
-
-	child_exit = 0;
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("Minishell");
-		return (1);
-	}
-	else if (pid == 0)
-	{
-		if (io_dup2(stack->_stdin_, stack->_stdout_))
-			return (EXIT_FAILURE);
-		if (execve(cmd, matrix, env) == -1 && \
-			execve(matrix[0], matrix, env) == -1)
-		{
-			perror("Minishell");
-			exit(EXIT_FAILURE);
-		}
-		exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		waitpid(pid, &child_exit, 0);
-		io_backup(stack->stdin_backup, stack->stdin_backup);
-		return (child_exit / 256);
-	}
-}
-
-int	call_cmd(t_tok *stack, t_init *init, t_lst *env)
-{
-	char	**cmd_matrix;
-	char	*cmd_path;
-	char	**env_mtrx;
-	int		exit_code;
-
-	if (init->flag)
-	{
-		find_path(init, env);
-		init->flag = 0;
-	}
-	env_mtrx = env_matrix(env);
-	if (!env_mtrx)
-		return (127);
-	cmd_matrix = restore_cmd_line(stack, -1);
-	if (!cmd_matrix)
-		return (destroy_cmd(0, 0, env_mtrx) + 1);
-	cmd_path = check_cmd(cmd_matrix[0], init->path);
-	if (!cmd_path)
-		return (destroy_cmd(0, cmd_matrix, env_mtrx) + 126);
-	exit_code = exec_cmd(cmd_path, cmd_matrix, env_mtrx, stack);
-	destroy_cmd(cmd_path, cmd_matrix, env_mtrx);
-	return (exit_code);
-}
-
-// command not found			->	127
-// syntax || rooting error		->	258
-// empty ()						->	1
-// unknown flag || parameter	->	1

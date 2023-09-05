@@ -6,17 +6,17 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 16:38:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 02:25:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	is_builtin(char **matrix, t_tok	*stack);
-int	check_built(t_tok *stack, t_lst *env, t_init *init);
-int	execute_builtin(t_init *init, t_tok *stack, t_lst *env, char **matrix);
+int	check_built(t_tok *stack, t_env *env);
+int	execute_builtin(t_tok *stack, t_env *env, char **matrix);
 
-int	check_built(t_tok *stack, t_lst *env, t_init *init)
+int	check_built(t_tok *stack, t_env *env)
 {
 	char	**cmd_matrix;
 	int		status;
@@ -26,34 +26,31 @@ int	check_built(t_tok *stack, t_lst *env, t_init *init)
 		return (0);
 	status = is_builtin(cmd_matrix, stack);
 	if (status <= 0)
+	{
+		free_matrix(cmd_matrix);
 		return (status);
-	status = execute_builtin(init, stack, env, cmd_matrix);
+	}
+	status = execute_builtin(stack, env, cmd_matrix);
 	free_matrix(cmd_matrix);
 	return (status);
 }
 
-int	execute_builtin(t_init *init, t_tok *stack, t_lst *env, char **matrix)
+int	execute_builtin(t_tok *stack, t_env *env, char **matrix)
 {
 	if (ft_strcmp(stack->cmd, "exit") == 0)
-		ft_exit(env, init);
+		mshell_exit(matrix, env);
 	else if (ft_strcmp(matrix[0], "env") == 0)
-		ft_env (env);
+		mshell_env (env);
 	else if (ft_strnstr(matrix[0], "pwd", 3) == 0)
-		ft_pwd (env);
+		mshell_pwd (matrix[0], env);
 	else if (ft_strnstr(matrix[0], "export", 6) == 0)
-	{
-		printf ("input: %s\n", matrix[0]);
-		if (ft_strcmp(matrix[0], "export") == 0)
-			ft_export (env);
-		else
-			ft_export_change (matrix[0], env, init);
-	}
+		mshell_export(matrix, env);
 	else if (ft_strnstr(matrix[0], "unset", 5) == 0)
-		ft_unset(matrix[0], env, init);
+		mshell_unset(matrix, env);
 	else if (ft_strnstr(matrix[0], "cd", 2) == 0)
-		ft_cd (env, matrix);
+		mshell_cd(matrix, env);
 	else if (ft_strnstr(matrix[0], "echo", 4) == 0)
-		ft_echo(env, init);
+		mshell_echo(matrix);
 	else
 		return (0);
 	return (1);

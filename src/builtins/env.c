@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 19:28:58 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/04 23:26:43 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/09/04 22:56:40 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/09/04 23:44:50 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_back(t_lst **lst, t_lst *new)
+void	mshell_env(t_env *env)
 {
-	t_lst	*ptr;
+	t_env	*tmp;
 
-	ptr = ft_lstlast(*lst);
-	if (!ptr)
-		*lst = new;
-	else
+	tmp = env;
+	while (tmp != NULL)
 	{
-		ptr->next = new;
-		ptr->next->prev = ptr;
+		if (tmp->flag == 0)
+			printf("%s=%s\n", tmp->key, tmp->data);
+		tmp = tmp->next;
 	}
 }

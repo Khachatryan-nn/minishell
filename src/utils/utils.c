@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 14:42:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 23:55:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 char	*strjoin_helper(char *result, char *read, int mode);
 int		ft_strcmp( char *s1, char *s2);
 int		ft_onlyspaces(char *str);
+int		matrixlen(char **matrix);
+int		check_digit(char *str);
 
 /// @brief
 /// @param mode 1 -> new line
@@ -64,4 +66,31 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (ptr1[i] - ptr2[i]);
+}
+
+int	matrixlen(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	if (!matrix)
+		return (0);
+	while (matrix && matrix[i] != NULL)
+		i++;
+	return (i);
+}
+
+int	check_digit(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i] != '\0')
+	{
+		if ((str[i] >= 'a' && str[i] <= 'z') || \
+			(str[i] >= 'a' && str[i] <= 'Z'))
+			return (1);
+		i++;
+	}
+	return (0);
 }

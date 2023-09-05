@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:38:30 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 14:48:00 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 01:41:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int		handle_input(t_tok **res, char *line, int i, int count);
 /// @return 
 int	handle_heredoc(t_tok **res, char *line, int i, int count)
 {
-	char	*limiter;
 	int		end;
 	int		start;
 
@@ -39,13 +38,8 @@ int	handle_heredoc(t_tok **res, char *line, int i, int count)
 	end = find_limiter_end(line, i, start);
 	if (!end)
 		return (0);
-	limiter = ft_substr(line, start, end - start);
-	if (limiter)
-	{
-		lstback(res, lstnew_pars(limiter, WORD, 0, 1));
-		free (limiter);
-		return (end - 1);
-	}
+	else
+		return (i + 1);
 	return (parse_error("newline", 0));
 }
 

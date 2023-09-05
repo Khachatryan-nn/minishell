@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:21:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:25:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	add_new_quote(t_tok **res, char *line, int i, int type)
 int	find_limiter_end(char *line, int i, int start)
 {
 	int	end;
+	(void) i;
 
 	end = start;
 	while (line[end] && line[end] != ' ')
@@ -88,8 +89,8 @@ int	find_limiter_end(char *line, int i, int start)
 	}
 	if (end == start)
 	{
-		if (line[i] == '\0')
-			return (parse_error("newline", 1));
+		if (line[end] == '\0')
+			return (parse_error("newline", 0));
 		else
 			return (parse_error((char *)token_is(token_name(line + start)), 0));
 	}

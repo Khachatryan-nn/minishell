@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/25 21:25:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/09/04 23:02:48 by tikhacha          #+#    #+#             */
+/*   Updated: 2023/09/05 00:04:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_pwd(t_lst *env)
-{
-	char *ptr;
+t_env	*env_init(char **env, t_env *my_env);
 
-	(void)env;
-	ptr = NULL;
-	ptr = getcwd(NULL, 0);
-	printf("%s\n", ptr);
+t_env	*env_init(char **env, t_env *my_env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		my_env = push_back(&my_env, malloc_list(env[i]));
+		i++;
+		if (env[i] == NULL)
+			my_env = push_back(&my_env, malloc_list("$?=0"));
+	}
+	return (my_env);
 }

@@ -6,18 +6,18 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 14:32:00 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 23:04:06 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_iocmd(t_init *init, t_tok *stack, t_lst *env);
-int	io_heredoc(t_init *init, t_tok *stack, t_lst *env);
-int	io_input(t_init *init, t_tok *stack, t_lst *env);
-int	io_out(t_init *init, t_tok *stack, t_lst *env);
+int	exec_iocmd(t_init *init, t_tok *stack, t_env *env);
+int	io_heredoc(t_init *init, t_tok *stack, t_env *env);
+int	io_input(t_init *init, t_tok *stack, t_env *env);
+int	io_out(t_init *init, t_tok *stack, t_env *env);
 
-int	io_out(t_init *init, t_tok *stack, t_lst *env)
+int	io_out(t_init *init, t_tok *stack, t_env *env)
 {
 	int		fd;
 	t_tok	*tmp;
@@ -40,11 +40,11 @@ int	io_out(t_init *init, t_tok *stack, t_lst *env)
 	if (stack->last_red != 1)
 		return (0);
 	if (ft_strcmp(stack->left->cmd, "(NULL)") && !(stack->flag & (1 << 7)))
-		stack->err_code = to_execute(tmp->left, env, init, 0);
+		stack->err_code = check_ast(init, tmp->left, env);
 	return (stack->err_code);
 }
 
-int	io_heredoc(t_init *init, t_tok *stack, t_lst *env)
+int	io_heredoc(t_init *init, t_tok *stack, t_env *env)
 {
 	t_tok	*tmp;
 	int		fd;
@@ -64,7 +64,7 @@ int	io_heredoc(t_init *init, t_tok *stack, t_lst *env)
 	}
 	tmp->left->stdin_backup = init->stdin_backup;
 	tmp->left->_stdin_ = fd;
-	if (init->last_hdoc != 1)
+	if (stack->last_hdoc != 1)
 		return (0 + unlink(stack->hdoc_fname));
 	if (ft_strcmp(tmp->left->cmd, "(NULL)"))
 		stack->err_code = check_ast(init, tmp->left, env);
@@ -72,13 +72,13 @@ int	io_heredoc(t_init *init, t_tok *stack, t_lst *env)
 	return (stack->err_code);
 }
 
-int	io_input(t_init *init, t_tok *stack, t_lst *env)
+int	io_input(t_init *init, t_tok *stack, t_env *env)
 {
 	t_tok	*tmp;
-	int		file_fd;
+	int		fd;
 
-	file_fd = open(stack->right->cmd, O_RDONLY);
-	if (file_fd < 0)
+	fd = open(stack->right->cmd, O_RDONLY);
+	if (fd < 0)
 	{
 		perror("minishell");
 		init->fd_fail = 1;
@@ -90,14 +90,14 @@ int	io_input(t_init *init, t_tok *stack, t_lst *env)
 	while (tmp->left->type != WORD)
 		tmp = tmp->left;
 	tmp->left->stdin_backup = init->stdin_backup;
-	tmp->left->_stdin_ = file_fd;
+	tmp->left->_stdin_ = fd;
 	if (stack->last_input != 1)
 		return (0);
-	stack->err_code = to_execute(tmp->left, env, init, 0);
+	stack->err_code = check_ast(init, tmp->left, env);
 	return (stack->err_code);
 }
 
-int	exec_iocmd(t_init *init, t_tok *stack, t_lst *env)
+int	exec_iocmd(t_init *init, t_tok *stack, t_env *env)
 {
 	if (stack->type == WR_APPEND || stack->type == WR_TRUNC)
 		return (io_out(init, stack, env));

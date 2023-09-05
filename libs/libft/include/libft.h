@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:23:02 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 23:44:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int			ft_isascii(int c);
 int			ft_isdigit(int c);
 int			ft_isprint(int c);
 size_t		ft_strlcpy(char *dest, const char *src, size_t size);
+int			ft_strncmp(char *s1, char *s2, unsigned int n);
 size_t		ft_strlen(const char *str);
-// int		ft_strcmp(const char *s1, const char *s2, int n);
 char		*ft_strnstr( char *str, char *str1, int len);
 int			ft_toupper(int c);
 int			ft_tolower(int c);

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 11:45:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 02:12:08 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ void	pop(t_tok **stack)
 	{
 		temp->prev->next = NULL;
 		temp->prev = NULL;
-		free (temp);
 	}
 	else
 		*stack = NULL;
+	free (temp->cmd);
+	if (temp->hdoc_fname)
+		free(temp->hdoc_fname);
+	free (temp);
 }
 
 void	push(t_tok **a, t_tok **b)
@@ -106,5 +109,5 @@ void	parser(t_init *init)
 	while (stack_ops)
 		push(&stack_ops, &stack_otp);
 	init->pars = abstract_syntax_tree(init, &stack_otp);
-	//print_ast(init->pars, 0, 0);
+	print_ast(init->pars, 0, 0);
 }

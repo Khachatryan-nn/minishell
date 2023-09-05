@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 14:40:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 01:37:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	destroy_structure(t_tok *root)
 		destroy_structure(root->next);
 	if (root->cmd)
 		free (root->cmd);
+	if (root->type == HEREDOC && root->hdoc_fname)
+		free (root->hdoc_fname);
 	free (root);
 	root = NULL;
 	return ;

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/04 14:39:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 02:13:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,24 @@ typedef	struct s_hd
 	char	**fn;
 	int		i;
 }	t_hd;
+
+///	@brief
+///	@tparam	struct s_env	*next
+///	@tparam	struct s_env	*prev
+///	@tparam	char			*data
+///	@tparam	char			*key
+///	@tparam	char			*pwd
+///	@tparam	int				flag
+typedef struct s_env
+{
+	struct s_env	*next;
+	struct s_env	*prev;
+	char			*data;
+	char			*key;
+	char			*pwd;
+	int				flag;
+}					t_env;
+
 
 ///	@brief
 ///	@tparam char	*cmd_line
@@ -199,6 +217,7 @@ char		*heredoc_input(char	*limiter);
 /* - - - - - --!-- - - - - ! Nodes and lists ! - - - - --!-- - - - - - */
 t_tok		*lstnew_pars(char *content, t_type type, int prec, int flag);
 void		lstback_wcard(t_wcard **pars, t_wcard *new);
+t_env		*push_back(t_env **list, t_env *new);
 void		lstback(t_tok **lst, t_tok *new);
 void		destroy_structure(t_tok *root);
 void		lstclear_wcard(t_wcard **lst);
@@ -207,7 +226,8 @@ t_wcard		*lstadd_wcard(char *string);
 int			lstsize_wcard(t_wcard *lst);
 void		destroy_init(t_init *init);
 t_tok		*ast_branch(t_tok *tok);
-t_lst		*ft_lstnew_2(char *str);
+t_env		*malloc_list(char *env);
+int			env_lstsize(t_env *lst);
 void		lstclear(t_tok **lst);
 t_tok		*lstlast(t_tok *lst);
 int			lstsize(t_tok *lst);
@@ -216,7 +236,7 @@ int			lstsize(t_tok *lst);
 int			handle_cprnthses(t_tok **res, char *line, int i, int count);
 void		handle_heredoc_input(t_init *init, t_tok *tok, char *str);
 int			add_new_quote(t_tok **res, char *line, int i, int type);
-int 		check_ast(t_init *init, t_tok *root, t_lst *env);
+int 		check_ast(t_init *init, t_tok *root, t_env *env);
 int			lexer(t_tok **res, char **line);
 char		*rem_lim_quotes(char *limiter);
 void		lex(char **line, t_init *init);
@@ -234,23 +254,23 @@ void		pop(t_tok **stack);
 /* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
 char		**alloc_cmd_matrix(char **matrix, char *cmd, t_wcard *wild, int *i);
 char		**alloc_wc_matrix(char **matrix, t_tok *stack, t_wcard **wcard);
-int			to_execute(t_tok *pars, t_lst *env, t_init *init, int status);
-int			subsh_execute(t_tok *pars, t_lst *env, t_init *init, int pid);
+int			subsh_execute(t_init *init, t_tok *stack, t_env *env, int pid);
 void		wcard_logic_2(char **pattern, char **string, int star);
-int			pipe_prepair(t_init *init, t_tok *pars, t_lst *env);
-int			exec_iocmd(t_init *init, t_tok *stack, t_lst *env);
+int			pipe_prepair(t_init *init, t_tok *stack, t_env *env);
+int			exec_iocmd(t_init *init, t_tok *stack, t_env *env);
 void		check_lasts(t_init *init, t_tok *stack, int mode);
-int			call_cmd(t_tok *stack, t_init *init, t_lst *env);
+int			to_execute(t_init *init, t_tok *stack, t_env *env);
+int			call_cmd(t_init *init, t_tok *stack, t_env *env);
 int			io_backup(int stdin_backup, int stdout_backup);
 void		fill_wc_matrix(t_tok *stack, t_wcard **wild);
-void		handle_dollar(int exit_status, t_lst **env);
+void		handle_dollar(int exit_status, t_env **env);
 int			wcard_logic(char *pattern, char *string);
 char		**restore_cmd_line(t_tok *stack, int i);
 void		get_file(char *path, t_wcard **wcard);
 char		*check_cmd(char *cmd, char **path);
 int			io_dup2(int _stdin, int _stdout);
 int			error_code(int error_num);
-char		**env_matrix(t_lst *env);
+char		**env_matrix(t_env *env);
 
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
 int			destroy_cmd(char *cmd, char **cmd_matrix, char **env_matrix);
@@ -259,57 +279,50 @@ int			find_limiter_end(char *line, int i, int start);
 int			_free3_(void *ptr1, void *ptr2, void *ptr3);
 int			ft_isspace(char *line, int i, int j);
 int			parse_error(char *err_str, int mode);
+void		builtins_error(char	*str, char *err);
 int			_close3_(int fd1, int fd2, int fd3);
-void		find_path(t_init *init, t_lst *env);
-void		save_backup(t_init *init);
+void		find_path(t_init *init, t_env *env);
+unsigned long long int	ft_atll(char *str);
 int			_close2_(int fd1, int fd2);
 int			is_delimiter(t_tok *root);
+void		save_backup(t_init *init);
 int			ft_onlyspaces(char *str);
+int			matrixlen(char **matrix);
 void		print_types(t_tok *ptr);
 const char	*token_is(t_type token);
 void		free_matrix(char **ptr);
 t_type		token_name(char *token);
+int			check_digit(char *str);
 int			is_valid(t_init *init);
+char		*ft_itul(long long n);
+char		*trim_zeroes(char *s);
 int			close_pipes(int *fd);
 void		init_hd(t_hd **hd);
 int			_close_(int	fd);
 
 /* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */
-char		**ft_export_continue2(t_lst *env, t_lst *env1, char **ptr, int a);
-void		ft_export_change(char *line, t_lst *env, t_init *init);
-int			check_built(t_tok *stack, t_lst *env, t_init *init);
-void		ft_unset(char *ptr, t_lst *env, t_init *init);
-char		*expand_change(char *str, int i, t_lst *env);
-char		*ft_kes_2(char *ptr, char *ttr, char *str);
-void		ft_check_valid_3(t_init *lst, t_lst *env);
-void		ft_check_echo_env(char *str, t_lst *env);
-void		ft_create_env(char **str, t_lst **stack);
-void		ft_check_valid_2(char *str, t_lst *env);
-char		*ft_kes(char *str, int i, t_lst *env);
-void		ft_echo_dollar(char *str, t_lst *env);
-void		ft_check_valid(char *str, t_lst *env);
-char		*ft_expand(char *str, t_lst *env);
-char		**ft_export_continue(t_lst *env1);
-void		ft_echo(t_lst *env, t_init *init);
-void		ft_exit(t_lst *env, t_init *init);
-void		ft_cd(t_lst *str, char **ptr);
-void		ft_find_env_echo(t_lst *env);
-void		exit_env(int a, t_lst *env);
-char		**ft_change_2(char *str);
-void		ft_export(t_lst *env);
-int			ft_atoi_2(long long a);
-void		ft_env(t_lst *env);
-void		ft_pwd(t_lst *env);
+int			check_built(t_tok *stack, t_env *env);
+void		pwd_init_2(t_env *my_env, char *str, int *i);
+void		mshell_export(char **matrix, t_env *my_env);
+void		export(char **matrix, int i, t_env *my_env);
+int			mshell_unset(char **matrix, t_env *my_env);
+void		mshell_cd(char **matrix, t_env *my_env);
+t_env		*env_init(char **env, t_env *my_env);
+void		mshell_exit(char **matrix, t_env *env);
+int			ft_check(t_env *my_env, char *str);
+void		mshell_pwd(char *str, t_env *env);
+void		ft_add(t_env *my_env, char *str);
+void		ft_export(t_env *my_env);
+void		mshell_echo(char **matrix);
+void		pwd_init(t_env *my_env);
+int			check_unset(char *str);
+void		mshell_env(t_env *env);
+void		handler_stp(int sig);
+void		call_signals(void);
 
 /* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
 
-int			ft_list_change(t_lst *new, t_lst *env, t_init *init);
-char		*ft_find_symbol(char *str, char c);
 int			ft_strcmp(char *s1, char *s2);
+void		leaks_check(void);
 
-
-/*   avelacvac  */
-void		ft_check_main(char *str, t_lst env, t_init init);
-void		ft_handle(int signal);
-void		ft_signal();
 #endif

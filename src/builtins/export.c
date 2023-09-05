@@ -6,100 +6,137 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:50:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:34:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 23:56:42 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strncmp(char *s1, char *s2, int n)
+void	mshell_export(char **matrix, t_env *my_env);
+void	export(char **matrix, int i, t_env *my_env);
+int		ft_check(t_env *my_env, char *str);
+void	ft_add(t_env *my_env, char *str);
+void	ft_export(t_env *my_env);
+
+void	mshell_export(char **matrix, t_env *my_env)
 {
 	int		i;
-	char	*ptr1;
-	char	*ptr2;
 
 	i = 0;
-	ptr1 = (char *)s1;
-	ptr2 = (char *)s2;
-	if (!s1 && !s2)
-		return (0);
-	if (n == 0)
-		return (0);
-	while ((ptr1[i] == ptr2[i]) && n - 1 > i)
+	if (matrix[1] == NULL)
 	{
-		if (ptr1[i] == '\0' && ptr2[i] == '\0')
-			return (0);
-		i++;
+		ft_export(my_env);
+		return ;
 	}
-	return (ptr1[i] - ptr2[i]);
+	export(matrix, i, my_env);
 }
 
-void	ft_export(t_lst *env)
+void	export(char **matrix, int i, t_env *my_env)
 {
+	t_env	*tmp;
+
+	tmp = my_env;
+	while (matrix[++i])
+	{
+		if (ft_check(my_env, matrix[i]) == 2)
+			;
+		else if (ft_strchr(matrix[i], '=') != 0)
+		{
+			if (ft_check(my_env, matrix[i]) == 0)
+				tmp = push_back(&tmp, malloc_list(matrix[i]));
+			else
+				ft_add(my_env, matrix[i]);
+		}
+		else
+		{
+			if (ft_check(my_env, matrix[i]) == 0)
+			{
+				tmp = push_back(&tmp, malloc_list(matrix[i]));
+				while (tmp->next)
+					tmp = tmp->next;
+				tmp->flag = 2;
+			}
+		}
+	}
+}
+
+void	ft_export(t_env *my_env)
+{
+	t_env	*tmp;
+	int		flag;
+
+	tmp = my_env;
+	flag = 0;
+	while (tmp)
+	{
+		if (tmp->flag == 0)
+			printf("declare -x %s%c\"%s\"\n", tmp->key, '=', tmp->data);
+		if (tmp->flag == 2)
+			printf("declare -x %s\n", tmp->key);
+		tmp = tmp->next;
+	}
+	tmp = my_env;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, "OLDPWD") == 0)
+		{
+			flag = 1;
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	if (flag == 0)
+		printf("declare -x OLDPWD\n");
+}
+
+int	ft_check(t_env *my_env, char *str)
+{
+	t_env	*tmp;
 	int		i;
-	char	**ptr;
+
+	tmp = my_env;
+	i = -1;
+	while (str && str[++i])
+	{
+		if (str[0] != '=' && str[i] == '=')
+			break ;
+		if ((str[0] >= '0' && str[0] <= '9') || (ft_isalpha(str[i]) == 0 \
+			&& str[i] != '_' && !ft_isdigit(str[i])))
+		{
+			builtins_error("export", str);
+			return (2);
+		}
+	}
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->key, str, i) == 0)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	ft_add(t_env *my_env, char *str)
+{
+	t_env	*tmp;
+	int		i;
 
 	i = 0;
-	ptr = NULL;
-	ptr = ft_export_continue(env);
-	i = 0;
-	while (ptr[i] != 0)
+	tmp = my_env;
+	while (str[i])
 	{
-		printf("declare - x ");
-		printf("%s", ft_find_symbol(ptr[i], '='));
-		if (ft_strchr(ptr[i], '='))
-		{
-			printf("=%c", '\"');
-			printf("%s", ft_strchr(ptr[i], '=') + 1);
-			printf("%c\n", '\"');
-		}
-		else
-			printf("\n");
-		free(ptr[i]);
+		if (str[i] == '=')
+			break ;
 		i++;
 	}
-	free (ptr);
-}
-
-char	**ft_export_continue(t_lst *env1)
-{
-	char	**ptr;
-	t_lst	*env;
-	int		a;
-
-	a = 0;
-	ptr = NULL;
-	env = NULL;
-	env = env1;
-	while (env)
+	while (tmp)
 	{
-		if (env->unset != 1)
-		a++;
-		env = env->next;
-	}
-	env = env1;
-	ptr = ft_export_continue2(env, env1, ptr, a);
-	return (ptr);
-}
-
-char	**ft_export_continue2(t_lst *env, t_lst *env1, char **ptr, int a)
-{
-	int	i;
-
-	i = 0;
-	ptr = (char **)malloc(sizeof(char *) * ft_lstsize(env1) - a + 1);
-	while (env)
-	{
-		if (env->unset == 1 && env1->type == 1)
+		if (ft_strncmp(tmp->key, str, i) == 0)
 		{
-			ptr[i] = ft_strdup(env->ptr);
-			ptr[i] = ft_strjoin(ptr[i], env->value, 0);
-			i++;
-			env = env->next;
+			free(tmp->data);
+			tmp->data = ft_strdup(str + i + 1);
+			tmp->flag = 0;
 		}
-		else
-			env = env->next;
+		tmp = tmp->next;
 	}
-	ptr[i] = 0;
-	return (ptr);
 }

@@ -6,13 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/04 16:38:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 02:17:46 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <signal.h>
 
+void static	while_loop(t_init *init, t_env *env, char *str);
 void static	print_logo(void)
 {
 	write (1, "\033[38;5;60m\
@@ -44,56 +45,58 @@ void	init_in(t_init *root)
 	root->exit_status = 0;
 }
 
+void	leaks_check(void)
+{
+	system("leaks minishell");
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*str;
-	t_lst	*env;
+	t_env	*env;
 	t_init	init;
 
 	env = NULL;
 	str = NULL;
 	init.flag = 1;
 	init_in(&init);
-	ft_create_env(envp, &env);
+	env = env_init(envp, env);
 	rl_catch_signals = 0;
 	if (ac == 1 && av)
 	{
 		print_logo();
-		while (1)
-		{
-			init_hd(&init.hd);
-			save_backup(&init);
-			ft_signal();
-			str = readline("minishell$ ");
-			if (!str)
-			{
-				printf("exit\n");
-				while (env)
-				{
-					free(env->ptr);
-					free(env->value);
-					env = env->next;
-				}
-				free (str);
-				break ;
-			}
-			// str = ft_expand(str, env);
-			// printf("---%s\n", str);
-			if (!ft_onlyspaces(str))
-			{
-				lex(&str, &init);
-				if (init.pars)
-				{
-					init.exit_status = check_ast(&init, init.pars, env);
-					exit_env(init.exit_status, env);
-					destroy_init(&init);
-					init.hd->i = 0;
-				}
-			}
-			add_history(str);
-		}
+		init_hd(&init.hd);
+		while_loop(&init, env, str);
 	}
 	return (0);
+}
+
+void static	while_loop(t_init *init, t_env *env, char *str)
+{
+	while (1)
+	{
+		save_backup(init);
+		call_signals();
+		str = readline("minishell$ ");
+		if (!str)
+		{
+			printf("exit\n");
+			exit (init->exit_status);
+		}
+		if (!ft_onlyspaces(str))
+		{
+			lex(&str, init);
+			if (init->pars)
+			{
+				init->exit_status = check_ast(init, init->pars, env);
+				handle_dollar(init->exit_status, &env);
+				destroy_init(init);
+				init->hd->i = 0;
+			}
+		}
+		add_history(str);
+		free(str);
+	}
 }
 
 // command not found -> 127

@@ -6,131 +6,68 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:56:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 15:07:24 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/04 23:54:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(t_lst *env, t_init *init)
-{
-	t_init	*lst;
-	char	*str;
+void	mshell_exit(char **matrix, t_env *env);
 
-	lst = NULL;
-	lst = init;
-	lst->lex = lst->lex->next;
-	if (ft_strcmp(lst->lex->cmd, "AST") == 0)
+void	mshell_exit(char **matrix, t_env *env)
+{
+	char		*s;
+	t_env		*tmp;
+	long long	exit_num;
+
+	s = NULL;
+	tmp = env;
+	if (matrix[1] != NULL && (matrix[1][0] == '0' || \
+			matrix[1][0] == '+' || matrix[1][1] == '0'))
+		matrix[1] = trim_zeroes(matrix[1]);
+	exit_num = ft_atll(matrix[1]);
+	s = ft_itul(exit_num);
+	if (matrix[1] && matrix[1][0] == '+')
+		s = ft_strjoin("+", s, -1);
+	if (matrixlen(matrix) == 1 && matrix[1] == NULL)
 	{
-		exit_env(0, env);
-		exit(0);
-	}
-	if (lst->lex->cmd[0] == '\0')
-	{
+		while (tmp)
+		{
+			if (!ft_strcmp(tmp->key, "$?"))
+				break ;
+			tmp = tmp->next;
+		}
 		printf("exit\n");
-		printf("minishell$: exit: : numeric argument required\n");
-		exit_env(255, env);
-		exit (255);
+		free_matrix(matrix);
+		exit(ft_atoi(tmp->data));
 	}
-	while (ft_strcmp(lst->lex->cmd, "AST") != 0)
+	else if (matrixlen(matrix) == 2 && ft_strcmp(s, matrix[1]) == 0)
 	{
-		str = ft_strdup(lst->lex->cmd);
-		while (*str == '0')
-			str++;
-		ft_check_valid(str, env);
-		ft_check_valid_2(str, env);
-		ft_check_valid_3(lst, env);
-		free(str);
-		lst->lex = lst->lex->next;
+		ft_dprintf(2, "exit\n");
+		free_matrix(matrix);
+		if (exit_num == 0)
+			exit (EXIT_SUCCESS);
+		exit (exit_num % 256);
 	}
-}
-
-void	exit_env(int a, t_lst *env)
-{
-	t_lst	*lst;
-	char	*ptr;
-
-	lst = NULL;
-	lst = env;
-	ptr = ft_itoa(a);
-	while (lst)
+	else if (ft_strlen(s) > 19 || check_digit(matrix[1]) == 1 || \
+		ft_strcmp(s, matrix[1]) != 0)
 	{
-		if (ft_strcmp(lst->ptr, "?") == 0)
-		{
-			lst->value = ft_strdup(ptr);
-			break ;
-		}
-		lst = lst->next;
+		ft_dprintf(2, "exit\n");
+		ft_dprintf(2, "Minishell: exit: %s: numeric argument required\n", \
+			matrix[1]);
+		free_matrix(matrix);
+		free(s);
+		exit(255);
 	}
-	free(ptr);
-}
-
-int	ft_atoi_2(long long a)
-{
-	if (a % 256 > 0)
-		return (a % 256);
-	else if (a % 256 < 0)
-		return (256 + a);
-	else
-		return (0);
-}
-
-void	ft_check_valid(char *str, t_lst *env)
-{
-	int	i;
-
-	i = 0;
-	if (str[0] == '-' ||str[0] == '+')
-		i++;
-	while (str[i] != '\0')
+	else if (matrixlen(matrix) > 2 && check_digit(matrix[1]) == 0)
 	{
-		if (str[i] < 48 || str[i] > 57)
-		{
-			printf("exit\n");
-			printf("minishell$: exit: %s: numeric argument required\n", str);
-			exit_env(255, env);
-		 	exit (255);
-		}
-		i++;
+		ft_dprintf(2, "exit\n");
+		ft_dprintf(2, "Minishell: exit: too many arguments\n");
+		free_matrix(matrix);
 	}
-}
-
-void	ft_check_valid_2(char *str, t_lst *env)
-{
-	if (str[0] == '-')
+	if (s)
 	{
-		if (ft_strlen(str) > 20 || ft_strcmp(str, "-9223372036854775808") > 0)
-		{
-			printf("exit\n");
-			printf("minishell$: exit: %s: numeric argument required\n",str);
-			exit_env(255, env);
-			exit (255);
-		}
-	}
-	else
-	{
-		if (ft_strlen(str) > 20 || ft_strcmp(str, "9223372036854775807") > 0)
-		{
-			printf("exit\n");
-			printf("minishell$: exit: %s: numeric argument required\n",str);
-			exit_env(255, env);
-			exit (255);
-		}		
-	}
-}
-
-void	ft_check_valid_3(t_init *lst, t_lst *env)
-{
-	if (ft_strcmp(lst->lex->next->cmd, "AST") != 0)
-	{
-		printf("exit\n");
-		printf("minishell$: exit: too many arguments\n");
-		exit_env(1, env);
- 		exit(1);
-	}
-	else
-	{
-		exit_env(ft_atoi_2(ft_atoi(lst->lex->cmd)), env);
-		exit(ft_atoi_2(ft_atoi(lst->lex->cmd) % 256));
+		free(s);
+		s = NULL;
 	}
 }
