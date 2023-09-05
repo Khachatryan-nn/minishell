@@ -27,7 +27,7 @@ DEPS			=	$(wildcard $(INCS_DIR)/*.h) Makefile
 # SOURCES
 SRC_DIR			=	./src
 BUILD			=	./build
-SUBDIRS			=	lexer parser utils executer builtins wildcard
+SUBDIRS			=	lexer parser utils executer builtins wildcardAndExpand
 SRCDIRS			:=	$(addprefix $(SRC_DIR)/, $(SUBDIRS))
 SRCS			:=	$(notdir $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))) $(notdir $(SRC_DIR)/main.c)
 

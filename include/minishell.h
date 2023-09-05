@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/05 02:13:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 13:02:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,26 @@ int			io_dup2(int _stdin, int _stdout);
 int			error_code(int error_num);
 char		**env_matrix(t_env *env);
 
+/* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */
+int			check_built(t_tok *stack, t_env *env);
+void		pwd_init_2(t_env *my_env, char *str, int *i);
+void		mshell_export(char **matrix, t_env *my_env);
+void		export(char **matrix, int i, t_env *my_env);
+int			mshell_unset(char **matrix, t_env *my_env);
+void		mshell_cd(char **matrix, t_env *my_env);
+t_env		*env_init(char **env, t_env *my_env);
+void		mshell_exit(char **matrix, t_env *env);
+int			ft_check(t_env *my_env, char *str);
+void		mshell_pwd(char *str, t_env *env);
+void		ft_add(t_env *my_env, char *str);
+void		ft_export(t_env *my_env);
+void		mshell_echo(char **matrix);
+void		pwd_init(t_env *my_env);
+int			check_unset(char *str);
+void		mshell_env(t_env *env);
+void		handler_stp(int sig);
+void		call_signals(void);
+
 /* - - - - - --!-- - - - - ! Utils and helpers ! - - - - --!-- - - - - - */
 int			destroy_cmd(char *cmd, char **cmd_matrix, char **env_matrix);
 char		*strjoin_helper(char *result, char *read, int mode);
@@ -300,25 +320,10 @@ int			close_pipes(int *fd);
 void		init_hd(t_hd **hd);
 int			_close_(int	fd);
 
-/* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */
-int			check_built(t_tok *stack, t_env *env);
-void		pwd_init_2(t_env *my_env, char *str, int *i);
-void		mshell_export(char **matrix, t_env *my_env);
-void		export(char **matrix, int i, t_env *my_env);
-int			mshell_unset(char **matrix, t_env *my_env);
-void		mshell_cd(char **matrix, t_env *my_env);
-t_env		*env_init(char **env, t_env *my_env);
-void		mshell_exit(char **matrix, t_env *env);
-int			ft_check(t_env *my_env, char *str);
-void		mshell_pwd(char *str, t_env *env);
-void		ft_add(t_env *my_env, char *str);
-void		ft_export(t_env *my_env);
-void		mshell_echo(char **matrix);
-void		pwd_init(t_env *my_env);
-int			check_unset(char *str);
-void		mshell_env(t_env *env);
-void		handler_stp(int sig);
-void		call_signals(void);
+/* - - - - - - --!-- - - - - - ! Expander ! - - - - - --!-- - - - - - - */
+void		do_expand(t_tok *stack, t_env *env);
+char		*expand(char *str, t_env **env);
+int			onlydollar(char *str);
 
 /* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
 
