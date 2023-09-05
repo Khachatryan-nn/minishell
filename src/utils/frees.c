@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 01:37:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:34:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	_free3_(void *ptr1, void *ptr2, void *ptr3)
 	if (ptr1)
 		free (ptr1);
 	if (ptr2)
-		free (ptr1);
+		free (ptr2);
 	if (ptr3)
-		free (ptr1);
+		free (ptr3);
 	return (0);
 }

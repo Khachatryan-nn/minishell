@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/05 13:02:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:32:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,12 +254,11 @@ void		pop(t_tok **stack);
 /* - - - - - --!-- - - - - - - ! Executer ! - - - - - --!-- - - - - - - */
 char		**alloc_cmd_matrix(char **matrix, char *cmd, t_wcard *wild, int *i);
 char		**alloc_wc_matrix(char **matrix, t_tok *stack, t_wcard **wcard);
-int			subsh_execute(t_init *init, t_tok *stack, t_env *env, int pid);
 void		wcard_logic_2(char **pattern, char **string, int star);
 int			pipe_prepair(t_init *init, t_tok *stack, t_env *env);
+int			to_execute(t_init *init, t_tok *stack, t_env *env);
 int			exec_iocmd(t_init *init, t_tok *stack, t_env *env);
 void		check_lasts(t_init *init, t_tok *stack, int mode);
-int			to_execute(t_init *init, t_tok *stack, t_env *env);
 int			call_cmd(t_init *init, t_tok *stack, t_env *env);
 int			io_backup(int stdin_backup, int stdout_backup);
 void		fill_wc_matrix(t_tok *stack, t_wcard **wild);
@@ -273,19 +272,21 @@ int			error_code(int error_num);
 char		**env_matrix(t_env *env);
 
 /* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */
-int			check_built(t_tok *stack, t_env *env);
+int			check_exit_status(char **arr, char *s, int exit_num);
+void		mshell_exit(char **arr, t_env *env, char *s);
 void		pwd_init_2(t_env *my_env, char *str, int *i);
 void		mshell_export(char **matrix, t_env *my_env);
 void		export(char **matrix, int i, t_env *my_env);
 int			mshell_unset(char **matrix, t_env *my_env);
 void		mshell_cd(char **matrix, t_env *my_env);
+int			check_built(t_tok *stack, t_env *env);
 t_env		*env_init(char **env, t_env *my_env);
-void		mshell_exit(char **matrix, t_env *env);
 int			ft_check(t_env *my_env, char *str);
 void		mshell_pwd(char *str, t_env *env);
 void		ft_add(t_env *my_env, char *str);
-void		ft_export(t_env *my_env);
+int			exit_error_code(t_env *env);
 void		mshell_echo(char **matrix);
+void		ft_export(t_env *my_env);
 void		pwd_init(t_env *my_env);
 int			check_unset(char *str);
 void		mshell_env(t_env *env);

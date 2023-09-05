@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 13:26:06 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 15:31:21 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,47 +15,46 @@
 int	call_cmd(t_init *init, t_tok *stack, t_env *env);
 int	to_execute(t_init *init, t_tok *pars, t_env *env);
 int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack);
-int	subsh_execute(t_init *init, t_tok *stack, t_env *env, int pid);
+// int	subsh_execute(t_init *init, t_tok *stack, t_env *env, int pid);
 
-int	subsh_execute(t_init *init, t_tok *stack, t_env *env, int pid)
-{
-	int	status;
+// int	subsh_execute(t_init *init, t_tok *stack, t_env *env, int pid)
+// {
+// 	int	status;
 
-	status = 0;
-	if (pid == -1)
-		return (127);
-	else if (pid == 0)
-	{
-		if (check_built(stack, env))
-			kill(pid, SIGKILL);
-		else
-		{
-			stack->err_code = call_cmd(init, stack, env);
-			init->exit_status = stack->err_code;
-		}
-	}
-	else
-	{
-		if (wait(&status) < 0)
-		{
-			perror("wait");
-			return (1);
-		}
-		return (status);
-	}
-	return (0);
-}
+// 	status = 1;
+// 	if (pid < 0)
+// 		return (127);
+// 	else if (pid == 0)
+// 	{
+// 		status = check_built(stack, env);
+// 		if (status == 1)
+// 			status = call_cmd(init, stack, env);
+// 		else if (status == -1)
+// 			exit (1);
+// 		else
+// 			if (io_backup(stack->stdin_backup, stack->stdout_backup))
+// 				exit (1);
+// 		exit (status);
+// 	}
+// 	if (wait(&status) < 0)
+// 	{
+// 		perror("wait");
+// 		return (1);
+// 	}
+// 	return (status);
+// }
 
 int	to_execute(t_init *init, t_tok *stack, t_env *env)
 {
-	int	pid;
+	// int	pid;
 	int	status;
 
-	if (stack->subshell_code)
-	{
-		pid = fork();
-		return (subsh_execute(init, stack, env, pid));
-	}
+	// if (stack->subshell_code)
+	// {
+	// 	pid = fork();
+	// 	stack->err_code = subsh_execute(init, stack, env, pid);
+	// 	return (stack->err_code);
+	// }
 	status = check_built(stack, env);
 	if (status == 1)
 		status = call_cmd(init, stack, env);

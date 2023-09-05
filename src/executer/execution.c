@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 02:17:26 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 17:26:42 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 	{
 		root->err_code = to_execute(init, root, env);
 		//handle_dollar(root->err_code, env);
+		printf("error code is %d\n", root->err_code);
 		return (root->err_code);
 	}
 	if (root->left && root->right && check_type(root->type) == 2)
@@ -62,7 +63,7 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 		!(root->left->flag & _PIPES_))
 	{
 		check_lasts(init, root, 1);
-		if (root->left->subshell_code)
+		if (root->left->subshell_code && check_type(root->left->type) == 1)
 		{
 			pid = fork();
 			if (pid == -1)
@@ -72,16 +73,15 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 				root->err_code = check_ast(init, root->left, env);
 				exit(root->err_code);
 			}
-			else
+			if (wait(&status) < 0)
 			{
-				if (wait(&status) < 0)
-				{
-					perror("minishell");
-					return (1);
-				}
-				//exit_env(status, env);
-				return (status);
+				perror("minishell");
+				return (1);
 			}
+			if (WIFSIGNALED(status))
+				root->err_code = WTERMSIG(status);
+			else
+				root->err_code = status;
 		}
 		else
 			root->err_code = check_ast(init, root->left, env);
@@ -90,7 +90,7 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 		!(root->right->flag & (_REDIR_)) && !(root->right->flag & _PIPES_))
 	{
 		check_lasts(init, root, 1);
-		if (root->right->subshell_code)
+		if (root->right->subshell_code && check_type(root->right->type) == 1)
 		{
 			pid = fork();
 			if (pid == -1)
@@ -98,11 +98,18 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 			else if (pid == 0)
 			{
 				root->err_code = check_ast(init, root->right, env);
-				exit(root->err_code);
+				exit (root->err_code);
 			}
+			if (wait(&status) < 0)
+			{
+				perror("minishell");
+				return (1);
+			}
+			if (WIFSIGNALED(status))
+				root->err_code = WTERMSIG(status);
 			else
-				wait(NULL);
-			return (1);
+				root->err_code = status;
+			//exit_env(status, env);
 		}
 		else
 			root->err_code = check_ast(init, root->right, env);
