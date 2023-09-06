@@ -6,15 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 02:12:08 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/06 23:02:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	shunting_yard(t_tok **p, t_tok **ops, t_tok **otp);
-void	parser(t_init *init);
 void	push(t_tok **a, t_tok **b);
+void	parser(t_init *init);
 void	pop(t_tok **stack);
 
 void	pop(t_tok **stack)
@@ -46,18 +46,15 @@ void	push(t_tok **a, t_tok **b)
 	ptr2 = lstlast(*b);
 	if (ptr1 == NULL)
 		return ;
+	if (ptr2)
+		ptr2->next = ptr1;
 	else
-	{
-		if (ptr2)
-			ptr2->next = ptr1;
-		else
-			*b = ptr1;
-		if (ptr1->prev)
-			ptr1->prev->next = NULL;
-		else
-			*a = NULL;
-		ptr1->prev = ptr2;
-	}
+		*b = ptr1;
+	if (ptr1->prev)
+		ptr1->prev->next = NULL;
+	else
+		*a = NULL;
+	ptr1->prev = ptr2;
 }
 
 void	shunting_yard(t_tok **p, t_tok **ops, t_tok **otp)
@@ -70,18 +67,16 @@ void	shunting_yard(t_tok **p, t_tok **ops, t_tok **otp)
 		{
 			while (*ops && lstlast(*ops)->type != SUBSH_OPEN)
 				push(ops, otp);
-			pop(ops);
 			lstlast(*otp)->subshell_code = 1;
+			pop(ops);
 		}
-		else if ((*p)->type != SUBSH_OPEN)
+		else
 		{
 			while (*ops && lstlast(*ops)->prc >= (*p)->prc \
 				&& lstlast(*ops)->type != SUBSH_OPEN)
 				push(ops, otp);
 			lstback(ops, ast_branch(*p));
 		}
-		else
-			lstback(ops, ast_branch(*p));
 	}
 }
 

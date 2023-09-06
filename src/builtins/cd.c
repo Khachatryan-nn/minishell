@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 16:26:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/06 22:02:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	mshell_cd_helper(char *str, t_env *my_env)
 		if (ft_strcmp(tmp->key, "PWD") == 0)
 		{
 			free(tmp->pwd);
+			tmp->pwd = NULL;
 			str = getcwd(NULL, 0);
 			if (str == NULL)
 				builtins_error("cd", NULL);

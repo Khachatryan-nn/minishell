@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 22:33:20 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 22:57:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/06 16:24:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	ft_dprintf(int fd, const char *arg, ...)
 	if (!arg || fd < 0)
 		return (0);
 	va_start(args, arg);
-	va_arg(arg, const char *);
 	while (arg[i])
 	{
 		while (arg[i] != '%' && arg[i] != '\0' && ++len)

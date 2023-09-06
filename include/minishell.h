@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/05 22:54:07 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/06 23:03:08 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,8 +284,9 @@ int			error_code(int error_num);
 char		**env_matrix(t_env *env);
 
 /* - - - - - --!-- - - - - ! builtins handling ! - - - - --!-- - - - - - */
-int			check_exit_status(char **arr, char *s, int exit_num);
-void		mshell_exit(char **arr, t_env *env, char *s);
+int			check_exit_status(t_tok *stack, char **arr, char *s, int exit_num);
+int			mshell_exit(t_tok *stack, char **arr, t_env *env, char *s);
+int			exit_error_code(t_tok *stack, t_env *env, char *s);
 void		pwd_init_2(t_env *my_env, char *str, int *i);
 void		mshell_export(char **matrix, t_env *my_env);
 void		export(char **matrix, int i, t_env *my_env);
@@ -296,7 +297,6 @@ t_env		*env_init(char **env, t_env *my_env);
 int			ft_check(t_env *my_env, char *str);
 void		mshell_pwd(char *str, t_env *env);
 void		ft_add(t_env *my_env, char *str);
-int			exit_error_code(t_env *env);
 void		mshell_echo(char **matrix);
 void		ft_export(t_env *my_env);
 void		pwd_init(t_env *my_env);
@@ -319,6 +319,7 @@ unsigned long long int	ft_atll(char *str);
 int			_close2_(int fd1, int fd2);
 int			is_delimiter(t_tok *root);
 void		save_backup(t_init *init);
+int			check_subsh(t_tok *stack);
 int			ft_onlyspaces(char *str);
 int			matrixlen(char **matrix);
 void		print_types(t_tok *ptr);
@@ -346,5 +347,7 @@ void		exp_3(t_exp **tmp);
 
 int			ft_strcmp(char *s1, char *s2);
 void		leaks_check(void);
+
+extern		t_init	*init;
 
 #endif

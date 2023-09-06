@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 22:53:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/06 23:00:14 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	handle_heredoc_input(t_init *init, t_tok *tok, char *str);
 void	handle_dollar(int exit_status, t_env *env);
 void	save_backup(t_init *init);
+int		check_subsh(t_tok *stack);
 char	**env_matrix(t_env *env);
 
 char	**env_matrix(t_env *env)
@@ -98,4 +99,18 @@ void	save_backup(t_init *init)
 	init->stdout_backup = dup(STDOUT_FILENO);
 	if (init->stdout_backup == -1)
 		perror("Minishell");
+}
+
+int	check_subsh(t_tok *stack)
+{
+	t_tok	*temp;
+
+	temp = stack;
+	while (temp)
+	{
+		if (temp->subshell_code)
+			return (1);
+		temp = temp->next;
+	}
+	return (0);
 }
