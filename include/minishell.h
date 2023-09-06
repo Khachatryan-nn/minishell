@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/05 16:32:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 22:54:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,27 @@ typedef enum e_token_type
 	END,
 }	t_type;
 
+/// @brief 
+///	@tparam int		i;
+///	@tparam int		l;
+///	@tparam char	*s;
+///	@tparam char	*str;
+typedef struct s_exp
+{
+	int		i;
+	int		l;
+	char	*str;
+	char	*s;
+}			t_exp;
 
 /// @brief 
-///	@tparam **fn;
+///	@tparam char	**fn;
 ///	@tparam int		i;
 typedef	struct s_hd
 {
 	char	**fn;
 	int		i;
-}	t_hd;
+}			t_hd;
 
 ///	@brief
 ///	@tparam	struct s_env	*next
@@ -262,7 +274,7 @@ void		check_lasts(t_init *init, t_tok *stack, int mode);
 int			call_cmd(t_init *init, t_tok *stack, t_env *env);
 int			io_backup(int stdin_backup, int stdout_backup);
 void		fill_wc_matrix(t_tok *stack, t_wcard **wild);
-void		handle_dollar(int exit_status, t_env **env);
+void		handle_dollar(int exit_status, t_env *env);
 int			wcard_logic(char *pattern, char *string);
 char		**restore_cmd_line(t_tok *stack, int i);
 void		get_file(char *path, t_wcard **wcard);
@@ -297,7 +309,7 @@ void		call_signals(void);
 int			destroy_cmd(char *cmd, char **cmd_matrix, char **env_matrix);
 char		*strjoin_helper(char *result, char *read, int mode);
 int			find_limiter_end(char *line, int i, int start);
-int			_free3_(void *ptr1, void *ptr2, void *ptr3);
+int			_free3_(char *ptr1, char **ptr2, char **ptr3);
 int			ft_isspace(char *line, int i, int j);
 int			parse_error(char *err_str, int mode);
 void		builtins_error(char	*str, char *err);
@@ -322,9 +334,13 @@ void		init_hd(t_hd **hd);
 int			_close_(int	fd);
 
 /* - - - - - - --!-- - - - - - ! Expander ! - - - - - --!-- - - - - - - */
+char		*expand(char *str, t_env *env, t_exp *exp);
 void		do_expand(t_tok *stack, t_env *env);
-char		*expand(char *str, t_env **env);
+void		exp_2(t_exp **tmp, t_env *env);
+void		destroy_exp(t_exp *exp);
 int			onlydollar(char *str);
+void		exp_1(t_exp **tmp);
+void		exp_3(t_exp **tmp);
 
 /* - - - - - --!-- - - - - ! etc. - et cetera ! - - - - --!-- - - - - - */
 

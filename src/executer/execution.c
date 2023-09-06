@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 17:26:42 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 22:49:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 	if (root->left == NULL && root->right == NULL)
 	{
 		root->err_code = to_execute(init, root, env);
-		//handle_dollar(root->err_code, env);
-		printf("error code is %d\n", root->err_code);
+		handle_dollar(root->err_code, env);
 		return (root->err_code);
 	}
 	if (root->left && root->right && check_type(root->type) == 2)
@@ -55,7 +54,10 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 		check_lasts(init, root, 0);
 		if (root->left->left)
 			check_ast(init, root->left, env);
-		root->err_code = exec_iocmd(init, root, env);
+		if (init->exit_status == EXIT_SUCCESS)
+			root->err_code = exec_iocmd(init, root, env);
+		if (root->hdoc_fname)
+			unlink(root->hdoc_fname);
 	}
 	else if (root->left && root->right && root->type == PIPE) // && stack->left->type != HEREDOC && stack->right->type != HEREDOC)
 		root->err_code = pipe_prepair(init, root, env);

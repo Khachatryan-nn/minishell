@@ -6,16 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 23:39:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 22:53:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**env_matrix(t_env *env);
-void	save_backup(t_init *init);
-void	handle_dollar(int exit_status, t_env **env);
 void	handle_heredoc_input(t_init *init, t_tok *tok, char *str);
+void	handle_dollar(int exit_status, t_env *env);
+void	save_backup(t_init *init);
+char	**env_matrix(t_env *env);
 
 char	**env_matrix(t_env *env)
 {
@@ -47,7 +47,7 @@ void	handle_heredoc_input(t_init *init, t_tok *tok, char *str)
 
 	res = NULL;
 	tok->hdoc_fname = ft_strdup(init->hd->fn[++init->hd->i]);
-	tok->fd = open(init->hd->fn[init->hd->i], O_RDWR | O_CREAT | O_TRUNC, 0655);
+	tok->fd = open(tok->hdoc_fname, O_RDWR | O_CREAT | O_TRUNC, 00655);
 	while (1)
 	{
 		str = readline("> ");
@@ -70,12 +70,12 @@ void	handle_heredoc_input(t_init *init, t_tok *tok, char *str)
 	_close2_(tok->fd, _free3_(res, NULL, NULL) - 42);
 }
 
-void	handle_dollar(int exit_status, t_env **env)
+void	handle_dollar(int exit_status, t_env *env)
 {
 	t_env	*tmp;
 	char	*status;
 
-	tmp = (*env);
+	tmp = env;
 	status = ft_itoa(exit_status);
 	while (tmp)
 	{

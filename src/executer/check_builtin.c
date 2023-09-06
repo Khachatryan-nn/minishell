@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 16:33:05 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 22:27:10 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,8 @@ int	check_built(t_tok *stack, t_env *env)
 	if (!cmd_matrix || !cmd_matrix[0])
 		return (1);
 	status = is_builtin(cmd_matrix, stack);
-	if (status < 0 || status == 1)
-	{
-		free_matrix(cmd_matrix);
-		return (status);
-	}
-	status = execute_builtin(stack, env, cmd_matrix);
+	if (!status)
+		status = execute_builtin(stack, env, cmd_matrix);
 	free_matrix(cmd_matrix);
 	return (status);
 }

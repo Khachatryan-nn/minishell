@@ -5,105 +5,118 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 13:09:43 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 13:19:12 by tikhacha         ###   ########.fr       */
+/*   Created: 2023/08/29 20:19:02 by rmkrtchy          #+#    #+#             */
+/*   Updated: 2023/09/05 21:39:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    do_expand(t_tok *stack, t_env *env);
-char    *expand(char *str, t_env **env);
-int     only_dollar(char *str);
+char	*expand(char *str, t_env *env, t_exp *exp);
+void	exp_2(t_exp **tmp, t_env *env);
+int		onlydollar(char *str);
+void	exp_1(t_exp **tmp);
+void	exp_3(t_exp **tmp);
 
-int only_dollar(char *str)
+int	onlydollar(char *str)
 {
-    int i = 0;
-    while (str && str[i])
-    {
-        if (str[i] != '$')
-            return (0);
-        i++;
-    }
-    return (1);
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] != '$')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-char *expand(char *str, t_env **env)
+void	exp_1(t_exp **tmp)
 {
-    int i = -1;
-    int l = 0;
-    t_env *tmp;
+	t_exp	*exp;
+	char	*s1;
 
-    char *result = NULL;
-    char *segment = NULL;
-    if (only_dollar(str))
-        return (ft_strdup(""));
-    while (str[++i])
-    {
-        if (str[i] == '$')
-        {
-            if (i > 0 && !result)
-                result = ft_substr(str, 0, i);
-            else if (str[i + 1] != '\0')
-            {
-                segment = ft_substr(str, l, i - l);
-                result = ft_strjoin(result, segment, 1);
-                free(segment);
-            }
-            i++;
-            if (!ft_isalpha(str[i]) && str[i] != '?')
-                result = ft_strjoin(result, "$", 1);
-            l = i;
-            while (str[l] != '\0' && str[l] != '$' && str[l] != ' ' && str[l] != '\'')
-                l++;
-            tmp = (*env);
-            segment = ft_substr(str + i, 0, l - i);
-            while (tmp)
-            {
-                if (str[i] == '?')
-                {
-                    if (!ft_strcmp(tmp->key, "$?"))
-                        result = ft_strjoin(result, tmp->data, 1);
-                }
-                else if (l - i != 0 && !ft_strcmp(segment, tmp->key))
-                    result = ft_strjoin(result, tmp->data, 1);
-                tmp = tmp->next;
-            }
-            i = l;
-            free(segment);
-        }
-        if (!ft_strchr(str + l, '$'))
-        {
-            result = ft_strjoin(result, str + i, 1);
-            break  ;
-        }
-        else if (str[i] != '$')
-        {
-            i = l;
-            while (str[l] && str[l] != '$')
-                l++;
-            segment = ft_substr(str, i, l - i);
-            result = ft_strjoin(result, segment, 1);
-            free(segment);
-            i = l - 1;
-        }
-    }
-    return (result);
+	s1 = NULL;
+	exp = (*tmp);
+	if (exp->i > 0 && !exp->s)
+		exp->s = ft_substr(exp->str, 0, exp->i);
+	else if (exp->str[exp->i + 1] != '\0')
+	{
+		s1 = ft_substr(exp->str, exp->l, exp->i - exp->l);
+		exp->s = ft_strjoin(exp->s, s1, 1);
+		free(s1);
+	}
+	exp->i++;
+	if (!ft_isalpha(exp->str[exp->i]) && exp->str[exp->i] != '?')
+		exp->s = ft_strjoin(exp->s, "$", 1);
+	exp->l = exp->i;
+	while (exp->str[exp->l] != '\0' && exp->str[exp->l] != '$' && \
+			exp->str[exp->l] != ' ' && exp->str[exp->l] != '\'' && \
+			exp->str[exp->l] != '=')
+		exp->l++;
 }
 
-void do_expand(t_tok *stack, t_env *env)
+void	exp_2(t_exp **tmp, t_env *env)
 {
-    t_tok *tmp = stack;
+	t_exp	*exp;
+	char	*s1;
+	t_env	*tmp_env;
 
-    while (tmp)
-    {
-        if (ft_strchr(tmp->cmd, '$') && tmp->type != SQUOTE)
-        {
-            char *expanded = expand(tmp->cmd, &env);
-            free(tmp->cmd);
-            tmp->cmd = ft_strdup(expanded);
-            free(expanded);
-        }
-        tmp = tmp->next;
-    }
+	exp = *tmp;
+	s1 = NULL;
+	s1 = ft_substr(exp->str + exp->i, 0, exp->l - exp->i);
+	tmp_env = env;
+	while (tmp_env)
+	{
+		if (exp->str[exp->i] == '?')
+		{
+			if (!ft_strcmp(tmp_env->key, "$?"))
+				exp->s = ft_strjoin(exp->s, tmp_env->data, 1);
+		}
+		else if (exp->l - exp->i != 0 && !ft_strcmp(s1, tmp_env->key))
+			exp->s = ft_strjoin(exp->s, tmp_env->data, 1);
+		tmp_env = tmp_env->next;
+	}
+	exp->i = exp->l;
+	free(s1);
+}
+
+void	exp_3(t_exp **tmp)
+{
+	t_exp	*exp;
+	char	*s1;
+
+	s1 = NULL;
+	exp = *tmp;
+	exp->i = exp->l;
+	while (exp->str[exp->l] && exp->str[exp->l] != '$')
+		exp->l++;
+	s1 = ft_substr(exp->str, exp->i, exp->l - exp->i);
+	exp->s = ft_strjoin(exp->s, s1, 1);
+	free(s1);
+	exp->i = exp->l - 1;
+}
+
+char	*expand(char *str, t_env *env, t_exp *exp)
+{
+	exp->str = ft_strdup(str);
+	if (onlydollar(exp->str))
+		return ("$");
+	while (exp->str[++exp->i])
+	{
+		if (exp->str[exp->i] == '$')
+		{
+			exp_1(&exp);
+			exp_2(&exp, env);
+		}
+		if (!ft_strchr(exp->str + exp->l, '$'))
+		{
+			exp->s = ft_strjoin(exp->s, exp->str + exp->i, 1);
+			break ;
+		}
+		else if (exp->str[exp->i] != '$')
+			exp_3(&exp);
+	}
+	return (exp->s);
 }

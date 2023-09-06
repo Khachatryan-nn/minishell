@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 17:31:55 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 23:41:46 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 22:56:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	error_code(int error_num)
 		return (1);
 	return (error_num % 256);
 }
-
 
 void	builtins_error(char	*str, char *err)
 {

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 12:50:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/05 22:53:05 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	io_heredoc(t_init *init, t_tok *stack, t_env *env)
 		return (0 + unlink(stack->hdoc_fname));
 	if (ft_strcmp(tmp->left->cmd, "(NULL)"))
 		stack->err_code = check_ast(init, tmp->left, env);
-	unlink(stack->hdoc_fname);
 	return (stack->err_code);
 }
 
