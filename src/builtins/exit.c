@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:56:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/06 23:01:09 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:31:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,17 @@ char	*check_zeroes(char *str);
 int	mshell_exit(t_tok *stack, char **matrix, t_env *env, char *s)
 {
 	long long	exit_num;
-	char		*str;
 
 	if (matrix[1] != NULL)
-	{
-		str = matrix[1];
 		matrix[1] = check_zeroes(matrix[1]);
-		free(str);
-	}
 	exit_num = ft_atll(matrix[1]);
 	s = ft_itul(exit_num);
 	if (matrix[1] && matrix[1][0] == '+' && matrix[1][0] == '-')
 	{
-		str = ft_strdup(s);
 		if (matrix[1][0] == '+')
-			s = ft_strjoin("+", str, -1);
+			s = ft_strjoin("+", s, 2);
 		else if (matrix[1][0] == '-')
-			s = ft_strjoin("-", str, -1);
-		free(str);
+			s = ft_strjoin("-", s, 2);
 	}
 	if (matrixlen(matrix) == 1 && matrix[1] == NULL)
 		return (exit_error_code(stack, env, s));
@@ -106,5 +99,7 @@ char	*check_zeroes(char *str)
 		str = trim_zeroes(tmp);
 		free(tmp);
 	}
-	return (ft_strdup(str));
+	tmp = ft_strdup(str);
+	free(str);
+	return (tmp);
 }

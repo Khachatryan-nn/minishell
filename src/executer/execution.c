@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 22:49:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/06 23:08:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 		if (root->hdoc_fname)
 			unlink(root->hdoc_fname);
 	}
-	else if (root->left && root->right && root->type == PIPE) // && stack->left->type != HEREDOC && stack->right->type != HEREDOC)
+	else if (root->left && root->right && root->type == PIPE)
 		root->err_code = pipe_prepair(init, root, env);
 	if (root->left != NULL && !(root->left->flag & _REDIR_) && \
 		!(root->left->flag & _PIPES_))

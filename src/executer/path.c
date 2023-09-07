@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 00:13:57 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/06 23:54:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,21 @@ char	*check_cmd(char *cmd, char **path)
 	char	*cmd_path;
 
 	cmd_path = NULL;
-	if ((ft_strchr(cmd, '/') && access(cmd, X_OK) == -1))
+	if (access(cmd, X_OK | F_OK) == -1)
 	{
-		dprintf(2, "minishell: %s: No such file or directory\n", cmd);
-		return (cmd_path);
-	}
-	else if (!ft_strchr(cmd, '/'))
-	{
+		if ((ft_strchr(cmd, '/') && access(cmd, X_OK) == -1))
+		{
+			ft_dprintf(2, "minishell: %s: No such file or directory\n", cmd);
+			return (cmd_path);
+		}
 		cmd_path = find_cmdpath(cmd, path);
 		if (!cmd_path)
-			dprintf(2, "minishell: %s: command not found\n", cmd);
+			ft_dprintf(2, "minishell: %s: command not found\n", cmd);
+		return (cmd_path);
+	}
+	else if (ft_strchr(cmd, '/'))
+	{
+		ft_dprintf(2, "minishell: %s: is a directory\n", cmd);
 		return (cmd_path);
 	}
 	return (ft_strdup(cmd));

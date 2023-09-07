@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 17:07:40 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/04 14:51:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:27:59 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ char	*ft_strjoin(char *s1, char *s2, int mode)
 	while (s2[++k])
 		new[i + k] = s2[k];
 	new[len] = '\0';
-	if (mode)
+	if (mode == 1)
 		free(s1);
+	if (mode == 2)
+		free(s2);
 	return (new);
 }
