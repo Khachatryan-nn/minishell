@@ -6,17 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 14:42:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 14:04:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 const char	*token_is(t_type token);
-int			quote_count(char *limiter);
 int			is_delimiter(t_tok *root);
 const char	*get_token_name(t_type token);
-char		*rem_lim_quotes(char *limiter);
 
 const char	*get_token_name(t_type token)
 {
@@ -92,50 +90,4 @@ int	is_delimiter(t_tok *root)
 		return (1);
 	else
 		return (0);
-}
-
-char	*rem_lim_quotes(char *limiter)
-{
-	int		i;
-	int		quote;
-	char	*str;
-
-	i = -1;
-	quote = 0;
-	if (quote_count(limiter))
-		return (NULL);
-	str = (char *)malloc(sizeof(char) * (i - quote) + 1);
-	if (!str)
-		return (NULL);
-	i = ((quote = 0));
-	while (limiter && limiter[i])
-	{
-		if (limiter[i] == '"' || limiter[i] == '\'')
-			i++;
-		else
-			str[quote++] = limiter[i++];
-	}
-	str[quote] = '\0';
-	free(limiter);
-	return (str);
-}
-
-int	quote_count(char *limiter)
-{
-	int	dquote;
-	int	squote;
-	int	i;
-
-	i = -1;
-	dquote = ((squote = 0));
-	while (limiter && limiter[++i])
-	{
-		if (limiter[i] == '"')
-			dquote++;
-		if (limiter[i] == '\'')
-			squote++;
-	}
-	if (dquote % 2 != 0 || squote % 2 != 0 || squote == 1 || dquote == 1)
-		return (1);
-	return (0);
 }

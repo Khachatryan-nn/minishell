@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 02:07:06 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:54:20 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	lex(char **line, t_init *init)
 	}
 	if (init->hdoc > 15)
 	{
-		ft_dprintf(2, "Minishell: maximum here-document count exceeded");
+		ft_dprintf(2, "minishell: maximum here-document count exceeded");
 		exit(2);
 	}
 	parser(init);

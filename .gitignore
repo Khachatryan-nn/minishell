@@ -1,13 +1,13 @@
 # folder with obj #
 ###################
 build
-minishell*
-libs/ft_dprintf/build
-libs/ft_dprintf/libftdprintf*.a
-libs/get_next_line/build
-libs/get_next_line/libgnl*.a
+minishell
 libs/libft/build
 libs/libft/libft*.a
+libs/ft_dprintf/build
+libs/get_next_line/build
+libs/get_next_line/libgnl*.a
+libs/ft_dprintf/libftdprintf*.a
 
 # Compiled source #
 ###################

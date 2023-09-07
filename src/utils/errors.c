@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 17:31:55 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 22:56:49 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:54:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	builtins_error(char	*str, char *err)
 					"getcwd: cannot access parent directories: ", \
 					"No such file or directory");
 	else if (!ft_strcmp(str, "export") && err)
-		ft_dprintf(2, "Minishell: export: `%s': not a %s\n", \
+		ft_dprintf(2, "minishell: export: `%s': not a %s\n", \
 					err, "valid identifier");
 	else if (!ft_strcmp(str, "unset") && err)
-		ft_dprintf(2, "Minishell: unset: `%s': not a %s\n", \
+		ft_dprintf(2, "minishell: unset: `%s': not a %s\n", \
 					err, "valid identifier");
 }

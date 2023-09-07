@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/06 23:00:14 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:54:33 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ void	save_backup(t_init *init)
 {
 	init->stdin_backup = dup(STDIN_FILENO);
 	if (init->stdin_backup == -1)
-		perror("Minishell");
+		perror("minishell");
 	init->stdout_backup = dup(STDOUT_FILENO);
 	if (init->stdout_backup == -1)
-		perror("Minishell");
+		perror("minishell");
 }
 
 int	check_subsh(t_tok *stack)

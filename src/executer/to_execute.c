@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 00:03:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:53:56 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Minishell");
+		perror("minishell");
 		return (1);
 	}
 	else if (pid == 0)
@@ -50,7 +50,7 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 		if (execve(cmd, matrix, env) == -1 && \
 			execve(matrix[0], matrix, env) == -1)
 		{
-			perror("Minishell");
+			perror("minishell");
 			exit(EXIT_FAILURE);
 		}
 		exit(EXIT_SUCCESS);

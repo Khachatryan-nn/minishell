@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/06 22:02:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:54:08 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	mshell_cd(char **arr, t_env *my_env)
 	}
 	else if (chdir(arr[1]) != 0)
 	{
-		ft_dprintf(2, "Minishell: cd: no such file or directory: %s\n", arr[1]);
+		ft_dprintf(2, "minishell: cd: no such file or directory: %s\n", arr[1]);
 		return ;
 	}
 	mshell_cd_helper(str, my_env);
@@ -48,7 +48,7 @@ int	check_home(t_env *env)
 		tmp = tmp->next;
 	if (!ft_strcmp(tmp->key, "HOME") && tmp->flag == 1)
 	{
-		ft_dprintf(2, "Minishell: cd: HOME not set\n");
+		ft_dprintf(2, "minishell: cd: HOME not set\n");
 		return (1);
 	}
 	chdir(tmp->data);
