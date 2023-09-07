@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:52:40 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 22:19:43 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 23:19:22 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "minishell.h"
 
-int	 static	echo_part1(char **arr, int i);
+int static	echo_part1(char **arr, int i);
 void static	echo_part2(int i, char **arr);
 void		mshell_echo(char **arr);
 

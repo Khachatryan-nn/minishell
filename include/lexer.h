@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:59:23 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 21:13:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 23:20:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			handle_xor(t_tok **res, char *line, int i, int count);
 
 /* ******************************* ! Lexer ! ******************************* */
 int			add_new_quote(t_tok **res, char *line, int i, int type);
-int			find_limiter_end(char *line, int i, int start);
+int			find_limiter_end(char *line, int start);
 int			ft_isspace(char *line, int i, int j);
 int			lexer(t_tok **res, char **line);
 void		lex(char **line, t_init *init);

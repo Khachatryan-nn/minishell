@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 22:53:05 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:15:17 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,19 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 
 int	exec_iocmd(t_init *init, t_tok *stack, t_env *env)
 {
-	if (stack->type == WR_APPEND || stack->type == WR_TRUNC)
-		return (io_out(init, stack, env));
-	else if (stack->type == HEREDOC)
-		return (io_heredoc(init, stack, env));
-	else if (stack->type == INPUT)
-		return (io_input(init, stack, env));
-	return (1);
+	ch_reds(init, stack, 0);
+	if (stack->left->left)
+		stack->err_code = check_ast(init, stack->left, env);
+	if (init->exit_status == EXIT_SUCCESS)
+	{
+		if (stack->type == WR_APPEND || stack->type == WR_TRUNC)
+			return (io_out(init, stack, env));
+		else if (stack->type == HEREDOC)
+			return (io_heredoc(init, stack, env));
+		else if (stack->type == INPUT)
+			return (io_input(init, stack, env));
+	}
+	if (stack->hdoc_fname)
+		unlink(stack->hdoc_fname);
+	return (stack->err_code);
 }

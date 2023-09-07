@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:25:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 23:57:38 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 23:19:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	pwd_init(t_env *my_env)
 			break ;
 		}
 		tmp = tmp->next;
-	}	
+	}
 	pwd_init_2(my_env, str, &i);
 	free(str);
 }

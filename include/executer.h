@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 21:14:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:20:10 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 char	**alloc_cmd_matrix(char **matrix, char *cmd, t_wcard *wild, int *i);
 char	**alloc_wc_matrix(char **matrix, t_tok *stack, t_wcard **wcard);
 int		destroy_cmd(char *cmd, char **cmd_matrix, char **env_matrix);
+int		right_branch(t_init *in, t_tok *s, t_env *env, int status);
+int		left_branch(t_init *in, t_tok *s, t_env *env, int status);
 int		pipe_prepair(t_init *init, t_tok *stack, t_env *env);
 int		to_execute(t_init *init, t_tok *stack, t_env *env);
 int		exec_iocmd(t_init *init, t_tok *stack, t_env *env);
-void	check_lasts(t_init *init, t_tok *stack, int mode);
 int		call_cmd(t_init *init, t_tok *stack, t_env *env);
 int		io_backup(int stdin_backup, int stdout_backup);
+int		ch_reds(t_init *init, t_tok *stack, int mode);
 void	fill_wc_matrix(t_tok *stack, t_wcard **wild);
 void	handle_dollar(int exit_status, t_env *env);
 char	**restore_cmd_line(t_tok *stack, int i);

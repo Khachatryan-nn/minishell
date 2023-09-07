@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:56:21 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 21:14:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:19:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_cmd
 ///	@tparam	int				last_input
 ///	@tparam	char			*hdoc_fname
 ///	@tparam	int				stdin_backup
-///	@tparam	int				subshell_code
+///	@tparam	int				sub
 ///	@tparam	int				stdout_backup
 typedef struct s_tok
 {
@@ -145,7 +145,7 @@ typedef struct s_tok
 	int				last_input;
 	char			*hdoc_fname;
 	int				stdin_backup;
-	int				subshell_code;
+	int				sub;
 	int				stdout_backup;
 }					t_tok;
 

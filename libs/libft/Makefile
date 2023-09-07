@@ -11,7 +11,7 @@ IFLAGS			=	-Iinclude
 GRAY			=	\033[38;5;8m
 GREEN			=	\033[38;5;46m
 RED				=	\033[38;5;196m
-RESET			=	\033m[0m
+RESET			=	\033m
 
 # DEPENDENCIES
 DEPS			=	include/libft.h Makefile

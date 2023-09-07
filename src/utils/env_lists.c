@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 23:22:12 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 23:37:12 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 23:19:46 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_env	*push_back(t_env **list, t_env *new)
 	if (ptr == NULL)
 		list = &new;
 	else
-	{	
+	{
 		while (ptr->next != NULL)
 			ptr = ptr->next;
 		ptr->next = new;

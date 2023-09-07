@@ -6,15 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 13:53:56 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:25:14 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	call_cmd(t_init *init, t_tok *stack, t_env *env);
-int	to_execute(t_init *init, t_tok *pars, t_env *env);
 int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack);
+int	to_execute(t_init *init, t_tok *pars, t_env *env);
+int	call_cmd(t_init *init, t_tok *stack, t_env *env);
 
 int	to_execute(t_init *init, t_tok *stack, t_env *env)
 {
@@ -22,7 +22,9 @@ int	to_execute(t_init *init, t_tok *stack, t_env *env)
 
 	status = check_built(stack, env);
 	if (status == 1)
+	{
 		status = call_cmd(init, stack, env);
+	}
 	else if (status == -1)
 		return (1);
 	else

@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 23:46:00 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 23:46:17 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 23:19:53 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 unsigned long long int	ft_atll(char *str);
-char	*trim_zeroes(char *s);
+char					*trim_zeroes(char *s);
 
 char	*trim_zeroes(char *s)
 {

@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 18:25:38 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 23:20:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		add_new_quote(t_tok **res, char *line, int i, int type);
-int		find_limiter_end(char *line, int i, int start);
+int		find_limiter_end(char *line, int start);
 char	*heredoc_input(char	*limiter);
 
 char	*heredoc_input(char	*limiter)
@@ -70,10 +70,9 @@ int	add_new_quote(t_tok **res, char *line, int i, int type)
 	return (counter);
 }
 
-int	find_limiter_end(char *line, int i, int start)
+int	find_limiter_end(char *line, int start)
 {
 	int	end;
-	(void) i;
 
 	end = start;
 	while (line[end] && line[end] != ' ')

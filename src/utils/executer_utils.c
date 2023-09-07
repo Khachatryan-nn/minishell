@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 13:54:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:19:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	check_subsh(t_tok *stack)
 	temp = stack;
 	while (temp)
 	{
-		if (temp->subshell_code)
+		if (temp->sub)
 			return (1);
 		temp = temp->next;
 	}

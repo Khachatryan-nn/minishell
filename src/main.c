@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/05 22:54:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 00:16:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <signal.h>
 
 void static	while_loop(t_init *init, t_env *env, char *str);
+
 void static	print_logo(void)
 {
 	write (1, "\033[38;5;60m\

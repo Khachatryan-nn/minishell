@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   check_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/06 23:08:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:24:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ int	andor_check(t_tok *stack)
 
 int	check_ast(t_init *init, t_tok *root, t_env *env)
 {
-	pid_t	pid;
 	int		status;
 
-	pid = 0;
 	status = 0;
 	if (!root)
 	{
@@ -46,75 +44,18 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 	if (root->left == NULL && root->right == NULL)
 	{
 		root->err_code = to_execute(init, root, env);
-		handle_dollar(root->err_code, env);
 		return (root->err_code);
 	}
 	if (root->left && root->right && check_type(root->type) == 2)
-	{
-		check_lasts(init, root, 0);
-		if (root->left->left)
-			check_ast(init, root->left, env);
-		if (init->exit_status == EXIT_SUCCESS)
-			root->err_code = exec_iocmd(init, root, env);
-		if (root->hdoc_fname)
-			unlink(root->hdoc_fname);
-	}
+		root->err_code = exec_iocmd(init, root, env);
 	else if (root->left && root->right && root->type == PIPE)
 		root->err_code = pipe_prepair(init, root, env);
 	if (root->left != NULL && !(root->left->flag & _REDIR_) && \
 		!(root->left->flag & _PIPES_))
-	{
-		check_lasts(init, root, 1);
-		if (root->left->subshell_code && check_type(root->left->type) == 1)
-		{
-			pid = fork();
-			if (pid == -1)
-				return (127);
-			else if (pid == 0)
-			{
-				root->err_code = check_ast(init, root->left, env);
-				exit(root->err_code);
-			}
-			if (wait(&status) < 0)
-			{
-				perror("minishell");
-				return (1);
-			}
-			if (WIFSIGNALED(status))
-				root->err_code = WTERMSIG(status);
-			else
-				root->err_code = status;
-		}
-		else
-			root->err_code = check_ast(init, root->left, env);
-	}
+		root->err_code = left_branch(init, root, env, status);
 	if (root->right != NULL && andor_check(root) && \
 		!(root->right->flag & (_REDIR_)) && !(root->right->flag & _PIPES_))
-	{
-		check_lasts(init, root, 1);
-		if (root->right->subshell_code && check_type(root->right->type) == 1)
-		{
-			pid = fork();
-			if (pid == -1)
-				return (127);
-			else if (pid == 0)
-			{
-				root->err_code = check_ast(init, root->right, env);
-				exit (root->err_code);
-			}
-			if (wait(&status) < 0)
-			{
-				perror("minishell");
-				return (1);
-			}
-			if (WIFSIGNALED(status))
-				root->err_code = WTERMSIG(status);
-			else
-				root->err_code = status;
-			//exit_env(status, env);
-		}
-		else
-			root->err_code = check_ast(init, root->right, env);
-	}
-	return (0);
+		root->err_code = right_branch(init, root, env, status);
+	handle_dollar(root->err_code, env);
+	return (root->err_code);
 }

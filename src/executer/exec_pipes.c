@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:34:10 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/06 23:09:57 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 21:58:37 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ int	pipe_prepair(t_init *init, t_tok *stack, t_env *env)
 	close_pipes(pipes);
 	waitpid(pid_left, &status, 0);
 	waitpid(pid_right, &status, 0);
-	return (status);
+	return (status / 256);
 }

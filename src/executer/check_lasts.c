@@ -6,29 +6,30 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 12:18:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 12:20:13 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:24:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		check_lasts(t_init *init, t_tok *stack, int mode);
+int			ch_reds(t_init *init, t_tok *stack, int mode);
 void static	last_redir(t_init *init, t_tok *stack);
 void static	last_input(t_init *init, t_tok *stack);
 void static	last_hd(t_init *init, t_tok *stack);
 
-void	check_lasts(t_init *init, t_tok *stack, int mode)
+int	ch_reds(t_init *init, t_tok *stack, int mode)
 {
 	if (mode == 1)
 	{
 		init->last_hdoc = -42;
 		init->last_redir = -42;
 		init->last_input = -42;
-		return ;
+		return (1);
 	}
 	last_hd(init, stack);
 	last_redir(init, stack);
 	last_input(init, stack);
+	return (1);
 }
 
 void static	last_hd(t_init *init, t_tok *stack)

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:42 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 14:45:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:19:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_tok	*lstnew_pars(char *content, t_type type, int prec, int flag)
 	elt->last_red = -1;
 	elt->last_hdoc = 0;
 	elt->last_input = -1;
-	elt->subshell_code = 0;
+	elt->sub = 0;
 	elt->fd = -42;
 	elt->_stdin_ = -42;
 	elt->_stdout_ = -42;

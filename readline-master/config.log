@@ -30,8 +30,8 @@ Kernel configured for up to 10 processors.
 Processor type: arm64e (ARM64E)
 Processors active: 0 1 2 3 4 5 6 7 8 9
 Primary memory available: 16.00 gigabytes
-Default processor set: 589 tasks, 2559 threads, 10 processors
-Load average: 1.92, Mach factor: 8.07
+Default processor set: 548 tasks, 2258 threads, 10 processors
+Load average: 2.27, Mach factor: 7.73
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -2546,7 +2546,7 @@ configure:6098: checking for tgetent
 configure:6098: gcc -o conftest -g -O   conftest.c  >&5
 Undefined symbols for architecture arm64:
   "_tgetent", referenced from:
-      _main in conftest-85903a.o
+      _main in conftest-38eab5.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:6098: $? = 1
@@ -2929,7 +2929,7 @@ configure:6427: checking for mbscasecmp
 configure:6427: gcc -o conftest -g -O   conftest.c  >&5
 Undefined symbols for architecture arm64:
   "_mbscasecmp", referenced from:
-      _main in conftest-e8e98a.o
+      _main in conftest-ee461c.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:6427: $? = 1
@@ -3059,7 +3059,7 @@ configure:6433: checking for mbscmp
 configure:6433: gcc -o conftest -g -O   conftest.c  >&5
 Undefined symbols for architecture arm64:
   "_mbscmp", referenced from:
-      _main in conftest-4ff753.o
+      _main in conftest-31ae35.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:6433: $? = 1
@@ -3197,7 +3197,7 @@ configure:6452: checking for mbschr
 configure:6452: gcc -o conftest -g -O   conftest.c  >&5
 Undefined symbols for architecture arm64:
   "_mbschr", referenced from:
-      _main in conftest-df1c1a.o
+      _main in conftest-1e8ff6.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:6452: $? = 1
@@ -3553,6 +3553,7 @@ config.status:939: creating examples/Makefile
 config.status:939: creating shlib/Makefile
 config.status:939: creating readline.pc
 config.status:939: creating config.h
+config.status:1114: config.h is unchanged
 config.status:1128: executing default commands
 
 ## ---------------- ##

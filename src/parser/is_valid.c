@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 14:45:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 00:03:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,12 @@ int	is_valid(t_init *init)
 	while (ptr->next != NULL)
 	{
 		if (check_type(ptr->type) && check_type(ptr->next->type) == 1)
-		{
 			return (parse_error(type_is(ptr->next->type), 0));
+		else if (check_type(ptr->type) == 2 && \
+			!ft_strcmp(ptr->next->cmd, "(NULL)"))
+		{
+			if (ptr->next->next)
+				return (parse_error(type_is(ptr->next->next->type), 0));
 		}
 		else if (check_type(ptr->type) && ptr->next->type == END)
 			return (parse_error("newline", 0));
