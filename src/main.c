@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/08 15:19:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 02:33:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,16 @@ void static	while_loop(t_init *init, t_env *env, char *str)
 		}
 		if (!ft_onlyspaces(str))
 		{
-			lex(&str, init);
+			lex(&str, init, env);
 			if (init->pars)
 			{
 				init->exit_status = check_ast(init, init->pars, env);
-				handle_dollar(init->exit_status, env);
 				destroy_init(init);
 				init->hd->i = 0;
 			}
+			handle_dollar(init->exit_status, env);
 		}
 		add_history(str);
 		free(str);
 	}
 }
-
-// command not found -> 127
-// syntax || parsing error -> 258
-// empty () -> 1
-// unknown flag || parameter -> 1
-// maximum exit value is 0->255, example: exit 256 -> 256 - 256 = 0, exit 300 -> 300 - 256 = 44
-// exit "20"1 is the same, as exit "201" and exit 201

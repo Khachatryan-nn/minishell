@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 23:55:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 23:26:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,17 @@ int	ft_onlyspaces(char *str)
 int	ft_strcmp(char *s1, char *s2)
 {
 	int		i;
-	char	*ptr1;
-	char	*ptr2;
 
 	i = 0;
 	if (!s1 && !s2)
 		return (0);
-	ptr1 = s1;
-	ptr2 = s2;
-	while (ptr1[i] && ptr2[i] && ptr1[i] == ptr2[i])
+	while (s1[i] == s2[i])
 	{
-		if (ptr1[i] == '\0' && ptr2[i] == '\0')
+		if (s1[i] == '\0' && s2[i] == '\0')
 			return (0);
 		i++;
 	}
-	return (ptr1[i] - ptr2[i]);
+	return (s1[i] - s2[i]);
 }
 
 int	matrixlen(char **matrix)

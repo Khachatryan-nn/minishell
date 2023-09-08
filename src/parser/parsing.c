@@ -6,15 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/08 00:28:18 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 02:27:23 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	shunting_yard(t_tok **p, t_tok **ops, t_tok **otp);
+void	parser(t_init *init, t_env *env);
 void	push(t_tok **a, t_tok **b);
-void	parser(t_init *init);
 void	pop(t_tok **stack);
 
 void	pop(t_tok **stack)
@@ -82,19 +82,13 @@ void	shunting_yard(t_tok **p, t_tok **ops, t_tok **otp)
 	}
 }
 
-void	parser(t_init *init)
+void	parser(t_init *init, t_env *env)
 {
 	t_tok	*ptr;
 	t_tok	*stack_ops;
 	t_tok	*stack_otp;
 
-	ptr = init->lex;
-	while (ptr)
-	{
-		if (ptr->type == HEREDOC)
-			handle_heredoc_input(init, ptr, NULL);
-		ptr = ptr->next;
-	}
+	(void) env;
 	stack_ops = NULL;
 	stack_otp = NULL;
 	ptr = init->lex;
