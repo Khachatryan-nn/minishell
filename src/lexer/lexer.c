@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/08 00:27:45 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:08:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,9 @@ int	lexer(t_tok **res, char **line)
 				else
 					i = parse_error(")", 0);
 			}
-			else if ((*line)[i] == '(')
-			{
-				if (handle_prnthses(res, *line, i, counter))
-				{
+			else if ((*line)[i] == '(' && \
+				handle_prnthses(res, *line, i, counter))
 					subsh++;
-					i = -1;
-				}
-				else
-					i = 0;
-			}
 			else if ((*line)[i] == '|' && (*line)[i + 1] == '|')
 				i = handle_xor(res, *line, i, counter);
 			else if ((*line)[i] == '&' && (*line)[i + 1] == '&')

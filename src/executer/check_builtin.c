@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/06 22:13:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:40:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_built(t_tok *stack, t_env *env)
 int	execute_builtin(t_tok *stack, t_env *env, char **matrix)
 {
 	if (ft_strcmp(stack->cmd, "exit") == 0)
-		mshell_exit(stack, matrix, env, NULL);
+		return (mshell_exit(stack, matrix, env, NULL));
 	else if (ft_strcmp(matrix[0], "env") == 0)
 		mshell_env (env);
 	else if (ft_strnstr(matrix[0], "pwd", 3) == 0)

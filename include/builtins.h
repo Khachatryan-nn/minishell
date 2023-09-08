@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:55:34 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 21:14:11 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:15:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int						check_unset(char *str);
 void					mshell_env(t_env *env);
 char					*ft_itul(long long n);
 char					*trim_zeroes(char *s);
-void					handler_stp(int sig);
+void					call_signals(int sig);
 unsigned long long int	ft_atll(char *str);
-void					call_signals(void);
 
 #endif

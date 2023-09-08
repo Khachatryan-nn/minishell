@@ -6,13 +6,12 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 22:19:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:28:58 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_heredoc_input(t_init *init, t_tok *tok, char *str);
 void	handle_dollar(int exit_status, t_env *env);
 void	save_backup(t_init *init);
 int		check_subsh(t_tok *stack);
@@ -40,35 +39,6 @@ char	**env_matrix(t_env *env)
 	}
 	n_env[i] = NULL;
 	return (n_env);
-}
-
-void	handle_heredoc_input(t_init *init, t_tok *tok, char *str)
-{
-	char	*res;
-
-	res = NULL;
-	tok->hdoc_fname = ft_strdup(init->hd->fn[++init->hd->i]);
-	tok->fd = open(tok->hdoc_fname, O_RDWR | O_CREAT | O_TRUNC, 00655);
-	while (1)
-	{
-		str = readline("> ");
-		if (!str || ft_strcmp(str, tok->next->cmd) == 0)
-		{
-			free(str);
-			break ;
-		}
-		if (!res)
-			res = ft_strdup(str);
-		else
-			res = strjoin_helper(res, str, 1);
-		free(str);
-	}
-	if (res)
-		res = ft_strjoin(res, "\n", 1);
-	else
-		res = ft_strdup("");
-	write(tok->fd, res, ft_strlen(res));
-	_close2_(tok->fd, _free3_(res, NULL, NULL) - 42);
 }
 
 void	handle_dollar(int exit_status, t_env *env)

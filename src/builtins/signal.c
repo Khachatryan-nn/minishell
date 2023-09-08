@@ -6,27 +6,73 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 00:41:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/05 22:23:22 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:14:55 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handler_stp(int sig);
-void	call_signals(void);
+void	sig_handler_hdoc(int sig);
+void	restore_prompt(int sig);
+void	call_signals(int sig);
+void	back_slash(int sig);
+void	ctrl_c(int sig);
 
-void	handler_stp(int sig)
+void	call_signals(int sig)
 {
-	if (sig == SIGINT)
-		write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (sig == 1)
+	{
+		signal(SIGINT, restore_prompt);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	if (sig == 2)
+	{
+		signal(SIGINT, ctrl_c);
+		signal(SIGQUIT, back_slash);
+	}
+	if (sig == 3)
+	{
+		;
+		// printf("exit\n");
+		// exit(0);
+	}
+	if (sig == 4)
+	{
+		signal(SIGINT, sig_handler_hdoc);
+		signal(SIGQUIT, SIG_DFL);
+	}
 }
 
-void	call_signals(void)
+void	restore_prompt(int sig)
 {
-	rl_catch_signals = 0;
-	signal(SIGINT, &handler_stp);
-	signal(SIGQUIT, &handler_stp);
+	g_exit_status_ = 130;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	(void) sig;
+}
+
+void	ctrl_c(int sig)
+{
+	g_exit_status_ = 130;
+	write(1, "\n", 1);
+	(void) sig;
+}
+
+void	back_slash(int sig)
+{
+	g_exit_status_ = 131;
+	printf("Quit (core dumped)\n");
+	(void) sig;
+}
+
+void	sig_handler_hdoc(int sig)
+{
+	(void) sig;
+	g_exit_status_ = 130;
+	write(1, "\n", 1);
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
 }

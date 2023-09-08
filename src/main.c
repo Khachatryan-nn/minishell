@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/08 00:16:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:19:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void static	while_loop(t_init *init, t_env *env, char *str)
 	while (1)
 	{
 		save_backup(init);
-		call_signals();
+		call_signals(1);
 		str = readline("minishell$ ");
 		if (!str)
 		{
 			ft_dprintf(2, "exit\n");
-			exit (init->exit_status);
+			exit (g_exit_status_);
 		}
 		if (!ft_onlyspaces(str))
 		{

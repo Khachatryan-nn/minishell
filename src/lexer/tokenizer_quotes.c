@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 14:47:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:36:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ int	handle_dquotes(t_tok **res, char **line, int i, int count)
 		{
 			read = readline("dquote> ");
 			result = strjoin_helper(result, read, 1);
+			free (read);
 		}
 		val = add_new_quote(res, result, 0, DQUOTE);
 		*line = ft_strjoin(*line, result, 1);
+		free(result);
 		while ((*line)[val] != '"')
 			val += 1;
 	}
@@ -90,9 +92,11 @@ int	handle_squotes(t_tok **res, char **line, int i, int count)
 		{
 			read = readline("squote> ");
 			result = strjoin_helper(result, read, 1);
+			free (read);
 		}
 		val = add_new_quote(res, result, 0, SQUOTE);
 		*line = ft_strjoin(*line, result, 1);
+		free(result);
 		while ((*line)[val] != '\'')
 			val += 1;
 	}

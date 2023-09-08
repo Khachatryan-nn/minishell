@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:34:01 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/07 21:13:24 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:18:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 
 # include <stdio.h>
 # include <stdio.h>
+# include <errno.h>
 # include <string.h>
 # include <dirent.h>
 # include <stdlib.h>
 # include <stdlib.h>
 # include <signal.h>
 # include <unistd.h>
+# include <termios.h>
+# include <sys/ioctl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "libft.h"
@@ -30,10 +33,10 @@
 # include "structs.h"
 # include "executer.h"
 # include "builtins.h"
-# include "wildAndExp.h"
+# include "etc.h"
 # include "ft_dprintf.h"
 # include "get_next_line.h"
 
-extern		t_init	*init;
+int	g_exit_status_;
 
 #endif

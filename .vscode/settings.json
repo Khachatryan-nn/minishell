@@ -28,6 +28,8 @@
 		"vector": "c",
 		"sstream": "c",
 		"__locale": "c",
-		"ft_dprintf.h": "c"
+		"ft_dprintf.h": "c",
+		"utils.h": "c",
+		"termios.h": "c"
 	}
 }

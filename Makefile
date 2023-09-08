@@ -27,7 +27,7 @@ DEPS			=	$(wildcard $(INCS_DIR)/*.h) Makefile
 # SOURCES
 SRC_DIR			=	./src
 BUILD			=	./build
-SUBDIRS			=	lexer parser utils executer builtins wildcardAndExpand
+SUBDIRS			=	lexer parser utils executer builtins etc
 SRCDIRS			:=	$(addprefix $(SRC_DIR)/, $(SUBDIRS))
 SRCS			:=	$(notdir $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))) $(notdir $(SRC_DIR)/main.c)
 
@@ -35,7 +35,7 @@ SRCS			:=	$(notdir $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))) $(notdir 
 OBJS			:=	$(patsubst %.c, $(BUILD)/%.o, $(SRCS))
 
 # COMPILATION
-SANITIZER		=	-g3 -fsanitize=address
+SANITIZER		=	#-g3 -fsanitize=address
 LIBS			=	libft ft_dprintf gnl
 LFLAGS			=	-L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftdprintf -L$(GNL_DIR) -lgnl -lreadline -L./rd_lib/lib
 IFLAGS			=	-Iinclude -I$(LIBFT_DIR)/include -I$(PRINTF_DIR)/include -I$(GNL_DIR)/include -I./rd_lib/include

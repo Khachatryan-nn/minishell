@@ -6,41 +6,54 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 23:20:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:14:35 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	handle_heredoc_input(t_init *init, t_tok *tok, char *str);
 int		add_new_quote(t_tok **res, char *line, int i, int type);
 int		find_limiter_end(char *line, int start);
-char	*heredoc_input(char	*limiter);
 
-char	*heredoc_input(char	*limiter)
+void	handle_heredoc_input(t_init *init, t_tok *tok, char *str)
 {
-	char	*line;
-	char	*result;
+	char	*res;
 
-	line = NULL;
-	result = NULL;
+	res = NULL;
+	tok->hdoc_fname = ft_strdup(init->hd->fn[++init->hd->i]);
+	tok->fd = open(tok->hdoc_fname, O_RDWR | O_CREAT | O_TRUNC, 00655);
+	call_signals(4);
 	while (1)
 	{
-		line = readline("> ");
-		if (!line)
+		if (g_exit_status_)
+		{
+			free(result);
+			return (130);
+		}
+		if (!read_heredoc(line, &result, tok->next->cmd))
 			break ;
-		if (!ft_strcmp(line, limiter))
-			break ;
-		if (!result)
-			result = line;
-		else
-			result = strjoin_helper(result, line, 1);
 	}
-	if (!result)
-		result = ft_strdup("");
-	else
-		result = ft_strjoin(result, "\n", 1);
-	return (result);
+	expand_heredoc(&result, tok->fd, )
 }
+
+int	read_heredoc(char *line, char **result, char *limiter)
+{
+	line = readline("> ");
+	if (!line || ft_strcmp(line, result, limiter));
+	{
+		free (line);
+		return (0);
+	}
+	if (!(*result))
+		*result = ft_strdup(line);
+	else
+		*result = strjoin_helper(*result, line, 1);
+	free (line);
+	return (1);
+}
+
+void	expand_heredoc()
 
 int	add_new_quote(t_tok **res, char *line, int i, int type)
 {
