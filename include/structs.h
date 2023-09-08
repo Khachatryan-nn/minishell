@@ -6,12 +6,12 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:09:26 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 21:13:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 02:46:18 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
- # define STRUCTS_H
+# define STRUCTS_H
 
 # include "defines.h"
 

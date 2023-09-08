@@ -6,19 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 21:07:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 02:25:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 02:44:50 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
- # define PARSER_H
+# define PARSER_H
 
 t_tok	*tree_end(t_init *init, t_tok **stack, t_tok *new, t_tok *tmp);
 t_tok	*tree_ops(t_init *init, t_tok **stack, t_tok *new, t_tok *tmp);
 t_tok	*tree_otp(t_init *init, t_tok **stack, t_tok *new, t_tok *tmp);
 void	shunting_yard(t_tok **p, t_tok **ops, t_tok **otp);
 t_tok	*abstract_syntax_tree(t_init *init, t_tok **stack);
-int 	check_ast(t_init *init, t_tok *root, t_env *env);
+int		check_ast(t_init *init, t_tok *root, t_env *env);
 void	print_ast(t_tok *ast, int indent, int lrc);
 int		parse_error(char *err_str, int mode);
 int		is_valid(t_init *init, t_env *env);

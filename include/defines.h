@@ -6,13 +6,17 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:56:21 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 22:19:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 02:50:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
-	#define DEFINES_H
+# define DEFINES_H
 
+# define _ISCMD_	2
+# define _REDIR_	8
+# define _PIPES_	32
+# define _SUBSH_	64
 # define _CD_		"cd"
 # define _PWD_		"pwd"
 # define _ENV_		"env"
@@ -20,11 +24,6 @@
 # define _ECHO_		"echo"
 # define _UNSET_	"unset"
 # define _EXPORT_	"export"
-
-# define _ISCMD_	1 << 1
-# define _REDIR_	1 << 3
-# define _PIPES_	1 << 5
-# define _SUBSH_	1 << 6
 
 typedef enum e_token_type
 {
@@ -61,7 +60,7 @@ typedef struct s_exp
 /// @brief 
 ///	@tparam char	**fn;
 ///	@tparam int		i;
-typedef	struct s_hd
+typedef struct s_hd
 {
 	char	**fn;
 	int		i;
@@ -83,7 +82,6 @@ typedef struct s_env
 	char			*pwd;
 	int				flag;
 }					t_env;
-
 
 ///	@brief
 ///	@tparam char	*cmd_line

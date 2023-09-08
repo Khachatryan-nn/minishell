@@ -6,12 +6,12 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:59:23 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/08 21:59:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 02:46:27 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
- # define LEXER_H
+# define LEXER_H
 
 # include "defines.h"
 # include "parser.h"

@@ -6,12 +6,12 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 22:20:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 02:47:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTER_H
- # define EXECUTER_H
+# define EXECUTER_H
 
 # include "defines.h"
 
@@ -40,6 +40,6 @@ int		error_code(int error_num);
 char	**env_matrix(t_env *env);
 int		close_pipes(int *fd);
 void	init_hd(t_hd **hd);
-int		_close_(int	fd);
+int		_close_(int fd);
 
 #endif

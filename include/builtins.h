@@ -6,12 +6,12 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:55:34 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/08 15:15:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 02:47:09 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
- # define BUILTINS_H
+# define BUILTINS_H
 
 int						check_exit_status(t_tok *stack, char **arr, char *s, \
 																int exit_num);
