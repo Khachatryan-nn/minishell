@@ -6,16 +6,17 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 01:10:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 20:52:34 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		handle_cprnthses(t_tok **res, char *line, int i, int count);
+char	*handle_quotes(t_tok **res, char **line, int *i, int count);
+int		handle_squotes(t_tok **res, char **line, int *i, int count);
+int		handle_dquotes(t_tok **res, char **line, int *i, int count);
 int		handle_prnthses(t_tok **res, char *line, int i, int count);
-int		handle_squotes(t_tok **res, char **line, int i, int count);
-int		handle_dquotes(t_tok **res, char **line, int i, int count);
 
 int	handle_prnthses(t_tok **res, char *line, int i, int count)
 {
@@ -31,18 +32,18 @@ int	handle_cprnthses(t_tok **res, char *line, int i, int count)
 	return (i);
 }
 
-int	handle_dquotes(t_tok **res, char **line, int i, int count)
+int	handle_dquotes(t_tok **res, char **line, int *i, int count)
 {
 	int		val;
 	char	*read;
 	char	*result;
 
-	handle_space(res, *line, i, count);
-	val = add_new_quote(res, *line, i, DQUOTE);
+	handle_space(res, *line, *i, count);
+	val = add_new_quote(res, *line, *i, DQUOTE);
 	if ((*line)[val] != '"')
 	{
 		read = NULL;
-		result = ft_substr(*line, i + 1, val - i + 1);
+		result = ft_substr(*line, *i + 1, val - *i + 1);
 		while (!read || !ft_strchr(result, '"'))
 		{
 			read = readline("dquote> ");
@@ -55,21 +56,22 @@ int	handle_dquotes(t_tok **res, char **line, int i, int count)
 		while ((*line)[val] != '"')
 			val++;
 	}
+	*i = val;
 	return (val);
 }
 
-int	handle_squotes(t_tok **res, char **line, int i, int count)
+int	handle_squotes(t_tok **res, char **line, int *i, int count)
 {
 	int		val;
 	char	*read;
 	char	*result;
 
-	handle_space(res, *line, i, count);
-	val = add_new_quote(res, *line, i, SQUOTE);
+	handle_space(res, *line, *i, count);
+	val = add_new_quote(res, *line, *i, SQUOTE);
 	if ((*line)[val] != '\'')
 	{
 		read = NULL;
-		result = ft_substr(*line, i + 1, val - i + 1);
+		result = ft_substr(*line, *i + 1, val - *i + 1);
 		while (!read || !ft_strchr(result, '\''))
 		{
 			read = readline("squote> ");
@@ -80,7 +82,27 @@ int	handle_squotes(t_tok **res, char **line, int i, int count)
 		*line = ft_strjoin(*line, result, 1);
 		free(result);
 		while ((*line)[val] != '\'')
-			val += 1;
+			val++;
 	}
+	*i = val;
 	return (val);
+}
+
+char	*handle_quotes(t_tok **res, char **line, int *i, int count)
+{
+	int	status;
+
+	if ((*line)[*i] == '\'')
+	{
+		status = handle_squotes(res, line, i, count);
+		if (status < 0)
+			return ("\'");
+	}
+	if ((*line)[*i] == '\"')
+	{
+		status = handle_dquotes(res, line, i, count);
+		if (status < 0)
+			return ("\"");
+	}
+	return (NULL);
 }

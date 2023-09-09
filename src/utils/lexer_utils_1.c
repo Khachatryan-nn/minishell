@@ -6,14 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/02 11:48:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 20:25:47 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_type	token_name(char *token);
+void	heredoc_validation(t_init *init, t_tok *tok);
 int		ft_isspace(char *line, int i, int j);
+int		quote_count(char *line);
+t_type	token_name(char *token);
 
 //Checks if there only spaces from i -> j.\
 //If there are only spaces returns 1.
@@ -55,4 +57,60 @@ t_type	token_name(char *token)
 	else if (token[0] == '\0')
 		return (END);
 	return (WORD);
+}
+
+void	unlink_heredocs(t_init	*init)
+{
+	t_tok	*tok;
+
+	tok = init->lex;
+	while (tok)
+	{
+		if (tok->type == HEREDOC && tok->hdoc_fname)
+			unlink(tok->hdoc_fname);
+		tok = tok->next;
+	}
+}
+
+void	heredoc_validation(t_init *init, t_tok *tok)
+{
+	tok = init->lex;
+	while (tok)
+	{
+		if (tok->type == HEREDOC)
+		{
+			if (tok->next->next->type == WR_APPEND || \
+				tok->next->next->type == WR_TRUNC)
+				init->redir = 1;
+			init->hdoc++;
+		}
+		tok = tok->next;
+	}
+	if (init->hdoc > 15)
+	{
+		ft_dprintf(2, "minishell: maximum here-document count exceeded");
+		exit(2);
+	}
+}
+
+
+int	quote_count(char *line)
+{
+	int	dquote;
+	int	squote;
+	int	i;
+
+	i = -1;
+	dquote = ((squote = 0));
+	while (line && line[++i])
+	{
+		if (line[i] == '"')
+			dquote++;
+		if (line[i] == '\'')
+			squote++;
+	}
+	printf("->%s<-\n%d %d\n", line, dquote, squote);
+	if (dquote % 2 != 0 || squote % 2 != 0)
+		return (-1);
+	return (dquote + squote);
 }

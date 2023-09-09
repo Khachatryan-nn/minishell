@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 21:19:13 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/07/25 23:37:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 20:20:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <stdarg.h>
 
-int		ft_percentage(int fd, char type, va_list arg);
+int		ft_percentage(int fd, char type, va_list *arg);
 int		ft_putnbrhex(int fd, unsigned int nb, char c);
 int		ft_dprintf(int fd, const char *arg, ...);
 int		ft_putptrhex(int fd, char const *ptr);

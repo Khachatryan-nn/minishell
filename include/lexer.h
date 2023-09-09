@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:59:23 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 02:46:27 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/09 20:14:10 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 
 /* ************************** ! Token handling ! ************************** */
 int			handle_cprnthses(t_tok **res, char *line, int i, int count);
+char		*handle_quotes(t_tok **res, char **line, int *i, int count);
+int			handle_squotes(t_tok **res, char **line, int *i, int count);
+int			handle_dquotes(t_tok **res, char **line, int *i, int count);
 int			handle_prnthses(t_tok **res, char *line, int i, int count);
-int			handle_squotes(t_tok **res, char **line, int i, int count);
-int			handle_dquotes(t_tok **res, char **line, int i, int count);
 int			handle_heredoc(t_tok **res, char *line, int i, int count);
 int			handle_wappend(t_tok **res, char *line, int i, int count);
 int			handle_wtrunc(t_tok **res, char *line, int i, int count);
@@ -32,13 +33,16 @@ int			handle_xor(t_tok **res, char *line, int i, int count);
 
 /* ******************************* ! Lexer ! ******************************* */
 int			add_new_quote(t_tok **res, char *line, int i, int type);
+void		heredoc_validation(t_init *init, t_tok *tok);
 void		lex(char **line, t_init *init, t_env *env);
 int			find_limiter_end(char *line, int start);
 int			ft_isspace(char *line, int i, int j);
 int			lexer(t_tok **res, char **line);
+void		unlink_heredocs(t_init	*init);
 const char	*get_token_name(t_type token);
 int			is_delimiter(t_tok *root);
 int			ft_onlyspaces(char *str);
+int			quote_count(char *line);
 const char	*token_is(t_type token);
 t_type		token_name(char *token);
 int			check_type(t_type type);
