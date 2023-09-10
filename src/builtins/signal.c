@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 00:41:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 02:15:42 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/10 18:03:09 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ctrl_c(int sig)
 void	back_slash(int sig)
 {
 	g_exit_status_ = 131;
-	printf("Quit (core dumped)\n");
+	ft_dprintf(2, "Quit: 3)\n");
 	(void) sig;
 }
 

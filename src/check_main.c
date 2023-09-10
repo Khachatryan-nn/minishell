@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:57:27 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 23:04:06 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/10 18:02:18 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_check_main(char *str, t_env *env, t_init init)
 {
 	if (!str)
 	{
-		printf("exit\n");
+		ft_dprintf(2, "exit\n");
 		while (env)
 		{
 			free(env->ptr);

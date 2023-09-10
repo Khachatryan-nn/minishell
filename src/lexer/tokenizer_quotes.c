@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 20:52:34 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:58:21 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	handle_dquotes(t_tok **res, char **line, int *i, int count)
 		while (!read || !ft_strchr(result, '"'))
 		{
 			read = readline("dquote> ");
+			if (read == NULL)
+				return (-42);
 			result = strjoin_helper(result, read, 1);
 			free (read);
 		}
@@ -56,8 +58,7 @@ int	handle_dquotes(t_tok **res, char **line, int *i, int count)
 		while ((*line)[val] != '"')
 			val++;
 	}
-	*i = val;
-	return (val);
+	return (*i = val);
 }
 
 int	handle_squotes(t_tok **res, char **line, int *i, int count)
@@ -75,6 +76,8 @@ int	handle_squotes(t_tok **res, char **line, int *i, int count)
 		while (!read || !ft_strchr(result, '\''))
 		{
 			read = readline("squote> ");
+			if (read == NULL)
+				return (-42);
 			result = strjoin_helper(result, read, 1);
 			free (read);
 		}
@@ -84,8 +87,7 @@ int	handle_squotes(t_tok **res, char **line, int *i, int count)
 		while ((*line)[val] != '\'')
 			val++;
 	}
-	*i = val;
-	return (val);
+	return (*i = val);
 }
 
 char	*handle_quotes(t_tok **res, char **line, int *i, int count)

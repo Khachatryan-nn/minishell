@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 02:32:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/10 20:26:58 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int			subshell_validation(t_tok *ptr, int *subshell);
-int			is_valid(t_init *init, t_env *env);
+int			is_valid(t_init *init, t_env *env, int sb);
 int			check_type(t_type type);
 char static	*type_is(t_type	type);
 
@@ -72,13 +72,11 @@ int	subshell_validation(t_tok *ptr, int *subshell)
 	return (1);
 }
 
-int	is_valid(t_init *init, t_env *env)
+int	is_valid(t_init *init, t_env *env, int sb)
 {
 	t_tok	*ptr;
-	int		sb;
 
 	ptr = init->lex;
-	sb = 0;
 	while (ptr->next != NULL)
 	{
 		if (!subshell_validation(ptr, &sb))
@@ -97,5 +95,7 @@ int	is_valid(t_init *init, t_env *env)
 			return (parse_error("newline", 0));
 		ptr = ptr->next;
 	}
+	if (sb > 0)
+		return (parse_error("newline", 0));
 	return (1);
 }

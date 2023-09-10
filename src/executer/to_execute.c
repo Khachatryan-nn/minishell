@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 22:25:14 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/10 20:09:10 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	to_execute(t_init *init, t_tok *stack, t_env *env)
 	int	status;
 
 	status = check_built(stack, env);
+	if (g_exit_status_ == -42)
+		return (stack->err_code);
 	if (status == 1)
 	{
 		status = call_cmd(init, stack, env);

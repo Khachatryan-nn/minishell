@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 20:52:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/10 20:29:03 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,12 @@ int	lexer(t_tok **res, char **line)
 void	lex(char **line, t_init *init, t_env *env)
 {
 	t_tok	*tmp;
+	int		sb;
 
+	sb = 0;
 	tmp = init->lex;
 	heredoc_validation(init, tmp);
-	if (!lexer(&init->lex, line) || !init->lex || !is_valid(init, env))
+	if (!lexer(&init->lex, line) || !init->lex || !is_valid(init, env, sb))
 	{
 		unlink_heredocs(init);
 		destroy_init(init);
@@ -98,3 +100,5 @@ void	lex(char **line, t_init *init, t_env *env)
 	}
 	parser(init, env);
 }
+
+//ls && pwdw || (ls | cat -e | cat -e | cat -e) > file1

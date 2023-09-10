@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 20:25:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/10 20:25:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	heredoc_validation(t_init *init, t_tok *tok)
 		exit(2);
 	}
 }
-
 
 int	quote_count(char *line)
 {

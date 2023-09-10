@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 22:33:20 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 20:20:03 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/10 20:23:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_dprintf(int fd, const char *arg, ...)
 	while (arg[i])
 	{
 		while (arg[i] != '%' && arg[i] != '\0' && ++len)
-			write (1, &arg[i++], 1);
+			write (fd, &arg[i++], 1);
 		if (arg[i] == '%')
 		{
 			i++;
