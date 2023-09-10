@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 14:04:38 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/11 00:28:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	is_delimiter(t_tok *root)
 	else if (ptr->type == WR_APPEND || ptr->type == WR_TRUNC)
 		return (1);
 	else if (ptr->type == SUBSH_OPEN || ptr->type == SUBSH_CLOSE)
-		return (1);
+		return (3);
 	else
 		return (0);
 }

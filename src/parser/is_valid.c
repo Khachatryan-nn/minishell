@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/10 20:26:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/11 00:39:14 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	subshell_validation(t_tok *ptr, int *subshell)
 		return (parse_error(")", 0));
 	if (ptr->type == SUBSH_OPEN && ptr->prev && !check_type(ptr->prev->type))
 	{
-		if (ptr->next->type != END)
+		if (ptr->next->type != END && ptr->prev->type != SUBSH_OPEN)
 			return (parse_error(ptr->next->cmd, 0));
-		else
+		else if (ptr->prev->type != SUBSH_OPEN)
 			return (parse_error("newline", 0));
 	}
 	return (1);
