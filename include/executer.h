@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 02:47:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:04:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		_close3_(int fd1, int fd2, int fd3);
 void	find_path(t_init *init, t_env *env);
 char	*check_cmd(char *cmd, char **path);
 int		io_dup2(int _stdin, int _stdout);
+void	config_right_dups(t_tok *stack);
+void	config_left_dups(t_tok *stack);
 int		_close2_(int fd1, int fd2);
 void	save_backup(t_init *init);
 int		check_subsh(t_tok *stack);
