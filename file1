@@ -1,0 +1,11 @@
+LICENSE
+Makefile
+build
+configure.sh
+file1
+include
+libs
+minishell
+rd_lib
+readline-master
+src

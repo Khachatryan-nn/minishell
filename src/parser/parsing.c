@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 20:19:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/11 00:25:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:35:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,5 @@ void	parser(t_init *init, t_env *env)
 	}
 	while (stack_ops)
 		push(&stack_ops, &stack_otp);
-	print_types(stack_otp);
 	init->pars = abstract_syntax_tree(init, &stack_otp);
-	print_ast(init->pars, 0, 0);
 }

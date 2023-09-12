@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 13:54:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:33:15 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	io_heredoc(t_init *init, t_tok *stack, t_env *env)
 		return (EXIT_FAILURE);
 	}
 	tmp = stack;
-	while (tmp->left->type != WORD && tmp->left->type != PIPE \
+	while (tmp->left->type != WORD && check_type(tmp->left->type) != 1 \
 		&& !tmp->left->sub)
 	{
 		if (tmp->left->type == HEREDOC)
@@ -65,8 +65,7 @@ int	io_heredoc(t_init *init, t_tok *stack, t_env *env)
 	}
 	tmp->left->stdin_backup = init->stdin_backup;
 	tmp->left->_stdin_ = fd;
-	if (stack->last_hdoc != 1 || init->fd_fail || tmp->left->type == PIPE \
-		|| tmp->left->sub)
+	if (stack->last_hdoc != 1 || init->fd_fail || tmp->left->type == PIPE)
 		return (0 + unlink(stack->hdoc_fname));
 	if (ft_strcmp(tmp->left->cmd, "(NULL)"))
 		stack->err_code = check_ast(init, tmp->left, env);
@@ -88,7 +87,8 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 	if (init->fd_fail == 1)
 		return (1);
 	tmp = stack;
-	while (tmp->left->type != WORD)
+	while (tmp->left->type != WORD && check_type(tmp->left->type) != 1 \
+		&& !tmp->left->sub)
 		tmp = tmp->left;
 	tmp->left->stdin_backup = init->stdin_backup;
 	tmp->left->_stdin_ = fd;
