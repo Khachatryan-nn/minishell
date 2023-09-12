@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 23:46:00 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 23:19:53 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:16:26 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,54 +17,47 @@ char					*trim_zeroes(char *s);
 
 char	*trim_zeroes(char *s)
 {
-	int		j;
-	char	*str;
+	char	*tmp;
 
-	j = 0;
-	str = NULL;
-	if (s[j] == '-' || s[j] == '+')
-		j++;
-	if (s[j] == '0' || (s[j] == '0' && s[j + 1] == '0'))
+	if (s != NULL && ((s[0] == '0' && s[1] == '0') || \
+			((s[0] == '+' || s[0] == '-') && s[1] == '0')))
 	{
-		while (s && s[j] != '\0')
-		{
-			while (s[j] != '\0' && s[j] == '0')
-				j++;
-			if (s[j] != '0')
-				break ;
-		}
-		if (s[j] != '\0' && s[j] != '0')
-			str = (char *)malloc(sizeof(char) * (j + 1));
-		if (!str)
-			return (ft_strdup("0"));
-		str = ft_strdup(&s[j]);
-		return (str);
+		tmp = ft_strdup(s);
+		free(s);
+		s = trim_zeroes(tmp);
+		if (ft_strchr(tmp, '+') || ft_strchr(tmp, '-'))
+			s = num_sign(s, tmp[0]);
+		free(tmp);
+		return (s);
 	}
-	return (s);
+	else
+		return (s);
 }
 
 unsigned long long int	ft_atll(char *str)
 {
 	long long	num;
 	int			sing;
+	int			i;
 
 	sing = 1;
 	num = 0;
+	i = 0;
 	if (!str)
 		return (0);
-	while (*str && ((*str == ' ') || *str == '\t' || *str == '\r'
-			|| *str == '\f' || *str == '\v' || *str == '\n'))
-		++str;
-	if (*str == '+' || *str == '-')
+	while (str[i] && ((str[i] == ' ') || str[i] == '\t' || str[i] == '\r'
+			|| str[i] == '\f' || str[i] == '\v' || str[i] == '\n'))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (*str == '-')
+		if (str[i] == '-')
 			sing *= -1;
-		++str;
+		i++;
 	}
-	while (*str >= '0' && *str <= '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		num = num * 10 + (*str - '0');
-		++str;
+		num = num * 10 + (str[i] - '0');
+		i++;
 	}
 	return (num * sing);
 }

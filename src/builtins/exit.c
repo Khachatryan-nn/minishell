@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:56:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/08 15:32:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:12:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		check_exit_status(t_tok *stack, char **matrix, char *s, int exit_num);
 int		mshell_exit(t_tok *stack, char **matrix, t_env *env, char *s);
 int		exit_error_code(t_tok *stack, t_env *env, char *s);
+char	*num_sign(char *s, char c);
 char	*check_zeroes(char *str);
 
 int	mshell_exit(t_tok *stack, char **matrix, t_env *env, char *s)
@@ -26,12 +27,7 @@ int	mshell_exit(t_tok *stack, char **matrix, t_env *env, char *s)
 	exit_num = ft_atll(matrix[1]);
 	s = ft_itul(exit_num);
 	if (matrix[1] && matrix[1][0] == '+' && matrix[1][0] == '-')
-	{
-		if (matrix[1][0] == '+')
-			s = ft_strjoin("+", s, 2);
-		else if (matrix[1][0] == '-')
-			s = ft_strjoin("-", s, 2);
-	}
+		s = num_sign(s, matrix[1][0]);
 	if (matrixlen(matrix) == 1 && matrix[1] == NULL)
 		return (exit_error_code(stack, env, s));
 	exit_num = check_exit_status(stack, matrix, s, exit_num);
@@ -102,4 +98,19 @@ char	*check_zeroes(char *str)
 	tmp = ft_strdup(str);
 	free(str);
 	return (tmp);
+}
+
+char	*num_sign(char *s, char c)
+{
+	char	*str;
+
+	str = ft_strdup(s);
+	free (s);
+	s = NULL;
+	if (c == '+')
+		s = ft_strjoin("+", str, 0);
+	else if (c == '-')
+		s = ft_strjoin("-", str, 0);
+	free (str);
+	return (s);
 }

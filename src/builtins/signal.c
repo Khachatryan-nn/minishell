@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 00:41:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/10 18:03:09 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:01:43 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ void	call_signals(int sig)
 	{
 		signal(SIGINT, ctrl_c);
 		signal(SIGQUIT, back_slash);
-	}
-	if (sig == 3)
-	{
-		ft_dprintf(2, "exit\n");
-		exit(0);
 	}
 	if (sig == 4)
 	{
