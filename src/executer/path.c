@@ -6,15 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 01:24:07 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:37:31 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char		*check_cmd(t_init *init, t_tok *stack, char *cmd, char **path);
 char static	*find_cmdpath(char *cmd, char **path);
 void		find_path(t_init *init, t_env *env);
-char		*check_cmd(t_tok *stack, char *cmd, char **path);
 
 void	find_path(t_init *init, t_env *env)
 {
@@ -26,15 +26,15 @@ void	find_path(t_init *init, t_env *env)
 		if (ft_strcmp(temp->key, "PATH") == 0)
 		{
 			if (temp->flag)
-			{
-				init->path = NULL;
-				return ;
-			}
+				init->flag = 1;
+			else
+				init->flag = 0;
 			break ;
 		}
 		temp = temp->next;
 	}
-	init->path = ft_split(temp->data, ':');
+	if (!init->path)
+		init->path = ft_split(temp->data, ':');
 }
 
 char static	*find_cmdpath(char *cmd, char **path)
@@ -58,7 +58,7 @@ char static	*find_cmdpath(char *cmd, char **path)
 	return (NULL);
 }
 
-char	*check_cmd(t_tok *stack, char *cmd, char **path)
+char	*check_cmd(t_init *init, t_tok *stack, char *cmd, char **path)
 {
 	char	*cmd_path;
 
@@ -81,5 +81,6 @@ char	*check_cmd(t_tok *stack, char *cmd, char **path)
 		ft_dprintf(2, "minishell: %s: command not found\n", cmd);
 		return (NULL);
 	}
+	init->flag++;
 	return (cmd_path);
 }

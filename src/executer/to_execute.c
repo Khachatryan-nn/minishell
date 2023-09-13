@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 01:47:50 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:36:33 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,18 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 	return (child_exit / 256);
 }
 
+int static destroy_unsetcase(char *path, char **mtrx, char **env, t_tok *s)
+{
+	ft_dprintf(2, "minishell: %s: No such file or directory\n", s->cmd);
+	destroy_cmd(path, mtrx, env);
+	return (127);
+}
+
 int	call_cmd(t_init *init, t_tok *stack, t_env *env)
 {
 	char	**cmd_matrix;
-	char	*cmd_path;
 	char	**env_mtrx;
+	char	*cmd_path;
 	int		exit_code;
 
 	find_path(init, env);
@@ -84,17 +91,13 @@ int	call_cmd(t_init *init, t_tok *stack, t_env *env)
 	cmd_matrix = restore_cmd_line(stack, -1);
 	if (!cmd_matrix)
 		return (destroy_cmd(0, 0, env_mtrx) + 1);
-	cmd_path = check_cmd(stack, cmd_matrix[0], init->path);
+	cmd_path = check_cmd(init, stack, cmd_matrix[0], init->path);
+	if (init->flag == 2)
+		return (destroy_unsetcase(cmd_path, cmd_matrix, env_mtrx, stack));
 	if (!cmd_path)
 		return (destroy_cmd(0, cmd_matrix, env_mtrx) + 126 + \
 			stack->err_code);
 	exit_code = exec_cmd(cmd_path, cmd_matrix, env_mtrx, stack);
 	destroy_cmd(cmd_path, cmd_matrix, env_mtrx);
-	free_matrix(init->path);
 	return (exit_code);
 }
-
-// command not found			->	127
-// syntax || rooting error		->	258
-// empty ()						->	1
-// unknown flag || parameter	->	1

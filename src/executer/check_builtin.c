@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 01:42:37 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:20:28 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_built(t_tok *stack, t_env *env)
 		status = execute_builtin(stack, env, cmd_matrix);
 	free_matrix(cmd_matrix);
 	free(str);
-	return (status);
+	return (status + stack->err_code);
 }
 
 int	execute_builtin(t_tok *stack, t_env *env, char **matrix)
@@ -52,9 +52,9 @@ int	execute_builtin(t_tok *stack, t_env *env, char **matrix)
 	else if (ft_strnstr(matrix[0], "pwd", 3) == 0)
 		mshell_pwd (matrix[0], env);
 	else if (ft_strnstr(matrix[0], "export", 6) == 0)
-		mshell_export(matrix, env);
+		mshell_export(stack, matrix, env);
 	else if (ft_strnstr(matrix[0], "unset", 5) == 0)
-		mshell_unset(matrix, env);
+		mshell_unset(stack, matrix, env);
 	else if (ft_strnstr(matrix[0], "cd", 2) == 0)
 		mshell_cd(matrix, env);
 	else if (ft_strnstr(matrix[0], "echo", 4) == 0)

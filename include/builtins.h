@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:55:34 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 16:16:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:20:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int						mshell_exit(t_tok *stack, char **arr, t_env *env, \
 																char *s);
 int						exit_error_code(t_tok *stack, t_env *env, char *s);
 void					pwd_init_2(t_env *my_env, char *str, int *i);
-void					mshell_export(char **matrix, t_env *my_env);
-void					export(char **matrix, int i, t_env *my_env);
-int						mshell_unset(char **matrix, t_env *my_env);
+void					mshell_export(t_tok *stack, char **matrix, t_env *my_env);
+void					export(t_tok *stack, char **matrix, int i, t_env *my_env);
+int						mshell_unset(t_tok *stack, char **matrix, t_env *my_env);
 void					mshell_cd(char **matrix, t_env *my_env);
 int						check_built(t_tok *stack, t_env *env);
 t_env					*env_init(char **env, t_env *my_env);

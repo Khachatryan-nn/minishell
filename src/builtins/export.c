@@ -6,19 +6,19 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:50:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/04 23:56:42 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:17:04 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	mshell_export(char **matrix, t_env *my_env);
-void	export(char **matrix, int i, t_env *my_env);
+void	mshell_export(t_tok *stack, char **matrix, t_env *my_env);
+void	export(t_tok *stack, char **matrix, int i, t_env *my_env);
 int		ft_check(t_env *my_env, char *str);
 void	ft_add(t_env *my_env, char *str);
 void	ft_export(t_env *my_env);
 
-void	mshell_export(char **matrix, t_env *my_env)
+void	mshell_export(t_tok *stack, char **matrix, t_env *my_env)
 {
 	int		i;
 
@@ -28,10 +28,10 @@ void	mshell_export(char **matrix, t_env *my_env)
 		ft_export(my_env);
 		return ;
 	}
-	export(matrix, i, my_env);
+	export(stack, matrix, i, my_env);
 }
 
-void	export(char **matrix, int i, t_env *my_env)
+void	export(t_tok *stack, char **matrix, int i, t_env *my_env)
 {
 	t_env	*tmp;
 
@@ -39,7 +39,7 @@ void	export(char **matrix, int i, t_env *my_env)
 	while (matrix[++i])
 	{
 		if (ft_check(my_env, matrix[i]) == 2)
-			;
+			stack->err_code = -1;
 		else if (ft_strchr(matrix[i], '=') != 0)
 		{
 			if (ft_check(my_env, matrix[i]) == 0)
