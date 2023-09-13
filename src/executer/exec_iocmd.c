@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 22:35:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:50:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	io_out(t_init *init, t_tok *stack, t_env *env)
 	t_tok	*tmp;
 
 	fd = -42;
-	if (stack->left->left && check_type(stack->left->type) == 2)
-		stack->err_code = check_ast(init, stack->left, env);
 	if (stack->type == WR_APPEND)
 		fd = open(stack->right->cmd, O_WRONLY | O_CREAT | O_APPEND, 00655);
 	else if (stack->type == WR_TRUNC)
@@ -78,15 +76,16 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 	t_tok	*tmp;
 	int		fd;
 
+	if (init->fd_fail == 1)
+		return (1);
 	fd = open(stack->right->cmd, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("minishell");
+		ft_dprintf(2, "minishell: %s: No such file or directory\n", \
+									stack->right->cmd);
 		init->fd_fail = 1;
 		return (EXIT_FAILURE);
 	}
-	if (init->fd_fail == 1)
-		return (1);
 	tmp = stack;
 	while (tmp->left->type != WORD)
 		tmp = tmp->left;
@@ -102,6 +101,8 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 int	exec_iocmd(t_init *init, t_tok *stack, t_env *env)
 {
 	ch_reds(init, stack, 0);
+	if (stack->left->left && check_type(stack->left->type) == 2)
+		stack->err_code = check_ast(init, stack->left, env);
 	if (init->exit_status == EXIT_SUCCESS)
 	{
 		if (stack->type == WR_APPEND || stack->type == WR_TRUNC)

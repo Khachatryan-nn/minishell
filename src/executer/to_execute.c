@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 02:36:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:50:06 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 	return (child_exit / 256);
 }
 
-int static destroy_unsetcase(char *path, char **mtrx, char **env, t_tok *s)
+int static	destroy_unsetcase(char *path, char **mtrx, char **env, t_tok *s)
 {
 	ft_dprintf(2, "minishell: %s: No such file or directory\n", s->cmd);
 	destroy_cmd(path, mtrx, env);
