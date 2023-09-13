@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 17:22:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:58:37 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,16 @@ int	execute_builtin(t_tok *stack, t_env *env, char **matrix);
 int	check_built(t_tok *stack, t_env *env)
 {
 	char	**cmd_matrix;
+	char	*str;
 	int		status;
 
-	do_expand(stack, env);
+	str = ft_strdup(stack->cmd);
+	if (do_expand(stack, env) && stack->cmd[0] == '\0')
+	{
+		free (stack->cmd);
+		stack->cmd = str;
+		return (1);
+	}
 	cmd_matrix = restore_cmd_line(stack, -1);
 	if (!cmd_matrix || !cmd_matrix[0])
 		return (1);

@@ -6,16 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 22:10:05 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 00:08:06 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:54:22 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_expand(t_tok *stack, t_env *env);
+int		do_expand(t_tok *stack, t_env *env);
 void	destroy_exp(t_exp *exp);
 
-void	do_expand(t_tok *stack, t_env *env)
+int	do_expand(t_tok *stack, t_env *env)
 {
 	t_tok	*tmp;
 	char	*str;
@@ -27,6 +27,8 @@ void	do_expand(t_tok *stack, t_env *env)
 	exp.str = NULL;
 	exp.s = NULL;
 	str = NULL;
+	if (stack->cmd[0] == '\0')
+		return (0);
 	while (tmp)
 	{
 		if (ft_strchr(tmp->cmd, '$') && tmp->type != SQUOTE)
@@ -39,6 +41,7 @@ void	do_expand(t_tok *stack, t_env *env)
 		}
 		tmp = tmp->next;
 	}
+	return (1);
 }
 
 void	destroy_exp(t_exp *exp)

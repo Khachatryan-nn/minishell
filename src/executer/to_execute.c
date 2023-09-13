@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 17:18:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:53:43 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ int	call_cmd(t_init *init, t_tok *stack, t_env *env)
 		find_path(init, env);
 		init->flag = 0;
 	}
-	do_expand(stack, env);
-	if (lstsize(stack) == 1 && stack->cmd[0] == '\0')
+	if (do_expand(stack, env) && stack->cmd[0] == '\0')
 		return (0);
 	env_mtrx = env_matrix(env);
 	if (!env_mtrx)

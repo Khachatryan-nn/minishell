@@ -19,7 +19,7 @@ void	wcard_logic_2(char **pattern, char **string, int star);
 char	*expand(char *str, t_env *env, t_exp *exp);
 int		wcard_logic(char *pattern, char *string);
 void	get_file(char *path, t_wcard **wcard);
-void	do_expand(t_tok *stack, t_env *env);
+int		do_expand(t_tok *stack, t_env *env);
 void	exp_2(t_exp **tmp, t_env *env);
 void	destroy_exp(t_exp *exp);
 int		onlydollar(char *str);
