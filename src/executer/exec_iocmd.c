@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 17:44:03 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:35:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	io_out(t_init *init, t_tok *stack, t_env *env)
 	t_tok	*tmp;
 
 	fd = -42;
+	if (stack->left->left && check_type(stack->left->type) == 2)
+		stack->err_code = check_ast(init, stack->left, env);
 	if (stack->type == WR_APPEND)
 		fd = open(stack->right->cmd, O_WRONLY | O_CREAT | O_APPEND, 00655);
 	else if (stack->type == WR_TRUNC)
@@ -33,7 +35,7 @@ int	io_out(t_init *init, t_tok *stack, t_env *env)
 		return (1);
 	}
 	tmp = stack;
-	while (tmp->left->type == WR_APPEND || tmp->left->type == WR_TRUNC)
+	while (tmp->left->type != WORD && check_type(tmp->left->type) != 1)
 		tmp = tmp->left;
 	tmp->left->_stdout_ = fd;
 	tmp->left->stdout_backup = init->stdout_backup;
@@ -56,10 +58,9 @@ int	io_heredoc(t_init *init, t_tok *stack, t_env *env)
 		return (EXIT_FAILURE);
 	}
 	tmp = stack;
-	while (tmp->left->type != WORD && check_type(tmp->left->type) != 1 \
-		&& !tmp->left->sub)
+	while (tmp->left->type != WORD)
 	{
-		if (tmp->left->type == HEREDOC)
+		if (tmp->left->type == HEREDOC && check_type(tmp->left->type) != 1)
 			unlink(tmp->left->hdoc_fname);
 		tmp = tmp->left;
 	}
@@ -68,7 +69,7 @@ int	io_heredoc(t_init *init, t_tok *stack, t_env *env)
 	if (stack->last_hdoc != 1 || init->fd_fail || tmp->left->type == PIPE)
 		return (0 + unlink(stack->hdoc_fname));
 	if (ft_strcmp(tmp->left->cmd, "(NULL)"))
-		stack->err_code = check_ast(init, tmp->left, env);
+		stack->err_code = to_execute(init, tmp->left, env);
 	return (stack->err_code + unlink(stack->hdoc_fname));
 }
 
@@ -87,8 +88,7 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 	if (init->fd_fail == 1)
 		return (1);
 	tmp = stack;
-	while (tmp->left->type != WORD && check_type(tmp->left->type)\
-		&& !tmp->left->sub)
+	while (tmp->left->type != WORD)
 		tmp = tmp->left;
 	tmp->left->stdin_backup = init->stdin_backup;
 	tmp->left->_stdin_ = fd;
@@ -102,8 +102,6 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 int	exec_iocmd(t_init *init, t_tok *stack, t_env *env)
 {
 	ch_reds(init, stack, 0);
-	if (stack->left->left && check_type(stack->left->type) == 2)
-		stack->err_code = check_ast(init, stack->left, env);
 	if (init->exit_status == EXIT_SUCCESS)
 	{
 		if (stack->type == WR_APPEND || stack->type == WR_TRUNC)

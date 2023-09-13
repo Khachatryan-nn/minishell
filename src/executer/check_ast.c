@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 16:58:08 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:25:18 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 		root->err_code = pipe_prepair(init, root, env);
 	}
 	if (root->left != NULL && !(root->left->flag & (_REDIR_)) && \
-		!(root->left->flag & _PIPES_))
+		!(root->left->flag & (_PIPES_)))
 		root->err_code = left_branch(init, root, env, status);
 	if (root->right != NULL && andor_check(root) && \
-		!(root->right->flag & (_REDIR_)) && !(root->right->flag & _PIPES_))
+		!(root->right->flag & (_REDIR_)) && !(root->right->flag & (_PIPES_)))
 		root->err_code = right_branch(init, root, env, status);
 	handle_dollar(root->err_code, env);
 	return (root->err_code);

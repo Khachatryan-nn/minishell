@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:10:18 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 17:42:11 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:28:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ int	left_branch(t_init *in, t_tok *s, t_env *env, int status)
 			perror("minishell");
 			return (1);
 		}
-		if (WIFSIGNALED(status))
-			s->err_code = WTERMSIG(status);
-		else
-			s->err_code = status / 256;
+		s->err_code = status / 256;
 	}
 	else
 		s->err_code = check_ast(in, s->left, env);
@@ -88,6 +85,8 @@ void	config_right_dups(t_tok *stack)
 		stack->right->_stdout_ = stack->_stdout_;
 	if (stack->fd != -42)
 		stack->right->fd = stack->fd;
+	if (stack->sub)
+		stack->right->sub = 1;
 }
 
 void	config_left_dups(t_tok *stack)
@@ -104,4 +103,6 @@ void	config_left_dups(t_tok *stack)
 		stack->left->_stdout_ = stack->_stdout_;
 	if (stack->fd != -42)
 		stack->right->fd = stack->fd;
+	if (stack->sub)
+		stack->left->sub = 1;
 }

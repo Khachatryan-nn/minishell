@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 23:46:00 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 16:16:26 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:05:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,34 @@ char					*trim_zeroes(char *s);
 
 char	*trim_zeroes(char *s)
 {
-	char	*tmp;
+	int		j;
 
-	if (s != NULL && ((s[0] == '0' && s[1] == '0') || \
-			((s[0] == '+' || s[0] == '-') && s[1] == '0')))
+	j = 0;
+	if (s[j] == '-' || s[j] == '+')
+		j++;
+	if (s[j] == '0' || (s[j] == '0' && s[j + 1] == '0'))
 	{
-		tmp = ft_strdup(s);
-		free(s);
-		s = trim_zeroes(tmp);
-		if (ft_strchr(tmp, '+') || ft_strchr(tmp, '-'))
-			s = num_sign(s, tmp[0]);
-		free(tmp);
-		return (s);
+		while (s && s[j] != '\0')
+		{
+			while (s[j] != '\0' && s[j] == '0')
+				j++;
+			if (s[j] != '0')
+				break ;
+		}
+		if (s[j] == '\0')
+			return (ft_strdup("0"));
+		return (ft_strdup(&s[j]));
 	}
-	else
-		return (s);
+	return (ft_strdup(s));
 }
 
 unsigned long long int	ft_atll(char *str)
 {
 	long long	num;
-	int			sing;
+	int			sign;
 	int			i;
 
-	sing = 1;
+	sign = 1;
 	num = 0;
 	i = 0;
 	if (!str)
@@ -48,10 +52,10 @@ unsigned long long int	ft_atll(char *str)
 	while (str[i] && ((str[i] == ' ') || str[i] == '\t' || str[i] == '\r'
 			|| str[i] == '\f' || str[i] == '\v' || str[i] == '\n'))
 		i++;
-	if (str[i] == '+' || str[i] == '-')
+	if (str && str[i] && (str[i] == '+' || str[i] == '-'))
 	{
 		if (str[i] == '-')
-			sing *= -1;
+			sign *= -1;
 		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
@@ -59,5 +63,5 @@ unsigned long long int	ft_atll(char *str)
 		num = num * 10 + (str[i] - '0');
 		i++;
 	}
-	return (num * sing);
+	return (num * sign);
 }

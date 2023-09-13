@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:56:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 16:12:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:22:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,23 @@ char	*check_zeroes(char *str);
 int	mshell_exit(t_tok *stack, char **matrix, t_env *env, char *s)
 {
 	long long	exit_num;
+	char		*str;
 
+	if (matrixlen(matrix) == 1 && matrix[1] == NULL)
+		return (exit_error_code(stack, env, s));
 	if (matrix[1] != NULL)
 		matrix[1] = check_zeroes(matrix[1]);
 	exit_num = ft_atll(matrix[1]);
 	s = ft_itul(exit_num);
-	if (matrix[1] && matrix[1][0] == '+' && matrix[1][0] == '-')
-		s = num_sign(s, matrix[1][0]);
-	if (matrixlen(matrix) == 1 && matrix[1] == NULL)
-		return (exit_error_code(stack, env, s));
-	exit_num = check_exit_status(stack, matrix, s, exit_num);
+	if (matrix[1] && matrix[1][0] == '+')
+		str = num_sign(s, matrix[1][0]);
+	else
+	{
+		str = ft_strdup(s);
+		free (s);
+	}
+	exit_num = check_exit_status(stack, matrix, str, exit_num);
+	free(str);
 	if (exit_num == 1000)
 		return (1);
 	if (check_subsh(stack) || (stack->flag & _PIPES_))
@@ -42,9 +49,8 @@ int	exit_error_code(t_tok *stack, t_env *env, char *s)
 {
 	t_env	*tmp;
 
+	(void) s;
 	tmp = env;
-	if (*s)
-		free(s);
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, "$?"))
@@ -59,28 +65,27 @@ int	exit_error_code(t_tok *stack, t_env *env, char *s)
 
 int	check_exit_status(t_tok *stack, char **matrix, char *s, int exit_num)
 {
-	if (matrixlen(matrix) == 2 && ft_strcmp(s, matrix[1]) == 0)
+	if (!check_subsh(stack) && !(stack->flag & _PIPES_))
+		ft_dprintf(2, "exit\n");
+	if (matrixlen(matrix) == 2 && ft_strcmp(s, matrix[1]) == 0 \
+								&& check_digit(matrix[1]) != 1)
 	{
-		if (!check_subsh(stack) && !(stack->flag & _PIPES_))
-			ft_dprintf(2, "exit\n");
-		free(s);
-		return (exit_num % 256);
+		if (!exit_num)
+			return (0);
+		return ((unsigned char) exit_num);
 	}
 	else if (ft_strlen(s) > 19 || check_digit(matrix[1]) == 1 || \
 		ft_strcmp(s, matrix[1]) != 0)
 	{
-		ft_dprintf(2, "exit\nminishell: exit: %s: numeric argument required\n", \
+		ft_dprintf(2, "\nminishell: exit: %s: numeric argument required\n", \
 			matrix[1]);
-		free(s);
 		return (255);
 	}
 	else if (matrixlen(matrix) > 2 && check_digit(matrix[1]) == 0)
 	{
-		ft_dprintf(2, "exit\nminishell: exit: too many arguments\n");
-		free(s);
+		ft_dprintf(2, "minishell: exit: too many arguments\n");
 		return (1000);
 	}
-	free(s);
 	return (-1);
 }
 
@@ -92,8 +97,12 @@ char	*check_zeroes(char *str)
 			((str[0] == '+' || str[0] == '-') && str[1] == '0')))
 	{
 		tmp = ft_strdup(str);
+		free(str);
 		str = trim_zeroes(tmp);
+		if (tmp[0] == '+' || tmp[0] == '-')
+			str = num_sign(str, tmp[0]);
 		free(tmp);
+		return (str);
 	}
 	tmp = ft_strdup(str);
 	free(str);

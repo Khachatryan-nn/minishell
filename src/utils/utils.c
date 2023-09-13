@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:09:17 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 16:19:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:18:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	check_digit(char *str)
 	int	i;
 
 	i = 0;
-	printf("%s\n", str);
 	if (str[i] == '+' || str[i] == '-')
 		i++;
 	while (str && str[i] != '\0')
