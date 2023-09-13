@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 14:04:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 01:20:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		pipe_prepair(t_init *init, t_tok *stack, t_env *env);
 int		to_execute(t_init *init, t_tok *stack, t_env *env);
 int		exec_iocmd(t_init *init, t_tok *stack, t_env *env);
 int		call_cmd(t_init *init, t_tok *stack, t_env *env);
+char	*check_cmd(t_tok *stack, char *cmd, char **path);
 int		io_backup(int stdin_backup, int stdout_backup);
 int		ch_reds(t_init *init, t_tok *stack, int mode);
 void	fill_wc_matrix(t_tok *stack, t_wcard **wild);
@@ -31,7 +32,6 @@ void	handle_dollar(int exit_status, t_env *env);
 char	**restore_cmd_line(t_tok *stack, int i);
 int		_close3_(int fd1, int fd2, int fd3);
 void	find_path(t_init *init, t_env *env);
-char	*check_cmd(char *cmd, char **path);
 int		io_dup2(int _stdin, int _stdout);
 void	config_right_dups(t_tok *stack);
 void	config_left_dups(t_tok *stack);

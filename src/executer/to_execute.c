@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 22:53:43 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 01:27:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,21 @@ int	to_execute(t_init *init, t_tok *stack, t_env *env)
 	if (g_exit_status_ == -42)
 		return (stack->err_code);
 	if (status == 1)
-	{
 		status = call_cmd(init, stack, env);
-	}
 	else if (status == -1)
 		return (1);
 	else
 		if (io_backup(stack->stdin_backup, stack->stdout_backup))
 			return (1);
 	return (status);
+}
+
+void static	exec_error(char *cmd, int err_num)
+{
+	if (err_num == 13)
+		ft_dprintf(2, "minishell: %s: is a directory\n", cmd);
+	else
+		ft_dprintf(2, "minishell: %s: Permission denied\n", cmd);
 }
 
 int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
@@ -51,10 +57,9 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 	{
 		if (io_dup2(stack->_stdin_, stack->_stdout_))
 			exit (EXIT_FAILURE);
-		if (execve(cmd, matrix, env) == -1 && \
-			execve(matrix[0], matrix, env) == -1)
+		if (execve(cmd, matrix, env) == -1)
 		{
-			perror("minishell");
+			exec_error(cmd, errno);
 			exit (EXIT_FAILURE);
 		}
 		exit (EXIT_SUCCESS);
@@ -70,11 +75,7 @@ int	call_cmd(t_init *init, t_tok *stack, t_env *env)
 	char	**env_mtrx;
 	int		exit_code;
 
-	if (init->flag)
-	{
-		find_path(init, env);
-		init->flag = 0;
-	}
+	find_path(init, env);
 	if (do_expand(stack, env) && stack->cmd[0] == '\0')
 		return (0);
 	env_mtrx = env_matrix(env);
@@ -83,9 +84,10 @@ int	call_cmd(t_init *init, t_tok *stack, t_env *env)
 	cmd_matrix = restore_cmd_line(stack, -1);
 	if (!cmd_matrix)
 		return (destroy_cmd(0, 0, env_mtrx) + 1);
-	cmd_path = check_cmd(cmd_matrix[0], init->path);
+	cmd_path = check_cmd(stack, cmd_matrix[0], init->path);
 	if (!cmd_path)
-		return (destroy_cmd(0, cmd_matrix, env_mtrx) + 126);
+		return (destroy_cmd(0, cmd_matrix, env_mtrx) + 126 + \
+			stack->err_code);
 	exit_code = exec_cmd(cmd_path, cmd_matrix, env_mtrx, stack);
 	destroy_cmd(cmd_path, cmd_matrix, env_mtrx);
 	return (exit_code);

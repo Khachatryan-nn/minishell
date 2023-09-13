@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 22:25:18 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 01:29:56 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 	if (root->left && root->right && check_type(root->type) == 2)
 		root->err_code = exec_iocmd(init, root, env);
 	else if (root->left && root->right && root->type == PIPE)
-	{
-		config_right_dups(root);
 		root->err_code = pipe_prepair(init, root, env);
-	}
 	if (root->left != NULL && !(root->left->flag & (_REDIR_)) && \
 		!(root->left->flag & (_PIPES_)))
 		root->err_code = left_branch(init, root, env, status);

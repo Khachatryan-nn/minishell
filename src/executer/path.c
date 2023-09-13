@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/10 20:23:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 01:24:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char static	*find_cmdpath(char *cmd, char **path);
 void		find_path(t_init *init, t_env *env);
-char		*check_cmd(char *cmd, char **path);
+char		*check_cmd(t_tok *stack, char *cmd, char **path);
 
 void	find_path(t_init *init, t_env *env)
 {
@@ -58,29 +58,28 @@ char static	*find_cmdpath(char *cmd, char **path)
 	return (NULL);
 }
 
-char	*check_cmd(char *cmd, char **path)
+char	*check_cmd(t_tok *stack, char *cmd, char **path)
 {
 	char	*cmd_path;
 
-	cmd_path = NULL;
-	if (access(cmd, X_OK | F_OK) == -1)
+	if (access(cmd, X_OK | F_OK) == -1 && ft_strchr(cmd, '/'))
 	{
-		if ((ft_strchr(cmd, '/') && access(cmd, X_OK) == -1))
-		{
+		if (access(cmd, F_OK) == -1)
 			ft_dprintf(2, "minishell: %s: No such file or directory\n", cmd);
-			return (cmd_path);
+		else
+		{
+			stack->err_code = -1;
+			ft_dprintf(2, "minishell: %s: Permission denied\n", cmd);
 		}
-		cmd_path = find_cmdpath(cmd, path);
-		if (!cmd_path)
-			ft_dprintf(2, "minishell: %s: command not found\n", cmd);
-		return (cmd_path);
+		return (NULL);
 	}
-	else if (!access(cmd, X_OK | F_OK))
+	else if (access(cmd, X_OK) != -1 && ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
-	else if (ft_strchr(cmd, '/'))
+	cmd_path = find_cmdpath(cmd, path);
+	if (!cmd_path)
 	{
-		ft_dprintf(2, "minishell: %s: is a directory\n", cmd);
-		return (cmd_path);
+		ft_dprintf(2, "minishell: %s: command not found\n", cmd);
+		return (NULL);
 	}
-	return (ft_strdup(cmd));
+	return (cmd_path);
 }

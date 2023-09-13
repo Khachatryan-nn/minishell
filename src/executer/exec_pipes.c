@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:34:10 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 21:58:37 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 01:30:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	pipe_prepair(t_init *init, t_tok *stack, t_env *env)
 	int		pipes[2];
 	int		status;
 
+	config_right_dups(stack);
 	stack->left->flag |= _PIPES_;
 	stack->right->flag |= _PIPES_;
 	if (pipe(pipes) == -1)
