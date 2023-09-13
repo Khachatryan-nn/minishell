@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 15:33:15 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:44:03 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	io_out(t_init *init, t_tok *stack, t_env *env)
 		return (1);
 	}
 	tmp = stack;
-	while (tmp->left->type != WORD && check_type(tmp->left->type) != 1)
+	while (tmp->left->type == WR_APPEND || tmp->left->type == WR_TRUNC)
 		tmp = tmp->left;
 	tmp->left->_stdout_ = fd;
 	tmp->left->stdout_backup = init->stdout_backup;
@@ -87,7 +87,7 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 	if (init->fd_fail == 1)
 		return (1);
 	tmp = stack;
-	while (tmp->left->type != WORD && check_type(tmp->left->type) != 1 \
+	while (tmp->left->type != WORD && check_type(tmp->left->type)\
 		&& !tmp->left->sub)
 		tmp = tmp->left;
 	tmp->left->stdin_backup = init->stdin_backup;
@@ -102,8 +102,8 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 int	exec_iocmd(t_init *init, t_tok *stack, t_env *env)
 {
 	ch_reds(init, stack, 0);
-	// if (stack->left->left)
-	// 	stack->err_code = check_ast(init, stack->left, env);
+	if (stack->left->left && check_type(stack->left->type) == 2)
+		stack->err_code = check_ast(init, stack->left, env);
 	if (init->exit_status == EXIT_SUCCESS)
 	{
 		if (stack->type == WR_APPEND || stack->type == WR_TRUNC)

@@ -1,8 +1,8 @@
 LICENSE
 Makefile
+a
 build
 configure.sh
-file1
 include
 libs
 minishell

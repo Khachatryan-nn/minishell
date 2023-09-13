@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 14:59:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:18:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 	else if (pid == 0)
 	{
 		if (io_dup2(stack->_stdin_, stack->_stdout_))
-			return (EXIT_FAILURE);
+			exit (EXIT_FAILURE);
 		if (execve(cmd, matrix, env) == -1 && \
 			execve(matrix[0], matrix, env) == -1)
 		{
 			perror("minishell");
-			exit(EXIT_FAILURE);
+			exit (EXIT_FAILURE);
 		}
-		exit(EXIT_SUCCESS);
+		exit (EXIT_SUCCESS);
 	}
 	waitpid(pid, &child_exit, 0);
 	return (child_exit / 256);

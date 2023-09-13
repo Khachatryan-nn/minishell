@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:10:18 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 13:41:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:42:11 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	left_branch(t_init *in, t_tok *s, t_env *env, int status)
 		else if (pid == 0)
 		{
 			s->err_code = check_ast(in, s->left, env);
-			exit(s->err_code);
+			exit (s->err_code);
 		}
 		if (wait(&status) < 0)
 		{
@@ -76,6 +76,8 @@ int	left_branch(t_init *in, t_tok *s, t_env *env, int status)
 
 void	config_right_dups(t_tok *stack)
 {
+	if (stack->type == END)
+		return ;
 	if (stack->stdin_backup != -42)
 		stack->right->stdin_backup = stack->stdin_backup;
 	if (stack->stdout_backup != -42)
@@ -90,6 +92,8 @@ void	config_right_dups(t_tok *stack)
 
 void	config_left_dups(t_tok *stack)
 {
+	if (stack->type == END)
+		return ;
 	if (stack->stdin_backup != -42)
 		stack->left->stdin_backup = stack->stdin_backup;
 	if (stack->stdout_backup != -42)
