@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:10:18 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 23:37:15 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:03:18 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,10 @@ int	mshell_unset(char **matrix, t_env *my_env)
 
 int	check_unset(char *str)
 {
-	int		i;
-
-	i = -1;
-	while (str && str[++i])
+	if (!ft_isalpha(str[0]) && str[0] != '_')
 	{
-		if (str[0] != '=' && str[i] == '=')
-			break ;
-		if (ft_isalpha(str[i]) == 0 && str[i] != '_')
-		{
-			builtins_error("unset", str);
-			return (1);
-		}
+		builtins_error("unset", str);
+		return (1);
 	}
 	return (0);
 }

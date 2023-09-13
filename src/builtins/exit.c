@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:56:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 22:22:07 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 01:54:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_exit_status(t_tok *stack, char **matrix, char *s, int exit_num)
 	else if (ft_strlen(s) > 19 || check_digit(matrix[1]) == 1 || \
 		ft_strcmp(s, matrix[1]) != 0)
 	{
-		ft_dprintf(2, "\nminishell: exit: %s: numeric argument required\n", \
+		ft_dprintf(2, "minishell: exit: %s: numeric argument required\n", \
 			matrix[1]);
 		return (255);
 	}
