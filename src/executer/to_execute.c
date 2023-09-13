@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 01:27:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 01:47:50 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	call_cmd(t_init *init, t_tok *stack, t_env *env)
 			stack->err_code);
 	exit_code = exec_cmd(cmd_path, cmd_matrix, env_mtrx, stack);
 	destroy_cmd(cmd_path, cmd_matrix, env_mtrx);
+	free_matrix(init->path);
 	return (exit_code);
 }
 
