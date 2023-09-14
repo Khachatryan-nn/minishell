@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/14 01:48:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 02:55:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void static	while_loop(t_init *init, t_env *env, char *str)
 				init->hd->i = 0;
 			}
 			handle_dollar(init->exit_status, env);
+			add_history(str);
 		}
-		add_history(str);
 		free(str);
 	}
 }

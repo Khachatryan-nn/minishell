@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/11 00:39:14 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 20:23:20 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,3 +99,5 @@ int	is_valid(t_init *init, t_env *env, int sb)
 		return (parse_error("newline", 0));
 	return (1);
 }
+
+// (ls > a) > b
