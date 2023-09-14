@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 20:23:20 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 21:33:52 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	is_valid(t_init *init, t_env *env, int sb)
 	{
 		if (!subshell_validation(ptr, &sb))
 			return (0);
-		if (ptr->type == HEREDOC && !check_type(ptr->next->type))
+		if (ptr->type == HEREDOC && !check_type(ptr->next->type) && \
+			ft_strcmp(ptr->next->cmd, "(NULL)"))
 			handle_heredoc_input(init, ptr, NULL, env);
 		if (check_type(ptr->type) && check_type(ptr->next->type) == 1)
 			return (parse_error(type_is(ptr->next->type), 0));

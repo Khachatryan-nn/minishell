@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 21:18:22 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 21:45:05 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	io_heredoc(t_init *init, t_tok *stack, t_env *env)
 	if (check_type(stack->type) == 2 && stack->sub)
 		stack->last_hdoc = 1;
 	if (stack->last_hdoc != 1 || init->fd_fail || tmp->left->type == PIPE || \
-			(check_type(stack->type) == 2 && stack->sub))
+			(check_type(stack->left->type) == 2 && stack->left->sub))
 		return (0 + unlink(stack->hdoc_fname));
 	if (ft_strcmp(tmp->left->cmd, "(NULL)"))
 		stack->err_code = to_execute(init, tmp->left, env);
