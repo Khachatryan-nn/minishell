@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/08 23:18:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 22:40:48 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,31 @@ int		handle_heredoc_input(t_init *init, t_tok *tok, char *str, t_env *env);
 int		add_new_quote(t_tok **res, char *line, int i, int type);
 int		read_heredoc(char *line, char **result, char *limiter);
 void	expand_heredoc(char *result, int fd, t_env *env);
-int		find_limiter_end(char *line, int start);
+char	*find_limiter(t_tok *stack);
 
 int	handle_heredoc_input(t_init *init, t_tok *tok, char *str, t_env *env)
 {
 	char	*result;
+	char	*limiter;
 
+	limiter = NULL;
 	result = NULL;
 	tok->hdoc_fname = ft_strdup(init->hd->fn[++init->hd->i]);
 	tok->fd = open(tok->hdoc_fname, O_RDWR | O_CREAT | O_TRUNC, 00655);
+	limiter = find_limiter(tok->next);
 	call_signals(4);
 	while (1)
 	{
 		if (g_exit_status_ == 130)
 		{
 			free(result);
+			free (limiter);
 			return (130);
 		}
-		if (!read_heredoc(str, &result, tok->next->cmd))
+		if (!read_heredoc(str, &result, limiter))
 			break ;
 	}
+	free (limiter);
 	expand_heredoc(result, tok->fd, env);
 	return (1);
 }
@@ -110,28 +115,20 @@ int	add_new_quote(t_tok **res, char *line, int i, int type)
 	return (counter);
 }
 
-int	find_limiter_end(char *line, int start)
+char	*find_limiter(t_tok *stack)
 {
-	int	end;
+	char	*str;
+	t_tok	*tmp;
 
-	end = start;
-	while (line[end] && line[end] != ' ')
+	str = ft_strdup(stack->cmd);
+	tmp = stack->next;
+	while (tmp && tmp->cmd)
 	{
-		if (line[end] == '&' && line[end + 1] == '&')
+		if (tmp->flag & (1 << 1) || check_type(tmp->type) || \
+				tmp->type == END)
 			break ;
-		else if (line[end] == '|' || line[end] == '<' || \
-			line[end] == '>')
-			break ;
-		else if (line[end] == '(' || line[end] == ')')
-			break ;
-		end++;
+		str = ft_strjoin(str, tmp->cmd, 1);
+		tmp = tmp->next;
 	}
-	if (end == start)
-	{
-		if (line[end] == '\0')
-			return (parse_error("newline", 0));
-		else
-			return (parse_error((char *)token_is(token_name(line + start)), 0));
-	}
-	return (end);
+	return (str);
 }
