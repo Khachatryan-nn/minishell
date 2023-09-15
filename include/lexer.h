@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:59:23 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 20:14:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/15 21:13:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,17 @@ void		heredoc_validation(t_init *init, t_tok *tok);
 void		lex(char **line, t_init *init, t_env *env);
 int			find_limiter_end(char *line, int start);
 int			ft_isspace(char *line, int i, int j);
+void		push_redir(t_tok *to, t_tok *from);
 int			lexer(t_tok **res, char **line);
 void		unlink_heredocs(t_init	*init);
 const char	*get_token_name(t_type token);
+void		find_limiter(t_tok *stack);
 int			is_delimiter(t_tok *root);
 int			ft_onlyspaces(char *str);
 int			quote_count(char *line);
 const char	*token_is(t_type token);
 t_type		token_name(char *token);
 int			check_type(t_type type);
+void		pop_redir(t_tok *tok);
 
 #endif

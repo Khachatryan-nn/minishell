@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 22:40:48 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/15 21:10:25 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,27 @@ int		handle_heredoc_input(t_init *init, t_tok *tok, char *str, t_env *env);
 int		add_new_quote(t_tok **res, char *line, int i, int type);
 int		read_heredoc(char *line, char **result, char *limiter);
 void	expand_heredoc(char *result, int fd, t_env *env);
-char	*find_limiter(t_tok *stack);
+void	find_limiter(t_tok *stack);
 
 int	handle_heredoc_input(t_init *init, t_tok *tok, char *str, t_env *env)
 {
 	char	*result;
-	char	*limiter;
 
-	limiter = NULL;
 	result = NULL;
 	tok->hdoc_fname = ft_strdup(init->hd->fn[++init->hd->i]);
 	tok->fd = open(tok->hdoc_fname, O_RDWR | O_CREAT | O_TRUNC, 00655);
-	limiter = find_limiter(tok->next);
+	find_limiter(tok->next);
 	call_signals(4);
 	while (1)
 	{
 		if (g_exit_status_ == 130)
 		{
 			free(result);
-			free (limiter);
 			return (130);
 		}
-		if (!read_heredoc(str, &result, limiter))
+		if (!read_heredoc(str, &result, tok->next->cmd))
 			break ;
 	}
-	free (limiter);
 	expand_heredoc(result, tok->fd, env);
 	return (1);
 }
@@ -115,20 +111,31 @@ int	add_new_quote(t_tok **res, char *line, int i, int type)
 	return (counter);
 }
 
-char	*find_limiter(t_tok *stack)
+void	find_limiter(t_tok *stack)
 {
-	char	*str;
 	t_tok	*tmp;
+	t_tok	*cmd_l;
 
-	str = ft_strdup(stack->cmd);
 	tmp = stack->next;
+	cmd_l = stack->prev->prev;
 	while (tmp && tmp->cmd)
 	{
 		if (tmp->flag & (1 << 1) || check_type(tmp->type) || \
 				tmp->type == END)
 			break ;
-		str = ft_strjoin(str, tmp->cmd, 1);
+		stack->cmd = ft_strjoin(stack->cmd, tmp->cmd, 1);
 		tmp = tmp->next;
+		pop_redir(tmp->prev);
 	}
-	return (str);
+	while (cmd_l->prev && check_type(cmd_l->prev->type) == 2)
+		cmd_l = cmd_l->prev->prev;
+	if (!ft_strcmp(cmd_l->cmd, "(NULL)"))
+		return ;
+	while (tmp && tmp->cmd)
+	{
+		if (check_type(tmp->type) || tmp->type == END)
+			break ;
+		tmp = tmp->next;
+		push_redir(cmd_l, tmp->prev);
+	}
 }

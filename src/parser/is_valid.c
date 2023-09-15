@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 21:33:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/15 21:18:30 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ int	is_valid(t_init *init, t_env *env, int sb)
 			handle_heredoc_input(init, ptr, NULL, env);
 		if (check_type(ptr->type) && check_type(ptr->next->type) == 1)
 			return (parse_error(type_is(ptr->next->type), 0));
-		else if (check_type(ptr->type) == 2 && \
+		if (check_type(ptr->type) == 2 && \
 			!ft_strcmp(ptr->next->cmd, "(NULL)"))
-		{
 			if (ptr->next->next)
 				return (parse_error(type_is(ptr->next->next->type), 0));
-		}
-		else if (check_type(ptr->type) && ptr->next->type == END)
+		if (check_type(ptr->type) && ptr->next->type == END)
 			return (parse_error("newline", 0));
+		if (check_type(ptr->type) == 2 && ptr->type != HEREDOC)
+			find_limiter(ptr->next);
 		ptr = ptr->next;
 	}
 	if (sb > 0)
