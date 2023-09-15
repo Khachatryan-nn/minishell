@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/15 16:28:30 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/15 18:18:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,18 @@ void	destroy_init(t_init *init)
 		return ;
 	destroy_structure(init->lex);
 	destroy_structure(init->pars);
-	init->pars = NULL;
+	init->hdoc = 0;
+	init->redir = 0;
+	init->input = 0;
+	init->fd_fail = 0;
 	init->lex = NULL;
+	if (init->path)
+		free_matrix(init->path);
+	init->path = NULL;
+	init->pars = NULL;
+	init->temp = NULL;
+	init->last_hdoc = -42;
+	init->exit_status = 0;
 }
 
 void	destroy_structure(t_tok *root)
