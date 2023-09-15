@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/15 15:44:09 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/15 17:57:05 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	fill_wc_matrix(t_tok *stack, t_wcard **wild);
 void	handle_dollar(int exit_status, t_env *env);
 char	**restore_cmd_line(t_tok *stack, int i);
 int		_close3_(int fd1, int fd2, int fd3);
+int		open_in(t_init *init, t_tok *stack);
 void	find_path(t_init *init, t_env *env);
 int		io_dup2(int _stdin, int _stdout);
 void	config_right_dups(t_tok *stack);
@@ -40,7 +41,9 @@ int		_close2_(int fd1, int fd2);
 void	save_backup(t_init *init);
 int		check_subsh(t_tok *stack);
 int		error_code(int error_num);
+int		open_out(t_tok *stack);
 char	**env_matrix(t_env *env);
+int		open_hd(t_tok *stack);
 int		close_pipes(int *fd);
 void	init_hd(t_hd **hd);
 int		_close_(int fd);
