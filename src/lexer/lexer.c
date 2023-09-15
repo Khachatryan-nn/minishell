@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/15 20:47:43 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/15 21:30:33 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	lex(char **line, t_init *init, t_env *env)
 		init->exit_status = 258;
 		return ;
 	}
-	print_types(init->lex);
 	parser(init, env);
 }
 
