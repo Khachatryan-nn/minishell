@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 01:56:36 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 02:37:31 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 23:26:06 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ char	*check_cmd(t_init *init, t_tok *stack, char *cmd, char **path)
 		if (access(cmd, F_OK) == -1)
 			ft_dprintf(2, "minishell: %s: No such file or directory\n", cmd);
 		else
-		{
-			stack->err_code = -1;
 			ft_dprintf(2, "minishell: %s: Permission denied\n", cmd);
-		}
+		stack->err_code = -1;
 		return (NULL);
 	}
 	else if (access(cmd, X_OK) != -1 && ft_strchr(cmd, '/'))

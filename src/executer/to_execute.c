@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 02:50:06 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/14 23:28:05 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ int	to_execute(t_init *init, t_tok *stack, t_env *env)
 	return (status);
 }
 
-void static	exec_error(char *cmd, int err_num)
+void static	exec_error(t_tok *stack, char *cmd, int err_num)
 {
 	if (err_num == 13)
+	{
 		ft_dprintf(2, "minishell: %s: is a directory\n", cmd);
+		stack->err_code = 125;
+	}
 	else
 		ft_dprintf(2, "minishell: %s: Permission denied\n", cmd);
 }
@@ -59,8 +62,8 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 			exit (EXIT_FAILURE);
 		if (execve(cmd, matrix, env) == -1)
 		{
-			exec_error(cmd, errno);
-			exit (EXIT_FAILURE);
+			exec_error(stack, cmd, errno);
+			exit (EXIT_FAILURE + stack->err_code);
 		}
 		exit (EXIT_SUCCESS);
 	}
