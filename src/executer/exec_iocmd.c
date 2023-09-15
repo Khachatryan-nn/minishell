@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/15 18:00:52 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/15 18:39:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 	if (stack->last_input != 1 || (check_type(stack->left->type) == 2 \
 				&& stack->left->sub))
 		return (0);
-	stack->err_code = check_ast(init, tmp->left, env);
+	if (ft_strcmp(stack->right->cmd, "(NULL)"))
+		stack->err_code = execute_second_arg(init, stack, env);
+	stack->err_code |= check_ast(init, tmp->left, env);
 	init->fd_fail = 0;
 	return (stack->err_code);
 }
