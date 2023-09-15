@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:50:41 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 02:30:41 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/15 15:44:09 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	**alloc_wc_matrix(char **matrix, t_tok *stack, t_wcard **wcard);
 char	*check_cmd(t_init *init, t_tok *stack, char *cmd, char **path);
 int		destroy_cmd(char *cmd, char **cmd_matrix, char **env_matrix);
 int		right_branch(t_init *in, t_tok *s, t_env *env, int status);
+int		execute_second_arg(t_init *init, t_tok *stack, t_env *env);
 int		left_branch(t_init *in, t_tok *s, t_env *env, int status);
 int		pipe_prepair(t_init *init, t_tok *stack, t_env *env);
 int		to_execute(t_init *init, t_tok *stack, t_env *env);
