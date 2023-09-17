@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 23:51:16 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/15 18:18:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/16 23:27:16 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	destroy_init(t_init *init)
 	init->pars = NULL;
 	init->temp = NULL;
 	init->last_hdoc = -42;
-	init->exit_status = 0;
 }
 
 void	destroy_structure(t_tok *root)

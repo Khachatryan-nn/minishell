@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:50:06 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 02:17:04 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/16 01:25:11 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	ft_export(t_env *my_env)
 int	ft_check(t_env *my_env, char *str)
 {
 	t_env	*tmp;
+	char	*s;
 	int		i;
 
 	tmp = my_env;
@@ -107,18 +108,20 @@ int	ft_check(t_env *my_env, char *str)
 			return (2);
 		}
 	}
+	s = ft_substr(str, 0, i);
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, str, i) == 0)
-			return (1);
+		if (!ft_strcmp(tmp->key, s))
+			return (1 + _free3_(s, 0, 0));
 		tmp = tmp->next;
 	}
-	return (0);
+	return (0 + _free3_(s, 0, 0));
 }
 
 void	ft_add(t_env *my_env, char *str)
 {
 	t_env	*tmp;
+	char	*s;
 	int		i;
 
 	i = 0;
@@ -129,9 +132,10 @@ void	ft_add(t_env *my_env, char *str)
 			break ;
 		i++;
 	}
+	s = ft_substr(str, 0, i);
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, str, i) == 0)
+		if (ft_strcmp(tmp->key, s) == 0)
 		{
 			free(tmp->data);
 			tmp->data = ft_strdup(str + i + 1);
@@ -139,4 +143,5 @@ void	ft_add(t_env *my_env, char *str)
 		}
 		tmp = tmp->next;
 	}
+	free(s);
 }

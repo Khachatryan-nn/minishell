@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:04:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/10 19:58:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/17 20:54:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	handle_dquotes(t_tok **res, char **line, int *i, int count)
 	{
 		read = NULL;
 		result = ft_substr(*line, *i + 1, val - *i + 1);
-		while (!read || !ft_strchr(result, '"'))
+		while (!ft_strchr(result, '"'))
 		{
 			read = readline("dquote> ");
 			if (read == NULL)
@@ -73,7 +73,7 @@ int	handle_squotes(t_tok **res, char **line, int *i, int count)
 	{
 		read = NULL;
 		result = ft_substr(*line, *i + 1, val - *i + 1);
-		while (!read || !ft_strchr(result, '\''))
+		while (!ft_strchr(result, '\''))
 		{
 			read = readline("squote> ");
 			if (read == NULL)
@@ -84,8 +84,8 @@ int	handle_squotes(t_tok **res, char **line, int *i, int count)
 		val = add_new_quote(res, result, 0, SQUOTE);
 		*line = ft_strjoin(*line, result, 1);
 		free(result);
-		while ((*line)[val] != '\'')
-			val++;
+		//while ((*line)[val++] != '\'')
+		//	;
 	}
 	return (*i = val);
 }

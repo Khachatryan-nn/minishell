@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/14 02:55:01 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/16 23:27:22 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,11 @@ void static	while_loop(t_init *init, t_env *env, char *str)
 			if (init->pars)
 			{
 				init->exit_status = check_ast(init, init->pars, env);
-				destroy_init(init);
 				init->hd->i = 0;
+				destroy_init(init);
 			}
 			handle_dollar(init->exit_status, env);
+			init->exit_status = 0;
 			add_history(str);
 		}
 		free(str);

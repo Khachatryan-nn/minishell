@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:07:04 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 01:46:18 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/17 19:40:12 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_ast(t_init *init, t_tok *root, t_env *env)
 		root->err_code = 258;
 		return (root->err_code);
 	}
-	if (root->left == NULL && root->right == NULL)
+	if (root->left == 0 && root->right == 0 && ft_strcmp(root->cmd, "(NULL)"))
 	{
 		root->err_code = to_execute(init, root, env);
 		return (root->err_code);

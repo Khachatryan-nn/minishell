@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/15 21:30:33 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/17 17:09:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,11 @@ void	lex(char **line, t_init *init, t_env *env)
 	sb = 0;
 	tmp = init->lex;
 	heredoc_validation(init, tmp);
-	if (!lexer(&init->lex, line) || !init->lex || !is_valid(init, env, sb))
+	if (!lexer(&init->lex, line) || !init->lex || \
+		!is_valid(init, env, &sb) || sb > 0)
 	{
+		if (sb > 0)
+			ft_dprintf(2, "minishell: syntax error: missing token `)'\n");
 		unlink_heredocs(init);
 		destroy_init(init);
 		init->exit_status = 258;

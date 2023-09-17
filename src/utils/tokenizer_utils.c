@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/15 21:10:25 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/17 20:38:29 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,9 @@ void	find_limiter(t_tok *stack)
 
 	tmp = stack->next;
 	cmd_l = stack->prev->prev;
-	while (tmp && tmp->cmd)
+	while (tmp && tmp->cmd && (tmp->type == WORD || tmp->type == SQUOTE \
+		|| tmp->type == DQUOTE) && !(tmp->flag & 1 << 1))
 	{
-		if (tmp->flag & (1 << 1) || check_type(tmp->type) || \
-				tmp->type == END)
-			break ;
 		stack->cmd = ft_strjoin(stack->cmd, tmp->cmd, 1);
 		tmp = tmp->next;
 		pop_redir(tmp->prev);
@@ -131,10 +129,9 @@ void	find_limiter(t_tok *stack)
 		cmd_l = cmd_l->prev->prev;
 	if (!ft_strcmp(cmd_l->cmd, "(NULL)"))
 		return ;
-	while (tmp && tmp->cmd)
+	while (tmp && tmp->cmd && (tmp->type == WORD || tmp->type == SQUOTE \
+		|| tmp->type == DQUOTE))
 	{
-		if (check_type(tmp->type) || tmp->type == END)
-			break ;
 		tmp = tmp->next;
 		push_redir(cmd_l, tmp->prev);
 	}
