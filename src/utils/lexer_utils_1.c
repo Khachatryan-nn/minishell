@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/10 20:25:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/17 21:12:55 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	heredoc_validation(t_init *init, t_tok *tok);
 int		ft_isspace(char *line, int i, int j);
-int		quote_count(char *line);
+int		quote_count(char *line, char c);
 t_type	token_name(char *token);
 
 //Checks if there only spaces from i -> j.\
@@ -93,7 +93,7 @@ void	heredoc_validation(t_init *init, t_tok *tok)
 	}
 }
 
-int	quote_count(char *line)
+int	quote_count(char *line, char c)
 {
 	int	dquote;
 	int	squote;
@@ -108,8 +108,9 @@ int	quote_count(char *line)
 		if (line[i] == '\'')
 			squote++;
 	}
-	printf("->%s<-\n%d %d\n", line, dquote, squote);
-	if (dquote % 2 != 0 || squote % 2 != 0)
-		return (-1);
+	if (c == '\'')
+		return (squote);
+	else if (c == '"')
+		return (dquote);
 	return (dquote + squote);
 }
