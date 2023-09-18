@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 02:07:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/17 21:12:55 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/18 18:41:32 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ void	heredoc_validation(t_init *init, t_tok *tok)
 	}
 	if (init->hdoc > 15)
 	{
-		ft_dprintf(2, "minishell: maximum here-document count exceeded");
+		ft_dprintf(2, "minishell: maximum here-document count exceeded\n");
+		destroy_init(init);
 		exit(2);
 	}
 }

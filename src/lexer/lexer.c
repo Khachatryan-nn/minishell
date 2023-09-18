@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/17 17:09:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/18 18:40:19 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,17 @@ int	lexer(t_tok **res, char **line)
 
 void	lex(char **line, t_init *init, t_env *env)
 {
-	t_tok	*tmp;
 	int		sb;
 
 	sb = 0;
-	tmp = init->lex;
-	heredoc_validation(init, tmp);
-	if (!lexer(&init->lex, line) || !init->lex || \
-		!is_valid(init, env, &sb) || sb > 0)
+	if (!lexer(&init->lex, line) || !init->lex)
+	{
+		destroy_init(init);
+		init->exit_status = 258;
+		return ;
+	}
+	heredoc_validation(init, NULL);
+	if (!is_valid(init, env, &sb) || sb > 0)
 	{
 		if (sb > 0)
 			ft_dprintf(2, "minishell: syntax error: missing token `)'\n");
