@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:06:56 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 02:20:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/18 22:53:23 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,15 @@ int	execute_builtin(t_tok *stack, t_env *env, char **matrix)
 	if (ft_strcmp(stack->cmd, "exit") == 0)
 	{
 		stack->err_code = mshell_exit(stack, matrix, env, NULL);
-		g_exit_status_ = -42;
+		g_exit_status_ = -100;
 	}
 	else if (ft_strcmp(matrix[0], "env") == 0)
+	{
+		if (matrix[1] != NULL)
+			return (127 + ft_dprintf(2, "%s: %s: %s\n", matrix[0], \
+			matrix[1], "No such file or directory") * 0);
 		mshell_env (env);
+	}
 	else if (ft_strnstr(matrix[0], "pwd", 3) == 0)
 		mshell_pwd (matrix[0], env);
 	else if (ft_strnstr(matrix[0], "export", 6) == 0)

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/17 19:35:48 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:22:00 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	to_execute(t_init *init, t_tok *stack, t_env *env)
 	int	status;
 
 	status = check_built(stack, env);
-	if (g_exit_status_ == -42)
-		return (stack->err_code);
 	if (status == 1)
 		status = call_cmd(init, stack, env);
-	else if (status == -1)
-		return (1);
 	else
 		if (io_backup(stack->stdin_backup, stack->stdout_backup))
 			return (1);
+	if (status == -1 || g_exit_status_ == -42)
+		return (1);
+	else if (g_exit_status_ == -100)
+		return (stack->err_code);
 	return (status);
 }
 
@@ -98,8 +98,7 @@ int	call_cmd(t_init *init, t_tok *stack, t_env *env)
 	if (init->flag == 2)
 		return (destroy_unsetcase(cmd_path, cmd_matrix, env_mtrx, stack));
 	if (!cmd_path)
-		return (destroy_cmd(0, cmd_matrix, env_mtrx) + 126 + \
-			stack->err_code);
+		return (destroy_cmd(0, cmd_matrix, env_mtrx) + 126 + stack->err_code);
 	exit_code = exec_cmd(cmd_path, cmd_matrix, env_mtrx, stack);
 	destroy_cmd(cmd_path, cmd_matrix, env_mtrx);
 	return (exit_code);

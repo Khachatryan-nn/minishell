@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/18 18:40:19 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/18 22:47:40 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	lex(char **line, t_init *init, t_env *env)
 	int		sb;
 
 	sb = 0;
+	g_exit_status_ = 0;
 	if (!lexer(&init->lex, line) || !init->lex)
 	{
 		destroy_init(init);

@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:33:29 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/16 23:27:22 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/18 22:58:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,36 +67,36 @@ int	main(int ac, char **av, char **envp)
 	{
 		print_logo();
 		init_hd(&init.hd);
-		while_loop(&init, env, str);
+		while (1)
+			while_loop(&init, env, str);
 	}
 	return (0);
 }
 
 void static	while_loop(t_init *init, t_env *env, char *str)
 {
-	while (1)
+	save_backup(init);
+	call_signals(1);
+	str = readline("minishell$ ");
+	if (!str)
 	{
-		save_backup(init);
-		call_signals(1);
-		str = readline("minishell$ ");
-		if (!str)
-		{
-			ft_dprintf(2, "exit\n");
-			exit (g_exit_status_);
-		}
-		if (!ft_onlyspaces(str))
-		{
-			lex(&str, init, env);
-			if (init->pars)
-			{
-				init->exit_status = check_ast(init, init->pars, env);
-				init->hd->i = 0;
-				destroy_init(init);
-			}
-			handle_dollar(init->exit_status, env);
-			init->exit_status = 0;
-			add_history(str);
-		}
-		free(str);
+		ft_dprintf(2, "exit\n");
+		if (g_exit_status_ == 130)
+			exit (1);
+		exit (init->exit_status);
 	}
+	if (!ft_onlyspaces(str))
+	{
+		lex(&str, init, env);
+		if (init->pars)
+		{
+			init->exit_status = check_ast(init, init->pars, env);
+			init->hd->i = 0;
+			destroy_init(init);
+		}
+		handle_dollar(init->exit_status, env);
+		init->exit_status = 0;
+		add_history(str);
+	}
+	free(str);
 }

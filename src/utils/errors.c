@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 17:31:55 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 13:54:26 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/18 22:48:11 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	builtins_error(char	*str, char *err)
 	else if (!ft_strcmp(str, "unset") && err)
 		ft_dprintf(2, "minishell: unset: `%s': not a %s\n", \
 					err, "valid identifier");
+	g_exit_status_ = -42;
 }

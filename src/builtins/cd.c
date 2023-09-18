@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:17:48 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 13:54:08 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 01:19:07 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	mshell_cd(char **arr, t_env *my_env)
 	else if (chdir(arr[1]) != 0)
 	{
 		ft_dprintf(2, "minishell: cd: no such file or directory: %s\n", arr[1]);
+		g_exit_status_ = -42;
 		return ;
 	}
 	mshell_cd_helper(str, my_env);
@@ -49,6 +50,7 @@ int	check_home(t_env *env)
 	if (!ft_strcmp(tmp->key, "HOME") && tmp->flag == 1)
 	{
 		ft_dprintf(2, "minishell: cd: HOME not set\n");
+		g_exit_status_ = -42;
 		return (1);
 	}
 	chdir(tmp->data);
@@ -68,21 +70,19 @@ void	mshell_cd_helper(char *str, t_env *my_env)
 	{
 		if (ft_strcmp(tmp->key, "PWD") == 0)
 		{
-			free(tmp->pwd);
-			tmp->pwd = NULL;
 			str = getcwd(NULL, 0);
 			if (str == NULL)
-				builtins_error("cd", NULL);
-			else
 			{
+				builtins_error("cd", NULL);
+				tmp->pwd = ft_strjoin(tmp->pwd, "/..", 1);
 				free(tmp->data);
-				tmp->data = ft_strdup(str);
-				tmp->pwd = ft_strdup(str);
+				tmp->data = ft_strdup(tmp->pwd);
+				break ;
 			}
-			if (!str)
-				tmp->pwd = ft_strjoin(tmp->pwd, "/..", -1);
-			free(str);
-			break ;
+			free(tmp->data);
+			free(tmp->pwd);
+			tmp->data = ft_strdup(str);
+			tmp->pwd = str;
 		}
 		tmp = tmp->next;
 	}
