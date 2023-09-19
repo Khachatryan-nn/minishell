@@ -32,7 +32,7 @@ datarootdir = ${prefix}/share
 srcdir = .
 VPATH = ..
 topdir = ..
-BUILD_DIR = /Users/tigrankhachatryan/Desktop/all/42/minishell/readline-master
+BUILD_DIR = /Users/tikhacha/Desktop/all/minishell/readline-master
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -49,10 +49,10 @@ LN = ln
 
 SHELL = /bin/sh
 
-host_os = darwin22.5.0
+host_os = darwin18.7.0
 host_vendor = apple
 
-prefix = /Users/tigrankhachatryan/Desktop/all/42/minishell/rd_lib
+prefix = /Users/tikhacha/Desktop/all/minishell/rd_lib
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
 bindir = ${exec_prefix}/bin
