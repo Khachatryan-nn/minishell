@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:30:36 by musimony          #+#    #+#             */
-/*   Updated: 2023/09/17 20:00:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:19:55 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*ft_strchr(const char *str, int c)
 	unsigned char	key;
 	int				i;
 
-	//dprintf(1, "---%s---\n", str);
 	i = 0;
 	if (!str)
 		return (NULL);
