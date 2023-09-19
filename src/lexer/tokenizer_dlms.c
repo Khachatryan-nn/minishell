@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:39:26 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/09 18:43:21 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:56:42 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	handle_xor(t_tok **res, char *line, int i, int count)
 {
 	handle_space(res, line, i, count);
 	if (!(*res))
-		return (parse_error("||", 0));
+		return (parse_error("||", 0) - 42);
 	lstback(res, lstnew_pars("||", XOR, 2, 1));
 	return (i + 1);
 }
@@ -48,7 +48,7 @@ int	handle_xand(t_tok **res, char *line, int i, int count)
 {
 	handle_space(res, line, i, count);
 	if (!(*res))
-		return (parse_error("&&", 0));
+		return (parse_error("&&", 0) - 42);
 	lstback(res, lstnew_pars("&&", XAND, 2, 1));
 	return (i + 1);
 }
@@ -57,7 +57,7 @@ int	handle_pipe(t_tok **res, char *line, int i, int count)
 {
 	handle_space(res, line, i, count);
 	if (!(*res))
-		return (parse_error("|", 0));
+		return (parse_error("|", 0) - 42);
 	lstback(res, lstnew_pars("|", PIPE, 3, 1));
 	return (i);
 }

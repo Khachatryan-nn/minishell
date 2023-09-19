@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/18 22:47:40 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:58:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,22 @@ int	handle_tokens_p1(t_tok **res, char **line, int *i, int counter)
 	return (1);
 }
 
-char	*inner_while(t_tok **res, char **line, int *i, int counter)
+int	inner_while(t_tok **res, char **line, int *i, int counter)
 {
-	char	*key;
-
 	while ((*line)[*i])
 	{
 		if ((*line)[*i] == '"' || (*line)[*i] == '\'')
-		{
-			key = handle_quotes(res, line, i, counter);
-			if (key)
-				return (key);
-		}
+			handle_quotes(res, line, i, counter);
 		else if (!handle_tokens_p1(res, line, i, counter))
 		{
 			(*i)++;
 			continue ;
 		}
+		if (*i < 0)
+			return (1);
 		break ;
 	}
-	return (NULL);
+	return (0);
 }
 
 int	lexer(t_tok **res, char **line)
@@ -76,7 +72,8 @@ int	lexer(t_tok **res, char **line)
 	while (*line && (*line)[i])
 	{
 		counter = i;
-		inner_while(res, line, &i, counter);
+		if (inner_while(res, line, &i, counter))
+			return (0);
 		i++;
 	}
 	lstback(res, lstnew_pars("AST", END, 1, 2));
