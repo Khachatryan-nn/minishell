@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 14:56:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/14 01:54:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 19:09:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	mshell_exit(t_tok *stack, char **matrix, t_env *env, char *s)
 	exit_num = check_exit_status(stack, matrix, str, exit_num);
 	free(str);
 	if (exit_num == 1000)
-		return (1);
+		return (1000);
 	if (check_subsh(stack) || (stack->flag & _PIPES_))
 		return (exit_num);
 	exit (exit_num);

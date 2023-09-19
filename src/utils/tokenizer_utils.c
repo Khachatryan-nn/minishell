@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/17 20:38:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 20:04:58 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		handle_heredoc_input(t_init *init, t_tok *tok, char *str, t_env *env);
 int		add_new_quote(t_tok **res, char *line, int i, int type);
 int		read_heredoc(char *line, char **result, char *limiter);
 void	expand_heredoc(char *result, int fd, t_env *env);
-void	find_limiter(t_tok *stack);
+void	find_limiter(t_tok **stack);
 
 int	handle_heredoc_input(t_init *init, t_tok *tok, char *str, t_env *env)
 {
@@ -25,13 +25,14 @@ int	handle_heredoc_input(t_init *init, t_tok *tok, char *str, t_env *env)
 	result = NULL;
 	tok->hdoc_fname = ft_strdup(init->hd->fn[++init->hd->i]);
 	tok->fd = open(tok->hdoc_fname, O_RDWR | O_CREAT | O_TRUNC, 00655);
-	find_limiter(tok->next);
+	find_limiter(&tok->next);
 	call_signals(4);
 	while (1)
 	{
 		if (g_exit_status_ == 130)
 		{
 			free(result);
+			init->exit_status = 1;
 			return (130);
 		}
 		if (!read_heredoc(str, &result, tok->next->cmd))
@@ -111,28 +112,31 @@ int	add_new_quote(t_tok **res, char *line, int i, int type)
 	return (counter);
 }
 
-void	find_limiter(t_tok *stack)
+void	find_limiter(t_tok **stack)
 {
 	t_tok	*tmp;
-	t_tok	*cmd_l;
+	t_tok	**cmd_l;
 
-	tmp = stack->next;
-	cmd_l = stack->prev->prev;
+	tmp = (*stack)->next;
+	cmd_l = &(*stack)->prev->prev;
 	while (tmp && tmp->cmd && (tmp->type == WORD || tmp->type == SQUOTE \
 		|| tmp->type == DQUOTE) && !(tmp->flag & 1 << 1))
 	{
-		stack->cmd = ft_strjoin(stack->cmd, tmp->cmd, 1);
+		(*stack)->cmd = ft_strjoin((*stack)->cmd, tmp->cmd, 1);
 		tmp = tmp->next;
 		pop_redir(tmp->prev);
 	}
-	while (cmd_l->prev && check_type(cmd_l->prev->type) == 2)
-		cmd_l = cmd_l->prev->prev;
-	if (!ft_strcmp(cmd_l->cmd, "(NULL)"))
+	while ((*cmd_l)->prev && check_type((*cmd_l)->prev->type) == 2)
+		*cmd_l = (*cmd_l)->prev->prev;
+	if (!ft_strcmp((*cmd_l)->cmd, "(NULL)") && tmp->cmd && \
+	(tmp->type != WORD && tmp->type != SQUOTE && tmp->type != DQUOTE))
 		return ;
 	while (tmp && tmp->cmd && (tmp->type == WORD || tmp->type == SQUOTE \
 		|| tmp->type == DQUOTE))
 	{
 		tmp = tmp->next;
-		push_redir(cmd_l, tmp->prev);
+		push_redir(*cmd_l, tmp->prev);
 	}
+	if (!ft_strcmp((*cmd_l)->cmd, "(NULL)"))
+		*cmd_l = pop_redir(*cmd_l);
 }

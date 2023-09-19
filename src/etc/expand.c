@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:19:02 by rmkrtchy          #+#    #+#             */
-/*   Updated: 2023/09/17 17:01:50 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 17:50:55 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	exp_1(t_exp **tmp)
 	while (exp->str[exp->l] != '\0' && exp->str[exp->l] != '$' && \
 			exp->str[exp->l] != ' ' && exp->str[exp->l] != '\'' && \
 			exp->str[exp->l] != '=' && exp->str[exp->l] != '\n' && \
-			exp->str[exp->l] != '"' && exp->str[exp->l] != '/')
+			exp->str[exp->l] != '"' && exp->str[exp->l] != '/' && \
+			exp->str[exp->l] != ':')
 		exp->l++;
 }
 

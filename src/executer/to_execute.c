@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/19 00:22:00 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 19:10:44 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ int	to_execute(t_init *init, t_tok *stack, t_env *env)
 	if (status == 1)
 		status = call_cmd(init, stack, env);
 	else
+	{
+		stack->err_code = 1;
 		if (io_backup(stack->stdin_backup, stack->stdout_backup))
 			return (1);
+	}
 	if (status == -1 || g_exit_status_ == -42)
 		return (1);
 	else if (g_exit_status_ == -100)
@@ -51,6 +54,7 @@ int	exec_cmd(char *cmd, char **matrix, char **env, t_tok *stack)
 
 	child_exit = 0;
 	pid = fork();
+	call_signals(2);
 	if (pid == -1)
 	{
 		perror("minishell");

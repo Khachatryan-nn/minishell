@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/19 15:29:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 20:05:24 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	is_valid(t_init *init, t_env *env, int *sb)
 		if (check_type(ptr->type) && ptr->next->type == END)
 			return (parse_error("newline", 0));
 		if (check_type(ptr->type) == 2 && ptr->type != HEREDOC)
-			find_limiter(ptr->next);
+			find_limiter(&ptr->next);
 		ptr = ptr->next;
 	}
 	return (1);

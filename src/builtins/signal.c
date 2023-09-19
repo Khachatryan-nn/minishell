@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 00:41:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/12 16:01:43 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/19 18:57:54 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,16 @@ void	call_signals(int sig)
 		signal(SIGINT, ctrl_c);
 		signal(SIGQUIT, back_slash);
 	}
+	if (sig == 3)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
+		//g_exit_status_ = 132;
+	}
 	if (sig == 4)
 	{
 		signal(SIGINT, sig_handler_hdoc);
-		signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
 
@@ -51,6 +57,8 @@ void	ctrl_c(int sig)
 {
 	g_exit_status_ = 130;
 	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
 	(void) sig;
 }
 
