@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 19:24:37 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/19 19:58:57 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/20 12:36:43 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	push_redir(t_tok *to, t_tok *from);
-t_tok	*pop_redir(t_tok *tok);
+void	pop_redir(t_tok *tok);
 
 void	push_redir(t_tok *to, t_tok *from)
 {
@@ -26,7 +26,7 @@ void	push_redir(t_tok *to, t_tok *from)
 		from->flag -= (1 << 2);
 }
 
-t_tok	*pop_redir(t_tok *tok)
+void	pop_redir(t_tok *tok)
 {
 	t_tok	*tmp;
 	
@@ -45,5 +45,4 @@ t_tok	*pop_redir(t_tok *tok)
 	}
 	free(tmp->cmd);
 	free(tmp);
-	return (tok);
 }

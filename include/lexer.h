@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:59:23 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/19 19:58:44 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/20 12:33:27 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int			lexer(t_tok **res, char **line);
 int			quote_count(char *line, char c);
 void		unlink_heredocs(t_init	*init);
 const char	*get_token_name(t_type token);
-void		find_limiter(t_tok **stack);
+void		find_limiter(t_init *init, t_tok *stack);
 int			is_delimiter(t_tok *root);
 int			ft_onlyspaces(char *str);
 const char	*token_is(t_type token);
 t_type		token_name(char *token);
 int			check_type(t_type type);
-t_tok		*pop_redir(t_tok *tok);
+void		pop_redir(t_tok *tok);
 
 #endif

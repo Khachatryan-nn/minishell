@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/19 19:10:44 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/21 22:10:13 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	to_execute(t_init *init, t_tok *stack, t_env *env)
 		if (io_backup(stack->stdin_backup, stack->stdout_backup))
 			return (1);
 	}
+	if (g_exit_status_ == 130)
+		return (130);
 	if (status == -1 || g_exit_status_ == -42)
 		return (1);
 	else if (g_exit_status_ == -100)
@@ -92,6 +94,7 @@ int	call_cmd(t_init *init, t_tok *stack, t_env *env)
 	find_path(init, env);
 	if (do_expand(stack, env) && stack->cmd[0] == '\0')
 		return (0);
+	//print_types(stack);
 	env_mtrx = env_matrix(env);
 	if (!env_mtrx)
 		return (127);

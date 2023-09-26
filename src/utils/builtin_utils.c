@@ -6,14 +6,15 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 23:46:00 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/13 22:05:48 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/21 21:38:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-unsigned long long int	ft_atll(char *str);
+void					print_matrix(char *line);
 char					*trim_zeroes(char *s);
+unsigned long long int	ft_atll(char *str);
 
 char	*trim_zeroes(char *s)
 {
@@ -64,4 +65,23 @@ unsigned long long int	ft_atll(char *str)
 		i++;
 	}
 	return (num * sign);
+}
+
+void	print_matrix(char *line)
+{
+	int		i;
+	char	**matrix;
+
+	i = 0;
+	matrix = ft_split(line, ' ');
+	if (!matrix)
+		return ;
+	while (matrix[i])
+	{
+		if (i)
+			printf(" ");
+		printf("%s", matrix[i]);
+		i++;
+	}
+	free_matrix(matrix);
 }

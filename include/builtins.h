@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:55:34 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/19 15:19:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/21 21:05:42 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void					ft_add(t_env *my_env, char *str);
 void					mshell_echo(char **matrix);
 char					*num_sign(char *s, char c);
 void					ft_export(t_env *my_env);
+void					print_matrix(char *line);
 void					pwd_init(t_env *my_env);
 int						check_unset(char *str);
 void					mshell_env(t_env *env);
