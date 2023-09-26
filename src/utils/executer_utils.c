@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 18:58:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/18 22:56:28 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:36:01 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	handle_dollar(int exit_status, t_env *env)
 	char	*status;
 
 	tmp = env;
-	status = ft_itoa(exit_status);
+	if (g_exit_status_ == -111)
+		status = ft_strdup("1");
+	else
+		status = ft_itoa(exit_status);
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, "$?"))
@@ -58,7 +61,8 @@ void	handle_dollar(int exit_status, t_env *env)
 		}
 		tmp = tmp->next;
 	}
-	g_exit_status_ = 0;
+	if (g_exit_status_ != -111)
+		g_exit_status_ = 0;
 	free(status);
 }
 

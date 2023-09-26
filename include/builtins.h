@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 20:55:34 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/21 21:05:42 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:29:37 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int						mshell_unset(t_tok *stack, char **matrix, \
 void					mshell_cd(char **matrix, t_env *my_env);
 int						check_built(t_tok *stack, t_env *env);
 t_env					*env_init(char **env, t_env *my_env);
+void					call_signals(int sig);
 int						ft_check(t_env *my_env, char *str);
 void					mshell_pwd(char *str, t_env *env);
 void					ft_add(t_env *my_env, char *str);
@@ -40,7 +41,6 @@ int						check_unset(char *str);
 void					mshell_env(t_env *env);
 char					*ft_itul(long long n);
 char					*trim_zeroes(char *s);
-void					call_signals(int sig);
 unsigned long long int	ft_atll(char *str);
 
 #endif

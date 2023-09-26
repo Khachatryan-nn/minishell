@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 00:41:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/19 18:57:54 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:32:42 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	call_signals(int sig)
 
 void	restore_prompt(int sig)
 {
-	g_exit_status_ = 130;
+	g_exit_status_ = -111;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
