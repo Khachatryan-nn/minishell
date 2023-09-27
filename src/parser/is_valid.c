@@ -6,14 +6,14 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/26 18:46:00 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:30:08 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int			is_valid(t_init *init, t_env *env, int *sb, int flag);
 int			subshell_validation(t_tok *ptr, int *subshell);
-int			is_valid(t_init *init, t_env *env, int *sb);
 int			check_type(t_type type);
 char static	*type_is(t_type	type);
 
@@ -75,7 +75,7 @@ int	subshell_validation(t_tok *ptr, int *subshell)
 	return (1);
 }
 
-int	is_valid(t_init *init, t_env *env, int *sb)
+int	is_valid(t_init *init, t_env *env, int *sb, int flag)
 {
 	t_tok	*ptr;
 
@@ -87,7 +87,7 @@ int	is_valid(t_init *init, t_env *env, int *sb)
 		if (check_type(ptr->type) == 2 && !ft_strcmp(ptr->next->cmd, "*"))
 			return (ft_dprintf(2, "Minishell: *: ambiguous redirect\n"), 0);
 		if (ptr->type == HEREDOC && !check_type(ptr->next->type) && \
-			ft_strcmp(ptr->next->cmd, "(NULL)"))
+			ft_strcmp(ptr->next->cmd, "(NULL)") && flag == 1)
 			handle_heredoc_input(init, ptr, NULL, env);
 		if (check_type(ptr->type) && check_type(ptr->next->type) == 1)
 			return (parse_error(type_is(ptr->next->type), 0));

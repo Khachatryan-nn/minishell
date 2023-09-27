@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:38:29 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/26 18:42:29 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:29:42 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	lex(char **line, t_init *init, t_env *env)
 		return ;
 	}
 	heredoc_validation(init, NULL);
-	if (!is_valid(init, env, &sb) || sb > 0 || !is_valid(init, env, &sb))
+	if (!is_valid(init, env, &sb, 1) || sb > 0 \
+		|| !is_valid(init, env, &sb, 0))
 	{
 		if (sb > 0)
 			ft_dprintf(2, "minishell: syntax error: missing token `)'\n");
@@ -104,5 +105,3 @@ void	lex(char **line, t_init *init, t_env *env)
 	}
 	parser(init, env);
 }
-
-//ls && pwdw || (ls | cat -e | cat -e | cat -e) > file1
