@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 8.0
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /Users/tikhacha/Desktop/all/minishell/rd_lib
+prefix = /Users/tikhacha/Desktop/intra-uuid-cbe85b5b-42ee-4426-9650-553a556e91d7-5208443-tikhacha/rd_lib
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /Users/tikhacha/Desktop/all/minishell/readline-master
+BUILD_DIR = /Users/tikhacha/Desktop/intra-uuid-cbe85b5b-42ee-4426-9650-553a556e91d7-5208443-tikhacha/readline-master
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c

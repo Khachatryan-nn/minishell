@@ -1,4 +1,4 @@
-prefix=/Users/tigrankhachatryan/Desktop/all/42/minishell/rd_lib
+prefix=/Users/tikhacha/Desktop/intra-uuid-cbe85b5b-42ee-4426-9650-553a556e91d7-5208443-tikhacha/rd_lib
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

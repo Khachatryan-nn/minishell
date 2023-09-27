@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/20 12:29:58 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:46:00 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ int	subshell_validation(t_tok *ptr, int *subshell)
 	if (ptr->type == SUBSH_CLOSE && (!ptr->prev || \
 		ptr->prev->type == SUBSH_OPEN || (*subshell) < 0))
 		return (parse_error(")", 0 + (*subshell = 0)));
-	if (ptr->type == SUBSH_CLOSE && ft_strcmp(ptr->next->cmd, "AST") \
-		&& ptr->next->type == WORD && ptr->next->type == SQUOTE \
-		&& ptr->next->type == DQUOTE)
+	if (ptr->type == SUBSH_CLOSE && (ptr->next->type == WORD \
+	|| ptr->next->type == SQUOTE || ptr->next->type == DQUOTE))
 		return (parse_error(ptr->next->cmd, 0 + (*subshell = 0)));
 	if (ptr->type == SUBSH_OPEN && ptr->prev && !check_type(ptr->prev->type))
 	{

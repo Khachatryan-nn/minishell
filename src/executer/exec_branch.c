@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:10:18 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/26 11:07:35 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:21:27 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	right_branch(t_init *in, t_tok *s, t_env *env, int status)
 			perror("minishell");
 			return (1);
 		}
-		s->err_code = status / 256;
+		s->err_code = (unsigned char)status;
 	}
 	else
 		s->err_code = check_ast(in, s->right, env);
@@ -64,7 +64,7 @@ int	left_branch(t_init *in, t_tok *s, t_env *env, int status)
 			perror("minishell");
 			return (1);
 		}
-		s->err_code = status / 256;
+		s->err_code = (unsigned char)status;
 	}
 	else
 		s->err_code = check_ast(in, s->left, env);

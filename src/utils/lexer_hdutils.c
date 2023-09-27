@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 19:24:37 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/20 12:36:43 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:51:09 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	push_redir(t_tok *to, t_tok *from)
 void	pop_redir(t_tok *tok)
 {
 	t_tok	*tmp;
-	
+
 	tmp = tok;
 	if (tok->prev)
 	{	

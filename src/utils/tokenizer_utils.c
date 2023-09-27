@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/26 11:30:47 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:58:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,5 @@ void	find_limiter(t_init *init, t_tok *stack)
 		push_redir(cmd_l, tmp->prev);
 	}
 	if (!ft_strcmp(cmd_l->cmd, "(NULL)") && !cmd_l->prev)
-	{
-		init->lex = init->lex->next;
-		init->lex->flag |= 1;
-		pop_redir(cmd_l);
-	}
+		swaping(init, &cmd_l);
 }

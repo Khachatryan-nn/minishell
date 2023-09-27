@@ -31,7 +31,7 @@ PACKAGE_TARNAME = readline
 srcdir = .
 
 top_srcdir = .
-BUILD_DIR = /Users/tikhacha/Desktop/all/minishell/readline-master
+BUILD_DIR = /Users/tikhacha/Desktop/intra-uuid-cbe85b5b-42ee-4426-9650-553a556e91d7-5208443-tikhacha/readline-master
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ MV = mv
 
 SHELL = /bin/sh
 
-prefix = /Users/tikhacha/Desktop/all/minishell/rd_lib
+prefix = /Users/tikhacha/Desktop/intra-uuid-cbe85b5b-42ee-4426-9650-553a556e91d7-5208443-tikhacha/rd_lib
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

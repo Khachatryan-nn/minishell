@@ -22,7 +22,7 @@ topdir = ..
 srcdir = .
 
 
-prefix = /Users/tigrankhachatryan/Desktop/all/42/minishell/rd_lib
+prefix = /Users/tikhacha/Desktop/intra-uuid-cbe85b5b-42ee-4426-9650-553a556e91d7-5208443-tikhacha/rd_lib
 
 datarootdir = ${prefix}/share
 
@@ -49,7 +49,7 @@ RM = rm -f
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 
-BUILD_DIR = /Users/tigrankhachatryan/Desktop/all/42/minishell/readline-master
+BUILD_DIR = /Users/tikhacha/Desktop/intra-uuid-cbe85b5b-42ee-4426-9650-553a556e91d7-5208443-tikhacha/readline-master
 TEXINPUTDIR = $(srcdir)
 
 MAKEINFO    = LANGUAGE= makeinfo
