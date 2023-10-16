@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/15 18:39:07 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:03:36 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	io_out(t_init *init, t_tok *stack, t_env *env)
 	int		fd;
 	t_tok	*tmp;
 
-	fd = open_out(stack);
+	fd = open_out(init, stack);
 	if (fd < 0)
 		return (1);
 	tmp = stack;
@@ -74,7 +74,7 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 		return (1);
 	fd = open_in(init, stack);
 	if (fd < 0)
-		return (1);
+		return (init->fd_fail = 1, 1);
 	tmp = stack;
 	while (tmp->left->type != WORD)
 		tmp = tmp->left;
