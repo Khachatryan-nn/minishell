@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/10/20 00:17:05 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:28:56 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	io_input(t_init *init, t_tok *stack, t_env *env)
 	if (fd < 0)
 		return (init->fd_fail = 1, 1);
 	tmp = stack;
-	while (tmp->left->type != WORD)
+	while (tmp->left && !is_wrd(tmp->left))
 		tmp = tmp->left;
 	tmp->left->stdin_backup = init->stdin_backup;
 	tmp->left->_stdin_ = fd;
@@ -107,7 +107,9 @@ int	exec_iocmd(t_init *init, t_tok *stack, t_env *env)
 		else if (stack->type == INPUT)
 			return (io_input(init, stack, env));
 	}
+	printf("segfault: 2\n");
 	if (stack->hdoc_fname)
 		unlink(stack->hdoc_fname);
+	printf("segfault: 3\n");
 	return (stack->err_code);
 }

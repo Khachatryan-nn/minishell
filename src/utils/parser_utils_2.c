@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:45:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/10/20 00:18:49 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:29:02 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	if_implementation(t_tok **tmp, t_tok **cmd_l)
 /// @return word: 1, squote:2, dquote:3, other:0
 int	is_wrd(t_tok *tok)
 {
+	if (tok == NULL)
+		return (0);
 	if (tok->type == WORD)
 		return (1);
 	else if (tok->type == SQUOTE)
