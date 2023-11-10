@@ -6,14 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:45:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/10/16 17:54:45 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/10/20 00:18:49 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		print_types(t_tok *ptr);
-int			parse_error(char *err_str, int mode);
+void	if_implementation(t_tok **tmp, t_tok **cmd_l);
+int		parse_error(char *err_str, int mode);
+void	print_types(t_tok *ptr);
+int		is_wrd(t_tok *tok);
 
 int	parse_error(char *err_str, int mode)
 {
@@ -40,4 +42,35 @@ void	print_types(t_tok *ptr)
 		ptr = ptr->next;
 	}
 	printf("\n");
+}
+
+void	if_implementation(t_tok **tmp, t_tok **cmd_l)
+{
+	while ((*tmp) && (*tmp)->next && ((*tmp)->type == WORD || \
+		(*tmp)->type == SQUOTE || (*tmp)->type == DQUOTE) && \
+		(*tmp)->next->type != END && check_type((*tmp)->next->type) <= 0 && \
+		(*tmp)->next->type != SUBSH_CLOSE)
+		(*tmp) = (*tmp)->next;
+	while (((*tmp)->type == WORD || (*tmp)->type == SQUOTE || \
+					(*tmp)->type == DQUOTE) && (*tmp)->prev && \
+		check_type((*tmp)->prev->type) != 2 && (*tmp)->prev->type != SUBSH_OPEN)
+	{
+		(*tmp) = (*tmp)->prev;
+		push_redir(*cmd_l, (*tmp)->next);
+	}
+}
+
+/// @brief
+/// @param tok 
+/// @return word: 1, squote:2, dquote:3, other:0
+int	is_wrd(t_tok *tok)
+{
+	if (tok->type == WORD)
+		return (1);
+	else if (tok->type == SQUOTE)
+		return (2);
+	else if (tok->type == DQUOTE)
+		return (3);
+	else
+		return (0);
 }

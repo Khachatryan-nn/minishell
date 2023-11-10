@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 21:07:53 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/27 17:29:50 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:02:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ int		is_valid(t_init *init, t_env *env, int *sb, int flag);
 void	shunting_yard(t_tok **p, t_tok **ops, t_tok **otp);
 t_tok	*abstract_syntax_tree(t_init *init, t_tok **stack);
 int		check_ast(t_init *init, t_tok *root, t_env *env);
+void	if_implementation(t_tok **tmp, t_tok **cmd_l);
 void	print_ast(t_tok *ast, int indent, int lrc);
 int		parse_error(char *err_str, int mode);
 void	parser(t_init *init, t_env *env);
 t_tok	*most_prev(t_tok	*stack);
 void	push(t_tok **a, t_tok **b);
 void	print_types(t_tok *ptr);
+int		is_wrd(t_tok *tok);
 void	pop(t_tok **stack);
 
 #endif

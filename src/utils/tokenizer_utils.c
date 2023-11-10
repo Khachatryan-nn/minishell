@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/26 17:58:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/10/20 00:17:46 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ void	find_limiter(t_init *init, t_tok *stack)
 
 	tmp = stack->next;
 	cmd_l = stack->prev->prev;
-	while (tmp && tmp->cmd && (tmp->type == WORD || tmp->type == SQUOTE \
-		|| tmp->type == DQUOTE) && !(tmp->flag & 1 << 1))
+	while (tmp && tmp->cmd && is_wrd(tmp) && !(tmp->flag & 1 << 1))
 	{
 		stack->cmd = ft_strjoin(stack->cmd, tmp->cmd, 1);
 		tmp = tmp->next;
@@ -128,15 +127,15 @@ void	find_limiter(t_init *init, t_tok *stack)
 	}
 	while (cmd_l->prev && check_type(cmd_l->prev->type) == 2)
 		cmd_l = cmd_l->prev->prev;
-	if (!ft_strcmp(cmd_l->cmd, "(NULL)") && tmp->cmd && \
-	(tmp->type != WORD && tmp->type != SQUOTE && tmp->type != DQUOTE))
+	if (cmd_l->cmd && !ft_strcmp(cmd_l->cmd, "(NULL)") \
+		&& tmp->cmd && !is_wrd(tmp))
 		return ;
-	while (tmp && tmp->cmd && (tmp->type == WORD || tmp->type == SQUOTE \
-		|| tmp->type == DQUOTE))
+	if (tmp && tmp->cmd && is_wrd(tmp))
+		if_implementation(&tmp, &cmd_l);
+	if (cmd_l->cmd && !ft_strcmp(cmd_l->cmd, "(NULL)") && !cmd_l->prev)
 	{
-		tmp = tmp->next;
-		push_redir(cmd_l, tmp->prev);
+		init->lex = init->lex->next;
+		init->lex->flag |= 1;
+		pop_redir(cmd_l);
 	}
-	if (!ft_strcmp(cmd_l->cmd, "(NULL)") && !cmd_l->prev)
-		swaping(init, &cmd_l);
 }

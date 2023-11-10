@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 19:24:37 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/26 17:51:09 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:15:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	pop_redir(t_tok *tok)
 
 	tmp = tok;
 	if (tok->prev)
-	{	
+	{
 		tok->prev->next = tok->next;
 		tok->next->prev = tok->prev;
 		tok->next = NULL;

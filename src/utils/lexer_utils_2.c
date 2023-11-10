@@ -6,15 +6,16 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:19:28 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/11 00:28:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:14:11 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-const char	*token_is(t_type token);
-int			is_delimiter(t_tok *root);
 const char	*get_token_name(t_type token);
+int			is_delimiter(t_tok *root);
+void		check_redir(t_tok **tok);
+const char	*token_is(t_type token);
 
 const char	*get_token_name(t_type token)
 {
@@ -90,4 +91,33 @@ int	is_delimiter(t_tok *root)
 		return (3);
 	else
 		return (0);
+}
+
+void	check_redir(t_tok **tok)
+{
+	t_tok	*tmp;
+
+	tmp = (*tok);
+	while (tmp && tmp->next)
+	{
+		if (!ft_strcmp(tmp->cmd, "(NULL)") && check_type(tmp->next->type) != 2)
+		{
+			set_links(&tmp);
+			tmp = (*tok);
+			continue ;
+		}
+		else if ((tmp->type == WORD || tmp->type == DQUOTE || \
+											tmp->type == SQUOTE) && \
+			(tmp->prev == NULL || check_type(tmp->prev->type) == 1 || \
+				tmp->prev->type == SUBSH_OPEN))
+		{
+			tmp->flag = 3;
+			while (tmp && (tmp->type == WORD || tmp->type == DQUOTE || \
+													tmp->type == SQUOTE))
+				tmp = tmp->next;
+		}
+		if (!tmp)
+			return ;
+		tmp = tmp->next;
+	}
 }

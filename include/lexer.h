@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:59:23 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/20 12:33:27 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:13:10 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,20 @@ int			handle_xor(t_tok **res, char *line, int i, int count);
 int			add_new_quote(t_tok **res, char *line, int i, int type);
 void		heredoc_validation(t_init *init, t_tok *tok);
 void		lex(char **line, t_init *init, t_env *env);
-int			find_limiter_end(char *line, int start);
+void		find_limiter(t_init *init, t_tok *stack);
 int			ft_isspace(char *line, int i, int j);
 void		push_redir(t_tok *to, t_tok *from);
 int			lexer(t_tok **res, char **line);
 int			quote_count(char *line, char c);
 void		unlink_heredocs(t_init	*init);
 const char	*get_token_name(t_type token);
-void		find_limiter(t_init *init, t_tok *stack);
 int			is_delimiter(t_tok *root);
+void		check_redir(t_tok **tok);
 int			ft_onlyspaces(char *str);
 const char	*token_is(t_type token);
 t_type		token_name(char *token);
 int			check_type(t_type type);
+void		set_links(t_tok **tmp);
 void		pop_redir(t_tok *tok);
 
 #endif

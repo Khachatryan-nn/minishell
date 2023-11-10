@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 22:48:45 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/10/16 17:03:36 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/10/20 00:17:05 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	io_out(t_init *init, t_tok *stack, t_env *env)
 	if (fd < 0)
 		return (1);
 	tmp = stack;
-	while (tmp->left->type != WORD && check_type(tmp->left->type) != 1)
+	while (tmp->left->type != WORD && check_type(tmp->left->type) != 1 && \
+					is_wrd(tmp->left) < 2)
 		tmp = tmp->left;
 	tmp->left->_stdout_ = fd;
 	tmp->left->stdout_backup = init->stdout_backup;

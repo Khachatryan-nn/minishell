@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 14:50:24 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/10/16 17:18:50 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/10/21 13:06:00 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	to_execute(t_init *init, t_tok *stack, t_env *env)
 	if (status == 1)
 		status = call_cmd(init, stack, env);
 	if (g_exit_status_ == 130)
-		return (130);
+		return (130) ;
+	else if (g_exit_status_ == -100 && status == -1)
+		return (1);
 	else if (g_exit_status_ == -100 && stack->err_code != 1000)
 		return (stack->err_code);
 	else if (g_exit_status_ == -100 && stack->err_code == 1000)
