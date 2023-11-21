@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:45:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/11/10 15:29:02 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/11/21 17:57:44 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ void	print_types(t_tok *ptr)
 
 void	if_implementation(t_tok **tmp, t_tok **cmd_l)
 {
-	while ((*tmp) && (*tmp)->next && ((*tmp)->type == WORD || \
-		(*tmp)->type == SQUOTE || (*tmp)->type == DQUOTE) && \
+	while ((*tmp) && (*tmp)->next && is_wrd((*tmp)) && \
 		(*tmp)->next->type != END && check_type((*tmp)->next->type) <= 0 && \
 		(*tmp)->next->type != SUBSH_CLOSE)
 		(*tmp) = (*tmp)->next;
-	while (((*tmp)->type == WORD || (*tmp)->type == SQUOTE || \
-					(*tmp)->type == DQUOTE) && (*tmp)->prev && \
-		check_type((*tmp)->prev->type) != 2 && (*tmp)->prev->type != SUBSH_OPEN)
+	while ((*tmp) && is_wrd((*tmp)) && (*tmp)->prev && \
+		check_type((*tmp)->prev->type) != 2 && \
+		(*tmp)->prev->type != SUBSH_OPEN)
 	{
 		(*tmp) = (*tmp)->prev;
 		push_redir(*cmd_l, (*tmp)->next);
 	}
 }
+
 
 /// @brief
 /// @param tok 

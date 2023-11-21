@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:41:52 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/11/10 14:43:34 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:30:41 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,16 @@ void	find_limiter(t_init *init, t_tok *stack)
 		tmp = tmp->next;
 		pop_redir(tmp->prev);
 	}
+	printf("lexer::: ");
+	print_types(init->lex);
+	printf("stack::: ");
+	print_types(stack);
 	while (cmd_l->prev && check_type(cmd_l->prev->type) == 2)
+	{
+		printf("bef::: %s\n", cmd_l->cmd);
 		cmd_l = cmd_l->prev->prev;
+		printf("aft::: %s\n", cmd_l->cmd);
+	}
 	if (cmd_l->cmd && !ft_strcmp(cmd_l->cmd, "(NULL)") \
 		&& tmp->cmd && !is_wrd(tmp))
 		return ;

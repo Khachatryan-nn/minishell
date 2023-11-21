@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:22:15 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/10/16 19:56:10 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:53:45 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ int	is_valid(t_init *init, t_env *env, int *sb, int flag)
 	return (1);
 }
 
-// (ls > a) > b
+// Found where is error! Ptr->next when passed to find_limiter, losses his left pointer, so we can't access ls
+// > a ls < a fname -> ls fname > a < a

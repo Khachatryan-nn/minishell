@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 21:25:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/09/07 23:19:32 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/11/21 14:58:11 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	mshell_pwd(char *str, t_env *env)
 	else if (!ft_strcmp(tmp->key, "PWD"))
 	{
 		printf("%s\n", tmp->pwd);
+		free(tmp->data);
 		tmp->data = ft_strdup(tmp->pwd);
 	}
 	free(buff);
