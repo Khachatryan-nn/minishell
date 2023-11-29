@@ -6,7 +6,7 @@
 /*   By: tikhacha <tikhacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 01:45:02 by tikhacha          #+#    #+#             */
-/*   Updated: 2023/11/21 17:57:44 by tikhacha         ###   ########.fr       */
+/*   Updated: 2023/11/29 18:38:38 by tikhacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	if_implementation(t_tok **tmp, t_tok **cmd_l)
 		push_redir(*cmd_l, (*tmp)->next);
 	}
 }
-
 
 /// @brief
 /// @param tok 
